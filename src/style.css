@@ -126,6 +126,5 @@ body {
 
 @utility app-padding-y {
   @apply py-3;
-  @apply sm:py-5;
   @apply app-duration;
 }

@@ -1,5 +1,8 @@
 <template>
-  <header class="header">Header</header>
+  <header class="header">
+    <Brand />
+    <Menu />
+  </header>
 </template>
 
 <style scoped>
@@ -7,12 +10,13 @@
 @reference '../../style.css';
 
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-
+  @apply sticky top-0 z-50;
+  @apply flex items-center justify-between;
   @apply bg-primary-dark app-padding-x app-padding-y;
 }
 </style>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Brand from './header-brand.vue';
+import Menu from './header-menu.vue';
+</script>
