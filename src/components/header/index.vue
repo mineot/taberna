@@ -13,6 +13,7 @@
   @apply sticky top-0 z-50;
   @apply flex items-center justify-between;
   @apply bg-primary-dark app-padding-x app-padding-y;
+  @apply border-b-primary-light border-b;
 }
 </style>
 

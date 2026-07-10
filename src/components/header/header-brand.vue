@@ -3,7 +3,7 @@
     <!-- FIXME: buscar uma imagem na pasta public -->
     <img src="https://placehold.co/40" alt="No Image" />
     <!-- FIXME: buscar o nome do arquivo env -->
-    <h1>Marina Müller Pires</h1>
+    <h1>Educação Parental</h1>
   </section>
 </template>
 
