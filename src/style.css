@@ -78,6 +78,8 @@
   --color-primary-light: var(--color-olive-700);
   --color-secondary-dark: var(--color-olive-400);
   --color-secondary-light: var(--color-olive-200);
+  --color-tertiary-dark: var(--color-amber-500);
+  --color-tertiary-light: var(--color-amber-300);
 }
 
 * {

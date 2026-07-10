@@ -24,5 +24,6 @@
 .brand h1 {
   line-height: 0;
   margin-top: 7px;
+  @apply text-tertiary-dark;
 }
 </style>
