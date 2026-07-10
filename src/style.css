@@ -72,12 +72,12 @@
 
   --text-small: var(--text-sm);
   --text-regular: var(--text-base);
-  --text-large: var(--text-3xl);
+  --text-large: var(--text-4xl);
 
-  --color-background-dark: var(--color-olive-800);
-  --color-background-light: var(--color-olive-700);
-  --color-foreground-dark: var(--color-olive-400);
-  --color-foreground-light: var(--color-olive-200);
+  --color-primary-dark: var(--color-olive-800);
+  --color-primary-light: var(--color-olive-700);
+  --color-secondary-dark: var(--color-olive-400);
+  --color-secondary-light: var(--color-olive-200);
 }
 
 * {
@@ -95,8 +95,8 @@ body {
   flex-direction: column;
   gap: 0px;
 
-  background-color: var(--color-background-light);
-  color: var(--color-foreground-light);
+  background-color: var(--color-primary-light);
+  color: var(--color-secondary-light);
   font-family: var(--font-sans);
   font-size: var(--text-regular);
 
@@ -119,7 +119,7 @@ body {
 }
 
 @utility app-padding-x {
-  @apply px-5;
+  @apply px-2;
   @apply sm:px-16;
   @apply app-duration;
 }

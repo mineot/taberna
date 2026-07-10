@@ -1,9 +1,7 @@
 <template>
   <Header />
-  <main class="app-main">
-    <div>Inicio</div>
-    <div v-for="test in tests" :key="test">Content</div>
-    <div>Final</div>
+  <main>
+    <div v-for="test in tests" :key="test">Main {{ test }}</div>
   </main>
 </template>
 

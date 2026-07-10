@@ -1,5 +1,5 @@
 <template>
-  <header class="header"></header>
+  <header class="header">Header</header>
 </template>
 
 <style scoped>
@@ -7,8 +7,11 @@
 @reference '../../style.css';
 
 .header {
-  @apply fixed top-0 right-0 left-0;
-  @apply bg-background-dark app-padding-x app-padding-y;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  @apply bg-primary-dark app-padding-x app-padding-y;
 }
 </style>
 
