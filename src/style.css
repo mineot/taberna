@@ -1,14 +1,87 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf')
+    format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Serif';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/Roboto_Serif/RobotoSerif-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Serif';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/Roboto_Serif/RobotoSerif-Italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url('/fonts/Roboto_Mono/RobotoMono-VariableFont_wght.ttf')
+    format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: italic;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url('/fonts/Roboto_Mono/RobotoMono-Italic-VariableFont_wght.ttf')
+    format('truetype');
+}
+
+@font-face {
+  font-family: 'Italianno';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Italianno/Italianno-Regular.ttf') format('truetype');
+}
+
 @theme {
-  --color-background-dark: var(--color-olive-900);
-  --color-background-light: var(--color-olive-800);
-  --color-foreground-dark: var(--color-olive-500);
-  --color-foreground-light: var(--color-olive-300);
+  --font-sans:
+    'Roboto', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif:
+    'Roboto Serif', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono:
+    'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+  --font-fancy: 'Italianno', cursive;
+
+  --text-small: var(--text-sm);
+  --text-regular: var(--text-base);
+  --text-large: var(--text-3xl);
+
+  --color-background-dark: var(--color-olive-800);
+  --color-background-light: var(--color-olive-700);
+  --color-foreground-dark: var(--color-olive-400);
+  --color-foreground-light: var(--color-olive-200);
 }
 
 * {
-  box-sizing: border-boxs;
+  box-sizing: border-box;
 }
 
 html,
@@ -24,6 +97,8 @@ body {
 
   background-color: var(--color-background-light);
   color: var(--color-foreground-light);
+  font-family: var(--font-sans);
+  font-size: var(--text-regular);
 
   > #app {
     flex: 1;
@@ -33,14 +108,24 @@ body {
   }
 }
 
-@utility app-main {
-  @apply mt-10;
-  @apply sm:mt-14;
+@utility app-duration {
   @apply duration-300;
 }
 
-@utility app-padding {
-  @apply px-4 py-2;
-  @apply sm:px-8 sm:py-4;
-  @apply duration-300;
+@utility app-main {
+  @apply mt-12;
+  @apply sm:mt-16;
+  @apply app-duration;
+}
+
+@utility app-padding-x {
+  @apply px-5;
+  @apply sm:px-16;
+  @apply app-duration;
+}
+
+@utility app-padding-y {
+  @apply py-3;
+  @apply sm:py-5;
+  @apply app-duration;
 }
