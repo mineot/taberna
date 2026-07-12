@@ -49,13 +49,15 @@ taberna/
 │       │   ├── sobre.md       # Pagina Sobre em portugues
 │       │   ├── servicos.md    # Pagina Servicos em portugues
 │       │   ├── servico-1.md   # Servico 1 em portugues
-│       │   └── servico-2.md   # Servico 2 em portugues
+│       │   ├── servico-2.md   # Servico 2 em portugues
+│       │   └── footer.md      # Footer customizado em portugues
 │       └── en-us/
 │           ├── intro.md       # Conteudo markdown em ingles
 │           ├── sobre.md       # Pagina Sobre em ingles
 │           ├── servicos.md    # Pagina Servicos em ingles
 │           ├── service-1.md   # Service 1 in english
-│           └── service-2.md   # Service 2 in english
+│           ├── service-2.md   # Service 2 in english
+│           └── footer.md      # Footer customizado em ingles
 ├── src/
 │   ├── main.ts                # Entry point — mount Vue em #app + router
 │   ├── App.vue                # Root — layout (header/sidebar/footer) + router-view
@@ -119,7 +121,7 @@ Utilitarios customizados:
 - `app-nav-link` → `app-text hover:app-background-hover hover:app-accent app-duration rounded-lg px-3 py-2 transition-colors`
 - `app-backdrop` → `fixed inset-0 z-60 bg-black/60 backdrop-blur-sm md:hidden`
 - `app-sidebar` → `app-background app-text fixed top-0 right-0 z-70 flex h-full w-72 flex-col shadow-xl md:hidden`
-- `app-footer` → `app-border app-background-footer app-text-subtle border-t py-6 text-center`
+- `app-footer` → `app-border app-background-footer app-text-subtle border-t py-6 px-6 text-sm flex flex-col items-center`
 
 Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css):
 - `.z-60` → `z-index: 60` (backdrop do mobile menu)
@@ -299,6 +301,7 @@ O titulo do site (imagem + texto) e um link `<a href="/">` com:
 - **`app-title-text`** no `<h1>`/`<h2>` — `mt-2 leading-[0]` para alinhar com a imagem
 - **`app-duration`** — transicao suave (0.3s) no hover
 - **Sidebar**: Mesmo esquema, `<a href="/">` com `app-title app-accent-hover app-duration` + `@click="closeMenu"` para fechar o menu ao clicar
+- **Opcional**: Campo `title` no config e opcional — se ausente, `<h1>`/`<h2>` nao sao renderizados (permite usar apenas imagem)
 
 ### Imagem do Site (Header + Sidebar)
 
@@ -361,3 +364,25 @@ Arquivos markdown em `public/content/{locale}/*.md`:
 - Skeleton loader durante carregamento
 - Mensagem de erro "Page not found" se arquivo nao existir
 - **Protecao SPA fallback**: `useMarkdown` checa `Content-Type` da resposta — se for `text/html` (Vite retorna `index.html` para arquivos inexistentes), lança erro em vez de renderizar HTML cru
+
+### Footer Customizado
+
+Campo `contentFile` no `footer` do config permite carregar conteudo markdown para o footer:
+
+- **Opcional**: Se nao definido, footer mostra apenas ownership + "Powered by Mineot"
+- **Arquivo**: `public/content/{locale}/{contentFile}` (ex: `footer.md`)
+- **Renderizacao**: HTML inline com Tailwind (grid, links, etc.)
+- **Estrutura**: Markdown com HTML para layout (grid de colunas)
+- **Separador**: Barra horizontal entre conteudo markdown e a linha de ownership/powered by
+- **Ownership**: Campo `ownership` no config (ex: "© 2026 Nome")
+- **Powered by**: Texto estatico com link para `https://github.com/mineot/taberna`
+- **Links**: Estilizados via `.app-footer-content :deep(a)` — underline + `app-text-subtle` que muda para `app-accent` no hover
+- **Layout**: Mobile = empilhado, Desktop = `space-between`
+- **Exemplo de conteudo footer.md**:
+  ```html
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+    <div>### Titulo\nDescricao</div>
+    <div>### Links\n- [Link](url)</div>
+    <div>### Social\n- [GitHub](url)</div>
+  </div>
+  ```

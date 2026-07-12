@@ -41,7 +41,7 @@
               :alt="config.site.title"
               class="app-logo app-duration md:h-12 md:w-12"
             />
-            <h1 :key="locale" class="app-title-text text-3xl md:text-5xl">
+            <h1 v-if="config?.site.title" :key="locale" class="app-title-text text-3xl md:text-5xl">
               {{ config?.site.title }}
             </h1>
           </router-link>
@@ -118,7 +118,7 @@
                 :alt="config.site.title"
                 class="app-logo"
               />
-              <h2 class="app-title-text text-3xl">
+              <h2 v-if="config?.site.title" class="app-title-text text-3xl">
                 {{ config?.site.title }}
               </h2>
             </router-link>
@@ -183,17 +183,22 @@
     </main>
 
     <footer class="app-footer">
-      <p>{{ config?.footer.ownership }}</p>
-      <p>
-        Powered by
-        <a
-          href="https://github.com/mineot/taberna"
-          target="_blank"
-          rel="noopener"
-          class="app-accent hover:app-accent-hover app-duration transition-colors"
-          >Mineot</a
-        >
-      </p>
+      <div v-if="footerHtml" class="app-container app-footer-content" v-html="footerHtml" />
+      <div
+        class="app-border mt-6 flex w-full flex-col items-center gap-2 border-t pt-6 md:flex-row md:justify-between"
+      >
+        <p>{{ config?.footer.ownership }}</p>
+        <p>
+          Powered by
+          <a
+            href="https://github.com/mineot/taberna"
+            target="_blank"
+            rel="noopener"
+            class="app-accent hover:app-accent-hover app-duration transition-colors"
+            >Mineot</a
+          >
+        </p>
+      </div>
     </footer>
   </div>
 </template>
@@ -215,6 +220,14 @@
 .skeleton {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   background-color: var(--color-primary-700);
+}
+
+.app-footer-content :deep(a) {
+  @apply app-text-subtle underline transition-colors duration-300;
+}
+
+.app-footer-content :deep(a:hover) {
+  @apply app-accent;
 }
 
 .backdrop-enter-active,
@@ -264,6 +277,7 @@ import { useRouter } from 'vue-router';
 import { Menu, X } from '@lucide/vue';
 import { useConfig } from './composables/useConfig';
 import { useLocale } from './composables/useLocale';
+import { useMarkdown } from './composables/useMarkdown';
 
 const router = useRouter();
 const { config, loaded, error, loadConfig } = useConfig();
@@ -277,7 +291,10 @@ const {
   setLocale,
 } = useLocale();
 
+const { fetchMarkdown } = useMarkdown();
+
 const menuOpen = ref(false);
+const footerHtml = ref('');
 
 const hasMenu = computed(() => (config.value?.menu?.length ?? 0) > 0);
 const hasMultipleLangs = computed(() => available.value.length > 1);
@@ -300,6 +317,20 @@ async function switchLocale(lang: string) {
   }
 }
 
+async function loadFooter() {
+  if (!config.value?.footer.contentFile || !locale.value) {
+    footerHtml.value = '';
+    return;
+  }
+  try {
+    footerHtml.value = await fetchMarkdown(
+      `/content/${locale.value}/${config.value.footer.contentFile}`,
+    );
+  } catch {
+    footerHtml.value = '';
+  }
+}
+
 onMounted(async () => {
   await loadLocale();
   await loadConfig(locale.value);
@@ -309,9 +340,10 @@ watch(locale, async (newLocale) => {
   await loadConfig(newLocale);
 });
 
-watch(config, (newConfig) => {
+watch(config, async (newConfig) => {
   if (newConfig?.site.title) {
     document.title = newConfig.site.title;
   }
+  await loadFooter();
 });
 </script>

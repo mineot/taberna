@@ -1,7 +1,7 @@
 export type VerticalPosition = 'top' | 'center' | 'bottom';
 
 export interface SiteConfig {
-  title: string;
+  title?: string;
   owner: string;
   description: string;
   image?: string;
@@ -27,19 +27,14 @@ export interface Section {
   destak?: boolean;
 }
 
-export interface SocialLink {
-  platform: string;
-  url: string;
-}
-
 export interface FooterConfig {
   ownership: string;
+  contentFile?: string;
 }
 
 export interface AppConfig {
   site: SiteConfig;
   menu: MenuItem[];
   sections: Section[];
-  social: SocialLink[];
   footer: FooterConfig;
 }

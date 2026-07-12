@@ -32,11 +32,8 @@
       "destak": true
     }
   ],
-  "social": [
-    { "platform": "github", "url": "https://github.com/" },
-    { "platform": "bluesky", "url": "https://bsky.app/" }
-  ],
   "footer": {
-    "ownership": "© 2026 Owner Name"
+    "ownership": "© 2026 Owner Name",
+    "contentFile": "footer.md"
   }
 }
