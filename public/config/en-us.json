@@ -1,0 +1,46 @@
+{
+  "site": {
+    "title": "Taberna",
+    "owner": "Marina Muller Pires",
+    "description": "Parental Education"
+  },
+  "menu": [
+    { "label": "Home", "href": "#inicio" },
+    { "label": "About", "href": "#sobre" },
+    { "label": "Contact", "href": "#contato" }
+  ],
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Parental Education",
+      "subtitle": "Specialized support for families",
+      "content": ["Lorem ipsum dolor sit amet, consectetur adipiscing elit."],
+      "image": "https://placehold.co/600x400"
+    },
+    {
+      "id": "about",
+      "title": "About",
+      "subtitle": "Who is Marina",
+      "content": ["Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."],
+      "image": "https://placehold.co/600x400",
+      "invert": true
+    },
+    {
+      "id": "services",
+      "title": "Services",
+      "subtitle": "What we offer",
+      "content": [
+        "Individual counseling for parents seeking more conscious and affectionate education.",
+        "Group workshops to share experiences and learning among families."
+      ],
+      "image": "https://placehold.co/600x400"
+    }
+  ],
+  "social": [
+    { "platform": "github", "url": "https://github.com/" },
+    { "platform": "bluesky", "url": "https://bsky.app/" }
+  ],
+  "footer": {
+    "text": "© 2026 Marina Muller Pires"
+  }
+}
