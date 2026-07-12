@@ -4,10 +4,13 @@ const STORAGE_KEY = 'taberna-lang';
 
 const locale = ref<string>('');
 const loaded = ref(false);
+const flags = ref<Record<string, string>>({});
+const available = ref<string[]>([]);
 
 interface LanguagesManifest {
   default: string;
   available: string[];
+  flags: Record<string, string>;
 }
 
 function normalize(lang: string): string {
@@ -54,6 +57,8 @@ export function useLocale() {
 
     localStorage.setItem(STORAGE_KEY, locale.value);
     document.documentElement.lang = locale.value;
+    flags.value = manifest.flags;
+    available.value = manifest.available;
     loaded.value = true;
   };
 
@@ -63,5 +68,5 @@ export function useLocale() {
     document.documentElement.lang = lang;
   };
 
-  return { locale, loaded, loadLocale, setLocale };
+  return { locale, loaded, flags, available, loadLocale, setLocale };
 }

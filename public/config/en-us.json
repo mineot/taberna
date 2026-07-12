@@ -2,7 +2,8 @@
   "site": {
     "title": "Taberna",
     "owner": "Owner Name",
-    "description": "Site Description"
+    "description": "Site Description",
+    "image": "https://placehold.co/80x80"
   },
   "menu": [
     { "label": "Home", "href": "#inicio" },

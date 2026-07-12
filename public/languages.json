@@ -1,4 +1,8 @@
 {
   "default": "pt-br",
-  "available": ["pt-br", "en-us"]
+  "available": ["pt-br", "en-us"],
+  "flags": {
+    "pt-br": "🇧🇷",
+    "en-us": "🇺🇸"
+  }
 }

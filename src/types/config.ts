@@ -2,6 +2,7 @@ export interface SiteConfig {
   title: string;
   owner: string;
   description: string;
+  image?: string;
 }
 
 export interface MenuItem {

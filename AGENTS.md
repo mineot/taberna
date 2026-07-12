@@ -8,7 +8,7 @@
 
 - **Framework**: Vue 3.5.39 (Composition API / `<script setup>`)
 - **Language**: TypeScript 7.0.2 (strict mode)
-- **Build**: Vite 8.1.1
+- **Build**: Vite 8.1.4
 - **CSS**: Tailwind CSS v4.3.2 (plugin oficial `@tailwindcss/vite`)
 - **Icons**: Lucide Vue (`@lucide/vue` 1.24.0)
 - **Markdown**: marked (parse) + @tailwindcss/typography (prose)
@@ -54,7 +54,7 @@ taberna/
 │           └── service-2.md   # Service 2 in english
 ├── src/
 │   ├── main.ts                # Entry point — mount Vue em #app
-│   ├── App.vue                # Root — usa useLocale + useConfig, skeleton loading, dynamic title
+│   ├── App.vue                # Root — useLocale + useConfig, skeleton, dynamic title, transitions
 │   ├── env.d.ts               # Tipos para .vue
 │   ├── style.css              # Tailwind v4 + @font-face + @theme custom + typography plugin
 │   ├── composables/
@@ -70,11 +70,11 @@ taberna/
 
 Paleta de cores mapeada via `@theme` no Tailwind v4:
 
-| Token | Escala | Uso |
+| Token | Escala | Uso real no codigo |
 |---|---|---|
-| `primary-*` | olive-50..950 | Cor principal (fundo, elementos) |
-| `secondary-*` | amber-50..950 | Cor secundaria (destaques, acentos) |
-| `asset-*` | taupe-50..950 | Cor de assets/terciaria |
+| `primary-*` | olive-50..950 | 100, 200, 300, 400, 600, 700, 800, 900, 950 (50 e 500 nao usados) |
+| `secondary-*` | amber-50..950 | 300, 400 (resto nao usado) |
+| `asset-*` | taupe-50..950 | Nenhuma cor usada |
 
 Font stacks customizados:
 - `--font-sans`: Roboto
@@ -84,6 +84,10 @@ Font stacks customizados:
 
 Utilitarios customizados:
 - `app-duration` → `duration-300`
+
+Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css):
+- `.z-60` → `z-index: 60` (backdrop do mobile menu)
+- `.z-70` → `z-index: 70` (sidebar do mobile menu)
 
 ## Configuracoes Importantes
 
@@ -101,7 +105,7 @@ Utilitarios customizados:
 
 ## Bugs Conhecidos
 
-- **CSS typo**: `@applu font-sans` em `src/style.css:122` — deveria ser `@apply font-sans`
+- **CSS typo**: `@applu font-sans` em `src/style.css:123` — deveria ser `@apply font-sans`
 
 ## O que NAO existe ainda
 
@@ -114,13 +118,17 @@ Utilitarios customizados:
 - Configuracao ESLint (arquivo de config)
 - Arquivo `.env`
 
+## Observacoes
+
+- `public/icons.svg` (sprite SVG customizado) existe mas nao esta sendo usado — Lucide Vue esta disponivel para substitui-lo
+
 ## Convencoes
 
 - Composition API com `<script setup lang="ts">`
 - TypeScript strict
 - Tailwind CSS v4 via `@import 'tailwindcss'` (CSS-first config, sem tailwind.config.js)
 - Componentes em lowercase com hifen: `header-brand.vue`, `header-menu-item.vue`
-- Scoped styles
+- Scoped styles (App.vue usa `@reference` para acessar tema do style.css)
 - Nao adicionar comentarios no codigo (so se pedido)
 - Conteudo do site em arquivos JSON (`public/config/`) e markdown (`public/content/`)
 
@@ -141,12 +149,19 @@ Utilitarios customizados:
 1. `useLocale()` detecta idioma: localStorage → navigator.languages → languages.json.default
 2. `useConfig(locale)` busca `public/config/{locale}.json`
 3. `App.vue` atualiza `document.documentElement.lang` e `document.title` (via watch no config)
-4. Switcher PT/EN no header atualiza locale + salva no localStorage
+4. Switcher de bandeiras no header/sidebar atualiza locale + salva no localStorage
 
 ### Manifest (`public/languages.json`)
 
 ```json
-{ "default": "pt-br", "available": ["pt-br", "en-us"] }
+{
+  "default": "pt-br",
+  "available": ["pt-br", "en-us"],
+  "flags": {
+    "pt-br": "🇧🇷",
+    "en-us": "🇺🇸"
+  }
+}
 ```
 
 ### Configs por idioma
@@ -174,3 +189,37 @@ Campo `imagePosition` controla alinhamento vertical da imagem na section:
 | `"bottom"` | Imagem alinhada ao fundo (`items-end`) |
 
 Se nao informado,assume `"center"`.
+
+### Menu Mobile (Offcanvas)
+
+Em telas pequenas (`< md`), o menu de navegacao e substituido por um icone hamburger (Lucide `Menu`). Ao clicar:
+
+- Abre um sidebar da direita com titulo + imagem do site + menu + switcher de idioma
+- Backdrop escuro com blur por tras
+- Fecha ao clicar no backdrop, no icone X, ou em qualquer link
+- Animacao de slide-in/slide-out via `<Transition>`
+- Teleport do sidebar para `<body>` via `<Teleport>`
+
+### Comportamento Condicional (menu + idiomas)
+
+O header e sidebar se adaptam ao conteudo:
+
+- **`menu: []` (array vazio)**: `<nav>` nao e renderizado no header nem no sidebar
+- **Um so idioma**: switcher de bandeiras nao e exibido
+- **Sem menu E um so idioma**: hamburger nao e exibido (sidebar inacessivel)
+- **Hamburger aparece**: quando ha menu OU mais de um idioma
+
+### Transicoes
+
+- **Sidebar/Backdrop**: `<Transition name="sidebar">` e `<Transition name="backdrop">` no mobile menu (slide + opacity)
+- **Titulo**: `:key="locale"` no h1 com `app-duration` — fade suave (0.3s) ao trocar idioma
+
+### Imagem do Site (Header + Sidebar)
+
+Campo `site.image` no config controla exibicao de imagem ao lado do titulo:
+
+- **Opcional**: Se nao definido ou vazio, nao exibe nada
+- **Tamanho**: `h-8 w-8` (32px) mobile, `md:h-12 md:w-12` (48px) desktop, `min-h-5 min-w-5` (20px minimo)
+- **Formato**: `rounded-full` (circular)
+- **Posicao**: Ao lado esquerdo do titulo, com `gap-3` de espacamento
+- **Sidebar**: Mesmo tamanho mobile (`h-8 w-8`) e titulo `text-3xl` (mesmo do header mobile)
