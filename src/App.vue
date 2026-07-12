@@ -183,7 +183,17 @@
     </main>
 
     <footer class="app-footer">
-      <p>{{ config?.footer.text }}</p>
+      <p>{{ config?.footer.ownership }}</p>
+      <p>
+        Powered by
+        <a
+          href="https://github.com/mineot/taberna"
+          target="_blank"
+          rel="noopener"
+          class="app-accent hover:app-accent-hover app-duration transition-colors"
+          >Mineot</a
+        >
+      </p>
     </footer>
   </div>
 </template>

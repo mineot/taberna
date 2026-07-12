@@ -33,7 +33,7 @@ export interface SocialLink {
 }
 
 export interface FooterConfig {
-  text: string;
+  ownership: string;
 }
 
 export interface AppConfig {

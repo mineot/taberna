@@ -38,6 +38,6 @@
     { "platform": "bluesky", "url": "https://bsky.app/" }
   ],
   "footer": {
-    "text": "© 2026 Nome do Proprietario"
+    "ownership": "© 2026 Nome do Proprietario"
   }
 }
