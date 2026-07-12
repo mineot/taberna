@@ -1,18 +1,41 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useConfig } from './composables/useConfig';
 import { useLocale } from './composables/useLocale';
+import { useMarkdown } from './composables/useMarkdown';
 
 const { config, loaded, error, loadConfig } = useConfig();
 const { locale, loaded: localeLoaded, loadLocale, setLocale } = useLocale();
+const { fetchMarkdown } = useMarkdown();
+
+const markdownContent = ref<Map<string, string[]>>(new Map());
+
+async function loadMarkdownFiles() {
+  if (!config.value) return;
+
+  const newMap = new Map<string, string[]>();
+  for (const section of config.value.sections) {
+    if (section.contentFile) {
+      const results = await Promise.all(
+        section.contentFile.map((file) =>
+          fetchMarkdown(`/content/${locale.value}/${file}`),
+        ),
+      );
+      newMap.set(section.id, results);
+    }
+  }
+  markdownContent.value = newMap;
+}
 
 onMounted(async () => {
   await loadLocale();
   await loadConfig(locale.value);
+  await loadMarkdownFiles();
 });
 
-watch(locale, (newLocale) => {
-  loadConfig(newLocale);
+watch(locale, async (newLocale) => {
+  await loadConfig(newLocale);
+  await loadMarkdownFiles();
 });
 
 watch(config, (newConfig) => {
@@ -84,13 +107,33 @@ watch(config, (newConfig) => {
         v-for="section in config?.sections"
         :key="section.id"
         :id="section.id"
-        class="flex flex-col gap-4 md:flex-row md:items-center md:gap-8"
-        :class="section.invert ? 'md:flex-row-reverse' : ''"
+        class="flex flex-col gap-4 md:flex-row md:gap-8"
+        :class="[
+          section.invert ? 'md:flex-row-reverse' : '',
+          {
+            'md:items-start': section.imagePosition === 'top',
+            'md:items-center': !section.imagePosition || section.imagePosition === 'center',
+            'md:items-end': section.imagePosition === 'bottom',
+          },
+        ]"
       >
         <div class="flex-1">
           <h2 class="text-2xl font-bold">{{ section.title }}</h2>
           <p v-if="section.subtitle" class="mt-1 text-secondary-400">{{ section.subtitle }}</p>
-          <div class="mt-4 flex gap-6">
+
+          <div
+            v-if="section.contentFile && markdownContent.get(section.id)"
+            class="mt-4 flex flex-col gap-6 md:flex-row"
+          >
+            <div
+              v-for="(html, i) in markdownContent.get(section.id)"
+              :key="i"
+              class="prose prose-invert flex-1 max-w-none"
+              v-html="html"
+            />
+          </div>
+
+          <div v-else-if="section.content" class="mt-4 flex flex-col gap-6 md:flex-row">
             <p
               v-for="(item, i) in section.content"
               :key="i"
@@ -105,6 +148,11 @@ watch(config, (newConfig) => {
           :src="section.image"
           :alt="section.title"
           class="w-full rounded-lg object-cover md:w-1/2"
+          :class="{
+            'object-top': section.imagePosition === 'top',
+            'object-center': !section.imagePosition || section.imagePosition === 'center',
+            'object-bottom': section.imagePosition === 'bottom',
+          }"
         />
       </section>
     </main>

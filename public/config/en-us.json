@@ -1,39 +1,35 @@
 {
   "site": {
     "title": "Taberna",
-    "owner": "Marina Muller Pires",
-    "description": "Parental Education"
+    "owner": "Owner Name",
+    "description": "Site Description"
   },
   "menu": [
     { "label": "Home", "href": "#inicio" },
     { "label": "About", "href": "#sobre" },
-    { "label": "Contact", "href": "#contato" }
+    { "label": "Services", "href": "#servicos" }
   ],
   "sections": [
     {
       "id": "intro",
-      "title": "Parental Education",
-      "subtitle": "Specialized support for families",
-      "content": ["Lorem ipsum dolor sit amet, consectetur adipiscing elit."],
-      "image": "https://placehold.co/600x400"
-    },
-    {
-      "id": "about",
-      "title": "About",
-      "subtitle": "Who is Marina",
-      "content": ["Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."],
+      "title": "Introduction Title",
+      "subtitle": "Optional subtitle for the introduction",
+      "contentFile": ["intro.md"],
       "image": "https://placehold.co/600x400",
-      "invert": true
+      "imagePosition": "top"
     },
     {
-      "id": "services",
-      "title": "Services",
-      "subtitle": "What we offer",
-      "content": [
-        "Individual counseling for parents seeking more conscious and affectionate education.",
-        "Group workshops to share experiences and learning among families."
-      ],
+      "id": "sobre",
+      "title": "About Section Title",
+      "subtitle": "Optional subtitle",
+      "content": ["Fictitious content in plain text for this section."],
       "image": "https://placehold.co/600x400"
+    },
+    {
+      "id": "servicos",
+      "title": "Services Section Title",
+      "subtitle": "Optional subtitle",
+      "contentFile": ["service-1.md", "service-2.md"]
     }
   ],
   "social": [
@@ -41,6 +37,6 @@
     { "platform": "bluesky", "url": "https://bsky.app/" }
   ],
   "footer": {
-    "text": "© 2026 Marina Muller Pires"
+    "text": "© 2026 Owner Name"
   }
 }

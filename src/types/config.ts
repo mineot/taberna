@@ -9,12 +9,16 @@ export interface MenuItem {
   href: string;
 }
 
+export type ImagePosition = 'top' | 'center' | 'bottom';
+
 export interface Section {
   id: string;
   title: string;
   subtitle?: string;
-  content: string[];
+  content?: string[];
+  contentFile?: string[];
   image?: string;
+  imagePosition?: ImagePosition;
   invert?: boolean;
 }
 

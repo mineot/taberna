@@ -1,39 +1,35 @@
 {
   "site": {
     "title": "Taberna",
-    "owner": "Marina Muller Pires",
-    "description": "Educacao Parental"
+    "owner": "Nome do Proprietario",
+    "description": "Descricao do Site"
   },
   "menu": [
     { "label": "Inicio", "href": "#inicio" },
     { "label": "Sobre", "href": "#sobre" },
-    { "label": "Contato", "href": "#contato" }
+    { "label": "Servicos", "href": "#servicos" }
   ],
   "sections": [
     {
       "id": "intro",
-      "title": "Educacao Parental",
-      "subtitle": "Acompanhamento especializado para familias",
-      "content": ["Lorem ipsum dolor sit amet, consectetur adipiscing elit."],
-      "image": "https://placehold.co/600x400"
-    },
-    {
-      "id": "about",
-      "title": "Sobre",
-      "subtitle": "Quem e Marina",
-      "content": ["Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."],
+      "title": "Titulo da Introducao",
+      "subtitle": "Subtitulo opcional da introducao",
+      "contentFile": ["intro.md"],
       "image": "https://placehold.co/600x400",
-      "invert": true
+      "imagePosition": "top"
     },
     {
-      "id": "services",
-      "title": "Servicos",
-      "subtitle": "O que oferecemos",
-      "content": [
-        "Aconselhamento individual para pais que buscam uma educacao mais consciente e afetiva.",
-        "Workshops em grupo para compartilhar experiencias e aprendizados entre familias."
-      ],
+      "id": "sobre",
+      "title": "Titulo da Secao Sobre",
+      "subtitle": "Subtitulo opcional",
+      "content": ["Conteudo ficticio em texto simples para esta secao."],
       "image": "https://placehold.co/600x400"
+    },
+    {
+      "id": "servicos",
+      "title": "Titulo da Secao Servicos",
+      "subtitle": "Subtitulo opcional",
+      "contentFile": ["servico-1.md", "servico-2.md"]
     }
   ],
   "social": [
@@ -41,6 +37,6 @@
     { "platform": "bluesky", "url": "https://bsky.app/" }
   ],
   "footer": {
-    "text": "© 2026 Marina Muller Pires"
+    "text": "© 2026 Nome do Proprietario"
   }
 }

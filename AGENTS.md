@@ -2,7 +2,7 @@
 
 ## O que e
 
-**Taberna** e um site pessoal/landing page voltado para um profissional de Educacao Parental ("Marina Muller Pires"). Projeto em fase inicial, com conteudo placeholder (Lorem Ipsum). Sistema de i18n via JSON (pt-br/en-us) com deteccao de idioma do browser.
+**Taberna** e um site pessoal/landing page generico. Projeto em fase inicial, com conteudo placeholder ficticio. Sistema de i18n via JSON (pt-br/en-us) com deteccao de idioma do browser. Conteudo sera configurado posteriormente.
 
 ## Stack
 
@@ -11,6 +11,7 @@
 - **Build**: Vite 8.1.1
 - **CSS**: Tailwind CSS v4.3.2 (plugin oficial `@tailwindcss/vite`)
 - **Icons**: Lucide Vue (`@lucide/vue` 1.24.0)
+- **Markdown**: marked (parse) + @tailwindcss/typography (prose)
 - **Formatting**: Prettier 3.9.5 (single quotes, semicolons, plugin tailwindcss)
 - **Linting**: ESLint 10.6.0 (eslint-plugin-vue, eslint-config-prettier)
 - **Fonts**: Roboto (sans/serif/mono) + Italianno (decorativa), self-hosted em `public/fonts/`
@@ -39,34 +40,30 @@ taberna/
 │   ├── icons.svg              # Sprite SVG: GitHub, Discord, X, Bluesky, etc.
 │   ├── fonts/                 # Roboto*, Italianno (self-hosted TTFs)
 │   ├── languages.json         # Manifest: idiomas disponiveis + default
-│   └── config/
-│       ├── pt-br.json         # Config completo em portugues
-│       └── en-us.json         # Config completo em ingles
+│   ├── config/
+│   │   ├── pt-br.json         # Config completo em portugues
+│   │   └── en-us.json         # Config completo em ingles
+│   └── content/
+│       ├── pt-br/
+│       │   ├── intro.md       # Conteudo markdown em portugues
+│       │   ├── servico-1.md   # Servico 1 em portugues
+│       │   └── servico-2.md   # Servico 2 em portugues
+│       └── en-us/
+│           ├── intro.md       # Conteudo markdown em ingles
+│           ├── service-1.md   # Service 1 in english
+│           └── service-2.md   # Service 2 in english
 ├── src/
 │   ├── main.ts                # Entry point — mount Vue em #app
 │   ├── App.vue                # Root — usa useLocale + useConfig, skeleton loading, dynamic title
 │   ├── env.d.ts               # Tipos para .vue
-│   ├── style.css              # Tailwind v4 + @font-face + @theme custom
+│   ├── style.css              # Tailwind v4 + @font-face + @theme custom + typography plugin
 │   ├── composables/
 │   │   ├── useConfig.ts       # Fetch de config por idioma (config/{locale}.json)
-│   │   └── useLocale.ts       # Detecao de idioma (browser/localStorage/manifest)
+│   │   ├── useLocale.ts       # Detecao de idioma (browser/localStorage/manifest)
+│   │   └── useMarkdown.ts     # Fetch + parse de arquivos markdown com cache
 │   └── types/
-│       └── config.ts          # Interfaces: AppConfig, SiteConfig, MenuItem, etc.
+│       └── config.ts          # Interfaces: AppConfig, SiteConfig, MenuItem, ImagePosition, etc.
 └── dist/                      # Build de producao
-```
-
-### Componentes (no ultimo commit, antes da limpeza do working tree)
-
-```
-src/components/
-├── header/
-│   ├── index.vue              # Header sticky — compoe Brand + Menu
-│   ├── header-brand.vue       # Logo + titulo "Educacao Parental" (Italianno)
-│   ├── header-menu.vue        # Nav responsiva (hamburger mobile, itens desktop)
-│   └── header-menu-item.vue   # Item de nav placeholder
-├── panel.vue                  # Layout 2 colunas com slots #left/#right, prop dark
-├── text.vue                   # Tipografia: title (obrigatorio), subtitle (opcional), slot
-└── footer.vue                 # Stub — NAO era importado no App.vue
 ```
 
 ## Sistema de Temas (style.css)
@@ -125,18 +122,17 @@ Utilitarios customizados:
 - Componentes em lowercase com hifen: `header-brand.vue`, `header-menu-item.vue`
 - Scoped styles
 - Nao adicionar comentarios no codigo (so se pedido)
+- Conteudo do site em arquivos JSON (`public/config/`) e markdown (`public/content/`)
 
 ## FIXMEs pendentes (do commit anterior)
 
 - Criar favicon real (index.html)
-- Substituir imagem placeholder do brand (header-brand.vue)
-- Obter nome do brand via config JSON
+- Configurar conteudo real nos arquivos de config e markdown
 
 ## Git
 
 - Branch: `master` (current), `backup`
 - Sem remote configurado
-- Arquivos deletados no working tree: todos os componentes, AGENTS.md, sample-logo.svg
 
 ## Sistema de i18n
 
@@ -156,3 +152,25 @@ Utilitarios customizados:
 ### Configs por idioma
 
 Cada `public/config/{locale}.json` e completo e independente. Dados nao-traduzidos (hrefs, ids, urls, images) sao os mesmos em todos os idiomas.
+
+### Conteudo Markdown
+
+Sections podem usar arquivos markdown via campo `contentFile` (array de strings):
+
+- Arquivos em `public/content/{locale}/*.md`
+- Buscados em runtime via `useMarkdown()` com cache
+- Parse com `marked`, renderizado com `v-html` + classe `prose` (Tailwind Typography)
+- Sections sem `contentFile` continuam usando `content[]` como fallback
+- Multiplas strings = multiplos arquivos lado a lado (empilha no mobile)
+
+### Posicionamento de Imagem
+
+Campo `imagePosition` controla alinhamento vertical da imagem na section:
+
+| Valor | Comportamento |
+|---|---|
+| `"top"` | Imagem alinhada ao topo (`items-start`) |
+| `"center"` | Imagem centralizada (padrao) |
+| `"bottom"` | Imagem alinhada ao fundo (`items-end`) |
+
+Se nao informado,assume `"center"`.
