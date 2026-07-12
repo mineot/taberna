@@ -207,21 +207,6 @@
 @reference 'tailwindcss';
 @reference "./style.css"
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
-}
-
-.skeleton {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  background-color: var(--color-primary-700);
-}
-
 .app-footer-content :deep(a) {
   @apply app-text-subtle underline transition-colors duration-300;
 }
@@ -250,18 +235,24 @@
   transform: translateX(100%);
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
 </style>
 
 <style>
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.skeleton {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background-color: var(--color-primary-700);
+}
+
 .z-60 {
   z-index: 60;
 }

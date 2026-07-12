@@ -37,7 +37,6 @@ taberna/
 ├── .prettierrc                # singleQuote, semi, tailwind plugin
 ├── public/
 │   ├── favicon.svg            # SVG lightning bolt
-│   ├── icons.svg              # Sprite SVG: GitHub, Discord, X, Bluesky, etc.
 │   ├── fonts/                 # Roboto*, Italianno (self-hosted TTFs)
 │   ├── languages.json         # Manifest: idiomas disponiveis + default
 │   ├── config/
@@ -85,7 +84,7 @@ Paleta de cores mapeada via `@theme` no Tailwind v4:
 |---|---|---|
 | `primary-*` | olive-50..950 | Via utilities (800, 700, 800/950, 950, 100, 200, 300, 400, 700) |
 | `secondary-*` | amber-50..950 | Via utility `app-accent` (400) |
-| `asset-*` | taupe-50..950 | Via utility `app-section-destak` (900) |
+| `tertiary-*` | taupe-50..950 | Via utility `app-section-destak` (800) |
 
 Font stacks customizados:
 - `--font-sans`: Roboto
@@ -113,7 +112,7 @@ Utilitarios customizados:
 - `app-section-subtitle` → `app-accent mt-1`
 - `app-section-content` → `mt-4 flex flex-col gap-6 md:flex-row`
 - `app-section-image` → `w-full rounded-lg object-cover md:w-1/2`
-- `app-section-destak` → `bg-asset-900 -mx-6 px-6 py-8`
+- `app-section-destak` → `bg-tertiary-800 -mx-6 px-6 py-8`
 - `app-container` → `mx-auto w-full max-w-4xl px-6`
 - `app-logo` → `h-8 min-h-5 w-8 min-w-5 rounded-full object-cover`
 - `app-icon-btn` → `app-text-muted hover:app-accent app-duration cursor-pointer transition-colors`
@@ -141,10 +140,6 @@ Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css)
 - `singleQuote: true`, `semi: true`
 - Plugin `prettier-plugin-tailwindcss` para ordenacao automatica de classes
 
-## Bugs Conhecidos
-
-- **CSS typo**: `@applu font-sans` em `src/style.css:123` — deveria ser `@apply font-sans`
-
 ## O que NAO existe ainda
 
 - Gerenciamento de estado (Pinia/Vuex)
@@ -154,10 +149,13 @@ Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css)
 - Scripts de lint/format no package.json
 - Configuracao ESLint (arquivo de config)
 - Arquivo `.env`
+- Favicon real (index.html)
+- README.md (substituir boilerplate do Vite)
+- Meta tags SEO (description, Open Graph)
 
 ## Observacoes
 
-- `public/icons.svg` (sprite SVG customizado) existe mas nao esta sendo usado — Lucide Vue esta disponivel para substitui-lo
+- Conteudo do site em arquivos JSON (`public/config/`) e markdown (`public/content/`)
 
 ## Convencoes
 
@@ -170,7 +168,7 @@ Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css)
 - Conteudo do site em arquivos JSON (`public/config/`) e markdown (`public/content/`)
 - **SEMPRE atualizar este arquivo (AGENTS.md) apos qualquer mudanca significativa no codigo**
 
-## FIXMEs pendentes (do commit anterior)
+## FIXMEs pendentes
 
 - Criar favicon real (index.html)
 - Configurar conteudo real nos arquivos de config e markdown
@@ -263,7 +261,7 @@ Campo `title` na section e opcional. Se nao informado, o `<h2>` nao e renderizad
 
 Campo `destak` (booleano, opcional) na section aplica um fundo diferente usando a paleta `asset` (taupe):
 
-- Quando `true`: aplica `app-section-destak` → `bg-asset-900 -mx-6 px-6 py-8`
+- Quando `true`: aplica `app-section-destak` → `bg-tertiary-800 -mx-6 px-6 py-8`
 - O `-mx-6` quebra a margem do container para "esticar" o fundo
 - Disponivel na interface `Section` em `src/types/config.ts`
 - Para usar: adicionar `"destak": true` no JSON da seção desejada

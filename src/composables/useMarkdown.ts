@@ -29,6 +29,8 @@ export function useMarkdown() {
       const html = marked.parse(md) as string;
       cache.set(path, html);
       return html;
+    } catch (e) {
+      throw e instanceof Error ? e : new Error(String(e));
     } finally {
       loading.value = false;
     }

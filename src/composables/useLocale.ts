@@ -43,23 +43,33 @@ export function useLocale() {
   const loadLocale = async () => {
     if (loaded.value) return;
 
-    const manifestRes = await fetch('/languages.json');
-    const manifest: LanguagesManifest = await manifestRes.json();
+    try {
+      const manifestRes = await fetch('/languages.json');
 
-    const stored = localStorage.getItem(STORAGE_KEY);
+      if (!manifestRes.ok) {
+        throw new Error(`HTTP ${manifestRes.status}`);
+      }
 
-    if (stored && manifest.available.includes(stored)) {
-      locale.value = stored;
-    } else {
-      const detected = matchLocale(navigator.languages, manifest.available);
-      locale.value = detected ?? manifest.default;
+      const manifest: LanguagesManifest = await manifestRes.json();
+
+      const stored = localStorage.getItem(STORAGE_KEY);
+
+      if (stored && manifest.available.includes(stored)) {
+        locale.value = stored;
+      } else {
+        const detected = matchLocale(navigator.languages, manifest.available);
+        locale.value = detected ?? manifest.default;
+      }
+
+      localStorage.setItem(STORAGE_KEY, locale.value);
+      document.documentElement.lang = locale.value;
+      flags.value = manifest.flags;
+      available.value = manifest.available;
+      loaded.value = true;
+    } catch {
+      locale.value = 'pt-br';
+      loaded.value = true;
     }
-
-    localStorage.setItem(STORAGE_KEY, locale.value);
-    document.documentElement.lang = locale.value;
-    flags.value = manifest.flags;
-    available.value = manifest.available;
-    loaded.value = true;
   };
 
   const setLocale = (lang: string) => {

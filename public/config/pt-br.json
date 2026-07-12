@@ -6,7 +6,7 @@
     "image": "https://placehold.co/80x80"
   },
   "menu": [
-    { "label": "Inicio", "href": "#inicio" },
+    { "label": "Inicio", "href": "#intro" },
     { "label": "Sobre", "route": "/sobre" },
     { "label": "Servicos", "route": "/servicos" }
   ],
