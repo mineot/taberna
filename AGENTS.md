@@ -62,7 +62,7 @@ taberna/
 │   │   ├── useLocale.ts       # Detecao de idioma (browser/localStorage/manifest)
 │   │   └── useMarkdown.ts     # Fetch + parse de arquivos markdown com cache
 │   └── types/
-│       └── config.ts          # Interfaces: AppConfig, SiteConfig, MenuItem, ImagePosition, etc.
+│       └── config.ts          # Interfaces: AppConfig, SiteConfig, MenuItem, VerticalPosition, etc.
 └── dist/                      # Build de producao
 ```
 
@@ -72,9 +72,9 @@ Paleta de cores mapeada via `@theme` no Tailwind v4:
 
 | Token | Escala | Uso real no codigo |
 |---|---|---|
-| `primary-*` | olive-50..950 | 100, 200, 300, 400, 600, 700, 800, 900, 950 (50 e 500 nao usados) |
-| `secondary-*` | amber-50..950 | 300, 400 (resto nao usado) |
-| `asset-*` | taupe-50..950 | Nenhuma cor usada |
+| `primary-*` | olive-50..950 | Via utilities (800, 700, 800/950, 950, 100, 200, 300, 400, 700) |
+| `secondary-*` | amber-50..950 | Via utility `app-accent` (400) |
+| `asset-*` | taupe-50..950 | Via utility `app-section-destak` (900) |
 
 Font stacks customizados:
 - `--font-sans`: Roboto
@@ -84,6 +84,33 @@ Font stacks customizados:
 
 Utilitarios customizados:
 - `app-duration` → `duration-300`
+- `app-background` → `bg-primary-800`
+- `app-background-hover` → `bg-primary-700`
+- `app-background-header` → `bg-primary-800/95`
+- `app-background-footer` → `bg-primary-950`
+- `app-text` → `text-primary-100`
+- `app-text-muted` → `text-primary-200`
+- `app-text-body` → `text-primary-300`
+- `app-text-subtle` → `text-primary-400`
+- `app-accent` → `text-secondary-400`
+- `app-accent-hover` → `hover:text-secondary-300`
+- `app-border` → `border-primary-700`
+- `app-title` → `font-fancy app-accent`
+- `app-title-text` → `mt-2 leading-[0]`
+- `app-section` → `flex flex-col gap-4 md:flex-row md:gap-8`
+- `app-section-title` → `text-2xl font-bold`
+- `app-section-subtitle` → `app-accent mt-1`
+- `app-section-content` → `mt-4 flex flex-col gap-6 md:flex-row`
+- `app-section-image` → `w-full rounded-lg object-cover md:w-1/2`
+- `app-section-destak` → `bg-asset-900 -mx-6 px-6 py-8`
+- `app-container` → `mx-auto w-full max-w-4xl px-6`
+- `app-logo` → `h-8 min-h-5 w-8 min-w-5 rounded-full object-cover`
+- `app-icon-btn` → `app-text-muted hover:app-accent app-duration cursor-pointer transition-colors`
+- `app-flag-btn` → `app-duration cursor-pointer transition-all hover:scale-110`
+- `app-nav-link` → `app-text hover:app-background-hover hover:app-accent app-duration rounded-lg px-3 py-2 transition-colors`
+- `app-backdrop` → `fixed inset-0 z-60 bg-black/60 backdrop-blur-sm md:hidden`
+- `app-sidebar` → `app-background app-text fixed top-0 right-0 z-70 flex h-full w-72 flex-col shadow-xl md:hidden`
+- `app-footer` → `app-border app-background-footer app-text-subtle border-t py-6 text-center`
 
 Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css):
 - `.z-60` → `z-index: 60` (backdrop do mobile menu)
@@ -131,6 +158,7 @@ Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css)
 - Scoped styles (App.vue usa `@reference` para acessar tema do style.css)
 - Nao adicionar comentarios no codigo (so se pedido)
 - Conteudo do site em arquivos JSON (`public/config/`) e markdown (`public/content/`)
+- **SEMPRE atualizar este arquivo (AGENTS.md) apos qualquer mudanca significativa no codigo**
 
 ## FIXMEs pendentes (do commit anterior)
 
@@ -178,7 +206,7 @@ Sections podem usar arquivos markdown via campo `contentFile` (array de strings)
 - Sections sem `contentFile` continuam usando `content[]` como fallback
 - Multiplas strings = multiplos arquivos lado a lado (empilha no mobile)
 
-### Posicionamento de Imagem
+### Posicionamento Vertical
 
 Campo `imagePosition` controla alinhamento vertical da imagem na section:
 
@@ -188,7 +216,32 @@ Campo `imagePosition` controla alinhamento vertical da imagem na section:
 | `"center"` | Imagem centralizada (padrao) |
 | `"bottom"` | Imagem alinhada ao fundo (`items-end`) |
 
-Se nao informado,assume `"center"`.
+Se nao informado, assume `"center"`.
+
+Campo `contentPosition` controla alinhamento vertical do conteudo na section:
+
+| Valor | Comportamento |
+|---|---|
+| `"top"` | Conteudo alinhado ao topo (`items-start`) |
+| `"center"` | Conteudo centralizado (padrao) |
+| `"bottom"` | Conteudo alinhado ao fundo (`items-end`) |
+
+Se nao informado, assume `"center"`.
+
+**Precedencia**: `contentPosition` tem precedencia sobre `imagePosition` para o alinhamento flex. `imagePosition` controla apenas o corte da imagem (`object-position`). Ambos usam o tipo `VerticalPosition` em `src/types/config.ts`.
+
+### Titulo da Secao (Opcional)
+
+Campo `title` na section e opcional. Se nao informado, o `<h2>` nao e renderizado.
+
+### Destaque de Secao (`destak`)
+
+Campo `destak` (booleano, opcional) na section aplica um fundo diferente usando a paleta `asset` (taupe):
+
+- Quando `true`: aplica `app-section-destak` → `bg-asset-900 -mx-6 px-6 py-8`
+- O `-mx-6` quebra a margem do container para "esticar" o fundo
+- Disponivel na interface `Section` em `src/types/config.ts`
+- Para usar: adicionar `"destak": true` no JSON da seção desejada
 
 ### Menu Mobile (Offcanvas)
 
@@ -213,6 +266,16 @@ O header e sidebar se adaptam ao conteudo:
 
 - **Sidebar/Backdrop**: `<Transition name="sidebar">` e `<Transition name="backdrop">` no mobile menu (slide + opacity)
 - **Titulo**: `:key="locale"` no h1 com `app-duration` — fade suave (0.3s) ao trocar idioma
+
+### Titulo do Site (Header + Sidebar)
+
+O titulo do site (imagem + texto) e um link `<a href="/">` com:
+
+- **`app-title`** no container `<a>` — fonte fancy + cor accent
+- **`app-accent-hover`** no container `<a>` — hover clara a cor (secondary-400 → 300)
+- **`app-title-text`** no `<h1>`/`<h2>` — `mt-2 leading-[0]` para alinhar com a imagem
+- **`app-duration`** — transicao suave (0.3s) no hover
+- **Sidebar**: Mesmo esquema, `<a href="/">` com `app-title app-accent-hover app-duration` + `@click="closeMenu"` para fechar o menu ao clicar
 
 ### Imagem do Site (Header + Sidebar)
 

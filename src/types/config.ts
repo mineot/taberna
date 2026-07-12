@@ -1,3 +1,5 @@
+export type VerticalPosition = 'top' | 'center' | 'bottom';
+
 export interface SiteConfig {
   title: string;
   owner: string;
@@ -10,17 +12,17 @@ export interface MenuItem {
   href: string;
 }
 
-export type ImagePosition = 'top' | 'center' | 'bottom';
-
 export interface Section {
   id: string;
-  title: string;
+  title?: string;
   subtitle?: string;
   content?: string[];
   contentFile?: string[];
   image?: string;
-  imagePosition?: ImagePosition;
+  imagePosition?: VerticalPosition;
+  contentPosition?: VerticalPosition;
   invert?: boolean;
+  destak?: boolean;
 }
 
 export interface SocialLink {

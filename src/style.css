@@ -95,25 +95,133 @@
   --color-secondary-900: var(--color-amber-900);
   --color-secondary-950: var(--color-amber-950);
 
-  --color-asset-50: var(--color-taupe-50);
-  --color-asset-100: var(--color-taupe-100);
-  --color-asset-200: var(--color-taupe-200);
-  --color-asset-300: var(--color-taupe-300);
-  --color-asset-400: var(--color-taupe-400);
-  --color-asset-500: var(--color-taupe-500);
-  --color-asset-600: var(--color-taupe-600);
-  --color-asset-700: var(--color-taupe-700);
-  --color-asset-800: var(--color-taupe-800);
-  --color-asset-900: var(--color-taupe-900);
-  --color-asset-950: var(--color-taupe-950);
+  --color-tertiary-50: var(--color-taupe-50);
+  --color-tertiary-100: var(--color-taupe-100);
+  --color-tertiary-200: var(--color-taupe-200);
+  --color-tertiary-300: var(--color-taupe-300);
+  --color-tertiary-400: var(--color-taupe-400);
+  --color-tertiary-500: var(--color-taupe-500);
+  --color-tertiary-600: var(--color-taupe-600);
+  --color-tertiary-700: var(--color-taupe-700);
+  --color-tertiary-800: var(--color-taupe-800);
+  --color-tertiary-900: var(--color-taupe-900);
+  --color-tertiary-950: var(--color-taupe-950);
 }
 
 @utility app-duration {
   @apply duration-300;
 }
 
+@utility app-background {
+  @apply bg-primary-800;
+}
+
+@utility app-background-hover {
+  @apply hover:bg-primary-700;
+}
+
+@utility app-background-header {
+  @apply bg-primary-800/95;
+}
+
+@utility app-background-footer {
+  @apply bg-primary-950;
+}
+
+@utility app-text {
+  @apply text-primary-100;
+}
+
+@utility app-text-muted {
+  @apply text-primary-200;
+}
+
+@utility app-text-body {
+  @apply text-primary-300;
+}
+
+@utility app-text-subtle {
+  @apply text-primary-400;
+}
+
+@utility app-accent {
+  @apply text-secondary-400;
+}
+
+@utility app-accent-hover {
+  @apply hover:text-secondary-300;
+}
+
+@utility app-border {
+  @apply border-primary-700;
+}
+
+@utility app-title {
+  @apply font-fancy app-accent;
+}
+
+@utility app-title-text {
+  @apply mt-2 leading-[0];
+}
+
+@utility app-section {
+  @apply flex flex-col gap-4 md:flex-row md:gap-8;
+}
+
+@utility app-section-title {
+  @apply text-2xl font-bold;
+}
+
+@utility app-section-subtitle {
+  @apply app-accent mt-1;
+}
+
+@utility app-section-content {
+  @apply mt-4 flex flex-col gap-6 md:flex-row;
+}
+
+@utility app-section-destak {
+  @apply bg-tertiary-800 -mx-6 px-6 py-8;
+}
+
+@utility app-section-image {
+  @apply w-full rounded-lg object-cover md:w-1/2;
+}
+
+@utility app-container {
+  @apply mx-auto w-full max-w-4xl px-6;
+}
+
+@utility app-logo {
+  @apply h-8 min-h-5 w-8 min-w-5 rounded-full object-cover;
+}
+
+@utility app-icon-btn {
+  @apply app-text-muted hover:app-accent app-duration cursor-pointer transition-colors;
+}
+
+@utility app-flag-btn {
+  @apply app-duration cursor-pointer transition-all hover:scale-110;
+}
+
+@utility app-nav-link {
+  @apply app-text app-background-hover hover:app-accent app-duration rounded-lg px-3 py-2 transition-colors;
+}
+
+@utility app-backdrop {
+  @apply fixed inset-0 z-60 bg-black/60 backdrop-blur-sm md:hidden;
+}
+
+@utility app-sidebar {
+  @apply app-background app-text fixed top-0 right-0 z-70 flex h-full w-72 flex-col shadow-xl md:hidden;
+}
+
+@utility app-footer {
+  @apply app-border app-background-footer app-text-subtle border-t py-6 text-center;
+}
+
 * {
-  box-sizing: border-box;
+  @apply box-border;
 }
 
 html,
@@ -121,12 +229,6 @@ body {
   @apply m-0 h-full w-full p-0;
   @apply flex flex-col gap-0;
   @applu font-sans;
-
-  /* 
-  background-color: var(--color-primary-light);
-  color: var(--color-secondary-light);
-  font-size: var(--text-regular);
-  */
 
   > #app {
     @apply flex-1;

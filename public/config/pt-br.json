@@ -24,13 +24,13 @@
       "title": "Titulo da Secao Sobre",
       "subtitle": "Subtitulo opcional",
       "content": ["Conteudo ficticio em texto simples para esta secao."],
-      "image": "https://placehold.co/600x400"
+      "image": "https://placehold.co/600x400",
+      "contentPosition": "top"
     },
     {
       "id": "servicos",
-      "title": "Titulo da Secao Servicos",
-      "subtitle": "Subtitulo opcional",
-      "contentFile": ["servico-1.md", "servico-2.md"]
+      "contentFile": ["servico-1.md", "servico-2.md"],
+      "destak": true
     }
   ],
   "social": [
