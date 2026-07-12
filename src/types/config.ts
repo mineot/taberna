@@ -9,7 +9,9 @@ export interface SiteConfig {
 
 export interface MenuItem {
   label: string;
-  href: string;
+  href?: string;
+  route?: string;
+  content?: string;
 }
 
 export interface Section {

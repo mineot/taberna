@@ -31,8 +31,8 @@
     >
       <div class="app-container flex items-center justify-between py-4">
         <div class="flex items-center gap-3">
-          <a
-            href="/"
+          <router-link
+            to="/"
             class="app-title app-accent-hover app-duration flex items-center gap-3"
           >
             <img
@@ -44,18 +44,33 @@
             <h1 :key="locale" class="app-title-text text-3xl md:text-5xl">
               {{ config?.site.title }}
             </h1>
-          </a>
+          </router-link>
         </div>
         <div class="flex items-center gap-4">
           <nav v-if="hasMenu" class="hidden gap-6 md:flex">
-            <a
-              v-for="item in config?.menu"
-              :key="item.href"
-              :href="item.href"
-              class="hover:app-accent app-duration transition-colors"
-            >
-              {{ item.label }}
-            </a>
+            <template v-for="item in config?.menu" :key="item.label">
+              <router-link
+                v-if="item.route"
+                :to="item.route"
+                class="hover:app-accent app-duration transition-colors"
+              >
+                {{ item.label }}
+              </router-link>
+              <router-link
+                v-else-if="item.href?.startsWith('#')"
+                :to="'/' + item.href"
+                class="hover:app-accent app-duration transition-colors"
+              >
+                {{ item.label }}
+              </router-link>
+              <a
+                v-else-if="item.href"
+                :href="item.href"
+                class="hover:app-accent app-duration transition-colors"
+              >
+                {{ item.label }}
+              </a>
+            </template>
           </nav>
           <div v-if="hasMultipleLangs" class="hidden gap-1 text-lg md:flex">
             <button
@@ -67,7 +82,7 @@
                   ? 'grayscale-0'
                   : 'opacity-50 grayscale hover:opacity-100'
               "
-              @click="setLocale(lang)"
+              @click="switchLocale(lang)"
             >
               {{ flags[lang] }}
             </button>
@@ -92,8 +107,8 @@
           <div
             class="app-border flex items-center justify-between border-b px-6 py-4"
           >
-            <a
-              href="/"
+            <router-link
+              to="/"
               class="app-title app-accent-hover app-duration flex items-center gap-3"
               @click="closeMenu"
             >
@@ -106,21 +121,38 @@
               <h2 class="app-title-text text-3xl">
                 {{ config?.site.title }}
               </h2>
-            </a>
+            </router-link>
             <button class="app-icon-btn" @click="closeMenu">
               <X :size="24" />
             </button>
           </div>
           <nav v-if="hasMenu" class="flex flex-col gap-1 px-6 py-4">
-            <a
-              v-for="item in config?.menu"
-              :key="item.href"
-              :href="item.href"
-              class="app-nav-link"
-              @click="closeMenu"
-            >
-              {{ item.label }}
-            </a>
+            <template v-for="item in config?.menu" :key="item.label">
+              <router-link
+                v-if="item.route"
+                :to="item.route"
+                class="app-nav-link"
+                @click="closeMenu"
+              >
+                {{ item.label }}
+              </router-link>
+              <router-link
+                v-else-if="item.href?.startsWith('#')"
+                :to="'/' + item.href"
+                class="app-nav-link"
+                @click="closeMenu"
+              >
+                {{ item.label }}
+              </router-link>
+              <a
+                v-else-if="item.href"
+                :href="item.href"
+                class="app-nav-link"
+                @click="closeMenu"
+              >
+                {{ item.label }}
+              </a>
+            </template>
           </nav>
           <div
             v-if="hasMultipleLangs"
@@ -147,68 +179,7 @@
     </Teleport>
 
     <main class="app-container flex flex-1 flex-col gap-12 py-12">
-      <section
-        v-for="section in config?.sections"
-        :key="section.id"
-        :id="section.id"
-        class="app-section"
-        :class="[
-          section.destak ? 'app-section-destak' : '',
-          section.invert ? 'md:flex-row-reverse' : '',
-          {
-            'md:items-start':
-              (section.contentPosition ?? section.imagePosition) === 'top',
-            'md:items-center':
-              !(section.contentPosition ?? section.imagePosition) ||
-              (section.contentPosition ?? section.imagePosition) === 'center',
-            'md:items-end':
-              (section.contentPosition ?? section.imagePosition) === 'bottom',
-          },
-        ]"
-      >
-        <div class="flex-1">
-          <h2 v-if="section.title" class="app-section-title">
-            {{ section.title }}
-          </h2>
-          <p v-if="section.subtitle" class="app-section-subtitle">
-            {{ section.subtitle }}
-          </p>
-
-          <div
-            v-if="section.contentFile && markdownContent.get(section.id)"
-            class="app-section-content"
-          >
-            <div
-              v-for="(html, i) in markdownContent.get(section.id)"
-              :key="i"
-              class="prose prose-invert max-w-none flex-1"
-              v-html="html"
-            />
-          </div>
-
-          <div v-else-if="section.content" class="app-section-content">
-            <p
-              v-for="(item, i) in section.content"
-              :key="i"
-              class="app-text-body flex-1 leading-relaxed"
-            >
-              {{ item }}
-            </p>
-          </div>
-        </div>
-        <img
-          v-if="section.image"
-          :src="section.image"
-          :alt="section.title ?? ''"
-          class="app-section-image"
-          :class="{
-            'object-top': section.imagePosition === 'top',
-            'object-center':
-              !section.imagePosition || section.imagePosition === 'center',
-            'object-bottom': section.imagePosition === 'bottom',
-          }"
-        />
-      </section>
+      <router-view />
     </main>
 
     <footer class="app-footer">
@@ -279,13 +250,13 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import { Menu, X } from '@lucide/vue';
 import { useConfig } from './composables/useConfig';
 import { useLocale } from './composables/useLocale';
-import { useMarkdown } from './composables/useMarkdown';
 
+const router = useRouter();
 const { config, loaded, error, loadConfig } = useConfig();
-const { fetchMarkdown } = useMarkdown();
 
 const {
   locale,
@@ -297,28 +268,10 @@ const {
 } = useLocale();
 
 const menuOpen = ref(false);
-const markdownContent = ref<Map<string, string[]>>(new Map());
 
 const hasMenu = computed(() => (config.value?.menu?.length ?? 0) > 0);
 const hasMultipleLangs = computed(() => available.value.length > 1);
 const hasHamburger = computed(() => hasMenu.value || hasMultipleLangs.value);
-
-async function loadMarkdownFiles() {
-  if (!config.value) return;
-
-  const newMap = new Map<string, string[]>();
-  for (const section of config.value.sections) {
-    if (section.contentFile) {
-      const results = await Promise.all(
-        section.contentFile.map((file) =>
-          fetchMarkdown(`/content/${locale.value}/${file}`),
-        ),
-      );
-      newMap.set(section.id, results);
-    }
-  }
-  markdownContent.value = newMap;
-}
 
 function toggleMenu() {
   menuOpen.value = !menuOpen.value;
@@ -328,20 +281,22 @@ function closeMenu() {
   menuOpen.value = false;
 }
 
-function switchLocale(lang: string) {
+async function switchLocale(lang: string) {
   setLocale(lang);
   closeMenu();
+  await loadConfig(lang);
+  if (router.currentRoute.value.path !== '/') {
+    router.push('/');
+  }
 }
 
 onMounted(async () => {
   await loadLocale();
   await loadConfig(locale.value);
-  await loadMarkdownFiles();
 });
 
 watch(locale, async (newLocale) => {
   await loadConfig(newLocale);
-  await loadMarkdownFiles();
 });
 
 watch(config, (newConfig) => {

@@ -46,17 +46,26 @@ taberna/
 │   └── content/
 │       ├── pt-br/
 │       │   ├── intro.md       # Conteudo markdown em portugues
+│       │   ├── sobre.md       # Pagina Sobre em portugues
+│       │   ├── servicos.md    # Pagina Servicos em portugues
 │       │   ├── servico-1.md   # Servico 1 em portugues
 │       │   └── servico-2.md   # Servico 2 em portugues
 │       └── en-us/
 │           ├── intro.md       # Conteudo markdown em ingles
+│           ├── sobre.md       # Pagina Sobre em ingles
+│           ├── servicos.md    # Pagina Servicos em ingles
 │           ├── service-1.md   # Service 1 in english
 │           └── service-2.md   # Service 2 in english
 ├── src/
-│   ├── main.ts                # Entry point — mount Vue em #app
-│   ├── App.vue                # Root — useLocale + useConfig, skeleton, dynamic title, transitions
+│   ├── main.ts                # Entry point — mount Vue em #app + router
+│   ├── App.vue                # Root — layout (header/sidebar/footer) + router-view
 │   ├── env.d.ts               # Tipos para .vue
 │   ├── style.css              # Tailwind v4 + @font-face + @theme custom + typography plugin
+│   ├── router/
+│   │   └── index.ts           # Vue Router — rotas / e /:slug
+│   ├── views/
+│   │   ├── HomeView.vue       # Home — sections do config
+│   │   └── PageView.vue       # Pagina — carrega markdown pelo slug
 │   ├── composables/
 │   │   ├── useConfig.ts       # Fetch de config por idioma (config/{locale}.json)
 │   │   ├── useLocale.ts       # Detecao de idioma (browser/localStorage/manifest)
@@ -136,7 +145,6 @@ Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css)
 
 ## O que NAO existe ainda
 
-- Roteamento (Vue Router)
 - Gerenciamento de estado (Pinia/Vuex)
 - Testes (Vitest/Jest/Cypress/Playwright)
 - CI/CD (GitHub Actions, etc.)
@@ -177,7 +185,11 @@ Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css)
 1. `useLocale()` detecta idioma: localStorage → navigator.languages → languages.json.default
 2. `useConfig(locale)` busca `public/config/{locale}.json`
 3. `App.vue` atualiza `document.documentElement.lang` e `document.title` (via watch no config)
-4. Switcher de bandeiras no header/sidebar atualiza locale + salva no localStorage
+4. Switcher de bandeiras no header/sidebar chama `switchLocale(lang)`:
+   - `setLocale(lang)` — atualiza locale + localStorage
+   - `await loadConfig(lang)` — carrega config do novo idioma antes de navegar
+   - `router.push('/')` — redireciona para home para evitar page not found
+5. `HomeView` observa `config` (nao `locale`) para buscar markdown — garante que o config correto ja esta carregado
 
 ### Manifest (`public/languages.json`)
 
@@ -205,6 +217,17 @@ Sections podem usar arquivos markdown via campo `contentFile` (array de strings)
 - Parse com `marked`, renderizado com `v-html` + classe `prose` (Tailwind Typography)
 - Sections sem `contentFile` continuam usando `content[]` como fallback
 - Multiplas strings = multiplos arquivos lado a lado (empilha no mobile)
+
+### Paginas (rotas)
+
+Cada rota `/:slug` carrega um arquivo markdown individual:
+
+- Arquivo: `public/content/{locale}/{slug}.md`
+- Se `content` definido no menuItem → usa esse valor como nome do arquivo
+- Se nao definido → usa o slug da rota (ex: `/sobre` → `sobre.md`)
+- Renderizado como `<article class="prose prose-invert">`
+- Skeleton loader durante carregamento
+- Mensagem de erro "Page not found" se arquivo nao existir
 
 ### Posicionamento Vertical
 
@@ -286,3 +309,55 @@ Campo `site.image` no config controla exibicao de imagem ao lado do titulo:
 - **Formato**: `rounded-full` (circular)
 - **Posicao**: Ao lado esquerdo do titulo, com `gap-3` de espacamento
 - **Sidebar**: Mesmo tamanho mobile (`h-8 w-8`) e titulo `text-3xl` (mesmo do header mobile)
+
+## Sistema de Rotas (Vue Router)
+
+### Estrutura
+
+| Rota | Componente | Conteudo |
+|---|---|---|
+| `/` | `HomeView.vue` | Sections do config JSON |
+| `/:slug` | `PageView.vue` | Markdown carregado de `public/content/{locale}/{slug}.md` |
+
+### Configuracao
+
+- **History mode**: `createWebHistory()` ( URLs limpas sem `#` )
+- **Catch-all**: rota `/:pathMatch(.*)*` redireciona para `/`
+- **Scroll behavior**: suporta hash anchors, posicao salva, e scroll to top
+- **Arquivo**: `src/router/index.ts`
+
+### MenuItem (Interface)
+
+```ts
+export interface MenuItem {
+  label: string;
+  href?: string;    // anchor link (ex: "#sobre")
+  route?: string;   // Vue Router path (ex: "/sobre")
+  content?: string; // override do arquivo markdown (ex: "sobre.md")
+}
+```
+
+### Comportamento do Menu
+
+- **`route` definido** → renderiza `<router-link :to="item.route">`
+- **`href` com `#`** (anchor) → renderiza `<router-link :to="'/' + item.href">` — navega para `/` e o `scrollBehavior` faz scroll suave ate o anchor
+- **`href` externa** (http/https) → renderiza `<a :href="item.href">` (abre em nova aba)
+- **`route` + `content`** → rota usa `content` como nome do arquivo markdown
+- **Ambos definidos** → `route` tem precedencia
+
+### Resolucao do Conteudo (PageView)
+
+Se `content` nao for definido no menuItem, o sistema busca `{slug}.md`:
+
+- Rota `/sobre` → busca `public/content/{locale}/sobre.md`
+- Rota `/servicos` → busca `public/content/{locale}/servicos.md`
+- Com `"content": "custom.md"` → busca `public/content/{locale}/custom.md`
+
+### Conteudo das Paginas
+
+Arquivos markdown em `public/content/{locale}/*.md`:
+- Buscados em runtime via `useMarkdown()` com cache
+- Parse com `marked`, renderizado com `<article class="prose prose-invert">`
+- Skeleton loader durante carregamento
+- Mensagem de erro "Page not found" se arquivo nao existir
+- **Protecao SPA fallback**: `useMarkdown` checa `Content-Type` da resposta — se for `text/html` (Vite retorna `index.html` para arquivos inexistentes), lança erro em vez de renderizar HTML cru

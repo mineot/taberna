@@ -6,9 +6,9 @@
     "image": "https://placehold.co/80x80"
   },
   "menu": [
-    { "label": "Home", "href": "#inicio" },
-    { "label": "About", "href": "#sobre" },
-    { "label": "Services", "href": "#servicos" }
+    { "label": "Home", "href": "#intro" },
+    { "label": "About", "route": "/about" },
+    { "label": "Services", "route": "/services" }
   ],
   "sections": [
     {
@@ -20,14 +20,14 @@
       "imagePosition": "top"
     },
     {
-      "id": "sobre",
+      "id": "about",
       "title": "About Section Title",
       "content": ["Fictitious content in plain text for this section."],
       "image": "https://placehold.co/600x400",
       "contentPosition": "top"
     },
     {
-      "id": "servicos",
+      "id": "services",
       "contentFile": ["service-1.md", "service-2.md"],
       "destak": true
     }

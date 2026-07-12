@@ -20,6 +20,11 @@ export function useMarkdown() {
         throw new Error(`HTTP ${res.status}`);
       }
 
+      const ct = res.headers.get('content-type') ?? '';
+      if (ct.includes('text/html')) {
+        throw new Error('Not found');
+      }
+
       const md = await res.text();
       const html = marked.parse(md) as string;
       cache.set(path, html);

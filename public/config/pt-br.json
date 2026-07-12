@@ -7,8 +7,8 @@
   },
   "menu": [
     { "label": "Inicio", "href": "#inicio" },
-    { "label": "Sobre", "href": "#sobre" },
-    { "label": "Servicos", "href": "#servicos" }
+    { "label": "Sobre", "route": "/sobre" },
+    { "label": "Servicos", "route": "/servicos" }
   ],
   "sections": [
     {
