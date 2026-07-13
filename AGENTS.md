@@ -7,8 +7,8 @@
 ## Stack
 
 - **Framework**: Vue 3.5.39 (Composition API / `<script setup>`)
-- **Language**: TypeScript 7.0.2 (strict mode)
-- **Build**: Vite 8.1.4
+- **Language**: TypeScript 5.9.3 (strict mode)
+- **Build**: Vite 8.1.1
 - **CSS**: Tailwind CSS v4.3.2 (plugin oficial `@tailwindcss/vite`)
 - **Icons**: Lucide Vue (`@lucide/vue` 1.24.0)
 - **Markdown**: marked (parse) + @tailwindcss/typography (prose)
@@ -65,9 +65,10 @@ taberna/
 │   ├── components/
 │   │   └── section-carousel.vue # Carousel de slides com auto-play, botoes e dots
 │   ├── router/
-│   │   └── index.ts           # Vue Router — rotas / e /:slug
+│   │   └── index.ts           # Vue Router — rotas /, /languages e /:slug
 │   ├── views/
 │   │   ├── HomeView.vue       # Home — sections do config
+│   │   ├── LanguagesView.vue  # Pagina de selecao de idioma (grid de bandeiras)
 │   │   └── PageView.vue       # Pagina — carrega markdown pelo slug
 │   ├── composables/
 │   │   ├── useConfig.ts       # Fetch de config por idioma (config/{locale}.json)
@@ -84,9 +85,9 @@ Paleta de cores mapeada via `@theme` no Tailwind v4:
 
 | Token | Escala | Uso real no codigo |
 |---|---|---|
-| `primary-*` | olive-50..950 | Via utilities (800, 700, 800/950, 950, 100, 200, 300, 400, 700) |
-| `secondary-*` | amber-50..950 | Via utility `app-accent` (400) |
-| `tertiary-*` | taupe-50..950 | Via utility `app-section-destak` (800) |
+| `primary-*` | olive-50..950 | `app-background` (800), `app-background-hover` (700), `app-background-header` (900/95), `app-background-footer` (950), `app-text` (100), `app-text-muted` (200), `app-text-body` (300), `app-text-subtle` (400), `app-border` (700), `app-dot-inactive` (600, 500), `app-carousel-btn-bg` (800/80), `app-skeleton` (700) |
+| `secondary-*` | amber-50..950 | `app-accent` (400), `app-accent-hover` (300), `app-dot-active` (400) |
+| `tertiary-*` | taupe-50..950 | `app-section-destak` (800) |
 
 Font stacks customizados:
 - `--font-sans`: Roboto
@@ -98,7 +99,7 @@ Utilitarios customizados:
 - `app-duration` → `duration-300`
 - `app-background` → `bg-primary-800`
 - `app-background-hover` → `bg-primary-700`
-- `app-background-header` → `bg-primary-800/95`
+- `app-background-header` → `bg-primary-900/95`
 - `app-background-footer` → `bg-primary-950`
 - `app-text` → `text-primary-100`
 - `app-text-muted` → `text-primary-200`
@@ -112,7 +113,7 @@ Utilitarios customizados:
 - `app-section` → `flex flex-col gap-4 md:flex-row md:gap-8`
 - `app-section-title` → `text-2xl font-bold`
 - `app-section-subtitle` → `app-accent mt-1`
-- `app-section-content` → `mt-4 flex flex-col gap-6 md:flex-row`
+- `app-section-content` → `mt-4 flex flex-col flex-wrap gap-6 md:flex-row`
 - `app-section-image` → `w-full rounded-lg object-cover md:w-1/2`
 - `app-section-destak` → `bg-tertiary-800 -mx-6 px-6 py-8`
 - `app-container` → `mx-auto w-full max-w-4xl px-6`
@@ -120,9 +121,14 @@ Utilitarios customizados:
 - `app-icon-btn` → `app-text-muted hover:app-accent app-duration cursor-pointer transition-colors`
 - `app-flag-btn` → `app-duration cursor-pointer transition-all hover:scale-110`
 - `app-nav-link` → `app-text hover:app-background-hover hover:app-accent app-duration rounded-lg px-3 py-2 transition-colors`
-- `app-backdrop` → `fixed inset-0 z-60 bg-black/60 backdrop-blur-sm md:hidden`
-- `app-sidebar` → `app-background app-text fixed top-0 right-0 z-70 flex h-full w-72 flex-col shadow-xl md:hidden`
+- `app-backdrop` → `fixed inset-0 z-60 bg-black/60 backdrop-blur-sm`
+- `app-sidebar` → `app-background app-text fixed top-0 right-0 z-70 flex h-full w-72 flex-col shadow-xl`
 - `app-footer` → `app-border app-background-footer app-text-subtle border-t py-6 px-6 text-sm flex flex-col items-center`
+- `app-dot-active` → `bg-secondary-400`
+- `app-dot-inactive` → `bg-primary-600 hover:bg-primary-500`
+- `app-carousel-btn-bg` → `bg-primary-800/80`
+- `app-skeleton` → `bg-primary-700`
+- `app-ring` → `ring-secondary-400`
 
 Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css):
 - `.z-60` → `z-index: 60` (backdrop do mobile menu)
@@ -330,7 +336,7 @@ Todos os campos sao opcionais. Exemplo de uso:
 - **Auto-play**: inicia ao montar o componente, avanca slides automaticamente
 - **Pausa no hover**: auto-play pausa quando mouse esta sobre o carousel, retoma ao sair
 - **Botoes prev/next**: fixos nas laterais do conteudo (layout flex). Se `buttons: false`, conteudo ocupa 100%
-- **Dots**: clique define o slide/diretamente; dot ativo usa cor `secondary-400`
+- **Dots**: clique define o slide diretamente; dot ativo usa utility `app-dot-active`
 - **Acessibilidade**: `role="group"`, `aria-label` no container e botoes
 - **Se 1 slide**: botoes e dots nao sao exibidos
 
@@ -364,6 +370,28 @@ Em telas pequenas (`< md`), o menu de navegacao e substituido por um icone hambu
 - Animacao de slide-in/slide-out via `<Transition>`
 - Teleport do sidebar para `<body>` via `<Teleport>`
 
+### Menu Desktop com Muitos Itens (> 4)
+
+Quando o menu tem mais de 4 itens, o header se adapta em todas as telas:
+
+- `<nav>` inline nao e renderizado (em nenhuma resolucao)
+- Bandeira do idioma no header nao e exibida
+- Hamburger aparece em **todas** as telas (inclusive desktop)
+- Ao clicar, abre o mesmo sidebar offcanvas
+- Sidebar funciona em todas as resolucoes (sem `md:hidden`)
+
+### Sidebar (Todas as Resolucoes)
+
+O sidebar agora funciona em desktop e mobile:
+
+- `app-backdrop` e `app-sidebar` nao possuem `md:hidden`
+- Quando > 4 itens de menu, o hamburger aparece em desktop e abre o sidebar
+- Estrutura do sidebar:
+  - **Header** (`shrink-0`): titulo + imagem + botao X
+  - **Menu** (`flex-1 overflow-y-auto`): unica secao que rola
+  - **Footer de idiomas** (`shrink-0`): fixo no fundo, nao rola
+- Link de idioma no footer: mostra bandeira atual + codigo (ex: "🇧🇷 pt-br"), linka para `/languages`
+
 ### Comportamento Condicional (menu + idiomas)
 
 O header e sidebar se adaptam ao conteudo:
@@ -383,7 +411,7 @@ O header e sidebar se adaptam ao conteudo:
 O titulo do site (imagem + texto) e um link `<a href="/">` com:
 
 - **`app-title`** no container `<a>` — fonte fancy + cor accent
-- **`app-accent-hover`** no container `<a>` — hover clara a cor (secondary-400 → 300)
+- **`app-accent-hover`** no container `<a>` — hover clara a cor (secondary-400 → secondary-300)
 - **`app-title-text`** no `<h1>`/`<h2>` — `mt-2 leading-[0]` para alinhar com a imagem
 - **`app-duration`** — transicao suave (0.3s) no hover
 - **Sidebar**: Mesmo esquema, `<a href="/">` com `app-title app-accent-hover app-duration` + `@click="closeMenu"` para fechar o menu ao clicar
@@ -406,6 +434,7 @@ Campo `site.image` no config controla exibicao de imagem ao lado do titulo:
 | Rota | Componente | Conteudo |
 |---|---|---|
 | `/` | `HomeView.vue` | Sections do config JSON |
+| `/languages` | `LanguagesView.vue` | Grid de idiomas disponiveis (bandeira + codigo) |
 | `/:slug` | `PageView.vue` | Markdown carregado de `public/content/{locale}/{slug}.md` |
 
 ### Configuracao

@@ -47,7 +47,7 @@
           </router-link>
         </div>
         <div class="flex items-center gap-4">
-          <nav v-if="hasMenu" class="hidden gap-6 md:flex">
+          <nav v-if="hasMenu && !hasTooManyMenuItems" class="hidden gap-6 md:flex">
             <template v-for="item in config?.menu" :key="item.label">
               <router-link
                 v-if="item.route"
@@ -72,24 +72,18 @@
               </a>
             </template>
           </nav>
-          <div v-if="hasMultipleLangs" class="hidden gap-1 text-lg md:flex">
-            <button
-              v-for="lang in available"
-              :key="lang"
-              class="app-flag-btn"
-              :class="
-                locale === lang
-                  ? 'grayscale-0'
-                  : 'opacity-50 grayscale hover:opacity-100'
-              "
-              @click="switchLocale(lang)"
+          <div v-if="hasMultipleLangs && !hasTooManyMenuItems" class="hidden md:block">
+            <router-link
+              to="/languages"
+              class="app-flag-btn text-2xl"
             >
-              {{ flags[lang] }}
-            </button>
+              {{ flags[locale] }}
+            </router-link>
           </div>
           <button
             v-if="hasHamburger"
-            class="app-icon-btn md:hidden"
+            class="app-icon-btn"
+            :class="hasTooManyMenuItems ? '' : 'md:hidden'"
             @click="toggleMenu"
           >
             <Menu :size="24" />
@@ -105,7 +99,7 @@
       <Transition name="sidebar">
         <aside v-if="menuOpen" class="app-sidebar">
           <div
-            class="app-border flex items-center justify-between border-b px-6 py-4"
+            class="app-border flex shrink-0 items-center justify-between border-b px-6 py-4"
           >
             <router-link
               to="/"
@@ -126,53 +120,48 @@
               <X :size="24" />
             </button>
           </div>
-          <nav v-if="hasMenu" class="flex flex-col gap-1 px-6 py-4">
-            <template v-for="item in config?.menu" :key="item.label">
-              <router-link
-                v-if="item.route"
-                :to="item.route"
-                class="app-nav-link"
-                @click="closeMenu"
-              >
-                {{ item.label }}
-              </router-link>
-              <router-link
-                v-else-if="item.href?.startsWith('#')"
-                :to="'/' + item.href"
-                class="app-nav-link"
-                @click="closeMenu"
-              >
-                {{ item.label }}
-              </router-link>
-              <a
-                v-else-if="item.href"
-                :href="item.href"
-                class="app-nav-link"
-                @click="closeMenu"
-              >
-                {{ item.label }}
-              </a>
-            </template>
-          </nav>
+          <div class="flex flex-1 flex-col overflow-y-auto">
+            <nav v-if="hasMenu" class="flex flex-col gap-1 px-6 py-4">
+              <template v-for="item in config?.menu" :key="item.label">
+                <router-link
+                  v-if="item.route"
+                  :to="item.route"
+                  class="app-nav-link"
+                  @click="closeMenu"
+                >
+                  {{ item.label }}
+                </router-link>
+                <router-link
+                  v-else-if="item.href?.startsWith('#')"
+                  :to="'/' + item.href"
+                  class="app-nav-link"
+                  @click="closeMenu"
+                >
+                  {{ item.label }}
+                </router-link>
+                <a
+                  v-else-if="item.href"
+                  :href="item.href"
+                  class="app-nav-link"
+                  @click="closeMenu"
+                >
+                  {{ item.label }}
+                </a>
+              </template>
+            </nav>
+          </div>
           <div
             v-if="hasMultipleLangs"
-            class="app-border mt-auto border-t px-6 py-4"
+            class="app-border shrink-0 border-t px-6 py-4"
           >
-            <div class="flex gap-2 text-lg">
-              <button
-                v-for="lang in available"
-                :key="lang"
-                class="app-flag-btn"
-                :class="
-                  locale === lang
-                    ? 'grayscale-0'
-                    : 'opacity-50 grayscale hover:opacity-100'
-                "
-                @click="switchLocale(lang)"
-              >
-                {{ flags[lang] }}
-              </button>
-            </div>
+            <router-link
+              to="/languages"
+              class="app-nav-link flex items-center gap-3 text-xl"
+              @click="closeMenu"
+            >
+              <span class="text-2xl">{{ flags[locale] }}</span>
+              <span>{{ locale }}</span>
+            </router-link>
           </div>
         </aside>
       </Transition>
@@ -238,6 +227,8 @@
 </style>
 
 <style>
+@reference './style.css';
+
 @keyframes pulse {
   0%,
   100% {
@@ -250,7 +241,7 @@
 
 .skeleton {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  background-color: var(--color-primary-700);
+  @apply app-skeleton;
 }
 
 .z-60 {
@@ -288,6 +279,7 @@ const menuOpen = ref(false);
 const footerHtml = ref('');
 
 const hasMenu = computed(() => (config.value?.menu?.length ?? 0) > 0);
+const hasTooManyMenuItems = computed(() => (config.value?.menu?.length ?? 0) > 4);
 const hasMultipleLangs = computed(() => available.value.length > 1);
 const hasHamburger = computed(() => hasMenu.value || hasMultipleLangs.value);
 

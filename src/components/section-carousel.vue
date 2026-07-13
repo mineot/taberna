@@ -71,8 +71,8 @@
         class="h-2 w-2 rounded-full transition-all duration-300"
         :class="
           i === activeDot
-            ? 'scale-125 bg-secondary-400'
-            : 'bg-primary-600 hover:bg-primary-500'
+            ? 'scale-125 app-dot-active'
+            : 'app-dot-inactive'
         "
         :aria-label="`Slide ${i + 1}`"
         @click="goTo(i)"
@@ -210,6 +210,6 @@ watch(
 @reference '../style.css';
 
 .carousel-btn {
-  @apply app-text-muted hover:app-accent app-duration flex flex-shrink-0 cursor-pointer items-center justify-center rounded-full bg-primary-800/80 p-2 transition-colors;
+  @apply app-text-muted hover:app-accent app-duration app-carousel-btn-bg flex flex-shrink-0 cursor-pointer items-center justify-center rounded-full p-2 transition-colors;
 }
 </style>

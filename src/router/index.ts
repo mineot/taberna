@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
+import LanguagesView from '../views/LanguagesView.vue';
 import PageView from '../views/PageView.vue';
 
 const router = createRouter({
@@ -9,6 +10,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+    },
+    {
+      path: '/languages',
+      name: 'languages',
+      component: LanguagesView,
     },
     {
       path: '/:slug',

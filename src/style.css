@@ -209,15 +209,35 @@
 }
 
 @utility app-backdrop {
-  @apply fixed inset-0 z-60 bg-black/60 backdrop-blur-sm md:hidden;
+  @apply fixed inset-0 z-60 bg-black/60 backdrop-blur-sm;
 }
 
 @utility app-sidebar {
-  @apply app-background app-text fixed top-0 right-0 z-70 flex h-full w-72 flex-col shadow-xl md:hidden;
+  @apply app-background app-text fixed top-0 right-0 z-70 flex h-full w-72 flex-col shadow-xl;
 }
 
 @utility app-footer {
   @apply app-border app-background-footer app-text-subtle flex flex-col items-center border-t px-6 py-6 text-sm;
+}
+
+@utility app-dot-active {
+  @apply bg-secondary-400;
+}
+
+@utility app-dot-inactive {
+  @apply bg-primary-600 hover:bg-primary-500;
+}
+
+@utility app-carousel-btn-bg {
+  @apply bg-primary-800/80;
+}
+
+@utility app-skeleton {
+  @apply bg-primary-700;
+}
+
+@utility app-ring {
+  @apply ring-secondary-400;
 }
 
 * {
