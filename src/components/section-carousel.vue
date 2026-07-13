@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-w-0 flex flex-col pt-6"
+    class="flex min-w-0 flex-col pt-6"
     role="group"
     :aria-label="ariaLabel"
     @mouseenter="pause"
@@ -70,11 +70,10 @@
         :key="i"
         class="h-2 w-2 rounded-full transition-all duration-300"
         :class="
-          i === activeDot
-            ? 'scale-125 app-dot-active'
-            : 'app-dot-inactive'
+          i === activeDot ? 'app-dot-active scale-125' : 'app-dot-inactive'
         "
         :aria-label="`Slide ${i + 1}`"
+        :aria-current="i === activeDot ? 'true' : undefined"
         @click="goTo(i)"
       />
     </div>
@@ -111,8 +110,8 @@ const itemsPerView = computed(() => {
 });
 const isSingleView = computed(() => itemsPerView.value <= 1);
 
-const maxPage = computed(() =>
-  Math.ceil(props.slides.length / itemsPerView.value) - 1,
+const maxPage = computed(
+  () => Math.ceil(props.slides.length / itemsPerView.value) - 1,
 );
 
 const totalDots = computed(() =>
@@ -125,9 +124,7 @@ const activeDot = computed(() =>
   isSingleView.value ? currentIndex.value : currentPage.value,
 );
 
-const slideWidth = computed(
-  () => `calc(100% / ${itemsPerView.value})`,
-);
+const slideWidth = computed(() => `calc(100% / ${itemsPerView.value})`);
 
 const ariaLabel = computed(() => {
   const current = isSingleView.value ? currentIndex.value : currentPage.value;
@@ -146,10 +143,9 @@ function prev() {
 
 function next() {
   if (isSingleView.value) {
-    currentIndex.value =
-      (currentIndex.value + 1) % props.slides.length;
+    currentIndex.value = (currentIndex.value + 1) % props.slides.length;
   } else {
-    currentPage.value = (currentPage.value + 1) % (maxPage.value + 1);
+    currentPage.value = Math.min(currentPage.value + 1, maxPage.value);
   }
 }
 

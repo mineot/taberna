@@ -73,6 +73,7 @@ export function useLocale() {
   };
 
   const setLocale = (lang: string) => {
+    if (available.value.length > 0 && !available.value.includes(lang)) return;
     locale.value = lang;
     localStorage.setItem(STORAGE_KEY, lang);
     document.documentElement.lang = lang;

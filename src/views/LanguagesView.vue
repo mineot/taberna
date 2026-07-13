@@ -4,33 +4,23 @@
       <button
         v-for="lang in available"
         :key="lang"
-        class="app-border flex cursor-pointer flex-col items-center gap-3 rounded-xl border p-6 transition-all app-background-hover"
+        class="app-border app-background-hover flex cursor-pointer flex-col items-center gap-3 rounded-xl border p-6 transition-all"
         :class="{
-          'ring-2 app-ring': locale === lang,
+          'app-ring ring-2': locale === lang,
         }"
         @click="switchLocale(lang)"
       >
         <span class="text-5xl">{{ flags[lang] }}</span>
-        <span class="text-sm app-text-body">{{ lang }}</span>
+        <span class="app-text-body text-sm">{{ lang }}</span>
       </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { useConfig } from '../composables/useConfig';
 import { useLocale } from '../composables/useLocale';
+import { useSwitchLocale } from '../composables/useSwitchLocale';
 
-const router = useRouter();
-const { loadConfig } = useConfig();
-const { locale, flags, available, setLocale } = useLocale();
-
-async function switchLocale(lang: string) {
-  setLocale(lang);
-  await loadConfig(lang);
-  if (router.currentRoute.value.path !== '/') {
-    router.push('/');
-  }
-}
+const { locale, flags, available } = useLocale();
+const { switchLocale } = useSwitchLocale();
 </script>

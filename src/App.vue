@@ -41,13 +41,20 @@
               :alt="config.site.title"
               class="app-logo app-duration md:h-12 md:w-12"
             />
-            <h1 v-if="config?.site.title" :key="locale" class="app-title-text text-3xl md:text-5xl">
+            <h1
+              v-if="config?.site.title"
+              :key="locale"
+              class="app-title-text text-3xl md:text-5xl"
+            >
               {{ config?.site.title }}
             </h1>
           </router-link>
         </div>
         <div class="flex items-center gap-4">
-          <nav v-if="hasMenu && !hasTooManyMenuItems" class="hidden gap-6 md:flex">
+          <nav
+            v-if="hasMenu && !hasTooManyMenuItems"
+            class="hidden gap-6 md:flex"
+          >
             <template v-for="item in config?.menu" :key="item.label">
               <router-link
                 v-if="item.route"
@@ -64,7 +71,7 @@
                 {{ item.label }}
               </router-link>
               <a
-                v-else-if="item.href"
+                v-else-if="item.href && isSafeHref(item.href)"
                 :href="item.href"
                 class="hover:app-accent app-duration transition-colors"
               >
@@ -72,11 +79,11 @@
               </a>
             </template>
           </nav>
-          <div v-if="hasMultipleLangs && !hasTooManyMenuItems" class="hidden md:block">
-            <router-link
-              to="/languages"
-              class="app-flag-btn text-2xl"
-            >
+          <div
+            v-if="hasMultipleLangs && !hasTooManyMenuItems"
+            class="hidden md:block"
+          >
+            <router-link to="/languages" class="app-flag-btn text-2xl">
               {{ flags[locale] }}
             </router-link>
           </div>
@@ -84,6 +91,8 @@
             v-if="hasHamburger"
             class="app-icon-btn"
             :class="hasTooManyMenuItems ? '' : 'md:hidden'"
+            aria-label="Menu"
+            :aria-expanded="menuOpen"
             @click="toggleMenu"
           >
             <Menu :size="24" />
@@ -97,7 +106,13 @@
         <div v-if="menuOpen" class="app-backdrop" @click="closeMenu" />
       </Transition>
       <Transition name="sidebar">
-        <aside v-if="menuOpen" class="app-sidebar">
+        <aside
+          v-if="menuOpen"
+          class="app-sidebar"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+        >
           <div
             class="app-border flex shrink-0 items-center justify-between border-b px-6 py-4"
           >
@@ -140,7 +155,7 @@
                   {{ item.label }}
                 </router-link>
                 <a
-                  v-else-if="item.href"
+                  v-else-if="item.href && isSafeHref(item.href)"
                   :href="item.href"
                   class="app-nav-link"
                   @click="closeMenu"
@@ -172,7 +187,11 @@
     </main>
 
     <footer class="app-footer">
-      <div v-if="footerHtml" class="app-container app-footer-content" v-html="footerHtml" />
+      <div
+        v-if="footerHtml"
+        class="app-container app-footer-content"
+        v-html="footerHtml"
+      />
       <div
         class="app-border mt-6 flex w-full flex-col items-center gap-2 border-t pt-6 md:flex-row md:justify-between"
       >
@@ -223,7 +242,6 @@
 .sidebar-leave-to {
   transform: translateX(100%);
 }
-
 </style>
 
 <style>
@@ -255,13 +273,11 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
 import { Menu, X } from '@lucide/vue';
 import { useConfig } from './composables/useConfig';
 import { useLocale } from './composables/useLocale';
 import { useMarkdown } from './composables/useMarkdown';
 
-const router = useRouter();
 const { config, loaded, error, loadConfig } = useConfig();
 
 const {
@@ -270,7 +286,6 @@ const {
   flags,
   available,
   loadLocale,
-  setLocale,
 } = useLocale();
 
 const { fetchMarkdown } = useMarkdown();
@@ -279,7 +294,9 @@ const menuOpen = ref(false);
 const footerHtml = ref('');
 
 const hasMenu = computed(() => (config.value?.menu?.length ?? 0) > 0);
-const hasTooManyMenuItems = computed(() => (config.value?.menu?.length ?? 0) > 4);
+const hasTooManyMenuItems = computed(
+  () => (config.value?.menu?.length ?? 0) > 4,
+);
 const hasMultipleLangs = computed(() => available.value.length > 1);
 const hasHamburger = computed(() => hasMenu.value || hasMultipleLangs.value);
 
@@ -291,13 +308,8 @@ function closeMenu() {
   menuOpen.value = false;
 }
 
-async function switchLocale(lang: string) {
-  setLocale(lang);
-  closeMenu();
-  await loadConfig(lang);
-  if (router.currentRoute.value.path !== '/') {
-    router.push('/');
-  }
+function isSafeHref(href: string): boolean {
+  return !href.startsWith('javascript:') && !href.startsWith('data:');
 }
 
 async function loadFooter() {

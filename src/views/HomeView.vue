@@ -40,8 +40,7 @@
       <!-- contentFiles com 1 item: markdown + imagem opcional -->
       <div
         v-else-if="
-          section.contentFiles?.length === 1 &&
-          markdownContent.get(section.id)
+          section.contentFiles?.length === 1 && markdownContent.get(section.id)
         "
         class="app-section-content"
       >
@@ -75,7 +74,7 @@
         <div
           v-for="(html, i) in markdownContent.get(section.id)"
           :key="i"
-          class="prose prose-invert min-w-0 overflow-hidden basis-full md:basis-[calc(50%-0.75rem)]"
+          class="prose prose-invert min-w-0 basis-full overflow-hidden md:basis-[calc(50%-0.75rem)]"
           v-html="html"
         />
       </div>
@@ -84,8 +83,7 @@
     <!-- imagem: so aparece com content ou contentFiles com 1 item -->
     <img
       v-if="
-        section.image &&
-        (section.content || (section.contentFiles?.length === 1))
+        section.image && (section.content || section.contentFiles?.length === 1)
       "
       :src="section.image"
       :alt="section.title ?? ''"
@@ -117,20 +115,29 @@ async function loadMarkdownFiles() {
   if (!config.value) return;
 
   const newMap = new Map<string, string[]>();
-  for (const section of config.value.sections) {
-    if (section.contentFiles) {
-      const results = await Promise.all(
-        section.contentFiles.map((file) =>
-          fetchMarkdown(`/content/${locale.value}/${file}`),
-        ),
-      );
-      newMap.set(section.id, results);
-    }
+  const entries = await Promise.all(
+    config.value.sections
+      .filter((section) => section.contentFiles)
+      .map(async (section) => {
+        const results = await Promise.all(
+          section.contentFiles!.map((file) =>
+            fetchMarkdown(`/content/${locale.value}/${file}`),
+          ),
+        );
+        return [section.id, results] as const;
+      }),
+  );
+  for (const [id, results] of entries) {
+    newMap.set(id, results);
   }
   markdownContent.value = newMap;
 }
 
-watch([loaded, config], async ([isLoaded]) => {
-  if (isLoaded) await loadMarkdownFiles();
-}, { immediate: true });
+watch(
+  [loaded, config],
+  async ([isLoaded]) => {
+    if (isLoaded) await loadMarkdownFiles();
+  },
+  { immediate: true },
+);
 </script>

@@ -36,7 +36,10 @@ const pageHtml = ref('');
 const pageError = ref('');
 const pageLoading = ref(false);
 
-const slug = computed(() => route.params.slug as string);
+const slug = computed(() => {
+  const raw = route.params.slug as string;
+  return raw.replace(/[^a-zA-Z0-9\-\/]/g, '');
+});
 
 const contentFile = computed(() => {
   const menuItem = config.value?.menu?.find((m) => m.route === route.path);
