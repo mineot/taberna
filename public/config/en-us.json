@@ -31,7 +31,7 @@
       "id": "services",
       "title": "Services",
       "subtitle": "Services offered",
-      "contentFiles": ["service-1.md", "service-2.md"]
+      "contentFiles": ["services/service-1.md", "services/service-2.md"]
     },
     {
       "id": "testimonials",
@@ -39,16 +39,16 @@
       "subtitle": "What our clients say",
       "destak": true,
       "contentFiles": [
-        "testimonial-1.md",
-        "testimonial-2.md",
-        "testimonial-3.md",
-        "testimonial-4.md",
-        "testimonial-5.md",
-        "testimonial-6.md",
-        "testimonial-7.md",
-        "testimonial-8.md",
-        "testimonial-9.md",
-        "testimonial-10.md"
+        "testimonials/testimonial-1.md",
+        "testimonials/testimonial-2.md",
+        "testimonials/testimonial-3.md",
+        "testimonials/testimonial-4.md",
+        "testimonials/testimonial-5.md",
+        "testimonials/testimonial-6.md",
+        "testimonials/testimonial-7.md",
+        "testimonials/testimonial-8.md",
+        "testimonials/testimonial-9.md",
+        "testimonials/testimonial-10.md"
       ],
       "carousel": {
         "autoPlay": true,
