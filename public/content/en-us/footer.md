@@ -2,9 +2,9 @@
 
 <div>
 
-<div class="flex items-center gap-4 font-fancy text-3xl mb-2 app-title">
+<div class="flex items-center gap-3 font-serif text-4xl mb-3 app-title">
 
-<img src="https://placehold.co/40x40" alt="Taberna" class="h-8 w-8 rounded-full object-cover" />
+<img src="logo.png" alt="Taberna" class="h-12 w-12 rounded-full object-cover" />
 
 #### Taberna
 

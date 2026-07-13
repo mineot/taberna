@@ -71,42 +71,32 @@
     'Liberation Mono', 'Courier New', monospace;
   --font-fancy: 'Italianno', cursive;
 
-  --color-primary-50: var(--color-olive-50);
-  --color-primary-100: var(--color-olive-100);
-  --color-primary-200: var(--color-olive-200);
-  --color-primary-300: var(--color-olive-300);
-  --color-primary-400: var(--color-olive-400);
-  --color-primary-500: var(--color-olive-500);
-  --color-primary-600: var(--color-olive-600);
-  --color-primary-700: var(--color-olive-700);
-  --color-primary-800: var(--color-olive-800);
-  --color-primary-900: var(--color-olive-900);
-  --color-primary-950: var(--color-olive-950);
+  --color-primary-50: var(--color-neutral-50);
+  --color-primary-100: var(--color-neutral-100);
+  --color-primary-200: var(--color-neutral-200);
+  --color-primary-300: var(--color-neutral-300);
+  --color-primary-400: var(--color-neutral-400);
+  --color-primary-500: var(--color-neutral-500);
+  --color-primary-600: var(--color-neutral-600);
+  --color-primary-700: var(--color-neutral-700);
+  --color-primary-800: var(--color-neutral-800);
+  --color-primary-900: var(--color-neutral-900);
+  --color-primary-950: var(--color-neutral-950);
 
-  --color-secondary-50: var(--color-amber-50);
-  --color-secondary-100: var(--color-amber-100);
-  --color-secondary-200: var(--color-amber-200);
-  --color-secondary-300: var(--color-amber-300);
-  --color-secondary-400: var(--color-amber-400);
-  --color-secondary-500: var(--color-amber-500);
-  --color-secondary-600: var(--color-amber-600);
-  --color-secondary-700: var(--color-amber-700);
-  --color-secondary-800: var(--color-amber-800);
-  --color-secondary-900: var(--color-amber-900);
-  --color-secondary-950: var(--color-amber-950);
-
-  --color-tertiary-50: var(--color-taupe-50);
-  --color-tertiary-100: var(--color-taupe-100);
-  --color-tertiary-200: var(--color-taupe-200);
-  --color-tertiary-300: var(--color-taupe-300);
-  --color-tertiary-400: var(--color-taupe-400);
-  --color-tertiary-500: var(--color-taupe-500);
-  --color-tertiary-600: var(--color-taupe-600);
-  --color-tertiary-700: var(--color-taupe-700);
-  --color-tertiary-800: var(--color-taupe-800);
-  --color-tertiary-900: var(--color-taupe-900);
-  --color-tertiary-950: var(--color-taupe-950);
+  --color-secondary-50: var(--color-emerald-50);
+  --color-secondary-100: var(--color-emerald-100);
+  --color-secondary-200: var(--color-emerald-200);
+  --color-secondary-300: var(--color-emerald-300);
+  --color-secondary-400: var(--color-emerald-400);
+  --color-secondary-500: var(--color-emerald-500);
+  --color-secondary-600: var(--color-emerald-600);
+  --color-secondary-700: var(--color-emerald-700);
+  --color-secondary-800: var(--color-emerald-800);
+  --color-secondary-900: var(--color-emerald-900);
+  --color-secondary-950: var(--color-emerald-950);
 }
+
+/* BACKGROUND */
 
 @utility app-duration {
   @apply duration-300;
@@ -128,6 +118,8 @@
   @apply bg-primary-950;
 }
 
+/* TEXT COLOR */
+
 @utility app-text {
   @apply text-primary-100;
 }
@@ -144,25 +136,39 @@
   @apply text-primary-400;
 }
 
-@utility app-accent {
-  @apply text-secondary-400;
+@utility app-text-accent {
+  @apply text-secondary-500;
 }
 
-@utility app-accent-hover {
-  @apply hover:text-secondary-300;
+@utility app-text-accent-hover {
+  @apply hover:text-secondary-400;
 }
+
+/* APP CUSTOMS */
+
+@utility app-title {
+  @apply font-fancy app-text-accent;
+}
+
+@utility app-title-adjustment {
+  @apply mt-2 leading-[0];
+}
+
+@utility app-logo {
+  @apply h-8 min-h-5 w-8 min-w-5;
+}
+
+@utility app-ring {
+  @apply ring-secondary-400;
+}
+
+/* BORDER COLOR */
 
 @utility app-border {
   @apply border-primary-700;
 }
 
-@utility app-title {
-  @apply font-fancy app-accent;
-}
-
-@utility app-title-text {
-  @apply mt-2 leading-[0];
-}
+/* SECTION */
 
 @utility app-section {
   @apply flex flex-col gap-4 md:flex-row md:gap-8;
@@ -173,7 +179,7 @@
 }
 
 @utility app-section-subtitle {
-  @apply app-accent mt-1;
+  @apply text-primary-500 mt-1;
 }
 
 @utility app-section-content {
@@ -181,23 +187,17 @@
 }
 
 @utility app-section-destak {
-  @apply bg-tertiary-800 -mx-6 px-6 py-8;
+  @apply bg-primary-700 -mx-6 px-6 py-8;
 }
 
 @utility app-section-image {
   @apply w-full rounded-lg object-cover md:w-1/2;
 }
 
-@utility app-container {
-  @apply mx-auto w-full max-w-4xl px-6;
-}
-
-@utility app-logo {
-  @apply h-8 min-h-5 w-8 min-w-5 rounded-full object-cover;
-}
+/* BUTTONS AND LINKS */
 
 @utility app-icon-btn {
-  @apply app-text-muted hover:app-accent app-duration cursor-pointer transition-colors;
+  @apply app-text-muted hover:app-text-accent app-duration cursor-pointer transition-colors;
 }
 
 @utility app-flag-btn {
@@ -205,12 +205,10 @@
 }
 
 @utility app-nav-link {
-  @apply app-text app-background-hover hover:app-accent app-duration rounded-lg px-3 py-2 transition-colors;
+  @apply app-text app-background-hover hover:app-text-accent app-duration rounded-lg px-3 py-2 transition-colors;
 }
 
-@utility app-backdrop {
-  @apply fixed inset-0 z-60 bg-black/60 backdrop-blur-sm;
-}
+/* SIDEBAR AND FOOTER */
 
 @utility app-sidebar {
   @apply app-background app-text fixed top-0 right-0 z-70 flex h-full w-72 flex-col shadow-xl;
@@ -220,6 +218,8 @@
   @apply app-border app-background-footer app-text-subtle flex flex-col items-center border-t px-6 py-6 text-sm;
 }
 
+/* CAROUSEL */
+
 @utility app-dot-active {
   @apply bg-secondary-400;
 }
@@ -228,17 +228,27 @@
   @apply bg-primary-600 hover:bg-primary-500;
 }
 
-@utility app-carousel-btn-bg {
-  @apply bg-primary-800/80;
+@utility app-carousel-btn {
+  @apply flex flex-shrink-0 items-center justify-center;
+  @apply app-text-muted hover:app-text-accent bg-primary-800/80;
+  @apply app-duration cursor-pointer rounded-full p-2 transition-colors;
+}
+
+/* UTILS AND LAYOUT */
+
+@utility app-container {
+  @apply mx-auto w-full max-w-4xl px-6;
+}
+
+@utility app-backdrop {
+  @apply fixed inset-0 z-60 bg-black/60 backdrop-blur-sm;
 }
 
 @utility app-skeleton {
   @apply bg-primary-700;
 }
 
-@utility app-ring {
-  @apply ring-secondary-400;
-}
+/* WEB DOC CUSTOMS */
 
 * {
   @apply box-border;

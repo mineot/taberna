@@ -142,7 +142,7 @@ Cada arquivo é completo e independente por idioma:
 | `title`       | Não         | Título exibido no header/sidebar. Se ausente, apenas a imagem é exibida |
 | `owner`       | Sim         | Nome do proprietário (exibido no footer)                                |
 | `description` | Sim         | Descrição do site (usado em meta tags)                                  |
-| `image`       | Não         | URL da imagem do site (exibida ao lado do título, formato circular)     |
+| `image`       | Não         | URL da imagem do site (exibida ao lado do título)                       |
 
 ### Conteúdo Markdown (`public/content/{locale}/*.md`)
 
@@ -185,12 +185,12 @@ Cada arquivo é completo e independente por idioma:
 
 O header e sidebar se adaptam automaticamente ao conteúdo:
 
-| Configuração                  | Comportamento                                      |
-| ----------------------------- | -------------------------------------------------- |
-| `menu: []` (array vazio)      | `<nav>` não é renderizado no header nem no sidebar |
-| Um único idioma               | Bandeira não é exibida no header/sidebar           |
-| Sem menu E um só idioma       | Hamburger não é exibido (sidebar inacessível)      |
-| Com menu OU mais de um idioma | Hamburger aparece                                  |
+| Configuração                  | Comportamento                                              |
+| ----------------------------- | ---------------------------------------------------------- |
+| `menu: []` (array vazio)      | `<nav>` não é renderizado no header nem no sidebar         |
+| Um único idioma               | Bandeira não é exibida no header/sidebar                   |
+| Sem menu E um só idioma       | Hamburger não é exibido (sidebar inacessível)              |
+| Com menu OU mais de um idioma | Hamburger aparece                                          |
 | Mais de 4 itens de menu       | Nav inline e bandeira ocultos; hamburger em todas as telas |
 
 **Clicando na bandeira** (header ou sidebar), o usuário é redirecionado para a página `/languages` — uma tela com grid de todos os idiomas disponíveis (bandeira + código). Ao selecionar um idioma, o site recarrega com o novo idioma.
@@ -255,7 +255,7 @@ O campo `title` é **opcional**. Se não informado, o `<h2>` não é renderizado
 
 #### Destaque de Seção (`destak`)
 
-Campo `destak` (booleano, opcional) aplica um fundo diferente na seção usando a paleta terciária:
+Campo `destak` (booleano, opcional) aplica um fundo diferente na seção usando a escala `primary`:
 
 ```json
 {
@@ -443,24 +443,23 @@ Todo o visual do site é controlado pelo arquivo `src/style.css`. Nele você enc
 
 O projeto usa fontes self-hosted em `public/fonts/`. Para trocar uma fonte, substitua os arquivos `.ttf` na pasta correspondente e atualize os `@font-face` no `style.css`.
 
-| Utilitário | Fonte | Uso |
-|------------|-------|-----|
-| `font-sans` | Roboto | Corpo do site, textos gerais |
-| `font-serif` | Roboto Serif | Textos editoriais |
-| `font-mono` | Roboto Mono | Código, trechos técnicos |
-| `font-fancy` | Italianno | Títulos decorativos (ex: logo) |
+| Utilitário   | Fonte        | Uso                            |
+| ------------ | ------------ | ------------------------------ |
+| `font-sans`  | Roboto       | Corpo do site, textos gerais   |
+| `font-serif` | Roboto Serif | Textos editoriais              |
+| `font-mono`  | Roboto Mono  | Código, trechos técnicos       |
+| `font-fancy` | Italianno    | Títulos decorativos (ex: logo) |
 
 ### Paleta de Cores
 
-O tema usa três escalas de cores mapeadas no `@theme`. Para trocar a paleta, altere as variáveis no bloco `@theme` do `style.css`.
+O tema usa duas escalas de cores mapeadas no `@theme`. Para trocar a paleta, altere as variáveis no bloco `@theme` do `style.css`.
 
-| Escala | Padrão | Uso |
-|--------|--------|-----|
-| `primary-*` (50 a 950) | Olive | Fundos, textos, bordas — a base do site |
-| `secondary-*` (50 a 950) | Amber | Cor de destaque (links, títulos, acentos) |
-| `tertiary-*` (50 a 950) | Taupe | Fundo de seções com destaque (`destak`) |
+| Escala                   | Padrão  | Uso                                                  |
+| ------------------------ | ------- | ---------------------------------------------------- |
+| `primary-*` (50 a 950)   | Neutral | Fundos, textos, bordas e seções com destaque         |
+| `secondary-*` (50 a 950) | Emerald | Cor de destaque para links, títulos, dots e seleções |
 
-**Exemplo** — Trocar a escala `primary` de olive para slate:
+**Exemplo** — Trocar a escala `primary` de neutral para slate:
 
 ```css
 @theme {
@@ -477,7 +476,7 @@ O tema usa três escalas de cores mapeadas no `@theme`. Para trocar a paleta, al
 > @theme {
 >   --color-primary-400: #6b7280;
 >   --color-primary-800: #1f2937;
->   --color-secondary-400: oklch(0.75 0.18 55);
+>   --color-secondary-500: oklch(0.75 0.18 55);
 > }
 > ```
 
@@ -487,98 +486,98 @@ Todos os utilitários começam com `app-*` e são definidos com `@utility` no `s
 
 #### Transições e Animações
 
-| Utilitário | Equivalente | Descrição |
-|------------|-------------|-----------|
+| Utilitário     | Equivalente    | Descrição                                      |
+| -------------- | -------------- | ---------------------------------------------- |
 | `app-duration` | `duration-300` | Duração de transições (hover, troca de idioma) |
 
 #### Fundos
 
-| Utilitário | Equivalente | Descrição |
-|------------|-------------|-----------|
-| `app-background` | `bg-primary-800` | Fundo principal (sidebar, cards) |
-| `app-background-hover` | `hover:bg-primary-700` | Fundo ao passar o mouse |
-| `app-background-header` | `bg-primary-900/95` | Fundo do header (95% opacidade) |
-| `app-background-footer` | `bg-primary-950` | Fundo do footer |
+| Utilitário              | Equivalente            | Descrição                        |
+| ----------------------- | ---------------------- | -------------------------------- |
+| `app-background`        | `bg-primary-800`       | Fundo principal (sidebar, cards) |
+| `app-background-hover`  | `hover:bg-primary-700` | Fundo ao passar o mouse          |
+| `app-background-header` | `bg-primary-900/95`    | Fundo do header (95% opacidade)  |
+| `app-background-footer` | `bg-primary-950`       | Fundo do footer                  |
 
 #### Texto
 
-| Utilitário | Equivalente | Descrição |
-|------------|-------------|-----------|
-| `app-text` | `text-primary-100` | Texto principal (títulos, links) |
-| `app-text-muted` | `text-primary-200` | Texto secundário (ícones, detalhes) |
-| `app-text-body` | `text-primary-300` | Texto de corpo / parágrafos |
-| `app-text-subtle` | `text-primary-400` | Texto sutil (footer, metainfo) |
-| `app-accent` | `text-secondary-400` | Cor de destaque (links, destaques) |
-| `app-accent-hover` | `hover:text-secondary-300` | Cor de destaque no hover |
+| Utilitário              | Equivalente                | Descrição                           |
+| ----------------------- | -------------------------- | ----------------------------------- |
+| `app-text`              | `text-primary-100`         | Texto principal (títulos, links)    |
+| `app-text-muted`        | `text-primary-200`         | Texto secundário (ícones, detalhes) |
+| `app-text-body`         | `text-primary-300`         | Texto de corpo / parágrafos         |
+| `app-text-subtle`       | `text-primary-400`         | Texto sutil (footer, metainfo)      |
+| `app-text-accent`       | `text-secondary-500`       | Cor de destaque (links, destaques)  |
+| `app-text-accent-hover` | `hover:text-secondary-400` | Cor de destaque no hover            |
 
 #### Bordas
 
-| Utilitário | Equivalente | Descrição |
-|------------|-------------|-----------|
+| Utilitário   | Equivalente          | Descrição            |
+| ------------ | -------------------- | -------------------- |
 | `app-border` | `border-primary-700` | Cor de bordas gerais |
 
 #### Títulos
 
-| Utilitário | Equivalente | Descrição |
-|------------|-------------|-----------|
-| `app-title` | `font-fancy app-accent` | Título do site (logo) — fonte Italianno + cor accent |
-| `app-title-text` | `mt-2 leading-[0]` | Alinhamento vertical do título com a imagem |
+| Utilitário             | Equivalente                  | Descrição                                            |
+| ---------------------- | ---------------------------- | ---------------------------------------------------- |
+| `app-title`            | `font-fancy app-text-accent` | Título do site (logo) — fonte Italianno + cor accent |
+| `app-title-adjustment` | `mt-2 leading-[0]`           | Alinhamento vertical do título com a imagem          |
 
 #### Seções (Home)
 
-| Utilitário | Equivalente | Descrição |
-|------------|-------------|-----------|
-| `app-section` | `flex flex-col gap-4 md:flex-row md:gap-8` | Layout da seção (empilha no mobile, lado a lado no desktop) |
-| `app-section-title` | `text-2xl font-bold` | Título da seção |
-| `app-section-subtitle` | `app-accent mt-1` | Subtítulo da seção (cor accent) |
-| `app-section-content` | `mt-4 flex flex-col flex-wrap gap-6 md:flex-row` | Container do conteúdo |
-| `app-section-image` | `w-full rounded-lg object-cover md:w-1/2` | Imagem da seção (50% no desktop) |
-| `app-section-destak` | `bg-tertiary-800 -mx-6 px-6 py-8` | Fundo de destaque da seção (estica além do container) |
+| Utilitário             | Equivalente                                      | Descrição                                                   |
+| ---------------------- | ------------------------------------------------ | ----------------------------------------------------------- |
+| `app-section`          | `flex flex-col gap-4 md:flex-row md:gap-8`       | Layout da seção (empilha no mobile, lado a lado no desktop) |
+| `app-section-title`    | `text-2xl font-bold`                             | Título da seção                                             |
+| `app-section-subtitle` | `text-primary-500 mt-1`                          | Subtítulo da seção                                          |
+| `app-section-content`  | `mt-4 flex flex-col flex-wrap gap-6 md:flex-row` | Container do conteúdo                                       |
+| `app-section-image`    | `w-full rounded-lg object-cover md:w-1/2`        | Imagem da seção (50% no desktop)                            |
+| `app-section-destak`   | `bg-primary-700 -mx-6 px-6 py-8`                 | Fundo de destaque da seção (estica além do container)       |
 
 #### Layout
 
-| Utilitário | Equivalente | Descrição |
-|------------|-------------|-----------|
-| `app-container` | `mx-auto w-full max-w-4xl px-6` | Container centralizado do conteúdo |
-| `app-logo` | `h-8 min-h-5 w-8 min-w-5 rounded-full object-cover` | Imagem do site (formato circular) |
+| Utilitário      | Equivalente                     | Descrição                                  |
+| --------------- | ------------------------------- | ------------------------------------------ |
+| `app-container` | `mx-auto w-full max-w-4xl px-6` | Container centralizado do conteúdo         |
+| `app-logo`      | `h-8 min-h-5 w-8 min-w-5`       | Dimensões base e mínimas da imagem do site |
 
 #### Botões e Navegação
 
-| Utilitário | Equivalente | Descrição |
-|------------|-------------|-----------|
-| `app-icon-btn` | `app-text-muted hover:app-accent app-duration cursor-pointer transition-colors` | Botão de ícone genérico (hamburger, fechar) |
-| `app-flag-btn` | `app-duration cursor-pointer transition-all hover:scale-110` | Botão de bandeira (idioma) |
-| `app-nav-link` | `app-text hover:app-background-hover hover:app-accent app-duration rounded-lg px-3 py-2 transition-colors` | Link do menu de navegação |
+| Utilitário     | Equivalente                                                                                               | Descrição                                   |
+| -------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `app-icon-btn` | `app-text-muted hover:app-text-accent app-duration cursor-pointer transition-colors`                      | Botão de ícone genérico (hamburger, fechar) |
+| `app-flag-btn` | `app-duration cursor-pointer transition-all hover:scale-110`                                              | Botão de bandeira (idioma)                  |
+| `app-nav-link` | `app-text app-background-hover hover:app-text-accent app-duration rounded-lg px-3 py-2 transition-colors` | Link do menu de navegação                   |
 
 #### Mobile (Sidebar + Backdrop)
 
-| Utilitário | Equivalente | Descrição |
-|------------|-------------|-----------|
-| `app-backdrop` | `fixed inset-0 z-60 bg-black/60 backdrop-blur-sm` | Fundo escuro atrás do sidebar |
-| `app-sidebar` | `app-background app-text fixed top-0 right-0 z-70 flex h-full w-72 flex-col shadow-xl` | Sidebar do menu (largura 288px) |
+| Utilitário     | Equivalente                                                                            | Descrição                       |
+| -------------- | -------------------------------------------------------------------------------------- | ------------------------------- |
+| `app-backdrop` | `fixed inset-0 z-60 bg-black/60 backdrop-blur-sm`                                      | Fundo escuro atrás do sidebar   |
+| `app-sidebar`  | `app-background app-text fixed top-0 right-0 z-70 flex h-full w-72 flex-col shadow-xl` | Sidebar do menu (largura 288px) |
 
 #### Footer
 
-| Utilitário | Equivalente | Descrição |
-|------------|-------------|-----------|
+| Utilitário   | Equivalente                                                                                              | Descrição           |
+| ------------ | -------------------------------------------------------------------------------------------------------- | ------------------- |
 | `app-footer` | `app-border app-background-footer app-text-subtle flex flex-col items-center border-t px-6 py-6 text-sm` | Container do footer |
 
 #### Carousel
 
-| Utilitário | Equivalente | Descrição |
-|------------|-------------|-----------|
-| `app-dot-active` | `bg-secondary-400` | Dot ativo do carousel |
-| `app-dot-inactive` | `bg-primary-600 hover:bg-primary-500` | Dot inativo do carousel |
-| `app-carousel-btn-bg` | `bg-primary-800/80` | Fundo dos botões prev/next |
+| Utilitário         | Equivalente                                                                                                                                                            | Descrição                                      |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `app-dot-active`   | `bg-secondary-400`                                                                                                                                                     | Dot ativo do carousel                          |
+| `app-dot-inactive` | `bg-primary-600 hover:bg-primary-500`                                                                                                                                  | Dot inativo do carousel                        |
+| `app-carousel-btn` | `flex flex-shrink-0 items-center justify-center app-text-muted hover:app-text-accent bg-primary-800/80 app-duration cursor-pointer rounded-full p-2 transition-colors` | Botões anterior/seguinte completos do carousel |
 
 #### Outros
 
-| Utilitário | Equivalente | Descrição |
-|------------|-------------|-----------|
-| `app-skeleton` | `bg-primary-700` | Fundo do skeleton loader (carregamento) |
-| `app-ring` | `ring-secondary-400` | Cor de anel/destaque (ex: idioma selecionado) |
+| Utilitário     | Equivalente          | Descrição                                     |
+| -------------- | -------------------- | --------------------------------------------- |
+| `app-skeleton` | `bg-primary-700`     | Fundo do skeleton loader (carregamento)       |
+| `app-ring`     | `ring-secondary-400` | Cor de anel/destaque (ex: idioma selecionado) |
 
-> **Dica:** Para mudar a cor de todos os links do site, basta alterar `app-accent` e `app-accent-hover`. Para trocar o fundo global, altere `app-background`.
+> **Dica:** Para mudar a cor de todos os links do site, basta alterar `app-text-accent` e `app-text-accent-hover`. Para trocar o fundo global, altere `app-background`.
 
 > **Aviso:** Para customização visual, recomendamos trocar apenas **cores** (paleta no `@theme`) e **fontes** (`@font-face`). Evite modificar as utilities (`app-*`) diretamente — se precisar alterar alguma, modifique apenas as cores definidas nelas, sem mexer no resto. Qualquer alteração nas utilities pode quebrar o layout do site, a menos que você saiba exatamente o que está fazendo.
 

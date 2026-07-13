@@ -9,7 +9,7 @@
     <div class="flex min-w-0 items-center gap-3">
       <button
         v-if="showButtons && slides.length > 1"
-        class="carousel-btn"
+        class="app-carousel-btn"
         aria-label="Previous slide"
         @click="prev"
       >
@@ -53,7 +53,7 @@
 
       <button
         v-if="showButtons && slides.length > 1"
-        class="carousel-btn"
+        class="app-carousel-btn"
         aria-label="Next slide"
         @click="next"
       >
@@ -137,7 +137,8 @@ function prev() {
     currentIndex.value =
       (currentIndex.value - 1 + props.slides.length) % props.slides.length;
   } else {
-    currentPage.value = Math.max(currentPage.value - 1, 0);
+    currentPage.value =
+      (currentPage.value - 1 + totalDots.value) % totalDots.value;
   }
 }
 
@@ -145,7 +146,7 @@ function next() {
   if (isSingleView.value) {
     currentIndex.value = (currentIndex.value + 1) % props.slides.length;
   } else {
-    currentPage.value = Math.min(currentPage.value + 1, maxPage.value);
+    currentPage.value = (currentPage.value + 1) % totalDots.value;
   }
 }
 
@@ -200,12 +201,3 @@ watch(
   },
 );
 </script>
-
-<style scoped>
-@reference 'tailwindcss';
-@reference '../style.css';
-
-.carousel-btn {
-  @apply app-text-muted hover:app-accent app-duration app-carousel-btn-bg flex flex-shrink-0 cursor-pointer items-center justify-center rounded-full p-2 transition-colors;
-}
-</style>

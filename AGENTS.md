@@ -114,11 +114,10 @@ taberna/
 
 Paleta de cores mapeada via `@theme` no Tailwind v4:
 
-| Token         | Escala        | Uso real no codigo                                                                                                                                                                                                                                                                                                       |
-| ------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `primary-*`   | olive-50..950 | `app-background` (800), `app-background-hover` (700), `app-background-header` (900/95), `app-background-footer` (950), `app-text` (100), `app-text-muted` (200), `app-text-body` (300), `app-text-subtle` (400), `app-border` (700), `app-dot-inactive` (600, 500), `app-carousel-btn-bg` (800/80), `app-skeleton` (700) |
-| `secondary-*` | amber-50..950 | `app-accent` (400), `app-accent-hover` (300), `app-dot-active` (400)                                                                                                                                                                                                                                                     |
-| `tertiary-*`  | taupe-50..950 | `app-section-destak` (800)                                                                                                                                                                                                                                                                                               |
+| Token         | Escala          | Uso real no codigo                                                                                                                                                                                                                                                                                                                                                              |
+| ------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `primary-*`   | neutral-50..950 | `app-background` (800), `app-background-hover` (700), `app-background-header` (900/95), `app-background-footer` (950), `app-text` (100), `app-text-muted` (200), `app-text-body` (300), `app-text-subtle` (400), `app-section-subtitle` (500), `app-border` (700), `app-section-destak` (700), `app-dot-inactive` (600, 500), `app-carousel-btn` (800/80), `app-skeleton` (700) |
+| `secondary-*` | emerald-50..950 | `app-text-accent` (500), `app-text-accent-hover` (400), `app-dot-active` (400), `app-ring` (400)                                                                                                                                                                                                                                                                                |
 
 Font stacks customizados:
 
@@ -138,28 +137,28 @@ Utilitarios customizados:
 - `app-text-muted` → `text-primary-200`
 - `app-text-body` → `text-primary-300`
 - `app-text-subtle` → `text-primary-400`
-- `app-accent` → `text-secondary-400`
-- `app-accent-hover` → `hover:text-secondary-300`
+- `app-text-accent` → `text-secondary-500`
+- `app-text-accent-hover` → `hover:text-secondary-400`
 - `app-border` → `border-primary-700`
-- `app-title` → `font-fancy app-accent`
-- `app-title-text` → `mt-2 leading-[0]`
+- `app-title` → `font-fancy app-text-accent`
+- `app-title-adjustment` → `mt-2 leading-[0]`
 - `app-section` → `flex flex-col gap-4 md:flex-row md:gap-8`
 - `app-section-title` → `text-2xl font-bold`
-- `app-section-subtitle` → `app-accent mt-1`
+- `app-section-subtitle` → `text-primary-500 mt-1`
 - `app-section-content` → `mt-4 flex flex-col flex-wrap gap-6 md:flex-row`
 - `app-section-image` → `w-full rounded-lg object-cover md:w-1/2`
-- `app-section-destak` → `bg-tertiary-800 -mx-6 px-6 py-8`
+- `app-section-destak` → `bg-primary-700 -mx-6 px-6 py-8`
 - `app-container` → `mx-auto w-full max-w-4xl px-6`
-- `app-logo` → `h-8 min-h-5 w-8 min-w-5 rounded-full object-cover`
-- `app-icon-btn` → `app-text-muted hover:app-accent app-duration cursor-pointer transition-colors`
+- `app-logo` → `h-8 min-h-5 w-8 min-w-5`
+- `app-icon-btn` → `app-text-muted hover:app-text-accent app-duration cursor-pointer transition-colors`
 - `app-flag-btn` → `app-duration cursor-pointer transition-all hover:scale-110`
-- `app-nav-link` → `app-text app-background-hover hover:app-accent app-duration rounded-lg px-3 py-2 transition-colors`
+- `app-nav-link` → `app-text app-background-hover hover:app-text-accent app-duration rounded-lg px-3 py-2 transition-colors`
 - `app-backdrop` → `fixed inset-0 z-60 bg-black/60 backdrop-blur-sm`
 - `app-sidebar` → `app-background app-text fixed top-0 right-0 z-70 flex h-full w-72 flex-col shadow-xl`
 - `app-footer` → `app-border app-background-footer app-text-subtle border-t py-6 px-6 text-sm flex flex-col items-center`
 - `app-dot-active` → `bg-secondary-400`
 - `app-dot-inactive` → `bg-primary-600 hover:bg-primary-500`
-- `app-carousel-btn-bg` → `bg-primary-800/80`
+- `app-carousel-btn` → `flex flex-shrink-0 items-center justify-center app-text-muted hover:app-text-accent bg-primary-800/80 app-duration cursor-pointer rounded-full p-2 transition-colors`
 - `app-skeleton` → `bg-primary-700`
 - `app-ring` → `ring-secondary-400`
 
@@ -207,13 +206,13 @@ Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css)
 
 Tudo que envolve HTML dinamico passa por sanitizacao antes de ser renderizado:
 
-| Onde                                    | O que                                                | Como                                              |
-| --------------------------------------- | ---------------------------------------------------- | ------------------------------------------------- |
-| **Conteudo markdown** (sections/paginas) | HTML gerado por `marked.parse()`                     | `DOMPurify.sanitize()` antes de cache + `v-html`  |
-| **Footer customizado**                  | HTML do markdown do footer                           | Mesmo pipeline do `useMarkdown` (DOMPurify)       |
-| **Links externos no menu**              | `href` de `<a>` tags                                 | `isSafeHref()` bloqueia `javascript:` e `data:`   |
-| **Slug de rotas**                       | `route.params.slug`                                  | Regex `[^a-zA-Z0-9\-\/]` remove caracteres invalidos |
-| **Troca de idioma**                     | Valor passado para `setLocale()`                      | Valida contra array `available` do manifest       |
+| Onde                                     | O que                            | Como                                                 |
+| ---------------------------------------- | -------------------------------- | ---------------------------------------------------- |
+| **Conteudo markdown** (sections/paginas) | HTML gerado por `marked.parse()` | `DOMPurify.sanitize()` antes de cache + `v-html`     |
+| **Footer customizado**                   | HTML do markdown do footer       | Mesmo pipeline do `useMarkdown` (DOMPurify)          |
+| **Links externos no menu**               | `href` de `<a>` tags             | `isSafeHref()` bloqueia `javascript:` e `data:`      |
+| **Slug de rotas**                        | `route.params.slug`              | Regex `[^a-zA-Z0-9\-\/]` remove caracteres invalidos |
+| **Troca de idioma**                      | Valor passado para `setLocale()` | Valida contra array `available` do manifest          |
 
 ### Content Security Policy (CSP)
 
@@ -262,7 +261,7 @@ Composable que orquestra a troca de idioma: `setLocale` + `loadConfig` + navega�
 - Tailwind CSS v4 via `@import 'tailwindcss'` (CSS-first config, sem tailwind.config.js)
 - Componentes em lowercase com hifen: `section-carousel.vue`
 - Scoped styles (App.vue usa `@reference` para acessar tema do style.css)
-- Usar sempre utilities customizadas (app-*) em componentes. Nunca usar cores do tema (primary-*, secondary-*, tertiary-*) diretamente em templates — exceto em style.css onde as utilities sao definidas
+- Usar sempre utilities customizadas (`app-*`) em componentes. Nunca usar cores do tema (`primary-*`, `secondary-*`) diretamente em templates — exceto em `style.css`, onde as utilities sao definidas
 - Nao adicionar comentarios no codigo (so se pedido)
 - Conteudo do site em arquivos JSON (`public/config/`) e markdown (`public/content/`)
 - **SEMPRE atualizar este arquivo (AGENTS.md) apos qualquer mudanca significativa no codigo**
@@ -289,6 +288,35 @@ Composable que orquestra a troca de idioma: `setLocale` + `loadConfig` + navega�
    - `await loadConfig(lang)` — carrega config do novo idioma antes de navegar
    - `router.push('/')` — redireciona para home para evitar page not found
 5. `HomeView` observa `[loaded, config]` para buscar markdown — garante que o config correto ja esta carregado
+
+### Textos Hardcoded
+
+O conteudo editorial em `public/config/{locale}.json` e `public/content/{locale}/` nao e considerado hardcoded: ele ja esta externalizado e possui versoes por idioma.
+
+Os valores abaixo sao hardcoded intencionais e devem permanecer fora do sistema de traducao:
+
+| Arquivo       | Valor        | Motivo                                                         |
+| ------------- | ------------ | -------------------------------------------------------------- |
+| `index.html`  | `lang="en"`  | Idioma inicial do documento, substituido pelo locale detectado |
+| `index.html`  | `Taberna`    | Titulo inicial/fallback antes do config ser carregado          |
+| `src/App.vue` | `Powered by` | Prefixo fixo do credito do projeto no footer                   |
+| `src/App.vue` | `Mineot`     | Nome proprio e fixo do autor no link de credito                |
+
+Os textos abaixo continuam hardcoded temporariamente e devem ser traduzidos depois:
+
+| Arquivo                                          | Texto                       | Contexto                                                                |
+| ------------------------------------------------ | --------------------------- | ----------------------------------------------------------------------- |
+| `src/App.vue`                                    | `Menu`                      | `aria-label` do botao hamburger e do dialog do sidebar                  |
+| `src/components/section-carousel.vue`            | `Previous slide`            | `aria-label` do botao de navegacao anterior                             |
+| `src/components/section-carousel.vue`            | `Next slide`                | `aria-label` do botao de navegacao seguinte                             |
+| `src/components/section-carousel.vue`            | `Slide {n}`                 | `aria-label` dinamico dos indicadores                                   |
+| `src/components/section-carousel.vue`            | `Carousel: {atual}/{total}` | `aria-label` dinamico do grupo do carousel                              |
+| `src/views/PageView.vue`                         | `Page not found`            | Mensagem visivel quando o Markdown de uma pagina nao pode ser carregado |
+| `src/composables/useConfig.ts`                   | `Unknown error`             | Fallback de erro que pode ser exibido por `App.vue`                     |
+| `src/composables/useConfig.ts`, `useMarkdown.ts` | `HTTP {status}`             | Mensagem tecnica gerada quando uma requisicao falha                     |
+| `src/composables/useMarkdown.ts`                 | `Not found`                 | Erro tecnico ao detectar o fallback HTML da SPA                         |
+
+Outros valores literais, como nomes internos de rotas, caminhos, media queries, chaves do `localStorage`, URLs, valores ARIA padronizados e o fallback de locale `pt-br`, sao constantes tecnicas e nao textos de interface. Atualmente nao existe um dicionario de mensagens de UI; a traducao dos itens pendentes exigira adiciona-los ao sistema de i18n ou aos configs por idioma.
 
 ### Manifest (`public/languages.json`)
 
@@ -408,9 +436,9 @@ Campos do objeto `site` no config JSON:
 
 ### Destaque de Secao (`destak`)
 
-Campo `destak` (booleano, opcional) na section aplica um fundo diferente usando a paleta `tertiary` (taupe):
+Campo `destak` (booleano, opcional) na section aplica um fundo diferente usando a escala `primary` (neutral):
 
-- Quando `true`: aplica `app-section-destak` → `bg-tertiary-800 -mx-6 px-6 py-8`
+- Quando `true`: aplica `app-section-destak` → `bg-primary-700 -mx-6 px-6 py-8`
 - O `-mx-6` quebra a margem do container para "esticar" o fundo
 - Disponivel na interface `Section` em `src/types/config.ts`
 - Para usar: adicionar `"destak": true` no JSON da seção desejada
@@ -474,7 +502,7 @@ Todos os campos sao opcionais. Exemplo de uso:
 - Cada slide ocupa `100% / N` do espaco disponivel
 - Navegacao por pagina (avanca/retorna N itens por clique)
 - Dots = `ceil(slides.length / N)` (posicoes disponiveis)
-- Nao e circular (para na ultima pagina)
+- Navegacao circular (apos a ultima pagina, retorna ao inicio; antes da primeira, retorna ao fim)
 
 #### Precedencia
 
@@ -532,10 +560,10 @@ O header e sidebar se adaptam ao conteudo:
 O titulo do site (imagem + texto) e um link `<a href="/">` com:
 
 - **`app-title`** no container `<a>` — fonte fancy + cor accent
-- **`app-accent-hover`** no container `<a>` — hover clara a cor (secondary-400 → secondary-300)
-- **`app-title-text`** no `<h1>`/`<h2>` — `mt-2 leading-[0]` para alinhar com a imagem
+- **`app-text-accent-hover`** no container `<a>` — hover clareia a cor (secondary-500 → secondary-400)
+- **`app-title-adjustment`** no `<h1>`/`<h2>` — `mt-2 leading-[0]` para alinhar com a imagem
 - **`app-duration`** — transicao suave (0.3s) no hover
-- **Sidebar**: Mesmo esquema, `<a href="/">` com `app-title app-accent-hover app-duration` + `@click="closeMenu"` para fechar o menu ao clicar
+- **Sidebar**: Mesmo esquema, `<a href="/">` com `app-title app-text-accent-hover app-duration` + `@click="closeMenu"` para fechar o menu ao clicar
 - **Opcional**: Campo `title` no config e opcional — se ausente, `<h1>`/`<h2>` nao sao renderizados (permite usar apenas imagem)
 
 ### Imagem do Site (Header + Sidebar)
@@ -544,7 +572,7 @@ Campo `site.image` no config controla exibicao de imagem ao lado do titulo:
 
 - **Opcional**: Se nao definido ou vazio, nao exibe nada
 - **Tamanho**: `h-8 w-8` (32px) mobile, `md:h-12 md:w-12` (48px) desktop, `min-h-5 min-w-5` (20px minimo)
-- **Formato**: `rounded-full` (circular)
+- **Formato**: `app-logo` controla apenas as dimensoes; nao aplica arredondamento nem corte da imagem
 - **Posicao**: Ao lado esquerdo do titulo, com `gap-3` de espacamento
 - **Sidebar**: Mesmo tamanho mobile (`h-8 w-8`) e titulo `text-3xl` (mesmo do header mobile)
 
@@ -613,7 +641,7 @@ Campo `contentFile` no `footer` do config permite carregar conteudo markdown par
 - **Separador**: Barra horizontal entre conteudo markdown e a linha de ownership/powered by
 - **Ownership**: Campo `ownership` no config (ex: "© 2026 Nome")
 - **Powered by**: Texto estatico com link para `https://github.com/mineot/taberna`
-- **Links**: Estilizados via `.app-footer-content :deep(a)` — underline + `app-text-subtle` que muda para `app-accent` no hover
+- **Links**: Estilizados via `.app-footer-content :deep(a)` — underline + `app-text-subtle` que muda para `app-text-accent` no hover
 - **Layout**: Mobile = empilhado, Desktop = `space-between`
 - **Exemplo de conteudo footer.md**:
   ```html

@@ -26,7 +26,6 @@
         {{ section.subtitle }}
       </p>
 
-      <!-- content: texto simples + imagem opcional -->
       <div v-if="section.content" class="app-section-content">
         <p
           v-for="(item, i) in section.content"
@@ -37,7 +36,6 @@
         </p>
       </div>
 
-      <!-- contentFiles com 1 item: markdown + imagem opcional -->
       <div
         v-else-if="
           section.contentFiles?.length === 1 && markdownContent.get(section.id)
@@ -50,7 +48,6 @@
         />
       </div>
 
-      <!-- contentFiles com 2+ items + carousel -->
       <SectionCarousel
         v-else-if="
           section.contentFiles &&
@@ -62,7 +59,6 @@
         :config="section.carousel"
       />
 
-      <!-- contentFiles com 2+ items sem carousel -->
       <div
         v-else-if="
           section.contentFiles &&
@@ -80,7 +76,6 @@
       </div>
     </div>
 
-    <!-- imagem: so aparece com content ou contentFiles com 1 item -->
     <img
       v-if="
         section.image && (section.content || section.contentFiles?.length === 1)

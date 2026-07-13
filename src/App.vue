@@ -19,7 +19,7 @@
     v-else-if="error"
     class="app-background flex min-h-screen items-center justify-center"
   >
-    <p class="app-accent">{{ error }}</p>
+    <p class="app-text-accent">{{ error }}</p>
   </div>
 
   <div
@@ -33,7 +33,7 @@
         <div class="flex items-center gap-3">
           <router-link
             to="/"
-            class="app-title app-accent-hover app-duration flex items-center gap-3"
+            class="app-title app-text-accent-hover app-duration flex items-center gap-3"
           >
             <img
               v-if="config?.site.image"
@@ -44,7 +44,7 @@
             <h1
               v-if="config?.site.title"
               :key="locale"
-              class="app-title-text text-3xl md:text-5xl"
+              class="app-title-adjustment text-3xl md:text-5xl"
             >
               {{ config?.site.title }}
             </h1>
@@ -59,21 +59,21 @@
               <router-link
                 v-if="item.route"
                 :to="item.route"
-                class="hover:app-accent app-duration transition-colors"
+                class="hover:app-text-accent app-duration transition-colors"
               >
                 {{ item.label }}
               </router-link>
               <router-link
                 v-else-if="item.href?.startsWith('#')"
                 :to="'/' + item.href"
-                class="hover:app-accent app-duration transition-colors"
+                class="hover:app-text-accent app-duration transition-colors"
               >
                 {{ item.label }}
               </router-link>
               <a
                 v-else-if="item.href && isSafeHref(item.href)"
                 :href="item.href"
-                class="hover:app-accent app-duration transition-colors"
+                class="hover:app-text-accent app-duration transition-colors"
               >
                 {{ item.label }}
               </a>
@@ -118,7 +118,7 @@
           >
             <router-link
               to="/"
-              class="app-title app-accent-hover app-duration flex items-center gap-3"
+              class="app-title app-text-accent-hover app-duration flex items-center gap-3"
               @click="closeMenu"
             >
               <img
@@ -127,7 +127,10 @@
                 :alt="config.site.title"
                 class="app-logo"
               />
-              <h2 v-if="config?.site.title" class="app-title-text text-3xl">
+              <h2
+                v-if="config?.site.title"
+                class="app-title-adjustment text-3xl"
+              >
                 {{ config?.site.title }}
               </h2>
             </router-link>
@@ -202,7 +205,7 @@
             href="https://github.com/mineot/taberna"
             target="_blank"
             rel="noopener"
-            class="app-accent hover:app-accent-hover app-duration transition-colors"
+            class="app-text-accent hover:app-text-accent-hover app-duration transition-colors"
             >Mineot</a
           >
         </p>
@@ -220,7 +223,7 @@
 }
 
 .app-footer-content :deep(a:hover) {
-  @apply app-accent;
+  @apply app-text-accent;
 }
 
 .backdrop-enter-active,

@@ -10,7 +10,7 @@
   </div>
 
   <div v-else-if="pageError" class="py-12 text-center">
-    <p class="app-accent text-xl">{{ pageError }}</p>
+    <p class="app-text-accent text-xl">{{ pageError }}</p>
   </div>
 
   <article
@@ -64,7 +64,11 @@ async function loadPage() {
   }
 }
 
-watch([loaded, locale, slug], async ([isLoaded]) => {
-  if (isLoaded) await loadPage();
-}, { immediate: true });
+watch(
+  [loaded, locale, slug],
+  async ([isLoaded]) => {
+    if (isLoaded) await loadPage();
+  },
+  { immediate: true },
+);
 </script>
