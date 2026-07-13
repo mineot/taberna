@@ -18,7 +18,7 @@
       },
     ]"
   >
-    <div class="flex-1">
+    <div class="min-w-0 flex-1">
       <h2 v-if="section.title" class="app-section-title">
         {{ section.title }}
       </h2>
@@ -26,8 +26,14 @@
         {{ section.subtitle }}
       </p>
 
+      <SectionCarousel
+        v-if="section.carousel && section.contentFile && markdownContent.get(section.id)"
+        :slides="markdownContent.get(section.id)!"
+        :config="section.carousel"
+      />
+
       <div
-        v-if="section.contentFile && markdownContent.get(section.id)"
+        v-else-if="section.contentFile && markdownContent.get(section.id)"
         class="app-section-content"
       >
         <div
@@ -37,6 +43,12 @@
           v-html="html"
         />
       </div>
+
+      <SectionCarousel
+        v-else-if="section.carousel && section.content"
+        :slides="section.content"
+        :config="section.carousel"
+      />
 
       <div v-else-if="section.content" class="app-section-content">
         <p
@@ -68,6 +80,7 @@ import { ref, watch } from 'vue';
 import { useConfig } from '../composables/useConfig';
 import { useLocale } from '../composables/useLocale';
 import { useMarkdown } from '../composables/useMarkdown';
+import SectionCarousel from '../components/section-carousel.vue';
 
 const { config, loaded } = useConfig();
 const { locale } = useLocale();

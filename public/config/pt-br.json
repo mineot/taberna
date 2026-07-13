@@ -25,12 +25,37 @@
       "subtitle": "Subtitulo opcional",
       "content": ["Conteudo ficticio em texto simples para esta secao."],
       "image": "https://placehold.co/600x400",
-      "contentPosition": "top"
+      "contentPosition": "top",
+      "destak": true
     },
     {
       "id": "servicos",
-      "contentFile": ["servico-1.md", "servico-2.md"],
-      "destak": true
+      "contentFile": ["servico-1.md", "servico-2.md"]
+    },
+    {
+      "id": "depoimentos",
+      "title": "Depoimentos",
+      "subtitle": "O que nossos clientes dizem",
+      "destak": true,
+      "contentFile": [
+        "depoimento-1.md",
+        "depoimento-2.md",
+        "depoimento-3.md",
+        "depoimento-4.md",
+        "depoimento-5.md",
+        "depoimento-6.md",
+        "depoimento-7.md",
+        "depoimento-8.md",
+        "depoimento-9.md",
+        "depoimento-10.md"
+      ],
+      "carousel": {
+        "autoPlay": true,
+        "interval": 4000,
+        "buttons": true,
+        "dots": true,
+        "itemsPerView": 3
+      }
     }
   ],
   "footer": {

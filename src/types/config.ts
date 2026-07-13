@@ -14,6 +14,14 @@ export interface MenuItem {
   content?: string;
 }
 
+export interface CarouselConfig {
+  autoPlay?: boolean;
+  interval?: number;
+  buttons?: boolean;
+  dots?: boolean;
+  itemsPerView?: number;
+}
+
 export interface Section {
   id: string;
   title?: string;
@@ -25,6 +33,7 @@ export interface Section {
   contentPosition?: VerticalPosition;
   invert?: boolean;
   destak?: boolean;
+  carousel?: CarouselConfig;
 }
 
 export interface FooterConfig {

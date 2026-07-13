@@ -62,6 +62,8 @@ taberna/
 │   ├── App.vue                # Root — layout (header/sidebar/footer) + router-view
 │   ├── env.d.ts               # Tipos para .vue
 │   ├── style.css              # Tailwind v4 + @font-face + @theme custom + typography plugin
+│   ├── components/
+│   │   └── section-carousel.vue # Carousel de slides com auto-play, botoes e dots
 │   ├── router/
 │   │   └── index.ts           # Vue Router — rotas / e /:slug
 │   ├── views/
@@ -72,7 +74,7 @@ taberna/
 │   │   ├── useLocale.ts       # Detecao de idioma (browser/localStorage/manifest)
 │   │   └── useMarkdown.ts     # Fetch + parse de arquivos markdown com cache
 │   └── types/
-│       └── config.ts          # Interfaces: AppConfig, SiteConfig, MenuItem, VerticalPosition, etc.
+│       └── config.ts          # Interfaces: AppConfig, Section, CarouselConfig, MenuItem, etc.
 └── dist/                      # Build de producao
 ```
 
@@ -265,6 +267,69 @@ Campo `destak` (booleano, opcional) na section aplica um fundo diferente usando 
 - O `-mx-6` quebra a margem do container para "esticar" o fundo
 - Disponivel na interface `Section` em `src/types/config.ts`
 - Para usar: adicionar `"destak": true` no JSON da seção desejada
+
+### Carousel de Secoes
+
+Campo `carousel` (objeto opcional) na section ativa o modo carousel para o conteudo:
+
+- Quando definido, o conteudo (`contentFile` ou `content`) e exibido como slides com transicao
+- A imagem da section permanece estatica (fora do carousel)
+- Componente: `src/components/section-carousel.vue`
+
+#### Configuracao (`CarouselConfig`)
+
+| Campo | Tipo | Default | Descricao |
+|---|---|---|---|
+| `autoPlay` | `boolean` | `true` | Auto-avanca os slides |
+| `interval` | `number` | `5000` | Milissegundos entre slides |
+| `buttons` | `boolean` | `true` | Exibe setas prev/next (Lucide ChevronLeft/ChevronRight) |
+| `dots` | `boolean` | `true` | Exibe indicadores de posicao (dots) |
+| `itemsPerView` | `number` | `1` | Quantos itens visiveis simultaneamente |
+
+Todos os campos sao opcionais. Exemplo de uso:
+
+```json
+{
+  "id": "depoimentos",
+  "contentFile": ["depo-1.md", "depo-2.md", "depo-3.md"],
+  "carousel": {
+    "autoPlay": true,
+    "interval": 4000,
+    "buttons": true,
+    "dots": true,
+    "itemsPerView": 3
+  }
+}
+```
+
+#### Comportamento
+
+- **Auto-play**: inicia ao montar o componente, avanca slides automaticamente
+- **Pausa no hover**: auto-play pausa quando mouse esta sobre o carousel, retoma ao sair
+- **Botoes prev/next**: fixos nas laterais do conteudo (layout flex). Se `buttons: false`, conteudo ocupa 100%
+- **Dots**: clique define o slide/diretamente; dot ativo usa cor `secondary-400`
+- **Acessibilidade**: `role="group"`, `aria-label` no container e botoes
+- **Se 1 slide**: botoes e dots nao sao exibidos
+
+#### Comportamento por `itemsPerView`
+
+**`itemsPerView: 1`** (padrao):
+- 1 slide visivel por vez
+- Transicao: fade com `opacity` e `duration-500`
+- Navegacao circular (volta ao inicio ao chegar no fim)
+- Dots = numero de slides
+
+**`itemsPerView: N`** (N > 1):
+- N slides visiveis lado a lado
+- Transicao: slide horizontal com `translateX` e `duration-500`
+- Cada slide ocupa `100% / N` do espaco disponivel
+- Navegacao por pagina (avanca/retorna N itens por clique)
+- Dots = `ceil(slides.length / N)` (posicoes disponiveis)
+- Nao e circular (para na ultima pagina)
+
+#### Precedencia
+
+Se `carousel` esta definido, ele tem precedencia sobre a renderizacao estatica do conteudo. O componente so e renderizado se houver conteudo (`contentFile` ou `content`).
 
 ### Menu Mobile (Offcanvas)
 

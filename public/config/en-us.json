@@ -24,12 +24,37 @@
       "title": "About Section Title",
       "content": ["Fictitious content in plain text for this section."],
       "image": "https://placehold.co/600x400",
-      "contentPosition": "top"
+      "contentPosition": "top",
+      "destak": true
     },
     {
       "id": "services",
-      "contentFile": ["service-1.md", "service-2.md"],
-      "destak": true
+      "contentFile": ["service-1.md", "service-2.md"]
+    },
+    {
+      "id": "testimonials",
+      "title": "Testimonials",
+      "subtitle": "What our clients say",
+      "destak": true,
+      "contentFile": [
+        "testimonial-1.md",
+        "testimonial-2.md",
+        "testimonial-3.md",
+        "testimonial-4.md",
+        "testimonial-5.md",
+        "testimonial-6.md",
+        "testimonial-7.md",
+        "testimonial-8.md",
+        "testimonial-9.md",
+        "testimonial-10.md"
+      ],
+      "carousel": {
+        "autoPlay": true,
+        "interval": 4000,
+        "buttons": true,
+        "dots": true,
+        "itemsPerView": 3
+      }
     }
   ],
   "footer": {
