@@ -27,7 +27,7 @@ export interface Section {
   title?: string;
   subtitle?: string;
   content?: string[];
-  contentFile?: string[];
+  contentFiles?: string[];
   image?: string;
   imagePosition?: VerticalPosition;
   contentPosition?: VerticalPosition;

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-w-0 flex flex-col"
+    class="min-w-0 flex flex-col pt-6"
     role="group"
     :aria-label="ariaLabel"
     @mouseenter="pause"
@@ -93,13 +93,22 @@ const props = defineProps<{
 
 const currentIndex = ref(0);
 const currentPage = ref(0);
+const isSmallScreen = ref(false);
 let timer: ReturnType<typeof setInterval> | null = null;
+let mql: MediaQueryList | null = null;
+
+function onBreakpointChange(e: MediaQueryListEvent | MediaQueryList) {
+  isSmallScreen.value = !e.matches;
+}
 
 const autoPlay = computed(() => props.config.autoPlay !== false);
 const interval = computed(() => props.config.interval ?? 5000);
 const showButtons = computed(() => props.config.buttons !== false);
 const showDots = computed(() => props.config.dots !== false);
-const itemsPerView = computed(() => props.config.itemsPerView ?? 1);
+const itemsPerView = computed(() => {
+  const configured = props.config.itemsPerView ?? 1;
+  return isSmallScreen.value ? 1 : configured;
+});
 const isSingleView = computed(() => itemsPerView.value <= 1);
 
 const maxPage = computed(() =>
@@ -175,10 +184,14 @@ function resume() {
 }
 
 onMounted(() => {
+  mql = window.matchMedia('(min-width: 768px)');
+  onBreakpointChange(mql);
+  mql.addEventListener('change', onBreakpointChange);
   startTimer();
 });
 
 onBeforeUnmount(() => {
+  mql?.removeEventListener('change', onBreakpointChange);
   stopTimer();
 });
 

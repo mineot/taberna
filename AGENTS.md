@@ -212,13 +212,36 @@ Cada `public/config/{locale}.json` e completo e independente. Dados nao-traduzid
 
 ### Conteudo Markdown
 
-Sections podem usar arquivos markdown via campo `contentFile` (array de strings):
+Sections podem usar arquivos markdown via campo `contentFiles` (array de strings):
 
 - Arquivos em `public/content/{locale}/*.md`
 - Buscados em runtime via `useMarkdown()` com cache
 - Parse com `marked`, renderizado com `v-html` + classe `prose` (Tailwind Typography)
-- Sections sem `contentFile` continuam usando `content[]` como fallback
-- Multiplas strings = multiplos arquivos lado a lado (empilha no mobile)
+
+### Regras de Conteudo por Section
+
+Cada section segue regras estritas baseadas no tipo de conteudo:
+
+| Atributo | Image | content (texto) | carousel |
+|---|---|---|---|
+| `content` (texto) | ✅ | — | ❌ |
+| `contentFiles` (1 item) | ✅ | ❌ | ❌ |
+| `contentFiles` (2+ items) | ❌ | ❌ | ✅ |
+
+**`content` (texto simples):**
+- Array de strings renderizadas como `<p>`
+- Pode ter `image` ao lado
+- Ignora `contentFiles` e `carousel`
+
+**`contentFiles` com 1 item:**
+- Renderiza 1 arquivo markdown
+- Pode ter `image` ao lado
+- Ignora `content` e `carousel`
+
+**`contentFiles` com 2+ items:**
+- Renderiza multiplos arquivos markdown lado a lado (empilha no mobile)
+- Ignora `image` e `content`
+- Pode ter `carousel` para exibir como slides
 
 ### Paginas (rotas)
 

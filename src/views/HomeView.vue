@@ -3,7 +3,7 @@
     v-for="section in config?.sections"
     :key="section.id"
     :id="section.id"
-    class="app-section"
+    class="app-section rounded-2xl"
     :class="[
       section.destak ? 'app-section-destak' : '',
       section.invert ? 'md:flex-row-reverse' : '',
@@ -26,31 +26,8 @@
         {{ section.subtitle }}
       </p>
 
-      <SectionCarousel
-        v-if="section.carousel && section.contentFile && markdownContent.get(section.id)"
-        :slides="markdownContent.get(section.id)!"
-        :config="section.carousel"
-      />
-
-      <div
-        v-else-if="section.contentFile && markdownContent.get(section.id)"
-        class="app-section-content"
-      >
-        <div
-          v-for="(html, i) in markdownContent.get(section.id)"
-          :key="i"
-          class="prose prose-invert max-w-none flex-1"
-          v-html="html"
-        />
-      </div>
-
-      <SectionCarousel
-        v-else-if="section.carousel && section.content"
-        :slides="section.content"
-        :config="section.carousel"
-      />
-
-      <div v-else-if="section.content" class="app-section-content">
+      <!-- content: texto simples + imagem opcional -->
+      <div v-if="section.content" class="app-section-content">
         <p
           v-for="(item, i) in section.content"
           :key="i"
@@ -59,9 +36,57 @@
           {{ item }}
         </p>
       </div>
+
+      <!-- contentFiles com 1 item: markdown + imagem opcional -->
+      <div
+        v-else-if="
+          section.contentFiles?.length === 1 &&
+          markdownContent.get(section.id)
+        "
+        class="app-section-content"
+      >
+        <div
+          class="prose prose-invert w-full"
+          v-html="markdownContent.get(section.id)![0]"
+        />
+      </div>
+
+      <!-- contentFiles com 2+ items + carousel -->
+      <SectionCarousel
+        v-else-if="
+          section.contentFiles &&
+          section.contentFiles.length > 1 &&
+          section.carousel &&
+          markdownContent.get(section.id)
+        "
+        :slides="markdownContent.get(section.id)!"
+        :config="section.carousel"
+      />
+
+      <!-- contentFiles com 2+ items sem carousel -->
+      <div
+        v-else-if="
+          section.contentFiles &&
+          section.contentFiles.length > 1 &&
+          markdownContent.get(section.id)
+        "
+        class="app-section-content"
+      >
+        <div
+          v-for="(html, i) in markdownContent.get(section.id)"
+          :key="i"
+          class="prose prose-invert min-w-0 overflow-hidden basis-full md:basis-[calc(50%-0.75rem)]"
+          v-html="html"
+        />
+      </div>
     </div>
+
+    <!-- imagem: so aparece com content ou contentFiles com 1 item -->
     <img
-      v-if="section.image"
+      v-if="
+        section.image &&
+        (section.content || (section.contentFiles?.length === 1))
+      "
       :src="section.image"
       :alt="section.title ?? ''"
       class="app-section-image"
@@ -93,9 +118,9 @@ async function loadMarkdownFiles() {
 
   const newMap = new Map<string, string[]>();
   for (const section of config.value.sections) {
-    if (section.contentFile) {
+    if (section.contentFiles) {
       const results = await Promise.all(
-        section.contentFile.map((file) =>
+        section.contentFiles.map((file) =>
           fetchMarkdown(`/content/${locale.value}/${file}`),
         ),
       );

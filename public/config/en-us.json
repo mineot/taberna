@@ -15,7 +15,7 @@
       "id": "intro",
       "title": "Introduction Title",
       "subtitle": "Optional subtitle for the introduction",
-      "contentFile": ["intro.md"],
+      "contentFiles": ["intro.md"],
       "image": "https://placehold.co/600x400",
       "imagePosition": "top"
     },
@@ -29,14 +29,16 @@
     },
     {
       "id": "services",
-      "contentFile": ["service-1.md", "service-2.md"]
+      "title": "Services",
+      "subtitle": "Services offered",
+      "contentFiles": ["service-1.md", "service-2.md"]
     },
     {
       "id": "testimonials",
       "title": "Testimonials",
       "subtitle": "What our clients say",
       "destak": true,
-      "contentFile": [
+      "contentFiles": [
         "testimonial-1.md",
         "testimonial-2.md",
         "testimonial-3.md",
