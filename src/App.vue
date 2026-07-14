@@ -239,6 +239,7 @@ import { useConfig } from './composables/useConfig';
 import { useLocale } from './composables/useLocale';
 import { useMarkdown } from './composables/useMarkdown';
 import { isSafeExternalHref } from './utils/links';
+import { setMetaDescription } from './utils/meta';
 
 const { config, loaded, loading, error, loadConfig } = useConfig();
 
@@ -335,6 +336,9 @@ onMounted(async () => {
 watch([config, locale], async ([newConfig]) => {
   if (newConfig?.site.title) {
     document.title = newConfig.site.title;
+  }
+  if (newConfig?.site.description) {
+    setMetaDescription(newConfig.site.description);
   }
   await loadFooter();
 });

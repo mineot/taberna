@@ -114,6 +114,8 @@ taberna/
 │   ├── utils/
 │   │   ├── links.ts           # Allowlist http/https para links externos
 │   │   ├── links.test.ts      # Testes da validacao de links
+│   │   ├── meta.ts            # Atualizacao da meta description
+│   │   ├── meta.test.ts       # Testes de criacao e atualizacao da meta description
 │   │   └── paths.ts           # Caminhos publicos relativos ao base do Vite
 │   └── types/
 │       └── config.ts          # Types: AppConfig, Section, CarouselConfig, MenuItem, SiteConfig, FooterConfig, VerticalPosition
@@ -205,7 +207,7 @@ Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css)
 - CI/CD (GitHub Actions, etc.)
 - Docker
 - Arquivo `.env`
-- Meta tags SEO (description, Open Graph)
+- Open Graph, metadata por pagina e prerenderizacao de SEO
 
 ## Observacoes
 
@@ -299,7 +301,7 @@ Composable que orquestra a troca de idioma: validação + `loadConfig` + `setLoc
 
 1. `useLocale()` detecta idioma: localStorage → navigator.languages → languages.json.default
 2. `useConfig(locale)` busca `public/config/{locale}.json`
-3. `App.vue` atualiza `document.documentElement.lang` e `document.title` (via watch no config)
+3. `App.vue` atualiza `document.documentElement.lang`, `document.title` e a meta description (via watch no config)
 4. Switcher de bandeiras no header/sidebar navega para `/languages` via `<router-link>`. Em `LanguagesView`, `useSwitchLocale` orquestra a troca:
    - valida o idioma contra `available`
    - `await loadConfig(lang)` — carrega config com protecao contra respostas obsoletas
@@ -427,7 +429,7 @@ Campo `contentPosition` controla alinhamento vertical do conteudo na section:
 
 Se nao informado, assume `"center"`.
 
-**Precedencia**: `contentPosition` tem precedencia sobre `imagePosition` para o alinhamento flex. `imagePosition` controla apenas o corte da imagem (`object-position`). Ambos usam o tipo `VerticalPosition` em `src/types/config.ts`.
+**Precedencia**: `contentPosition` tem precedencia sobre `imagePosition` para o alinhamento flex. Quando `contentPosition` nao existe, `imagePosition` tambem funciona como fallback desse alinhamento. Separadamente, `imagePosition` controla o corte da imagem (`object-position`). Ambos usam o tipo `VerticalPosition` em `src/types/config.ts`.
 
 ### Titulo da Secao (Opcional)
 
@@ -441,19 +443,18 @@ Campo `subtitle` na section e opcional. Se informado, renderiza um `<p>` com uti
 
 Campo `invert` (booleano, opcional) na section inverte a ordem flex da imagem e do conteudo:
 
-- Quando `true`: aplica `md:flex-row-reverse` — imagem fica a direita, conteudo a esquerda
+- Quando `true`: aplica `md:flex-row-reverse` — imagem fica a esquerda, conteudo a direita
 - Quando `false` ou ausente: layout normal (conteudo a esquerda, imagem a direita)
 
 ### Configuracao do Site (`SiteConfig`)
 
 Campos do objeto `site` no config JSON:
 
-| Campo         | Tipo     | Obrigatorio | Descricao                                         |
-| ------------- | -------- | ----------- | ------------------------------------------------- |
-| `title`       | `string` | Sim         | Titulo do site (exibido no header/sidebar)        |
-| `owner`       | `string` | Sim         | Nome do proprietario (usado no footer)            |
-| `description` | `string` | Sim         | Descricao do site (para metadados)                |
-| `image`       | `string` | Nao         | URL da imagem do site (exibida ao lado do titulo) |
+| Campo         | Tipo     | Obrigatorio | Descricao                                                        |
+| ------------- | -------- | ----------- | ---------------------------------------------------------------- |
+| `title`       | `string` | Nao         | Titulo do site (header/sidebar e `document.title`)               |
+| `description` | `string` | Sim         | Atualiza `<meta name="description">` quando o config e carregado |
+| `image`       | `string` | Nao         | URL da imagem do site (exibida ao lado do titulo)                |
 
 ### Destaque de Secao (`destak`)
 
@@ -661,18 +662,18 @@ Campo `contentFile` no `footer` do config permite carregar conteudo markdown par
 
 - **Opcional**: Se nao definido, footer mostra apenas ownership + "Powered by Mineot"
 - **Arquivo**: `public/content/{locale}/{contentFile}` (ex: `footer.md`)
-- **Renderizacao**: HTML inline com Tailwind (grid, links, etc.)
+- **Renderizacao**: HTML inline sanitizado com Tailwind (grid, links, etc.); classes novas precisam estar presentes durante o build
 - **Estrutura**: Markdown com HTML para layout (grid de colunas)
 - **Separador**: Barra horizontal entre conteudo markdown e a linha de ownership/powered by
 - **Ownership**: Campo `ownership` no config (ex: "© 2026 Nome")
 - **Powered by**: Texto estatico com link para `https://github.com/mineot/taberna`
 - **Links**: Estilizados via `.app-footer-content :deep(a)` — underline + `app-text-subtle` que muda para `app-text-accent` no hover
-- **Layout**: Mobile = empilhado, Desktop = `space-between`
+- **Layout**: Definido pelo proprio Markdown; a linha de ownership/powered by usa coluna no mobile e `space-between` no desktop
 - **Exemplo de conteudo footer.md**:
   ```html
   <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-    <div>### Titulo\nDescricao</div>
-    <div>### Links\n- [Link](url)</div>
-    <div>### Social\n- [GitHub](url)</div>
+    <div>### Titulo Descricao</div>
+
+    <div>### Links - [Inicio](./#/)</div>
   </div>
   ```
