@@ -14,6 +14,7 @@
 - **Markdown**: marked (parse) + DOMPurify (sanitize) + @tailwindcss/typography (prose)
 - **Formatting**: Prettier 3.9.5 (single quotes, semicolons, plugin tailwindcss)
 - **Linting**: ESLint 10.6.0 (eslint-plugin-vue, eslint-config-prettier, typescript-eslint)
+- **Tests**: Vitest 4.1.10 + Vue Test Utils 2.4.11 + jsdom 29.1.1
 - **Fonts**: Roboto (sans/serif/mono) + Italianno (decorativa), self-hosted em `public/fonts/`
 
 ## Scripts
@@ -22,6 +23,7 @@
 npm run dev        # Vite dev server com HMR (http://localhost:5173)
 npm run build      # vue-tsc --noEmit && vite build (type-check + build)
 npm run preview    # Preview do build de producao (http://localhost:4173)
+npm run test       # Testes unitarios com Vitest
 npm run typecheck  # Apenas type-check (vue-tsc --noEmit)
 npm run lint       # ESLint em src/
 npm run format     # Prettier em src/ (ts, vue, css)
@@ -37,12 +39,13 @@ taberna/
 ├── index.html                 # SPA shell, preload de fonts, favicon, CSP
 ├── package.json               # "taberna", type: module
 ├── tsconfig.json              # ESNext, strict, bundler resolution
-├── vite.config.ts             # plugins: vue + @tailwindcss/vite
+├── vite.config.ts             # base relativo + plugins Vite + jsdom do Vitest
 ├── eslint.config.js           # ESLint flat config (vue + typescript + prettier)
 ├── .prettierrc                # singleQuote, semi, tailwind plugin
 ├── .vscode/                   # Configuracoes do editor
 ├── public/
-│   ├── favicon.svg            # SVG lightning bolt
+│   ├── favicon.png            # Favicon PNG 16x16
+│   ├── logo.png               # Logo PNG 512x512
 │   ├── fonts/                 # Roboto*, Italianno (self-hosted TTFs)
 │   ├── languages.json         # Manifest: idiomas disponiveis + default
 │   ├── config/
@@ -93,7 +96,8 @@ taberna/
 │   ├── env.d.ts               # Tipos para .vue
 │   ├── style.css              # Tailwind v4 + @font-face + @theme custom + typography plugin
 │   ├── components/
-│   │   └── section-carousel.vue # Carousel de slides com auto-play, botoes e dots
+│   │   ├── section-carousel.vue      # Carousel acessivel com auto-play, botoes e dots
+│   │   └── section-carousel.test.ts  # Testes de configuracao e movimento reduzido
 │   ├── router/
 │   │   └── index.ts           # Vue Router — rotas /, /languages e /:slug
 │   ├── views/
@@ -101,10 +105,16 @@ taberna/
 │   │   ├── LanguagesView.vue  # Pagina de selecao de idioma (grid de bandeiras)
 │   │   └── PageView.vue       # Pagina — carrega markdown pelo slug
 │   ├── composables/
-│   │   ├── useConfig.ts       # Fetch de config por idioma (config/{locale}.json)
-│   │   ├── useLocale.ts       # Detecao de idioma (browser/localStorage/manifest)
+│   │   ├── useConfig.ts       # Fetch concorrente seguro de config por idioma
+│   │   ├── useConfig.test.ts  # Testes de erro e concorrencia do config
+│   │   ├── useLocale.ts       # Detecao de idioma + fallback completo
+│   │   ├── useLocale.test.ts  # Teste do fallback de idioma
 │   │   ├── useMarkdown.ts     # Fetch + parse de arquivos markdown com cache
-│   │   └── useSwitchLocale.ts # Troca de idioma (setLocale + loadConfig + navigate)
+│   │   └── useSwitchLocale.ts # Troca de idioma (loadConfig + setLocale + navigate)
+│   ├── utils/
+│   │   ├── links.ts           # Allowlist http/https para links externos
+│   │   ├── links.test.ts      # Testes da validacao de links
+│   │   └── paths.ts           # Caminhos publicos relativos ao base do Vite
 │   └── types/
 │       └── config.ts          # Types: AppConfig, Section, CarouselConfig, MenuItem, SiteConfig, FooterConfig, VerticalPosition
 └── dist/                      # Build de producao
@@ -117,7 +127,7 @@ Paleta de cores mapeada via `@theme` no Tailwind v4:
 | Token         | Escala          | Uso real no codigo                                                                                                                                                                                                                                                                                                                                                              |
 | ------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `primary-*`   | neutral-50..950 | `app-background` (800), `app-background-hover` (700), `app-background-header` (900/95), `app-background-footer` (950), `app-text` (100), `app-text-muted` (200), `app-text-body` (300), `app-text-subtle` (400), `app-section-subtitle` (500), `app-border` (700), `app-section-destak` (700), `app-dot-inactive` (600, 500), `app-carousel-btn` (800/80), `app-skeleton` (700) |
-| `secondary-*` | emerald-50..950 | `app-text-accent` (500), `app-text-accent-hover` (400), `app-dot-active` (400), `app-ring` (400)                                                                                                                                                                                                                                                                                |
+| `secondary-*` | emerald-50..950 | `app-text-accent` (500), `app-text-accent-hover` (400), `app-dot-active` (400), `app-ring` (400), `app-carousel-progress` (400)                                                                                                                                                                                                                                                 |
 
 Font stacks customizados:
 
@@ -159,6 +169,8 @@ Utilitarios customizados:
 - `app-dot-active` → `bg-secondary-400`
 - `app-dot-inactive` → `bg-primary-600 hover:bg-primary-500`
 - `app-carousel-btn` → `flex flex-shrink-0 items-center justify-center app-text-muted hover:app-text-accent bg-primary-800/80 app-duration cursor-pointer rounded-full p-2 transition-colors`
+- `app-carousel-progress-track` → `stroke-primary-600`
+- `app-carousel-progress` → `stroke-secondary-400`
 - `app-skeleton` → `bg-primary-700`
 - `app-ring` → `ring-secondary-400`
 
@@ -179,6 +191,7 @@ Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css)
 ### vite.config.ts
 
 - Plugins: `@vitejs/plugin-vue`, `@tailwindcss/vite`
+- Base relativo (`./`) para deploy na raiz ou em subdiretorios
 - Sem aliases customizados
 
 ### .prettierrc
@@ -189,11 +202,9 @@ Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css)
 ## O que NAO existe ainda
 
 - Gerenciamento de estado (Pinia/Vuex)
-- Testes (Vitest/Jest/Cypress/Playwright)
 - CI/CD (GitHub Actions, etc.)
 - Docker
 - Arquivo `.env`
-- Favicon real (index.html)
 - Meta tags SEO (description, Open Graph)
 
 ## Observacoes
@@ -210,7 +221,7 @@ Tudo que envolve HTML dinamico passa por sanitizacao antes de ser renderizado:
 | ---------------------------------------- | -------------------------------- | ---------------------------------------------------- |
 | **Conteudo markdown** (sections/paginas) | HTML gerado por `marked.parse()` | `DOMPurify.sanitize()` antes de cache + `v-html`     |
 | **Footer customizado**                   | HTML do markdown do footer       | Mesmo pipeline do `useMarkdown` (DOMPurify)          |
-| **Links externos no menu**               | `href` de `<a>` tags             | `isSafeHref()` bloqueia `javascript:` e `data:`      |
+| **Links externos no menu**               | `href` de `<a>` tags             | `URL` com allowlist exclusiva de `http:` e `https:`  |
 | **Slug de rotas**                        | `route.params.slug`              | Regex `[^a-zA-Z0-9\-\/]` remove caracteres invalidos |
 | **Troca de idioma**                      | Valor passado para `setLocale()` | Valida contra array `available` do manifest          |
 
@@ -242,7 +253,14 @@ default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src
 
 ### useLocale
 
-- **`setLocale(lang)`**: Valida se o idioma existe no array `available` antes de aceitar. Se não existir, a chamada é ignorada silenciosamente.
+- **Fallback**: Se `languages.json` falhar, inicializa `pt-br`, flag, idiomas disponiveis, localStorage e `document.lang`.
+- **`setLocale(lang)`**: Valida contra `available` e retorna `boolean` indicando se o idioma foi aceito.
+
+### useConfig
+
+- **Loading e erro**: Expoe estados separados para impedir skeleton infinito em falhas iniciais.
+- **Concorrencia**: Cancela a requisicao anterior com `AbortController` e ignora respostas obsoletas.
+- **Retorno**: `loadConfig(locale)` retorna se o config solicitado foi aplicado com sucesso.
 
 ### useMarkdown
 
@@ -252,7 +270,7 @@ default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src
 
 ### useSwitchLocale
 
-Composable que orquestra a troca de idioma: `setLocale` + `loadConfig` + navegação para home. Usado por `LanguagesView`. Evita duplicação da lógica de troca.
+Composable que orquestra a troca de idioma: validação + `loadConfig` + `setLocale` + navegação para home. Expoe `switching` para desabilitar selecoes concorrentes em `LanguagesView`.
 
 ## Convencoes
 
@@ -268,7 +286,6 @@ Composable que orquestra a troca de idioma: `setLocale` + `loadConfig` + navega�
 
 ## FIXMEs pendentes
 
-- Criar favicon real (index.html)
 - Configurar conteudo real nos arquivos de config e markdown
 
 ## Git
@@ -284,10 +301,11 @@ Composable que orquestra a troca de idioma: `setLocale` + `loadConfig` + navega�
 2. `useConfig(locale)` busca `public/config/{locale}.json`
 3. `App.vue` atualiza `document.documentElement.lang` e `document.title` (via watch no config)
 4. Switcher de bandeiras no header/sidebar navega para `/languages` via `<router-link>`. Em `LanguagesView`, `useSwitchLocale` orquestra a troca:
-   - `setLocale(lang)` — atualiza locale + localStorage
-   - `await loadConfig(lang)` — carrega config do novo idioma antes de navegar
+   - valida o idioma contra `available`
+   - `await loadConfig(lang)` — carrega config com protecao contra respostas obsoletas
+   - `setLocale(lang)` — atualiza locale + localStorage apenas apos o config carregar
    - `router.push('/')` — redireciona para home para evitar page not found
-5. `HomeView` observa `[loaded, config]` para buscar markdown — garante que o config correto ja esta carregado
+5. `HomeView` observa `[loaded, config, locale]`, isola falhas por arquivo e ignora respostas obsoletas
 
 ### Textos Hardcoded
 
@@ -307,10 +325,13 @@ Os textos abaixo continuam hardcoded temporariamente e devem ser traduzidos depo
 | Arquivo                                          | Texto                       | Contexto                                                                |
 | ------------------------------------------------ | --------------------------- | ----------------------------------------------------------------------- |
 | `src/App.vue`                                    | `Menu`                      | `aria-label` do botao hamburger e do dialog do sidebar                  |
+| `src/App.vue`                                    | `Close menu`                | `aria-label` do botao de fechar o sidebar                               |
 | `src/components/section-carousel.vue`            | `Previous slide`            | `aria-label` do botao de navegacao anterior                             |
 | `src/components/section-carousel.vue`            | `Next slide`                | `aria-label` do botao de navegacao seguinte                             |
 | `src/components/section-carousel.vue`            | `Slide {n}`                 | `aria-label` dinamico dos indicadores                                   |
 | `src/components/section-carousel.vue`            | `Carousel: {atual}/{total}` | `aria-label` dinamico do grupo do carousel                              |
+| `src/components/section-carousel.vue`            | `Pause carousel`            | `aria-label` do controle de pausa                                       |
+| `src/components/section-carousel.vue`            | `Play carousel`             | `aria-label` do controle de reproducao                                  |
 | `src/views/PageView.vue`                         | `Page not found`            | Mensagem visivel quando o Markdown de uma pagina nao pode ser carregado |
 | `src/composables/useConfig.ts`                   | `Unknown error`             | Fallback de erro que pode ser exibido por `App.vue`                     |
 | `src/composables/useConfig.ts`, `useMarkdown.ts` | `HTTP {status}`             | Mensagem tecnica gerada quando uma requisicao falha                     |
@@ -480,7 +501,11 @@ Todos os campos sao opcionais. Exemplo de uso:
 #### Comportamento
 
 - **Auto-play**: inicia ao montar o componente, avanca slides automaticamente
-- **Pausa no hover**: auto-play pausa quando mouse esta sobre o carousel, retoma ao sair
+- **Pausa por interacao**: auto-play pausa durante hover ou foco e retoma ao sair
+- **Pausa persistente**: controle Play/Pause permite interromper o auto-play
+- **Anel de progresso**: envolve o controle Play/Pause, usa `interval`, congela durante pausas e reinicia na navegacao manual
+- **Visibilidade**: pausa quando a aba fica em segundo plano
+- **Movimento reduzido**: desativa auto-play com `prefers-reduced-motion: reduce`
 - **Botoes prev/next**: fixos nas laterais do conteudo (layout flex). Se `buttons: false`, conteudo ocupa 100%
 - **Dots**: clique define o slide diretamente; dot ativo usa utility `app-dot-active`
 - **Acessibilidade**: `role="group"`, `aria-label` no container e botoes, `aria-current` no dot ativo
@@ -517,7 +542,7 @@ Em telas pequenas (`< md`), o menu de navegacao e substituido por um icone hambu
 - Fecha ao clicar no backdrop, no icone X, ou em qualquer link
 - Animacao de slide-in/slide-out via `<Transition>`
 - Teleport do sidebar para `<body>` via `<Teleport>`
-- Acessibilidade: hamburger com `aria-label="Menu"` e `aria-expanded`, sidebar com `role="dialog"`, `aria-modal="true"`, `aria-label="Menu"`
+- Acessibilidade: foco inicial e confinado, fechamento por `Escape`, restauracao de foco, bloqueio de scroll e atributos ARIA de dialog
 
 ### Menu Desktop com Muitos Itens (> 4)
 
@@ -588,7 +613,7 @@ Campo `site.image` no config controla exibicao de imagem ao lado do titulo:
 
 ### Configuracao
 
-- **History mode**: `createWebHistory()` ( URLs limpas sem `#` )
+- **Hash mode**: `createWebHashHistory(import.meta.env.BASE_URL)` para funcionar sem rewrites em hospedagem estatica e subdiretorios
 - **Catch-all**: rota `/:pathMatch(.*)*` redireciona para `/`
 - **Scroll behavior**: suporta hash anchors, posicao salva, e scroll to top
 - **Arquivo**: `src/router/index.ts`
@@ -608,7 +633,7 @@ export interface MenuItem {
 
 - **`route` definido** → renderiza `<router-link :to="item.route">`
 - **`href` com `#`** (anchor) → renderiza `<router-link :to="'/' + item.href">` — navega para `/` e o `scrollBehavior` faz scroll suave ate o anchor
-- **`href` externa** (http/https) → renderiza `<a :href="item.href">` (abre em nova aba) — filtrada por `isSafeHref()` que bloqueia `javascript:` e `data:`
+- **`href` externa** (http/https) → abre em nova aba com `noopener noreferrer`; outros protocolos sao rejeitados por allowlist
 - **`route` + `content`** → rota usa `content` como nome do arquivo markdown
 - **Ambos definidos** → `route` tem precedencia
 

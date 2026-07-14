@@ -234,6 +234,14 @@
   @apply app-duration cursor-pointer rounded-full p-2 transition-colors;
 }
 
+@utility app-carousel-progress-track {
+  @apply stroke-primary-600;
+}
+
+@utility app-carousel-progress {
+  @apply stroke-secondary-400;
+}
+
 /* UTILS AND LAYOUT */
 
 @utility app-container {

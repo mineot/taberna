@@ -8,6 +8,8 @@
         :class="{
           'app-ring ring-2': locale === lang,
         }"
+        :disabled="switching"
+        :aria-busy="switching"
         @click="switchLocale(lang)"
       >
         <span class="text-5xl">{{ flags[lang] }}</span>
@@ -22,5 +24,5 @@ import { useLocale } from '../composables/useLocale';
 import { useSwitchLocale } from '../composables/useSwitchLocale';
 
 const { locale, flags, available } = useLocale();
-const { switchLocale } = useSwitchLocale();
+const { switchLocale, switching } = useSwitchLocale();
 </script>

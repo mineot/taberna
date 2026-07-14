@@ -1,3 +1,4 @@
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useConfig } from './useConfig';
 import { useLocale } from './useLocale';
@@ -5,15 +6,31 @@ import { useLocale } from './useLocale';
 export function useSwitchLocale() {
   const router = useRouter();
   const { loadConfig } = useConfig();
-  const { setLocale } = useLocale();
+  const { available, setLocale } = useLocale();
+  const switching = ref(false);
+  let activeSwitch = 0;
 
   async function switchLocale(lang: string) {
-    setLocale(lang);
-    await loadConfig(lang);
-    if (router.currentRoute.value.path !== '/') {
-      router.push('/');
+    if (!available.value.includes(lang)) return;
+
+    const switchId = ++activeSwitch;
+    switching.value = true;
+
+    try {
+      const configLoaded = await loadConfig(lang);
+
+      if (switchId !== activeSwitch || !configLoaded || !setLocale(lang))
+        return;
+
+      if (router.currentRoute.value.path !== '/') {
+        await router.push('/');
+      }
+    } finally {
+      if (switchId === activeSwitch) {
+        switching.value = false;
+      }
     }
   }
 
-  return { switchLocale };
+  return { switchLocale, switching };
 }

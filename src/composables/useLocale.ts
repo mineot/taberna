@@ -1,4 +1,5 @@
 import { ref } from 'vue';
+import { publicPath } from '../utils/paths';
 
 const STORAGE_KEY = 'taberna-lang';
 
@@ -11,6 +12,25 @@ interface LanguagesManifest {
   default: string;
   available: string[];
   flags: Record<string, string>;
+}
+
+const fallbackManifest: LanguagesManifest = {
+  default: 'pt-br',
+  available: ['pt-br'],
+  flags: { 'pt-br': '🇧🇷' },
+};
+
+function applyManifest(manifest: LanguagesManifest, selected: string) {
+  locale.value = selected;
+  flags.value = manifest.flags;
+  available.value = manifest.available;
+  document.documentElement.lang = selected;
+
+  try {
+    localStorage.setItem(STORAGE_KEY, selected);
+  } catch {
+    return;
+  }
 }
 
 function normalize(lang: string): string {
@@ -44,7 +64,7 @@ export function useLocale() {
     if (loaded.value) return;
 
     try {
-      const manifestRes = await fetch('/languages.json');
+      const manifestRes = await fetch(publicPath('languages.json'));
 
       if (!manifestRes.ok) {
         throw new Error(`HTTP ${manifestRes.status}`);
@@ -61,22 +81,26 @@ export function useLocale() {
         locale.value = detected ?? manifest.default;
       }
 
-      localStorage.setItem(STORAGE_KEY, locale.value);
-      document.documentElement.lang = locale.value;
-      flags.value = manifest.flags;
-      available.value = manifest.available;
+      applyManifest(manifest, locale.value);
       loaded.value = true;
     } catch {
-      locale.value = 'pt-br';
+      applyManifest(fallbackManifest, fallbackManifest.default);
       loaded.value = true;
     }
   };
 
-  const setLocale = (lang: string) => {
-    if (available.value.length > 0 && !available.value.includes(lang)) return;
+  const setLocale = (lang: string): boolean => {
+    if (!available.value.includes(lang)) return false;
     locale.value = lang;
-    localStorage.setItem(STORAGE_KEY, lang);
     document.documentElement.lang = lang;
+
+    try {
+      localStorage.setItem(STORAGE_KEY, lang);
+    } catch {
+      return true;
+    }
+
+    return true;
   };
 
   return { locale, loaded, flags, available, loadLocale, setLocale };

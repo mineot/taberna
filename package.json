@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
+    "test": "vitest --run",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint src/",
     "format": "prettier --write \"src/**/*.{ts,vue,css}\""
@@ -24,15 +25,18 @@
   "devDependencies": {
     "@types/dompurify": "^3.0.5",
     "@vitejs/plugin-vue": "^6.0.7",
+    "@vue/test-utils": "^2.4.11",
     "@vue/tsconfig": "^0.9.1",
     "eslint": "^10.6.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vue": "^10.9.2",
+    "jsdom": "^29.1.1",
     "prettier": "^3.9.5",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.63.0",
     "vite": "^8.1.1",
+    "vitest": "^4.1.10",
     "vue-tsc": "^3.3.7"
   }
 }

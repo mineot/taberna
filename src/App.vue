@@ -1,6 +1,13 @@
 <template>
   <div
-    v-if="!localeLoaded || !loaded"
+    v-if="error"
+    class="app-background flex min-h-screen items-center justify-center"
+  >
+    <p class="app-text-accent">{{ error }}</p>
+  </div>
+
+  <div
+    v-else-if="!localeLoaded || loading || !loaded"
     class="app-background flex min-h-screen flex-col items-center justify-center gap-6 p-8"
   >
     <div class="flex w-full max-w-2xl flex-col gap-4">
@@ -13,13 +20,6 @@
       </div>
       <div class="skeleton mt-4 h-48 w-full rounded"></div>
     </div>
-  </div>
-
-  <div
-    v-else-if="error"
-    class="app-background flex min-h-screen items-center justify-center"
-  >
-    <p class="app-text-accent">{{ error }}</p>
   </div>
 
   <div
@@ -73,6 +73,8 @@
               <a
                 v-else-if="item.href && isSafeHref(item.href)"
                 :href="item.href"
+                target="_blank"
+                rel="noopener noreferrer"
                 class="hover:app-text-accent app-duration transition-colors"
               >
                 {{ item.label }}
@@ -108,10 +110,12 @@
       <Transition name="sidebar">
         <aside
           v-if="menuOpen"
+          ref="sidebar"
           class="app-sidebar"
           role="dialog"
           aria-modal="true"
           aria-label="Menu"
+          @keydown="handleMenuKeydown"
         >
           <div
             class="app-border flex shrink-0 items-center justify-between border-b px-6 py-4"
@@ -134,7 +138,12 @@
                 {{ config?.site.title }}
               </h2>
             </router-link>
-            <button class="app-icon-btn" @click="closeMenu">
+            <button
+              ref="closeMenuButton"
+              class="app-icon-btn"
+              aria-label="Close menu"
+              @click="closeMenu"
+            >
               <X :size="24" />
             </button>
           </div>
@@ -160,6 +169,8 @@
                 <a
                   v-else-if="item.href && isSafeHref(item.href)"
                   :href="item.href"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   class="app-nav-link"
                   @click="closeMenu"
                 >
@@ -213,6 +224,141 @@
     </footer>
   </div>
 </template>
+
+<script setup lang="ts">
+import {
+  computed,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  watch,
+} from 'vue';
+import { Menu, X } from '@lucide/vue';
+import { useConfig } from './composables/useConfig';
+import { useLocale } from './composables/useLocale';
+import { useMarkdown } from './composables/useMarkdown';
+import { isSafeExternalHref } from './utils/links';
+
+const { config, loaded, loading, error, loadConfig } = useConfig();
+
+const {
+  locale,
+  loaded: localeLoaded,
+  flags,
+  available,
+  loadLocale,
+} = useLocale();
+
+const { fetchMarkdown } = useMarkdown();
+
+const menuOpen = ref(false);
+const footerHtml = ref('');
+const sidebar = ref<HTMLElement | null>(null);
+const closeMenuButton = ref<HTMLButtonElement | null>(null);
+let previousFocus: HTMLElement | null = null;
+let previousBodyOverflow = '';
+let footerRequest = 0;
+
+const hasMenu = computed(() => (config.value?.menu?.length ?? 0) > 0);
+const hasTooManyMenuItems = computed(
+  () => (config.value?.menu?.length ?? 0) > 4,
+);
+const hasMultipleLangs = computed(() => available.value.length > 1);
+const hasHamburger = computed(() => hasMenu.value || hasMultipleLangs.value);
+
+function toggleMenu() {
+  menuOpen.value = !menuOpen.value;
+}
+
+function closeMenu() {
+  menuOpen.value = false;
+}
+
+function isSafeHref(href: string): boolean {
+  return isSafeExternalHref(href);
+}
+
+function handleMenuKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape') {
+    event.preventDefault();
+    closeMenu();
+    return;
+  }
+
+  if (event.key !== 'Tab' || !sidebar.value) return;
+
+  const focusable = Array.from(
+    sidebar.value.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ),
+  );
+  const first = focusable[0];
+  const last = focusable.at(-1);
+
+  if (!first || !last) {
+    event.preventDefault();
+    return;
+  }
+
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+async function loadFooter() {
+  const requestId = ++footerRequest;
+
+  if (!config.value?.footer.contentFile || !locale.value) {
+    footerHtml.value = '';
+    return;
+  }
+  try {
+    const html = await fetchMarkdown(
+      `/content/${locale.value}/${config.value.footer.contentFile}`,
+    );
+    if (requestId === footerRequest) footerHtml.value = html;
+  } catch {
+    if (requestId === footerRequest) footerHtml.value = '';
+  }
+}
+
+onMounted(async () => {
+  await loadLocale();
+  await loadConfig(locale.value);
+});
+
+watch([config, locale], async ([newConfig]) => {
+  if (newConfig?.site.title) {
+    document.title = newConfig.site.title;
+  }
+  await loadFooter();
+});
+
+watch(menuOpen, async (isOpen) => {
+  if (isOpen) {
+    previousFocus = document.activeElement as HTMLElement | null;
+    previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    await nextTick();
+    closeMenuButton.value?.focus();
+    return;
+  }
+
+  document.body.style.overflow = previousBodyOverflow;
+  await nextTick();
+  previousFocus?.focus();
+  previousFocus = null;
+});
+
+onBeforeUnmount(() => {
+  document.body.style.overflow = previousBodyOverflow;
+});
+</script>
 
 <style scoped>
 @reference 'tailwindcss';
@@ -273,75 +419,3 @@
   z-index: 70;
 }
 </style>
-
-<script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue';
-import { Menu, X } from '@lucide/vue';
-import { useConfig } from './composables/useConfig';
-import { useLocale } from './composables/useLocale';
-import { useMarkdown } from './composables/useMarkdown';
-
-const { config, loaded, error, loadConfig } = useConfig();
-
-const {
-  locale,
-  loaded: localeLoaded,
-  flags,
-  available,
-  loadLocale,
-} = useLocale();
-
-const { fetchMarkdown } = useMarkdown();
-
-const menuOpen = ref(false);
-const footerHtml = ref('');
-
-const hasMenu = computed(() => (config.value?.menu?.length ?? 0) > 0);
-const hasTooManyMenuItems = computed(
-  () => (config.value?.menu?.length ?? 0) > 4,
-);
-const hasMultipleLangs = computed(() => available.value.length > 1);
-const hasHamburger = computed(() => hasMenu.value || hasMultipleLangs.value);
-
-function toggleMenu() {
-  menuOpen.value = !menuOpen.value;
-}
-
-function closeMenu() {
-  menuOpen.value = false;
-}
-
-function isSafeHref(href: string): boolean {
-  return !href.startsWith('javascript:') && !href.startsWith('data:');
-}
-
-async function loadFooter() {
-  if (!config.value?.footer.contentFile || !locale.value) {
-    footerHtml.value = '';
-    return;
-  }
-  try {
-    footerHtml.value = await fetchMarkdown(
-      `/content/${locale.value}/${config.value.footer.contentFile}`,
-    );
-  } catch {
-    footerHtml.value = '';
-  }
-}
-
-onMounted(async () => {
-  await loadLocale();
-  await loadConfig(locale.value);
-});
-
-watch(locale, async (newLocale) => {
-  await loadConfig(newLocale);
-});
-
-watch(config, async (newConfig) => {
-  if (newConfig?.site.title) {
-    document.title = newConfig.site.title;
-  }
-  await loadFooter();
-});
-</script>

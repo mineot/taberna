@@ -1,5 +1,6 @@
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
+import { publicPath } from '../utils/paths';
 
 const cache = new Map<string, string>();
 
@@ -9,7 +10,7 @@ export function useMarkdown() {
       return cache.get(path)!;
     }
 
-    const res = await fetch(path);
+    const res = await fetch(publicPath(path));
 
     if (!res.ok) {
       throw new Error(`HTTP ${res.status}`);

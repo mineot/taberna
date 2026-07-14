@@ -27,8 +27,8 @@ O sistema foi pensado para ser **fácil de personalizar**. Todo o conteúdo do s
 ## Features
 
 - **Internacionalização (i18n)** — Detecção automática de idioma (pt-br/en-us) com página de seleção de idiomas
-- **Carousel de Slides** — Auto-play, pause no hover, navegação por dots ou setas
-- **Menu Mobile Offcanvas** — Sidebar animado com backdrop blur
+- **Carousel de Slides** — Auto-play acessível, anel de progresso, pausa persistente, dots e setas
+- **Menu Mobile Offcanvas** — Sidebar animado com foco confinado e controle por teclado
 - **Conteúdo Dinâmico** — Páginas e seções renderizadas via Markdown
 - **Posicionamento Flexível** — Controle de alinhamento de imagens e conteúdo
 - **Seções com Destaque** — Background alternativo para seções importantes
@@ -38,7 +38,7 @@ O sistema foi pensado para ser **fácil de personalizar**. Todo o conteúdo do s
 
 ### Pré-requisitos
 
-- Node.js 18+
+- Node.js 20.19+ ou 22.12+
 - npm
 
 ### Instalação
@@ -55,6 +55,9 @@ npm install
 npm run dev      # Servidor de desenvolvimento com HMR (http://localhost:5173)
 npm run build    # Type-check + build para produção
 npm run preview  # Preview do build (http://localhost:4173)
+npm run test     # Testes unitários com Vitest
+npm run typecheck # Verificação TypeScript
+npm run lint     # ESLint em src/
 ```
 
 ### Testando localmente
@@ -75,6 +78,8 @@ npm run preview
 ```
 
 O preview ficará disponível em `http://localhost:4173`, simulando exatamente como o site se comportará no servidor.
+
+As rotas usam hash (`/#/sobre`), permitindo atualizar ou acessar páginas diretamente em hospedagens estáticas sem configurar rewrites.
 
 ## Estrutura de Arquivos
 
@@ -422,7 +427,7 @@ Configure o array `menu[]` no JSON:
 | --------------------------- | ------------------------------------------------ |
 | `route` definido            | Renderiza `<router-link>` para rota interna      |
 | `href` com `#` (anchor)     | Navega para `/` e faz scroll suave até o anchor  |
-| `href` externa (http/https) | Abre em nova aba com `<a>`                       |
+| `href` externa (http/https) | Abre em nova aba com `noopener noreferrer`       |
 | `route` + `content`         | Rota usa `content` como nome do arquivo markdown |
 | Ambos definidos             | `route` tem precedência sobre `href`             |
 
@@ -564,11 +569,13 @@ Todos os utilitários começam com `app-*` e são definidos com `@utility` no `s
 
 #### Carousel
 
-| Utilitário         | Equivalente                                                                                                                                                            | Descrição                                      |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| `app-dot-active`   | `bg-secondary-400`                                                                                                                                                     | Dot ativo do carousel                          |
-| `app-dot-inactive` | `bg-primary-600 hover:bg-primary-500`                                                                                                                                  | Dot inativo do carousel                        |
-| `app-carousel-btn` | `flex flex-shrink-0 items-center justify-center app-text-muted hover:app-text-accent bg-primary-800/80 app-duration cursor-pointer rounded-full p-2 transition-colors` | Botões anterior/seguinte completos do carousel |
+| Utilitário                    | Equivalente                                                                                                                                                            | Descrição                                      |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `app-dot-active`              | `bg-secondary-400`                                                                                                                                                     | Dot ativo do carousel                          |
+| `app-dot-inactive`            | `bg-primary-600 hover:bg-primary-500`                                                                                                                                  | Dot inativo do carousel                        |
+| `app-carousel-btn`            | `flex flex-shrink-0 items-center justify-center app-text-muted hover:app-text-accent bg-primary-800/80 app-duration cursor-pointer rounded-full p-2 transition-colors` | Botões anterior/seguinte completos do carousel |
+| `app-carousel-progress-track` | `stroke-primary-600`                                                                                                                                                   | Trilha do anel de progresso do auto-play       |
+| `app-carousel-progress`       | `stroke-secondary-400`                                                                                                                                                 | Progresso do intervalo do auto-play            |
 
 #### Outros
 
@@ -598,6 +605,8 @@ npm run build
 ### Hospedagem
 
 A pasta `dist/` pode ser hospedada em qualquer servidor estático:
+
+O router usa hash e os caminhos de conteúdo respeitam o `base` do Vite. Assim, o build funciona tanto na raiz quanto em subdiretórios sem regras de fallback para rotas.
 
 - **GitHub Pages** — Copie o conteúdo de `dist/` para a branch `gh-pages`
 - **Netlify / Vercel** — Aponte o build command para `npm run build` e o output directory para `dist`

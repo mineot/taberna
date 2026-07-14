@@ -1,8 +1,8 @@
 <template>
   <section
     v-for="section in config?.sections"
-    :key="section.id"
     :id="section.id"
+    :key="section.id"
     class="app-section rounded-2xl"
     :class="[
       section.destak ? 'app-section-destak' : '',
@@ -105,23 +105,34 @@ const { locale } = useLocale();
 const { fetchMarkdown } = useMarkdown();
 
 const markdownContent = ref<Map<string, string[]>>(new Map());
+let markdownRequest = 0;
 
 async function loadMarkdownFiles() {
-  if (!config.value) return;
+  const requestId = ++markdownRequest;
+  const currentConfig = config.value;
+  const currentLocale = locale.value;
+
+  if (!currentConfig || !currentLocale) return;
 
   const newMap = new Map<string, string[]>();
   const entries = await Promise.all(
-    config.value.sections
-      .filter((section) => section.contentFiles)
+    currentConfig.sections
+      .filter((section) => section.contentFiles?.length)
       .map(async (section) => {
-        const results = await Promise.all(
+        const settled = await Promise.allSettled(
           section.contentFiles!.map((file) =>
-            fetchMarkdown(`/content/${locale.value}/${file}`),
+            fetchMarkdown(`/content/${currentLocale}/${file}`),
           ),
+        );
+        const results = settled.flatMap((result) =>
+          result.status === 'fulfilled' ? [result.value] : [],
         );
         return [section.id, results] as const;
       }),
   );
+
+  if (requestId !== markdownRequest) return;
+
   for (const [id, results] of entries) {
     newMap.set(id, results);
   }
@@ -129,7 +140,7 @@ async function loadMarkdownFiles() {
 }
 
 watch(
-  [loaded, config],
+  [loaded, config, locale],
   async ([isLoaded]) => {
     if (isLoaded) await loadMarkdownFiles();
   },

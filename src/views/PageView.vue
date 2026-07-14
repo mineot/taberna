@@ -35,6 +35,7 @@ const { fetchMarkdown } = useMarkdown();
 const pageHtml = ref('');
 const pageError = ref('');
 const pageLoading = ref(false);
+let pageRequest = 0;
 
 const slug = computed(() => {
   const raw = route.params.slug as string;
@@ -47,20 +48,25 @@ const contentFile = computed(() => {
 });
 
 async function loadPage() {
-  if (!locale.value || !slug.value) return;
+  const requestId = ++pageRequest;
+  const path =
+    locale.value && slug.value
+      ? `/content/${locale.value}/${contentFile.value}`
+      : '';
+
+  if (!path) return;
 
   pageLoading.value = true;
   pageError.value = '';
   pageHtml.value = '';
 
   try {
-    pageHtml.value = await fetchMarkdown(
-      `/content/${locale.value}/${contentFile.value}`,
-    );
+    const html = await fetchMarkdown(path);
+    if (requestId === pageRequest) pageHtml.value = html;
   } catch {
-    pageError.value = 'Page not found';
+    if (requestId === pageRequest) pageError.value = 'Page not found';
   } finally {
-    pageLoading.value = false;
+    if (requestId === pageRequest) pageLoading.value = false;
   }
 }
 
