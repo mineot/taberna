@@ -1,44 +1,44 @@
 # Taberna
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE) [![🇧🇷 Português (Brasil)](<https://img.shields.io/badge/Idioma-%F0%9F%87%A7%F0%9F%87%B7%20Portugu%C3%AAs%20(Brasil)-e5e7eb.svg>)](README_PT_BR.md)
 
-Taberna é uma base para sites pessoais, portfólios, landing pages e sites institucionais. O conteúdo editorial fica em arquivos JSON e Markdown separados por idioma, enquanto o código Vue controla navegação, layout, segurança e comportamento responsivo.
+Taberna is a foundation for personal websites, portfolios, landing pages, and institutional websites. Editorial content is stored in JSON and Markdown files organized by language, while the Vue code handles navigation, layout, security, and responsive behavior.
 
-O projeto ainda usa conteúdo fictício. Antes de publicar, substitua os arquivos de exemplo em `public/config/` e `public/content/`.
+The project still uses placeholder content. Before publishing, replace the example files in `public/config/` and `public/content/`.
 
-## Principais recursos
+## Key features
 
-- Detecção automática de idioma, preferência persistida e página de seleção
-- Seções configuráveis com texto, Markdown, imagem, destaque e inversão de layout
-- Páginas Markdown acessadas por rotas
-- Carrossel responsivo com autoplay, pausa, progresso, setas e indicadores
-- Menu responsivo em sidebar com navegação por teclado e foco confinado
-- Footer opcional carregado de Markdown
-- Tema centralizado em utilitários CSS `app-*`
-- Sanitização de HTML e restrições de Content Security Policy (CSP)
-- Build estático compatível com hospedagem na raiz ou em subdiretórios
+- Automatic language detection, persisted preferences, and a language selection page
+- Configurable sections with text, Markdown, images, highlighting, and reversed layouts
+- Markdown pages accessed through routes
+- Responsive carousel with autoplay, pause, progress, arrows, and indicators
+- Responsive sidebar menu with keyboard navigation and focus trapping
+- Optional footer loaded from Markdown
+- Centralized theme using `app-*` CSS utilities
+- HTML sanitization and Content Security Policy (CSP) restrictions
+- Static build compatible with hosting at the root or in subdirectories
 
-## Tecnologias
+## Technologies
 
-- Vue 3 com Composition API e `<script setup>`
-- TypeScript em modo strict
+- Vue 3 with the Composition API and `<script setup>`
+- TypeScript in strict mode
 - Vite
-- Vue Router em hash mode
-- Tailwind CSS v4 e plugin Typography
-- `marked` para converter Markdown
-- DOMPurify para sanitizar o HTML gerado
-- Lucide Vue para ícones
-- Vitest, Vue Test Utils e jsdom para testes
-- ESLint e Prettier
+- Vue Router in hash mode
+- Tailwind CSS v4 and the Typography plugin
+- `marked` for converting Markdown
+- DOMPurify for sanitizing generated HTML
+- Lucide Vue for icons
+- Vitest, Vue Test Utils, and jsdom for testing
+- ESLint and Prettier
 
-## Começando
+## Getting started
 
-### Pré-requisitos
+### Prerequisites
 
-- Node.js 20.19+ ou 22.12+
+- Node.js 20.19+ or 22.12+
 - npm
 
-### Instalação
+### Installation
 
 ```bash
 git clone https://github.com/mineot/taberna.git
@@ -47,21 +47,21 @@ npm install
 npm run dev
 ```
 
-O servidor de desenvolvimento fica disponível em `http://localhost:5173`. Alterações no código são atualizadas pelo Vite; mudanças em arquivos públicos podem provocar uma atualização completa da página.
+The development server will be available at `http://localhost:5173`. Code changes are updated by Vite; changes to public files may trigger a full page reload.
 
 ### Scripts
 
 ```bash
-npm run dev        # Servidor de desenvolvimento com HMR
-npm run build      # Type-check e build de produção em dist/
-npm run preview    # Preview do build em http://localhost:4173
-npm run test       # Testes unitários com Vitest
-npm run typecheck  # Verificação TypeScript sem emitir arquivos
-npm run lint       # ESLint em src/
-npm run format     # Prettier em arquivos TS, Vue e CSS de src/
+npm run dev        # Development server with HMR
+npm run build      # Type-check and production build in dist/
+npm run preview    # Preview the build at http://localhost:4173
+npm run test       # Unit tests with Vitest
+npm run typecheck  # TypeScript validation without emitting files
+npm run lint       # ESLint on src/
+npm run format     # Prettier on TS, Vue, and CSS files in src/
 ```
 
-Antes de enviar uma alteração, execute:
+Before submitting a change, run:
 
 ```bash
 npm run format
@@ -71,61 +71,61 @@ npm run test
 npm run build
 ```
 
-O lint emite avisos para `v-html`. Eles são esperados neste projeto porque todo HTML originado de Markdown passa por DOMPurify antes da renderização.
+The linter reports warnings for `v-html`. These are expected in this project because all HTML originating from Markdown is processed by DOMPurify before rendering.
 
-## Como o projeto funciona
+## How the project works
 
-O carregamento inicial segue este fluxo:
+The initial loading process follows this flow:
 
-1. `useLocale` carrega `public/languages.json` e seleciona o idioma.
-2. `useConfig` busca `public/config/{locale}.json`.
-3. `App.vue` monta header, menu, sidebar e footer.
-4. O Vue Router escolhe a home, a seleção de idiomas ou uma página Markdown.
-5. `useMarkdown` busca, converte, sanitiza e armazena o conteúdo em cache.
+1. `useLocale` loads `public/languages.json` and selects the language.
+2. `useConfig` fetches `public/config/{locale}.json`.
+3. `App.vue` renders the header, menu, sidebar, and footer.
+4. Vue Router selects the home page, language selection page, or a Markdown page.
+5. `useMarkdown` fetches, converts, sanitizes, and caches the content.
 
-Os estados de `useLocale` e `useConfig` são singletons: os `ref`s ficam no escopo dos módulos e são compartilhados por todos os componentes. O projeto não usa Pinia ou Vuex.
+The `useLocale` and `useConfig` states are singletons: their `ref`s are declared at module scope and shared by all components. The project does not use Pinia or Vuex.
 
-### Responsabilidade dos composables
+### Composable responsibilities
 
-| Composable        | Responsabilidade                                                                            |
-| ----------------- | ------------------------------------------------------------------------------------------- |
-| `useLocale`       | Carrega o manifesto, detecta e persiste o idioma e atualiza o atributo `lang` do documento  |
-| `useConfig`       | Carrega o JSON do locale, expõe loading/erro e cancela requisições anteriores               |
-| `useMarkdown`     | Busca Markdown, rejeita fallback HTML da SPA, converte, sanitiza e mantém cache por caminho |
-| `useSwitchLocale` | Valida o idioma, carrega o config, aplica o locale e navega para a home                     |
+| Composable        | Responsibility                                                                                     |
+| ----------------- | -------------------------------------------------------------------------------------------------- |
+| `useLocale`       | Loads the manifest, detects and persists the language, and updates the document's `lang` attribute |
+| `useConfig`       | Loads the locale JSON, exposes loading/error states, and cancels previous requests                 |
+| `useMarkdown`     | Fetches Markdown, rejects the SPA HTML fallback, converts, sanitizes, and caches content by path   |
+| `useSwitchLocale` | Validates the language, loads the config, applies the locale, and navigates to the home page       |
 
-Requisições de config, página, footer e seções usam identificadores internos para ignorar respostas antigas que terminem depois de uma solicitação mais recente. Isso evita que uma troca rápida de idioma aplique conteúdo obsoleto.
+Config, page, footer, and section requests use internal identifiers to ignore stale responses that finish after a newer request. This prevents a rapid language switch from applying outdated content.
 
-### Estrutura principal
+### Main structure
 
 ```text
 taberna/
-├── index.html                  # Shell da SPA, favicon, fontes e CSP
+├── index.html                  # SPA shell, favicon, fonts, and CSP
 ├── public/
 │   ├── favicon.png
 │   ├── logo.png
-│   ├── fonts/                  # Fontes self-hosted
-│   ├── languages.json          # Manifesto de idiomas
-│   ├── config/                 # Um JSON completo por idioma
-│   └── content/                # Markdown separado por idioma
+│   ├── fonts/                  # Self-hosted fonts
+│   ├── languages.json          # Language manifest
+│   ├── config/                 # One complete JSON file per language
+│   └── content/                # Markdown organized by language
 ├── src/
-│   ├── App.vue                 # Layout, header, sidebar e footer
-│   ├── main.ts                 # Inicialização do Vue e router
-│   ├── style.css               # Tailwind, fontes, tema e utilities
-│   ├── components/             # Componentes reutilizáveis e testes
-│   ├── composables/            # Locale, config, Markdown e troca de idioma
-│   ├── router/                 # Definição das rotas
-│   ├── types/                  # Interfaces TypeScript do config
-│   ├── utils/                  # Validação de links e caminhos públicos
-│   └── views/                  # Home, idiomas e páginas Markdown
-└── dist/                       # Resultado gerado pelo build
+│   ├── App.vue                 # Layout, header, sidebar, and footer
+│   ├── main.ts                 # Vue and router initialization
+│   ├── style.css               # Tailwind, fonts, theme, and utilities
+│   ├── components/             # Reusable components and tests
+│   ├── composables/            # Locale, config, Markdown, and language switching
+│   ├── router/                 # Route definitions
+│   ├── types/                  # TypeScript interfaces for the config
+│   ├── utils/                  # Link validation and public paths
+│   └── views/                  # Home, languages, and Markdown pages
+└── dist/                       # Generated build output
 ```
 
-Edite `public/` para personalizar conteúdo e assets. Edite `src/` quando precisar alterar comportamento, layout, tema ou mensagens internas da aplicação. Não edite `dist/` diretamente.
+Edit `public/` to customize content and assets. Edit `src/` when you need to change behavior, layout, theme, or internal application messages. Do not edit `dist/` directly.
 
-## Idiomas
+## Languages
 
-### Manifesto `public/languages.json`
+### The `public/languages.json` manifest
 
 ```json
 {
@@ -138,114 +138,114 @@ Edite `public/` para personalizar conteúdo e assets. Edite `src/` quando precis
 }
 ```
 
-Use códigos em minúsculas no formato `idioma-região`, como `pt-br`. Cada item de `available` deve possuir uma flag e um arquivo correspondente em `public/config/`.
+Use lowercase codes in the `language-region` format, such as `pt-br`. Each item in `available` must have a flag and a corresponding file in `public/config/`.
 
-### Como o idioma é escolhido
+### How the language is selected
 
-A precedência é:
+The precedence order is:
 
-1. valor válido salvo em `localStorage` com a chave `taberna-lang`;
-2. correspondência exata ou parcial em `navigator.languages`;
-3. campo `default` do manifesto;
-4. fallback interno `pt-br` se o manifesto não puder ser carregado.
+1. a valid value saved in `localStorage` under the `taberna-lang` key;
+2. an exact or partial match in `navigator.languages`;
+3. the manifest's `default` field;
+4. the internal `pt-br` fallback if the manifest cannot be loaded.
 
-Ao selecionar outro idioma, a aplicação carrega o novo config antes de salvar a preferência. A troca acontece sem recarregar a página e navega para a home quando o usuário está em outra rota.
+When another language is selected, the application loads the new config before saving the preference. The switch happens without reloading the page and navigates to the home page when the user is on another route.
 
-### Adicionando um idioma
+### Adding a language
 
-1. Copie um config existente:
+1. Copy an existing config:
 
    ```bash
    cp public/config/pt-br.json public/config/es-es.json
    ```
 
-2. Crie a pasta de conteúdo:
+2. Create the content directory:
 
    ```bash
    mkdir -p public/content/es-es
    ```
 
-3. Traduza o config e todos os arquivos Markdown referenciados por ele.
-4. Adicione `es-es` a `available` e `flags` em `languages.json`.
-5. Execute a aplicação e teste home, menu, páginas, footer e troca de idioma.
+3. Translate the config and all Markdown files referenced by it.
+4. Add `es-es` to `available` and `flags` in `languages.json`.
+5. Run the application and test the home page, menu, pages, footer, and language switching.
 
-Cada config é completo e independente. Nomes de arquivos, rotas e conteúdo podem variar entre idiomas, desde que as referências daquele config existam.
+Each config is complete and independent. File names, routes, and content may vary between languages as long as the references in that config exist.
 
-## Configuração do site
+## Site configuration
 
-Cada `public/config/{locale}.json` segue esta estrutura:
+Each `public/config/{locale}.json` follows this structure:
 
 ```json
 {
   "site": {
-    "title": "Meu Site",
-    "description": "Descrição do site",
+    "title": "My Website",
+    "description": "Website description",
     "image": "logo.png"
   },
   "menu": [],
   "sections": [],
   "footer": {
-    "ownership": "© 2026 Nome",
+    "ownership": "© 2026 Name",
     "contentFile": "footer.md"
   }
 }
 ```
 
-### Campos de `site`
+### `site` fields
 
-| Campo         | Tipo   | Obrigatório | Comportamento atual                                     |
-| ------------- | ------ | ----------- | ------------------------------------------------------- |
-| `title`       | string | Não         | Título no header/sidebar e em `document.title`          |
-| `description` | string | Sim         | Atualiza a meta description quando o config é carregado |
-| `image`       | string | Não         | Imagem ao lado do título no header/sidebar              |
+| Field         | Type   | Required | Current behavior                                       |
+| ------------- | ------ | -------- | ------------------------------------------------------ |
+| `title`       | string | No       | Title in the header/sidebar and in `document.title`    |
+| `description` | string | Yes      | Updates the meta description when the config is loaded |
+| `image`       | string | No       | Image next to the title in the header/sidebar          |
 
-Se `title` não existir, o texto do título é omitido. Se `image` também não existir, o link visual da marca fica vazio.
+If `title` does not exist, the title text is omitted. If `image` also does not exist, the visual brand link is empty.
 
-O `index.html` contém uma descrição inicial para o período anterior ao carregamento da aplicação. Depois disso, `site.description` substitui o conteúdo de `<meta name="description">`. A troca de idioma também atualiza a descrição sem recarregar a página.
+The `index.html` file contains an initial description for the period before the application loads. After that, `site.description` replaces the content of `<meta name="description">`. Switching languages also updates the description without reloading the page.
 
-Essa atualização acontece no navegador. Open Graph, descrições específicas por página e metadados pré-renderizados ainda não estão implementados.
+This update happens in the browser. Open Graph, page-specific descriptions, and prerendered metadata have not been implemented yet.
 
-### Campos de `footer`
+### `footer` fields
 
-| Campo         | Tipo   | Obrigatório | Descrição                                    |
-| ------------- | ------ | ----------- | -------------------------------------------- |
-| `ownership`   | string | Sim         | Texto exibido na linha inferior do footer    |
-| `contentFile` | string | Não         | Markdown renderizado acima da linha inferior |
+| Field         | Type   | Required | Description                                |
+| ------------- | ------ | -------- | ------------------------------------------ |
+| `ownership`   | string | Yes      | Text displayed on the footer's bottom line |
+| `contentFile` | string | No       | Markdown rendered above the bottom line    |
 
-## Seções da home
+## Home page sections
 
-Cada item de `sections` aceita:
+Each item in `sections` accepts:
 
-| Campo             | Tipo                      | Obrigatório | Descrição                                               |
-| ----------------- | ------------------------- | ----------- | ------------------------------------------------------- |
-| `id`              | string                    | Sim         | Identificador e destino de anchors como `#sobre`        |
-| `title`           | string                    | Não         | Título `<h2>` da seção                                  |
-| `subtitle`        | string                    | Não         | Texto abaixo do título                                  |
-| `content`         | string[]                  | Não         | Parágrafos de texto simples                             |
-| `contentFiles`    | string[]                  | Não         | Markdown relativo a `public/content/{locale}/`          |
-| `image`           | string                    | Não         | Imagem usada com texto ou um Markdown                   |
-| `imagePosition`   | `top`, `center`, `bottom` | Não         | Corte da imagem e fallback do alinhamento flex          |
-| `contentPosition` | `top`, `center`, `bottom` | Não         | Alinhamento flex; tem precedência sobre `imagePosition` |
-| `invert`          | boolean                   | Não         | Inverte conteúdo e imagem no desktop                    |
-| `destak`          | boolean                   | Não         | Aplica fundo de destaque                                |
-| `carousel`        | objeto                    | Não         | Configura o carrossel para múltiplos arquivos           |
+| Field             | Type                      | Required | Description                                           |
+| ----------------- | ------------------------- | -------- | ----------------------------------------------------- |
+| `id`              | string                    | Yes      | Identifier and target for anchors such as `#about`    |
+| `title`           | string                    | No       | Section `<h2>` title                                  |
+| `subtitle`        | string                    | No       | Text below the title                                  |
+| `content`         | string[]                  | No       | Plain-text paragraphs                                 |
+| `contentFiles`    | string[]                  | No       | Markdown relative to `public/content/{locale}/`       |
+| `image`           | string                    | No       | Image used with text or a single Markdown file        |
+| `imagePosition`   | `top`, `center`, `bottom` | No       | Image cropping and fallback for flex alignment        |
+| `contentPosition` | `top`, `center`, `bottom` | No       | Flex alignment; takes precedence over `imagePosition` |
+| `invert`          | boolean                   | No       | Reverses the content and image on desktop             |
+| `destak`          | boolean                   | No       | Applies a highlighted background                      |
+| `carousel`        | object                    | No       | Configures the carousel for multiple files            |
 
-### Precedência de conteúdo
+### Content precedence
 
-1. Se `content` estiver definido, ele é renderizado como texto e vence as demais formas.
-2. Um único item em `contentFiles` renderiza um bloco Markdown.
-3. Dois ou mais itens com `carousel` renderizam o carrossel.
-4. Dois ou mais itens sem `carousel` são exibidos lado a lado e empilham no mobile.
-5. `image` só é exibida com `content` ou exatamente um `contentFile`.
+1. If `content` is defined, it is rendered as text and takes precedence over the other forms.
+2. A single item in `contentFiles` renders one Markdown block.
+3. Two or more items with `carousel` render the carousel.
+4. Two or more items without `carousel` are displayed side by side and stack on mobile.
+5. `image` is only displayed with `content` or exactly one `contentFile`.
 
-### Texto e imagem
+### Text and image
 
 ```json
 {
-  "id": "sobre",
-  "title": "Sobre",
-  "subtitle": "Conheça o projeto",
-  "content": ["Primeiro parágrafo.", "Segundo parágrafo."],
+  "id": "about",
+  "title": "About",
+  "subtitle": "Learn about the project",
+  "content": ["First paragraph.", "Second paragraph."],
   "image": "https://placehold.co/600x400",
   "imagePosition": "top",
   "contentPosition": "center",
@@ -254,44 +254,44 @@ Cada item de `sections` aceita:
 }
 ```
 
-No desktop, a ordem padrão é conteúdo à esquerda e imagem à direita. Com `invert: true`, a imagem fica à esquerda e o conteúdo à direita. No mobile, o conteúdo aparece acima da imagem nos dois casos.
+On desktop, the default order is content on the left and the image on the right. With `invert: true`, the image is on the left and the content is on the right. On mobile, the content appears above the image in both cases.
 
-`contentPosition` controla o alinhamento vertical da linha. Quando ele não existe, `imagePosition` também é usado como fallback desse alinhamento. Separadamente, `imagePosition` define `object-position` (`top`, `center` ou `bottom`) para o corte da imagem.
+`contentPosition` controls the row's vertical alignment. When it does not exist, `imagePosition` is also used as the alignment fallback. Separately, `imagePosition` defines the image's `object-position` (`top`, `center`, or `bottom`) for cropping.
 
-### Markdown único
+### Single Markdown file
 
 ```json
 {
   "id": "intro",
-  "title": "Introdução",
+  "title": "Introduction",
   "contentFiles": ["intro.md"],
   "image": "https://placehold.co/600x400"
 }
 ```
 
-### Múltiplos arquivos
+### Multiple files
 
 ```json
 {
-  "id": "servicos",
-  "title": "Serviços",
-  "contentFiles": ["servicos/servico-1.md", "servicos/servico-2.md"]
+  "id": "services",
+  "title": "Services",
+  "contentFiles": ["services/service-1.md", "services/service-2.md"]
 }
 ```
 
-Se um arquivo de uma seção falhar, os demais continuam sendo apresentados. Se todos falharem, a seção permanece sem aquele conteúdo.
+If one of a section's files fails, the others are still displayed. If all of them fail, the section remains without that content.
 
-## Carrossel
+## Carousel
 
-O carrossel é ativado em uma seção com dois ou mais `contentFiles`:
+The carousel is enabled in a section with two or more `contentFiles`:
 
 ```json
 {
-  "id": "depoimentos",
+  "id": "testimonials",
   "contentFiles": [
-    "depoimentos/depoimento-1.md",
-    "depoimentos/depoimento-2.md",
-    "depoimentos/depoimento-3.md"
+    "testimonials/testimonial-1.md",
+    "testimonials/testimonial-2.md",
+    "testimonials/testimonial-3.md"
   ],
   "carousel": {
     "autoPlay": true,
@@ -303,37 +303,37 @@ O carrossel é ativado em uma seção com dois ou mais `contentFiles`:
 }
 ```
 
-| Campo          | Tipo    | Padrão | Regras                                              |
-| -------------- | ------- | ------ | --------------------------------------------------- |
-| `autoPlay`     | boolean | `true` | Avança automaticamente                              |
-| `interval`     | number  | `5000` | Mínimo de 1000 ms; inválidos voltam ao padrão       |
-| `buttons`      | boolean | `true` | Exibe anterior/próximo quando há mais de uma página |
-| `dots`         | boolean | `true` | Exibe um indicador por página                       |
-| `itemsPerView` | number  | `1`    | Inteiro, mínimo 1 e limitado à quantidade de slides |
+| Field          | Type    | Default | Rules                                                        |
+| -------------- | ------- | ------- | ------------------------------------------------------------ |
+| `autoPlay`     | boolean | `true`  | Advances automatically                                       |
+| `interval`     | number  | `5000`  | Minimum 1,000 ms; invalid values fall back to the default    |
+| `buttons`      | boolean | `true`  | Shows previous/next buttons when there is more than one page |
+| `dots`         | boolean | `true`  | Shows one indicator per page                                 |
+| `itemsPerView` | number  | `1`     | Integer, minimum 1, and limited to the number of slides      |
 
-Com um item por vez, a transição usa fade. Com vários itens, usa deslocamento horizontal e navegação por página. A navegação é circular nos dois modos.
+With one item at a time, the transition uses a fade effect. With multiple items, it uses horizontal movement and page-based navigation. Navigation is circular in both modes.
 
-Em telas menores que 768 px, `itemsPerView` é sempre 1. Com somente uma página, setas, dots e controle de reprodução são ocultados.
+On screens narrower than 768 px, `itemsPerView` is always 1. With only one page, arrows, dots, and playback controls are hidden.
 
-O autoplay:
+Autoplay:
 
-- pausa durante hover ou foco;
-- pausa quando a aba fica oculta;
-- pode ser pausado pelo usuário;
-- mantém o progresso restante ao retomar;
-- é desativado com `prefers-reduced-motion: reduce`;
-- reinicia o intervalo após navegação manual.
+- pauses during hover or focus;
+- pauses when the tab is hidden;
+- can be paused by the user;
+- preserves the remaining progress when resumed;
+- is disabled when `prefers-reduced-motion: reduce` is enabled;
+- restarts the interval after manual navigation.
 
-## Menu e rotas
+## Menu and routes
 
-### Itens de menu
+### Menu items
 
 ```json
-{ "label": "Início", "href": "#intro" }
+{ "label": "Home", "href": "#intro" }
 ```
 
 ```json
-{ "label": "Sobre", "route": "/sobre" }
+{ "label": "About", "route": "/about" }
 ```
 
 ```json
@@ -341,118 +341,118 @@ O autoplay:
 ```
 
 ```json
-{ "label": "Blog", "route": "/blog", "content": "paginas/meu-blog.md" }
+{ "label": "Blog", "route": "/blog", "content": "pages/my-blog.md" }
 ```
 
-| Configuração             | Comportamento                              |
-| ------------------------ | ------------------------------------------ |
-| `route`                  | Rota interna por `<router-link>`           |
-| `href` começando com `#` | Volta à home e rola suavemente até a seção |
-| `href` HTTP/HTTPS        | Link externo em nova aba                   |
-| `route` e `content`      | Usa `content` como caminho do Markdown     |
-| `route` e `href`         | `route` tem precedência                    |
+| Configuration            | Behavior                                                     |
+| ------------------------ | ------------------------------------------------------------ |
+| `route`                  | Internal route using `<router-link>`                         |
+| `href` starting with `#` | Returns to the home page and smoothly scrolls to the section |
+| HTTP/HTTPS `href`        | External link in a new tab                                   |
+| `route` and `content`    | Uses `content` as the Markdown path                          |
+| `route` and `href`       | `route` takes precedence                                     |
 
-Links externos com protocolos diferentes de HTTP e HTTPS não são renderizados pelo menu.
+External links using protocols other than HTTP and HTTPS are not rendered by the menu.
 
-### Rotas disponíveis
+### Available routes
 
-| URL lógica   | URL no navegador | Conteúdo               |
-| ------------ | ---------------- | ---------------------- |
-| `/`          | `/#/`            | Seções da home         |
-| `/languages` | `/#/languages`   | Seleção de idioma      |
-| `/:slug`     | `/#/sobre`       | Markdown de uma página |
+| Logical URL  | Browser URL    | Content            |
+| ------------ | -------------- | ------------------ |
+| `/`          | `/#/`          | Home page sections |
+| `/languages` | `/#/languages` | Language selection |
+| `/:slug`     | `/#/about`     | Markdown page      |
 
-Sem `content`, `/sobre` procura `public/content/{locale}/sobre.md`. Com `content`, o arquivo indicado é usado. A rota aceita um segmento; o arquivo de conteúdo pode estar em uma subpasta.
+Without `content`, `/about` looks for `public/content/{locale}/about.md`. With `content`, the specified file is used. The route accepts one segment; the content file may be located in a subdirectory.
 
-Links escritos dentro de Markdown são anchors HTML comuns, não `<router-link>`. Para preservar hash routing e deploy em subdiretório, prefira links relativos como `[Sobre](./#/sobre)`. Links como `/sobre` tentam acessar uma rota real do servidor.
+Links written inside Markdown are regular HTML anchors, not `<router-link>` elements. To preserve hash routing and subdirectory deployment, prefer relative links such as `[About](./#/about)`. Links such as `/about` attempt to access an actual server route.
 
-Se a página não existir, a interface exibe `Page not found`. O slug é filtrado antes de formar o caminho do arquivo.
+If the page does not exist, the interface displays `Page not found`. The slug is filtered before the file path is constructed.
 
-O router restaura a posição salva ao voltar, rola suavemente para anchors e volta ao topo nas demais navegações. URLs que não correspondem às rotas suportadas são redirecionadas para a home.
+The router restores the saved position when navigating back, smoothly scrolls to anchors, and returns to the top for other navigation. URLs that do not match the supported routes are redirected to the home page.
 
-### Header e sidebar
+### Header and sidebar
 
-- No desktop, até quatro itens são exibidos no menu inline.
-- Com mais de quatro itens, menu e bandeira inline são substituídos pelo hamburger em todas as resoluções.
-- Em telas pequenas, o hamburger substitui a navegação inline.
-- Com menu vazio e um único idioma, o hamburger não aparece.
-- A seleção de idioma só aparece quando há mais de um idioma.
-- A sidebar fecha pelo backdrop, botão, link ou tecla `Escape`.
-- Ao abrir, ela bloqueia o scroll, move o foco para o botão de fechar e confina a navegação por Tab.
-- Ao fechar, o foco retorna ao elemento que abriu o menu.
+- On desktop, up to four items are displayed in the inline menu.
+- With more than four items, the inline menu and flag are replaced by the hamburger button at all resolutions.
+- On small screens, the hamburger button replaces inline navigation.
+- With an empty menu and a single language, the hamburger button is not displayed.
+- Language selection is only displayed when more than one language is available.
+- The sidebar closes when the user clicks the backdrop, button, or link, or presses `Escape`.
+- When opened, it locks scrolling, moves focus to the close button, and traps Tab navigation.
+- When closed, focus returns to the element that opened the menu.
 
-## Markdown e footer
+## Markdown and footer
 
-Arquivos Markdown são buscados em runtime, convertidos com `marked`, sanitizados com DOMPurify e renderizados com Tailwind Typography.
+Markdown files are fetched at runtime, converted with `marked`, sanitized with DOMPurify, and rendered with Tailwind Typography.
 
-Markdown também pode conter HTML, mas conteúdo perigoso é removido. Não dependa de `<script>`, atributos como `onclick` ou HTML não permitido pelo sanitizador.
+Markdown may also contain HTML, but dangerous content is removed. Do not rely on `<script>`, attributes such as `onclick`, or HTML that is not allowed by the sanitizer.
 
-Para misturar Markdown dentro de HTML, deixe linhas em branco entre as tags e o conteúdo:
+To mix Markdown inside HTML, leave blank lines between the tags and the content:
 
 ```html
 <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-  <div>### Empresa Descrição da empresa.</div>
+  <div>### Company Company description.</div>
 
-  <div>### Links - [Início](./#/) - [Sobre](./#/sobre)</div>
+  <div>### Links - [Home](./#/) - [About](./#/about)</div>
 </div>
 ```
 
-O layout do footer é definido pelo próprio Markdown; o componente não cria colunas automaticamente. Classes Tailwind presentes nos arquivos durante o build são incluídas no CSS. Se você adicionar classes inéditas diretamente em uma publicação já compilada, refaça o build.
+The footer layout is defined by the Markdown itself; the component does not create columns automatically. Tailwind classes present in the files at build time are included in the CSS. If you add new classes directly to an already compiled deployment, rebuild the project.
 
-Sem `footer.contentFile`, somente `ownership` e o crédito “Powered by Mineot” são apresentados. Se o arquivo do footer falhar, a aplicação omite apenas o conteúdo personalizado.
+Without `footer.contentFile`, only `ownership` and the “Powered by Mineot” credit are displayed. If the footer file fails, the application omits only the custom content.
 
-Links do footer recebem sublinhado e mudança de cor no hover. Outros detalhes de layout, como grid e alinhamento das colunas, dependem das classes escritas no Markdown.
+Footer links are underlined and change color on hover. Other layout details, such as the grid and column alignment, depend on the classes written in the Markdown.
 
 ### Cache
 
-`useMarkdown` mantém um cache em memória por caminho e não o invalida. Durante o desenvolvimento, recarregue a página se uma alteração de Markdown não aparecer. Em produção, o cache dura até a página ser recarregada.
+`useMarkdown` maintains an in-memory cache by path and does not invalidate it. During development, reload the page if a Markdown change does not appear. In production, the cache lasts until the page is reloaded.
 
-## Segurança
+## Security
 
-### Sanitização
+### Sanitization
 
-Todo HTML gerado de Markdown passa por `DOMPurify.sanitize()` antes de chegar a `v-html`. Isso cobre seções, páginas, slides e footer.
+All HTML generated from Markdown passes through `DOMPurify.sanitize()` before reaching `v-html`. This covers sections, pages, slides, and the footer.
 
-### Links externos
+### External links
 
-Links do menu passam por uma allowlist de protocolos HTTP e HTTPS. Links Markdown são tratados pelo sanitizador, mas continuam sendo links HTML comuns.
+Menu links pass through an allowlist of HTTP and HTTPS protocols. Markdown links are processed by the sanitizer but remain regular HTML links.
 
 ### Content Security Policy
 
-A CSP em `index.html` permite:
+The CSP in `index.html` allows:
 
-- scripts somente da própria origem;
-- estilos da própria origem e estilos inline;
-- fontes somente da própria origem;
-- imagens locais, data URIs e `https://placehold.co`.
+- scripts only from the same origin;
+- styles from the same origin and inline styles;
+- fonts only from the same origin;
+- local images, data URIs, and `https://placehold.co`.
 
-Para usar imagens de outro domínio, adicione-o à diretiva `img-src`. Faça essa alteração com cuidado e mantenha a lista tão restrita quanto possível.
+To use images from another domain, add it to the `img-src` directive. Make this change carefully and keep the list as restrictive as possible.
 
-A política está definida em uma meta tag. Para uma política de produção mais rigorosa, configure a CSP como header HTTP na hospedagem; recursos como nonces e algumas diretivas não são plenamente cobertos por CSP via meta tag.
+The policy is defined in a meta tag. For a stricter production policy, configure the CSP as an HTTP header in your hosting environment; features such as nonces and some directives are not fully covered by a CSP delivered through a meta tag.
 
-## Personalização visual
+## Visual customization
 
-O tema fica em `src/style.css`. Os componentes usam utilities `app-*`; evite aplicar `primary-*` ou `secondary-*` diretamente nos templates.
+The theme is defined in `src/style.css`. Components use `app-*` utilities; avoid applying `primary-*` or `secondary-*` directly in templates.
 
-### Fontes
+### Fonts
 
-| Utility      | Fonte        | Uso principal      |
-| ------------ | ------------ | ------------------ |
-| `font-sans`  | Roboto       | Interface e corpo  |
-| `font-serif` | Roboto Serif | Conteúdo editorial |
-| `font-mono`  | Roboto Mono  | Código             |
-| `font-fancy` | Italianno    | Título da marca    |
+| Utility      | Font         | Primary use       |
+| ------------ | ------------ | ----------------- |
+| `font-sans`  | Roboto       | UI and body text  |
+| `font-serif` | Roboto Serif | Editorial content |
+| `font-mono`  | Roboto Mono  | Code              |
+| `font-fancy` | Italianno    | Brand title       |
 
-Para trocar fontes, substitua ou adicione arquivos em `public/fonts/` e atualize os `@font-face` e variáveis em `style.css`.
+To change fonts, replace or add files in `public/fonts/` and update the `@font-face` rules and variables in `style.css`.
 
-### Cores
+### Colors
 
-O bloco `@theme` mapeia duas escalas:
+The `@theme` block maps two scales:
 
-- `primary-*`: neutral, usada em fundos, textos e bordas;
-- `secondary-*`: emerald, usada em destaques e interações.
+- `primary-*`: neutral, used for backgrounds, text, and borders;
+- `secondary-*`: emerald, used for highlights and interactions.
 
-Exemplo de alteração:
+Example customization:
 
 ```css
 @theme {
@@ -462,64 +462,64 @@ Exemplo de alteração:
 }
 ```
 
-### Utilities principais
+### Main utilities
 
-| Grupo     | Utilities                                                                                            |
-| --------- | ---------------------------------------------------------------------------------------------------- |
-| Fundos    | `app-background`, `app-background-hover`, `app-background-header`, `app-background-footer`           |
-| Texto     | `app-text`, `app-text-muted`, `app-text-body`, `app-text-subtle`, `app-text-accent`                  |
-| Marca     | `app-title`, `app-title-adjustment`, `app-logo`                                                      |
-| Seções    | `app-section`, `app-section-title`, `app-section-content`, `app-section-image`, `app-section-destak` |
-| Navegação | `app-icon-btn`, `app-flag-btn`, `app-nav-link`, `app-sidebar`, `app-backdrop`                        |
-| Carrossel | `app-carousel-btn`, `app-dot-active`, `app-dot-inactive`, `app-carousel-progress`                    |
-| Layout    | `app-container`, `app-footer`, `app-border`, `app-ring`, `app-skeleton`                              |
+| Group       | Utilities                                                                                            |
+| ----------- | ---------------------------------------------------------------------------------------------------- |
+| Backgrounds | `app-background`, `app-background-hover`, `app-background-header`, `app-background-footer`           |
+| Text        | `app-text`, `app-text-muted`, `app-text-body`, `app-text-subtle`, `app-text-accent`                  |
+| Brand       | `app-title`, `app-title-adjustment`, `app-logo`                                                      |
+| Sections    | `app-section`, `app-section-title`, `app-section-content`, `app-section-image`, `app-section-destak` |
+| Navigation  | `app-icon-btn`, `app-flag-btn`, `app-nav-link`, `app-sidebar`, `app-backdrop`                        |
+| Carousel    | `app-carousel-btn`, `app-dot-active`, `app-dot-inactive`, `app-carousel-progress`                    |
+| Layout      | `app-container`, `app-footer`, `app-border`, `app-ring`, `app-skeleton`                              |
 
-Altere as escalas e fontes para personalizações simples. Mudanças estruturais nas utilities podem afetar vários componentes e devem ser testadas em mobile e desktop.
+Change the scales and fonts for simple customizations. Structural changes to utilities may affect multiple components and should be tested on mobile and desktop.
 
-## Build e deploy
+## Build and deployment
 
-Gere a versão de produção com:
+Generate the production version with:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-O Vite copia os arquivos públicos e gera a aplicação em `dist/`. O router usa hash e os caminhos públicos respeitam o `base` relativo, portanto o resultado pode ser servido na raiz ou em subdiretórios sem regra de fallback para as rotas Vue.
+Vite copies the public files and generates the application in `dist/`. The router uses hash mode and public paths respect the relative `base`, so the result can be served at the root or in subdirectories without a fallback rule for Vue routes.
 
-Hospede `dist/` em GitHub Pages, Netlify, Vercel, Nginx, Apache ou qualquer servidor de arquivos estáticos. Em Netlify/Vercel, use `npm run build` como comando e `dist` como diretório de saída.
+Host `dist/` on GitHub Pages, Netlify, Vercel, Nginx, Apache, or any static file server. On Netlify/Vercel, use `npm run build` as the command and `dist` as the output directory.
 
-No fluxo normal do repositório, refaça o build após qualquer mudança para manter `dist/` atualizado. É possível substituir JSON ou Markdown diretamente em uma hospedagem estática, mas novas classes Tailwind e mudanças em código, CSS, assets processados ou `index.html` exigem um novo build.
+In the repository's normal workflow, rebuild after every change to keep `dist/` up to date. You can replace JSON or Markdown directly on static hosting, but new Tailwind classes and changes to code, CSS, processed assets, or `index.html` require a new build.
 
-### Backup da personalização
+### Backing up customizations
 
-Mantenha preferencialmente um fork ou repositório próprio. Dependendo das mudanças, preserve:
+Prefer maintaining a fork or your own repository. Depending on your changes, preserve:
 
 - `public/config/`;
 - `public/content/`;
 - `public/languages.json`;
-- `public/logo.png` e `public/favicon.png`;
+- `public/logo.png` and `public/favicon.png`;
 - `public/fonts/`;
 - `src/style.css`;
-- `index.html`, se CSP ou metadados foram alterados;
-- quaisquer componentes ou utilitários modificados em `src/`.
+- `index.html`, if the CSP or metadata were changed;
+- any modified components or utilities in `src/`.
 
-## Limitações atuais
+## Current limitations
 
-- O conteúdo distribuído é fictício.
-- Não há Pinia/Vuex, CI/CD, Docker ou arquivo `.env`.
-- A meta description é atualizada no cliente; não há Open Graph, metadata por página ou prerenderização para crawlers sem JavaScript.
-- Algumas mensagens internas e labels de acessibilidade ainda estão em inglês e fora do sistema de idiomas.
-- O projeto não valida o schema dos JSONs em runtime; mantenha tipos e campos conforme esta documentação.
+- The bundled content is fictional.
+- There is no Pinia/Vuex, CI/CD, Docker, or `.env` file.
+- The meta description is updated on the client; there is no Open Graph, per-page metadata, or prerendering for crawlers without JavaScript.
+- Some internal messages and accessibility labels are still in English and outside the language system.
+- The project does not validate the JSON schema at runtime; keep types and fields consistent with this documentation.
 
-## Contribuindo
+## Contributing
 
-1. Faça um fork do projeto.
-2. Crie uma branch: `git checkout -b feature/nova-feature`.
-3. Implemente e execute as validações.
-4. Faça commit e push da branch.
-5. Abra um Pull Request.
+1. Fork the project.
+2. Create a branch: `git checkout -b feature/new-feature`.
+3. Implement your changes and run the validation commands.
+4. Commit and push the branch.
+5. Open a Pull Request.
 
-## Licença
+## License
 
-Licenciado sob a [Apache License 2.0](LICENSE).
+Licensed under the [Apache License 2.0](LICENSE).

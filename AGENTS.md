@@ -1,66 +1,67 @@
 # Project: Taberna
 
-## O que e
+## What It Is
 
-**Taberna** e um site pessoal/landing page generico. Projeto em fase inicial, com conteudo placeholder ficticio. Sistema de i18n via JSON (pt-br/en-us) com deteccao de idioma do browser. Conteudo sera configurado posteriormente.
+**Taberna** is a generic personal website/landing page. The project is in its early stages and uses fictional placeholder content. It has JSON-based i18n (pt-br/en-us) with browser language detection. Content will be configured later.
 
 ## Stack
 
 - **Framework**: Vue 3.5.39 (Composition API / `<script setup>`)
 - **Language**: TypeScript 5.9.3 (strict mode)
 - **Build**: Vite 8.1.1
-- **CSS**: Tailwind CSS v4.3.2 (plugin oficial `@tailwindcss/vite`)
+- **CSS**: Tailwind CSS v4.3.2 (official `@tailwindcss/vite` plugin)
 - **Icons**: Lucide Vue (`@lucide/vue` 1.24.0)
 - **Markdown**: marked (parse) + DOMPurify (sanitize) + @tailwindcss/typography (prose)
-- **Formatting**: Prettier 3.9.5 (single quotes, semicolons, plugin tailwindcss)
+- **Formatting**: Prettier 3.9.5 (single quotes, semicolons, Tailwind CSS plugin)
 - **Linting**: ESLint 10.6.0 (eslint-plugin-vue, eslint-config-prettier, typescript-eslint)
 - **Tests**: Vitest 4.1.10 + Vue Test Utils 2.4.11 + jsdom 29.1.1
-- **Fonts**: Roboto (sans/serif/mono) + Italianno (decorativa), self-hosted em `public/fonts/`
+- **Fonts**: Roboto (sans/serif/mono) + Italianno (decorative), self-hosted in `public/fonts/`
 
 ## Scripts
 
 ```bash
-npm run dev        # Vite dev server com HMR (http://localhost:5173)
+npm run dev        # Vite development server with HMR (http://localhost:5173)
 npm run build      # vue-tsc --noEmit && vite build (type-check + build)
-npm run preview    # Preview do build de producao (http://localhost:4173)
-npm run test       # Testes unitarios com Vitest
-npm run typecheck  # Apenas type-check (vue-tsc --noEmit)
-npm run lint       # ESLint em src/
-npm run format     # Prettier em src/ (ts, vue, css)
+npm run preview    # Production build preview (http://localhost:4173)
+npm run test       # Unit tests with Vitest
+npm run typecheck  # Type-check only (vue-tsc --noEmit)
+npm run lint       # ESLint on src/
+npm run format     # Prettier on src/ (ts, vue, css)
 ```
 
-## Estrutura atual (working tree)
+## Current Structure (Working Tree)
 
 ```
 taberna/
 ├── .gitignore
 ├── LICENSE
-├── README.md
-├── index.html                 # SPA shell, preload de fonts, favicon, CSP
+├── README.md                  # Main documentation in English (en-us)
+├── README_PT_BR.md            # Portuguese version of the README
+├── index.html                 # SPA shell, font preloads, favicon, CSP
 ├── package.json               # "taberna", type: module
 ├── tsconfig.json              # ESNext, strict, bundler resolution
-├── vite.config.ts             # base relativo + plugins Vite + jsdom do Vitest
-├── eslint.config.js           # ESLint flat config (vue + typescript + prettier)
-├── .prettierrc                # singleQuote, semi, tailwind plugin
-├── .vscode/                   # Configuracoes do editor
+├── vite.config.ts             # Relative base + Vite plugins + Vitest jsdom
+├── eslint.config.js           # ESLint flat config (Vue + TypeScript + Prettier)
+├── .prettierrc                # singleQuote, semi, Tailwind plugin
+├── .vscode/                   # Editor settings
 ├── public/
-│   ├── favicon.png            # Favicon PNG 16x16
-│   ├── logo.png               # Logo PNG 512x512
+│   ├── favicon.png            # 16x16 PNG favicon
+│   ├── logo.png               # 512x512 PNG logo
 │   ├── fonts/                 # Roboto*, Italianno (self-hosted TTFs)
-│   ├── languages.json         # Manifest: idiomas disponiveis + default
+│   ├── languages.json         # Manifest: available languages + default
 │   ├── config/
-│   │   ├── pt-br.json         # Config completo em portugues
-│   │   └── en-us.json         # Config completo em ingles
+│   │   ├── pt-br.json         # Complete config in Portuguese
+│   │   └── en-us.json         # Complete config in English
 │   └── content/
 │       ├── pt-br/
-│       │   ├── intro.md       # Conteudo markdown em portugues
-│       │   ├── sobre.md       # Pagina Sobre em portugues
-│       │   ├── servicos.md    # Pagina Servicos em portugues
-│       │   ├── footer.md      # Footer customizado em portugues
-│       │   ├── servicos/      # Servicos individuais
+│       │   ├── intro.md       # Markdown content in Portuguese
+│       │   ├── sobre.md       # About page in Portuguese
+│       │   ├── servicos.md    # Services page in Portuguese
+│       │   ├── footer.md      # Custom footer in Portuguese
+│       │   ├── servicos/      # Individual services
 │       │   │   ├── servico-1.md
 │       │   │   └── servico-2.md
-│       │   └── depoimentos/   # Depoimentos de clientes
+│       │   └── depoimentos/   # Customer testimonials
 │       │       ├── depoimento-1.md
 │       │       ├── depoimento-2.md
 │       │       ├── depoimento-3.md
@@ -72,14 +73,14 @@ taberna/
 │       │       ├── depoimento-9.md
 │       │       └── depoimento-10.md
 │       └── en-us/
-│           ├── intro.md       # Conteudo markdown em ingles
-│           ├── about.md       # Pagina About em ingles
-│           ├── services.md    # Pagina Services em ingles
-│           ├── footer.md      # Footer customizado em ingles
-│           ├── services/      # Services individuais
+│           ├── intro.md       # Markdown content in English
+│           ├── about.md       # About page in English
+│           ├── services.md    # Services page in English
+│           ├── footer.md      # Custom footer in English
+│           ├── services/      # Individual services
 │           │   ├── service-1.md
 │           │   └── service-2.md
-│           └── testimonials/  # Testemunhos de clientes
+│           └── testimonials/  # Customer testimonials
 │               ├── testimonial-1.md
 │               ├── testimonial-2.md
 │               ├── testimonial-3.md
@@ -91,54 +92,54 @@ taberna/
 │               ├── testimonial-9.md
 │               └── testimonial-10.md
 ├── src/
-│   ├── main.ts                # Entry point — mount Vue em #app + router
-│   ├── App.vue                # Root — layout (header/sidebar/footer) + router-view + footer markdown
-│   ├── env.d.ts               # Tipos para .vue
-│   ├── style.css              # Tailwind v4 + @font-face + @theme custom + typography plugin
+│   ├── main.ts                # Entry point — mounts Vue on #app + router
+│   ├── App.vue                # Root — layout (header/sidebar/footer) + router-view + footer Markdown
+│   ├── env.d.ts               # Types for .vue files
+│   ├── style.css              # Tailwind v4 + @font-face + custom @theme + typography plugin
 │   ├── components/
-│   │   ├── section-carousel.vue      # Carousel acessivel com auto-play, botoes e dots
-│   │   └── section-carousel.test.ts  # Testes de configuracao e movimento reduzido
+│   │   ├── section-carousel.vue      # Accessible carousel with autoplay, buttons, and dots
+│   │   └── section-carousel.test.ts  # Configuration and reduced-motion tests
 │   ├── router/
-│   │   └── index.ts           # Vue Router — rotas /, /languages e /:slug
+│   │   └── index.ts           # Vue Router — routes /, /languages, and /:slug
 │   ├── views/
-│   │   ├── HomeView.vue       # Home — sections do config
-│   │   ├── LanguagesView.vue  # Pagina de selecao de idioma (grid de bandeiras)
-│   │   └── PageView.vue       # Pagina — carrega markdown pelo slug
+│   │   ├── HomeView.vue       # Home — sections from the config
+│   │   ├── LanguagesView.vue  # Language selection page (flag grid)
+│   │   └── PageView.vue       # Page — loads Markdown by slug
 │   ├── composables/
-│   │   ├── useConfig.ts       # Fetch concorrente seguro de config por idioma
-│   │   ├── useConfig.test.ts  # Testes de erro e concorrencia do config
-│   │   ├── useLocale.ts       # Detecao de idioma + fallback completo
-│   │   ├── useLocale.test.ts  # Teste do fallback de idioma
-│   │   ├── useMarkdown.ts     # Fetch + parse de arquivos markdown com cache
-│   │   └── useSwitchLocale.ts # Troca de idioma (loadConfig + setLocale + navigate)
+│   │   ├── useConfig.ts       # Safe concurrent config fetching by language
+│   │   ├── useConfig.test.ts  # Config error and concurrency tests
+│   │   ├── useLocale.ts       # Language detection + complete fallback
+│   │   ├── useLocale.test.ts  # Language fallback test
+│   │   ├── useMarkdown.ts     # Fetch + parse Markdown files with caching
+│   │   └── useSwitchLocale.ts # Language switching (loadConfig + setLocale + navigate)
 │   ├── utils/
-│   │   ├── links.ts           # Allowlist http/https para links externos
-│   │   ├── links.test.ts      # Testes da validacao de links
-│   │   ├── meta.ts            # Atualizacao da meta description
-│   │   ├── meta.test.ts       # Testes de criacao e atualizacao da meta description
-│   │   └── paths.ts           # Caminhos publicos relativos ao base do Vite
+│   │   ├── links.ts           # HTTP/HTTPS allowlist for external links
+│   │   ├── links.test.ts      # Link validation tests
+│   │   ├── meta.ts            # Meta description updates
+│   │   ├── meta.test.ts       # Meta description creation and update tests
+│   │   └── paths.ts           # Public paths relative to Vite's base
 │   └── types/
 │       └── config.ts          # Types: AppConfig, Section, CarouselConfig, MenuItem, SiteConfig, FooterConfig, VerticalPosition
-└── dist/                      # Build de producao
+└── dist/                      # Production build
 ```
 
-## Sistema de Temas (style.css)
+## Theme System (style.css)
 
-Paleta de cores mapeada via `@theme` no Tailwind v4:
+Color palette mapped through `@theme` in Tailwind v4:
 
-| Token         | Escala          | Uso real no codigo                                                                                                                                                                                                                                                                                                                                                              |
+| Token         | Scale           | Actual usage in the code                                                                                                                                                                                                                                                                                                                                                        |
 | ------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `primary-*`   | neutral-50..950 | `app-background` (800), `app-background-hover` (700), `app-background-header` (900/95), `app-background-footer` (950), `app-text` (100), `app-text-muted` (200), `app-text-body` (300), `app-text-subtle` (400), `app-section-subtitle` (500), `app-border` (700), `app-section-destak` (700), `app-dot-inactive` (600, 500), `app-carousel-btn` (800/80), `app-skeleton` (700) |
 | `secondary-*` | emerald-50..950 | `app-text-accent` (500), `app-text-accent-hover` (400), `app-dot-active` (400), `app-ring` (400), `app-carousel-progress` (400)                                                                                                                                                                                                                                                 |
 
-Font stacks customizados:
+Custom font stacks:
 
 - `--font-sans`: Roboto
 - `--font-serif`: Roboto Serif
 - `--font-mono`: Roboto Mono
-- `--font-fancy`: Italianno (decorativa/cursiva)
+- `--font-fancy`: Italianno (decorative/cursive)
 
-Utilitarios customizados:
+Custom utilities:
 
 - `app-duration` → `duration-300`
 - `app-background` → `bg-primary-800`
@@ -176,170 +177,170 @@ Utilitarios customizados:
 - `app-skeleton` → `bg-primary-700`
 - `app-ring` → `ring-secondary-400`
 
-Utilitarios z-index (definidos em `<style>` global no App.vue, nao no style.css):
+Custom z-index utilities (defined in the global `<style>` block in App.vue, not in style.css):
 
-- `.z-60` → `z-index: 60` (backdrop do mobile menu)
-- `.z-70` → `z-index: 70` (sidebar do mobile menu)
+- `.z-60` → `z-index: 60` (mobile menu backdrop)
+- `.z-70` → `z-index: 70` (mobile menu sidebar)
 
-## Configuracoes Importantes
+## Important Settings
 
 ### tsconfig.json
 
 - Extends: `@vue/tsconfig/tsconfig.dom.json`
 - Target: ESNext, Module: ESNext, moduleResolution: "bundler"
 - Strict: `strict`, `noUnusedLocals`, `noUnusedParameters`, `noImplicitReturns`
-- Outros: `noEmit`, `isolatedModules`, `allowImportingTsExtensions`, `resolveJsonModule`, `jsx: "preserve"`, `skipLibCheck`
+- Other: `noEmit`, `isolatedModules`, `allowImportingTsExtensions`, `resolveJsonModule`, `jsx: "preserve"`, `skipLibCheck`
 
 ### vite.config.ts
 
 - Plugins: `@vitejs/plugin-vue`, `@tailwindcss/vite`
-- Base relativo (`./`) para deploy na raiz ou em subdiretorios
-- Sem aliases customizados
+- Relative base (`./`) for deployment at the root or in subdirectories
+- No custom aliases
 
 ### .prettierrc
 
 - `singleQuote: true`, `semi: true`
-- Plugin `prettier-plugin-tailwindcss` para ordenacao automatica de classes
+- `prettier-plugin-tailwindcss` plugin for automatic class sorting
 
-## O que NAO existe ainda
+## What Does NOT Exist Yet
 
-- Gerenciamento de estado (Pinia/Vuex)
+- State management (Pinia/Vuex)
 - CI/CD (GitHub Actions, etc.)
 - Docker
-- Arquivo `.env`
-- Open Graph, metadata por pagina e prerenderizacao de SEO
+- `.env` file
+- Open Graph, per-page metadata, and SEO prerendering
 
-## Observacoes
+## Notes
 
-- Conteudo do site em arquivos JSON (`public/config/`) e markdown (`public/content/`)
+- Site content is stored in JSON (`public/config/`) and Markdown (`public/content/`) files
 
-## Seguranca
+## Security
 
-### Sanitizacao de HTML (XSS)
+### HTML Sanitization (XSS)
 
-Tudo que envolve HTML dinamico passa por sanitizacao antes de ser renderizado:
+Everything involving dynamic HTML is sanitized before rendering:
 
-| Onde                                     | O que                            | Como                                                 |
-| ---------------------------------------- | -------------------------------- | ---------------------------------------------------- |
-| **Conteudo markdown** (sections/paginas) | HTML gerado por `marked.parse()` | `DOMPurify.sanitize()` antes de cache + `v-html`     |
-| **Footer customizado**                   | HTML do markdown do footer       | Mesmo pipeline do `useMarkdown` (DOMPurify)          |
-| **Links externos no menu**               | `href` de `<a>` tags             | `URL` com allowlist exclusiva de `http:` e `https:`  |
-| **Slug de rotas**                        | `route.params.slug`              | Regex `[^a-zA-Z0-9\-\/]` remove caracteres invalidos |
-| **Troca de idioma**                      | Valor passado para `setLocale()` | Valida contra array `available` do manifest          |
+| Where                                 | What                               | How                                                    |
+| ------------------------------------- | ---------------------------------- | ------------------------------------------------------ |
+| **Markdown content** (sections/pages) | HTML generated by `marked.parse()` | `DOMPurify.sanitize()` before caching + `v-html`       |
+| **Custom footer**                     | HTML from the footer Markdown      | Same `useMarkdown` pipeline (DOMPurify)                |
+| **External menu links**               | `href` values on `<a>` tags        | `URL` with an exclusive `http:` and `https:` allowlist |
+| **Route slug**                        | `route.params.slug`                | Regex `[^a-zA-Z0-9\-\/]` removes invalid characters    |
+| **Language switching**                | Value passed to `setLocale()`      | Validates against the manifest's `available` array     |
 
 ### Content Security Policy (CSP)
 
-Meta tag em `index.html`:
+Meta tag in `index.html`:
 
 ```
 default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https://placehold.co data:; font-src 'self';
 ```
 
-- `script-src 'self'`: bloqueia scripts inline e externos
-- `style-src 'self' 'unsafe-inline'`: permite Tailwind CSS (utility classes inline necessarias)
-- `img-src 'self' https://placehold.co data:`: imagens locais + placeholder + data URIs
-- `font-src 'self'`: fonts self-hosted apenas
+- `script-src 'self'`: blocks inline and external scripts
+- `style-src 'self' 'unsafe-inline'`: allows Tailwind CSS (required inline utility classes)
+- `img-src 'self' https://placehold.co data:`: local images + placeholder + data URIs
+- `font-src 'self'`: self-hosted fonts only
 
-**Limitacoes**: CSP via meta tag nao suporta `nonce` ou `hash` para `unsafe-inline`. Para producao rigorosa, considerar CSP via header HTTP (Vercel/Netlify config).
+**Limitations**: A CSP delivered through a meta tag does not support `nonce` or `hash` for `unsafe-inline`. For a strict production policy, consider delivering the CSP through an HTTP header (Vercel/Netlify config).
 
-### Lint de Acessibilidade
+### Accessibility Linting
 
-- `vue/no-v-html` configurado como `warn` no ESLint (revertido apos sanitizacao com DOMPurify)
-- Componentes usam atributos ARIA: `aria-label`, `aria-expanded`, `role="dialog"`, `aria-modal`, `aria-current`
+- `vue/no-v-html` is configured as `warn` in ESLint (allowed after sanitization with DOMPurify)
+- Components use ARIA attributes: `aria-label`, `aria-expanded`, `role="dialog"`, `aria-modal`, `aria-current`
 
 ## Composables
 
-### Estado Global (Singleton)
+### Global State (Singleton)
 
-`useConfig` e `useLocale` usam `ref` no escopo do módulo (fora da função exportada). Todas as chamadas de `useConfig()` retornam a mesma instância reativa. Isso é o padrão Vue 3 para estado global sem store, mas pode causar confusão em testes.
+`useConfig` and `useLocale` use module-scoped `ref`s (outside the exported function). Every call to `useConfig()` returns the same reactive instance. This is the Vue 3 pattern for global state without a store, but it can cause confusion in tests.
 
 ### useLocale
 
-- **Fallback**: Se `languages.json` falhar, inicializa `pt-br`, flag, idiomas disponiveis, localStorage e `document.lang`.
-- **`setLocale(lang)`**: Valida contra `available` e retorna `boolean` indicando se o idioma foi aceito.
+- **Fallback**: If `languages.json` fails, initializes `pt-br`, its flag, available languages, localStorage, and `document.lang`.
+- **`setLocale(lang)`**: Validates against `available` and returns a `boolean` indicating whether the language was accepted.
 
 ### useConfig
 
-- **Loading e erro**: Expoe estados separados para impedir skeleton infinito em falhas iniciais.
-- **Concorrencia**: Cancela a requisicao anterior com `AbortController` e ignora respostas obsoletas.
-- **Retorno**: `loadConfig(locale)` retorna se o config solicitado foi aplicado com sucesso.
+- **Loading and error**: Exposes separate states to prevent an infinite skeleton on initial failures.
+- **Concurrency**: Cancels the previous request with `AbortController` and ignores stale responses.
+- **Return value**: `loadConfig(locale)` reports whether the requested config was applied successfully.
 
 ### useMarkdown
 
-- **Cache**: `Map<string, string>` no escopo do módulo (não é um `ref`). Nunca é invalidado. Adequado para conteúdo estático.
-- **Sem ref de loading**: O `loading` ref foi removido por não ser confiável entre chamadas concurrentes. `PageView` mantém seu próprio `pageLoading` local.
-- **Sanitização**: HTML gerado por `marked.parse()` passa por `DOMPurify.sanitize()` antes de ser cacheado/renderizado com `v-html`.
+- **Cache**: Module-scoped `Map<string, string>` (not a `ref`). It is never invalidated. Suitable for static content.
+- **No loading ref**: The `loading` ref was removed because it is unreliable across concurrent calls. `PageView` maintains its own local `pageLoading`.
+- **Sanitization**: HTML generated by `marked.parse()` passes through `DOMPurify.sanitize()` before being cached/rendered with `v-html`.
 
 ### useSwitchLocale
 
-Composable que orquestra a troca de idioma: validação + `loadConfig` + `setLocale` + navegação para home. Expoe `switching` para desabilitar selecoes concorrentes em `LanguagesView`.
+Composable that orchestrates language switching: validation + `loadConfig` + `setLocale` + navigation to the home page. Exposes `switching` to disable concurrent selections in `LanguagesView`.
 
-## Convencoes
+## Conventions
 
-- Composition API com `<script setup lang="ts">`
-- TypeScript strict
-- Tailwind CSS v4 via `@import 'tailwindcss'` (CSS-first config, sem tailwind.config.js)
-- Componentes em lowercase com hifen: `section-carousel.vue`
-- Scoped styles (App.vue usa `@reference` para acessar tema do style.css)
-- Usar sempre utilities customizadas (`app-*`) em componentes. Nunca usar cores do tema (`primary-*`, `secondary-*`) diretamente em templates — exceto em `style.css`, onde as utilities sao definidas
-- Nao adicionar comentarios no codigo (so se pedido)
-- Conteudo do site em arquivos JSON (`public/config/`) e markdown (`public/content/`)
-- **SEMPRE atualizar este arquivo (AGENTS.md) apos qualquer mudanca significativa no codigo**
+- Composition API with `<script setup lang="ts">`
+- TypeScript strict mode
+- Tailwind CSS v4 through `@import 'tailwindcss'` (CSS-first config, no tailwind.config.js)
+- Lowercase hyphenated component names: `section-carousel.vue`
+- Scoped styles (App.vue uses `@reference` to access the theme from style.css)
+- Always use custom utilities (`app-*`) in components. Never use theme colors (`primary-*`, `secondary-*`) directly in templates—except in `style.css`, where the utilities are defined
+- Do not add code comments unless requested
+- Site content belongs in JSON (`public/config/`) and Markdown (`public/content/`) files
+- **ALWAYS update this file (AGENTS.md) after any significant code change**
 
-## FIXMEs pendentes
+## Pending FIXMEs
 
-- Configurar conteudo real nos arquivos de config e markdown
+- Configure real content in the config and Markdown files
 
 ## Git
 
-- Branch: `master` (current), `backup`
+- Branches: `master` (current), `backup`
 - Remote: `origin` (github.com/mineot/taberna)
 
-## Sistema de i18n
+## i18n System
 
-### Fluxo
+### Flow
 
-1. `useLocale()` detecta idioma: localStorage → navigator.languages → languages.json.default
-2. `useConfig(locale)` busca `public/config/{locale}.json`
-3. `App.vue` atualiza `document.documentElement.lang`, `document.title` e a meta description (via watch no config)
-4. Switcher de bandeiras no header/sidebar navega para `/languages` via `<router-link>`. Em `LanguagesView`, `useSwitchLocale` orquestra a troca:
-   - valida o idioma contra `available`
-   - `await loadConfig(lang)` — carrega config com protecao contra respostas obsoletas
-   - `setLocale(lang)` — atualiza locale + localStorage apenas apos o config carregar
-   - `router.push('/')` — redireciona para home para evitar page not found
-5. `HomeView` observa `[loaded, config, locale]`, isola falhas por arquivo e ignora respostas obsoletas
+1. `useLocale()` detects the language: localStorage → navigator.languages → languages.json.default
+2. `useConfig(locale)` fetches `public/config/{locale}.json`
+3. `App.vue` updates `document.documentElement.lang`, `document.title`, and the meta description (through a watch on the config)
+4. The flag switcher in the header/sidebar navigates to `/languages` through `<router-link>`. In `LanguagesView`, `useSwitchLocale` orchestrates the switch:
+   - validates the language against `available`
+   - `await loadConfig(lang)` — loads the config with stale-response protection
+   - `setLocale(lang)` — updates the locale + localStorage only after the config loads
+   - `router.push('/')` — redirects to the home page to avoid page not found
+5. `HomeView` watches `[loaded, config, locale]`, isolates failures by file, and ignores stale responses
 
-### Textos Hardcoded
+### Hardcoded Text
 
-O conteudo editorial em `public/config/{locale}.json` e `public/content/{locale}/` nao e considerado hardcoded: ele ja esta externalizado e possui versoes por idioma.
+Editorial content in `public/config/{locale}.json` and `public/content/{locale}/` is not considered hardcoded: it is already externalized and has language-specific versions.
 
-Os valores abaixo sao hardcoded intencionais e devem permanecer fora do sistema de traducao:
+The values below are intentionally hardcoded and must remain outside the translation system:
 
-| Arquivo       | Valor        | Motivo                                                         |
-| ------------- | ------------ | -------------------------------------------------------------- |
-| `index.html`  | `lang="en"`  | Idioma inicial do documento, substituido pelo locale detectado |
-| `index.html`  | `Taberna`    | Titulo inicial/fallback antes do config ser carregado          |
-| `src/App.vue` | `Powered by` | Prefixo fixo do credito do projeto no footer                   |
-| `src/App.vue` | `Mineot`     | Nome proprio e fixo do autor no link de credito                |
+| File          | Value        | Reason                                                     |
+| ------------- | ------------ | ---------------------------------------------------------- |
+| `index.html`  | `lang="en"`  | Initial document language, replaced by the detected locale |
+| `index.html`  | `Taberna`    | Initial/fallback title before the config loads             |
+| `src/App.vue` | `Powered by` | Fixed prefix for the project credit in the footer          |
+| `src/App.vue` | `Mineot`     | Fixed proper name of the author in the credit link         |
 
-Os textos abaixo continuam hardcoded temporariamente e devem ser traduzidos depois:
+The text below is still temporarily hardcoded and must be translated later:
 
-| Arquivo                                          | Texto                       | Contexto                                                                |
-| ------------------------------------------------ | --------------------------- | ----------------------------------------------------------------------- |
-| `src/App.vue`                                    | `Menu`                      | `aria-label` do botao hamburger e do dialog do sidebar                  |
-| `src/App.vue`                                    | `Close menu`                | `aria-label` do botao de fechar o sidebar                               |
-| `src/components/section-carousel.vue`            | `Previous slide`            | `aria-label` do botao de navegacao anterior                             |
-| `src/components/section-carousel.vue`            | `Next slide`                | `aria-label` do botao de navegacao seguinte                             |
-| `src/components/section-carousel.vue`            | `Slide {n}`                 | `aria-label` dinamico dos indicadores                                   |
-| `src/components/section-carousel.vue`            | `Carousel: {atual}/{total}` | `aria-label` dinamico do grupo do carousel                              |
-| `src/components/section-carousel.vue`            | `Pause carousel`            | `aria-label` do controle de pausa                                       |
-| `src/components/section-carousel.vue`            | `Play carousel`             | `aria-label` do controle de reproducao                                  |
-| `src/views/PageView.vue`                         | `Page not found`            | Mensagem visivel quando o Markdown de uma pagina nao pode ser carregado |
-| `src/composables/useConfig.ts`                   | `Unknown error`             | Fallback de erro que pode ser exibido por `App.vue`                     |
-| `src/composables/useConfig.ts`, `useMarkdown.ts` | `HTTP {status}`             | Mensagem tecnica gerada quando uma requisicao falha                     |
-| `src/composables/useMarkdown.ts`                 | `Not found`                 | Erro tecnico ao detectar o fallback HTML da SPA                         |
+| File                                             | Text                        | Context                                                  |
+| ------------------------------------------------ | --------------------------- | -------------------------------------------------------- |
+| `src/App.vue`                                    | `Menu`                      | `aria-label` for the hamburger button and sidebar dialog |
+| `src/App.vue`                                    | `Close menu`                | `aria-label` for the sidebar close button                |
+| `src/components/section-carousel.vue`            | `Previous slide`            | `aria-label` for the previous navigation button          |
+| `src/components/section-carousel.vue`            | `Next slide`                | `aria-label` for the next navigation button              |
+| `src/components/section-carousel.vue`            | `Slide {n}`                 | Dynamic `aria-label` for the indicators                  |
+| `src/components/section-carousel.vue`            | `Carousel: {atual}/{total}` | Dynamic `aria-label` for the carousel group              |
+| `src/components/section-carousel.vue`            | `Pause carousel`            | `aria-label` for the pause control                       |
+| `src/components/section-carousel.vue`            | `Play carousel`             | `aria-label` for the playback control                    |
+| `src/views/PageView.vue`                         | `Page not found`            | Visible message when a page's Markdown cannot be loaded  |
+| `src/composables/useConfig.ts`                   | `Unknown error`             | Error fallback that may be displayed by `App.vue`        |
+| `src/composables/useConfig.ts`, `useMarkdown.ts` | `HTTP {status}`             | Technical message generated when a request fails         |
+| `src/composables/useMarkdown.ts`                 | `Not found`                 | Technical error when detecting the SPA HTML fallback     |
 
-Outros valores literais, como nomes internos de rotas, caminhos, media queries, chaves do `localStorage`, URLs, valores ARIA padronizados e o fallback de locale `pt-br`, sao constantes tecnicas e nao textos de interface. Atualmente nao existe um dicionario de mensagens de UI; a traducao dos itens pendentes exigira adiciona-los ao sistema de i18n ou aos configs por idioma.
+Other literal values—such as internal route names, paths, media queries, `localStorage` keys, URLs, standardized ARIA values, and the `pt-br` locale fallback—are technical constants, not UI text. There is currently no UI message dictionary; translating the pending items will require adding them to the i18n system or the per-language configs.
 
 ### Manifest (`public/languages.json`)
 
@@ -354,136 +355,136 @@ Outros valores literais, como nomes internos de rotas, caminhos, media queries, 
 }
 ```
 
-### Configs por idioma
+### Per-Language Configs
 
-Cada `public/config/{locale}.json` e completo e independente. Dados nao-traduzidos (hrefs, ids, urls, images) sao os mesmos em todos os idiomas.
+Each `public/config/{locale}.json` is complete and independent. Untranslated data (hrefs, ids, URLs, images) is the same in all languages.
 
-### Conteudo Markdown
+### Markdown Content
 
-Sections podem usar arquivos markdown via campo `contentFiles` (array de strings):
+Sections can use Markdown files through the `contentFiles` field (an array of strings):
 
-- Arquivos em `public/content/{locale}/*.md`
-- Buscados em runtime via `useMarkdown()` com cache
-- Parse com `marked`, renderizado com `v-html` + classe `prose` (Tailwind Typography)
-- **Sanitização**: HTML gerado por `marked.parse()` passa por `DOMPurify.sanitize()` antes de ser renderizado com `v-html`.
+- Files in `public/content/{locale}/*.md`
+- Fetched at runtime through `useMarkdown()` with caching
+- Parsed with `marked`, rendered with `v-html` + the `prose` class (Tailwind Typography)
+- **Sanitization**: HTML generated by `marked.parse()` passes through `DOMPurify.sanitize()` before being rendered with `v-html`.
 
-### Regras de Conteudo por Section
+### Content Rules by Section
 
-Cada section segue regras estritas baseadas no tipo de conteudo:
+Each section follows strict rules based on its content type:
 
-| Atributo                  | Image | content (texto) | carousel |
-| ------------------------- | ----- | --------------- | -------- |
-| `content` (texto)         | ✅    | —               | ❌       |
-| `contentFiles` (1 item)   | ✅    | ❌              | ❌       |
-| `contentFiles` (2+ items) | ❌    | ❌              | ✅       |
+| Attribute                 | Image | content (text) | carousel |
+| ------------------------- | ----- | -------------- | -------- |
+| `content` (text)          | ✅    | —              | ❌       |
+| `contentFiles` (1 item)   | ✅    | ❌             | ❌       |
+| `contentFiles` (2+ items) | ❌    | ❌             | ✅       |
 
-**`content` (texto simples):**
+**`content` (plain text):**
 
-- Array de strings renderizadas como `<p>`
-- Pode ter `image` ao lado
-- Ignora `contentFiles` e `carousel`
+- Array of strings rendered as `<p>` elements
+- May have an `image` beside it
+- Ignores `contentFiles` and `carousel`
 
-**`contentFiles` com 1 item:**
+**`contentFiles` with 1 item:**
 
-- Renderiza 1 arquivo markdown
-- Pode ter `image` ao lado
-- Ignora `content` e `carousel`
+- Renders 1 Markdown file
+- May have an `image` beside it
+- Ignores `content` and `carousel`
 
-**`contentFiles` com 2+ items:**
+**`contentFiles` with 2+ items:**
 
-- Renderiza multiplos arquivos markdown lado a lado (empilha no mobile)
-- Ignora `image` e `content`
-- Pode ter `carousel` para exibir como slides
+- Renders multiple Markdown files side by side (stacks on mobile)
+- Ignores `image` and `content`
+- May use `carousel` to display them as slides
 
-### Paginas (rotas)
+### Pages (Routes)
 
-Cada rota `/:slug` carrega um arquivo markdown individual:
+Each `/:slug` route loads an individual Markdown file:
 
-- Arquivo: `public/content/{locale}/{slug}.md`
-- Se `content` definido no menuItem → usa esse valor como nome do arquivo
-- Se nao definido → usa o slug da rota (ex: `/sobre` → `sobre.md`)
-- **Sanitização do slug**: Regex `[^a-zA-Z0-9\-\/]` remove caracteres especiais antes de usar o slug
-- Renderizado como `<article class="prose prose-invert">`
-- Skeleton loader durante carregamento
-- Mensagem de erro "Page not found" se arquivo nao existir
+- File: `public/content/{locale}/{slug}.md`
+- If `content` is defined on the menuItem → uses that value as the file name
+- If it is not defined → uses the route slug (for example, `/sobre` → `sobre.md`)
+- **Slug sanitization**: Regex `[^a-zA-Z0-9\-\/]` removes special characters before using the slug
+- Rendered as `<article class="prose prose-invert">`
+- Skeleton loader while loading
+- "Page not found" error message if the file does not exist
 
-### Posicionamento Vertical
+### Vertical Positioning
 
-Campo `imagePosition` controla alinhamento vertical da imagem na section:
+The `imagePosition` field controls the image's vertical alignment in the section:
 
-| Valor      | Comportamento                           |
-| ---------- | --------------------------------------- |
-| `"top"`    | Imagem alinhada ao topo (`items-start`) |
-| `"center"` | Imagem centralizada (padrao)            |
-| `"bottom"` | Imagem alinhada ao fundo (`items-end`)  |
-
-Se nao informado, assume `"center"`.
-
-Campo `contentPosition` controla alinhamento vertical do conteudo na section:
-
-| Valor      | Comportamento                             |
+| Value      | Behavior                                  |
 | ---------- | ----------------------------------------- |
-| `"top"`    | Conteudo alinhado ao topo (`items-start`) |
-| `"center"` | Conteudo centralizado (padrao)            |
-| `"bottom"` | Conteudo alinhado ao fundo (`items-end`)  |
+| `"top"`    | Image aligned to the top (`items-start`)  |
+| `"center"` | Image centered (default)                  |
+| `"bottom"` | Image aligned to the bottom (`items-end`) |
 
-Se nao informado, assume `"center"`.
+Defaults to `"center"` if omitted.
 
-**Precedencia**: `contentPosition` tem precedencia sobre `imagePosition` para o alinhamento flex. Quando `contentPosition` nao existe, `imagePosition` tambem funciona como fallback desse alinhamento. Separadamente, `imagePosition` controla o corte da imagem (`object-position`). Ambos usam o tipo `VerticalPosition` em `src/types/config.ts`.
+The `contentPosition` field controls the content's vertical alignment in the section:
 
-### Titulo da Secao (Opcional)
+| Value      | Behavior                                    |
+| ---------- | ------------------------------------------- |
+| `"top"`    | Content aligned to the top (`items-start`)  |
+| `"center"` | Content centered (default)                  |
+| `"bottom"` | Content aligned to the bottom (`items-end`) |
 
-Campo `title` na section e opcional. Se nao informado, o `<h2>` nao e renderizado.
+Defaults to `"center"` if omitted.
 
-### Subtitulo da Secao (Opcional)
+**Precedence**: `contentPosition` takes precedence over `imagePosition` for flex alignment. When `contentPosition` does not exist, `imagePosition` also acts as the alignment fallback. Separately, `imagePosition` controls image cropping (`object-position`). Both use the `VerticalPosition` type in `src/types/config.ts`.
 
-Campo `subtitle` na section e opcional. Se informado, renderiza um `<p>` com utility `app-section-subtitle` abaixo do titulo.
+### Section Title (Optional)
 
-### Inversao de Layout (`invert`)
+The section's `title` field is optional. If omitted, the `<h2>` is not rendered.
 
-Campo `invert` (booleano, opcional) na section inverte a ordem flex da imagem e do conteudo:
+### Section Subtitle (Optional)
 
-- Quando `true`: aplica `md:flex-row-reverse` — imagem fica a esquerda, conteudo a direita
-- Quando `false` ou ausente: layout normal (conteudo a esquerda, imagem a direita)
+The section's `subtitle` field is optional. If provided, it renders a `<p>` with the `app-section-subtitle` utility below the title.
 
-### Configuracao do Site (`SiteConfig`)
+### Layout Reversal (`invert`)
 
-Campos do objeto `site` no config JSON:
+The section's optional boolean `invert` field reverses the flex order of the image and content:
 
-| Campo         | Tipo     | Obrigatorio | Descricao                                                        |
-| ------------- | -------- | ----------- | ---------------------------------------------------------------- |
-| `title`       | `string` | Nao         | Titulo do site (header/sidebar e `document.title`)               |
-| `description` | `string` | Sim         | Atualiza `<meta name="description">` quando o config e carregado |
-| `image`       | `string` | Nao         | URL da imagem do site (exibida ao lado do titulo)                |
+- When `true`: applies `md:flex-row-reverse` — image on the left, content on the right
+- When `false` or absent: normal layout (content on the left, image on the right)
 
-### Destaque de Secao (`destak`)
+### Site Configuration (`SiteConfig`)
 
-Campo `destak` (booleano, opcional) na section aplica um fundo diferente usando a escala `primary` (neutral):
+Fields of the `site` object in the config JSON:
 
-- Quando `true`: aplica `app-section-destak` → `bg-primary-700 -mx-6 px-6 py-8`
-- O `-mx-6` quebra a margem do container para "esticar" o fundo
-- Disponivel na interface `Section` em `src/types/config.ts`
-- Para usar: adicionar `"destak": true` no JSON da seção desejada
+| Field         | Type     | Required | Description                                                   |
+| ------------- | -------- | -------- | ------------------------------------------------------------- |
+| `title`       | `string` | No       | Site title (header/sidebar and `document.title`)              |
+| `description` | `string` | Yes      | Updates `<meta name="description">` when the config is loaded |
+| `image`       | `string` | No       | URL of the site image (displayed next to the title)           |
 
-### Carousel de Secoes
+### Section Highlight (`destak`)
 
-Campo `carousel` (objeto opcional) na section ativa o modo carousel para o conteudo:
+The section's optional boolean `destak` field applies a different background using the `primary` (neutral) scale:
 
-- Quando definido, o conteudo (`contentFiles` ou `content`) e exibido como slides com transicao
-- A imagem da section permanece estatica (fora do carousel)
-- Componente: `src/components/section-carousel.vue`
+- When `true`: applies `app-section-destak` → `bg-primary-700 -mx-6 px-6 py-8`
+- `-mx-6` breaks out of the container margin to "stretch" the background
+- Available on the `Section` interface in `src/types/config.ts`
+- To use it: add `"destak": true` to the desired section's JSON
 
-#### Configuracao (`CarouselConfig`)
+### Section Carousel
 
-| Campo          | Tipo      | Default | Descricao                                               |
-| -------------- | --------- | ------- | ------------------------------------------------------- |
-| `autoPlay`     | `boolean` | `true`  | Auto-avanca os slides                                   |
-| `interval`     | `number`  | `5000`  | Milissegundos entre slides                              |
-| `buttons`      | `boolean` | `true`  | Exibe setas prev/next (Lucide ChevronLeft/ChevronRight) |
-| `dots`         | `boolean` | `true`  | Exibe indicadores de posicao (dots)                     |
-| `itemsPerView` | `number`  | `1`     | Quantos itens visiveis simultaneamente                  |
+The section's optional `carousel` object enables carousel mode for the content:
 
-Todos os campos sao opcionais. Exemplo de uso:
+- When defined, the content (`contentFiles` or `content`) is displayed as slides with a transition
+- The section image remains static (outside the carousel)
+- Component: `src/components/section-carousel.vue`
+
+#### Configuration (`CarouselConfig`)
+
+| Field          | Type      | Default | Description                                                  |
+| -------------- | --------- | ------- | ------------------------------------------------------------ |
+| `autoPlay`     | `boolean` | `true`  | Automatically advances the slides                            |
+| `interval`     | `number`  | `5000`  | Milliseconds between slides                                  |
+| `buttons`      | `boolean` | `true`  | Shows previous/next arrows (Lucide ChevronLeft/ChevronRight) |
+| `dots`         | `boolean` | `true`  | Shows position indicators (dots)                             |
+| `itemsPerView` | `number`  | `1`     | Number of items visible at the same time                     |
+
+All fields are optional. Usage example:
 
 ```json
 {
@@ -499,181 +500,181 @@ Todos os campos sao opcionais. Exemplo de uso:
 }
 ```
 
-#### Comportamento
+#### Behavior
 
-- **Auto-play**: inicia ao montar o componente, avanca slides automaticamente
-- **Pausa por interacao**: auto-play pausa durante hover ou foco e retoma ao sair
-- **Pausa persistente**: controle Play/Pause permite interromper o auto-play
-- **Anel de progresso**: envolve o controle Play/Pause, usa `interval`, congela durante pausas e reinicia na navegacao manual
-- **Visibilidade**: pausa quando a aba fica em segundo plano
-- **Movimento reduzido**: desativa auto-play com `prefers-reduced-motion: reduce`
-- **Botoes prev/next**: fixos nas laterais do conteudo (layout flex). Se `buttons: false`, conteudo ocupa 100%
-- **Dots**: clique define o slide diretamente; dot ativo usa utility `app-dot-active`
-- **Acessibilidade**: `role="group"`, `aria-label` no container e botoes, `aria-current` no dot ativo
-- **Se 1 slide**: botoes e dots nao sao exibidos
+- **Autoplay**: starts when the component mounts and advances slides automatically
+- **Interaction pause**: autoplay pauses during hover or focus and resumes when the interaction ends
+- **Persistent pause**: the Play/Pause control can stop autoplay
+- **Progress ring**: surrounds the Play/Pause control, uses `interval`, freezes during pauses, and restarts after manual navigation
+- **Visibility**: pauses when the tab is in the background
+- **Reduced motion**: disables autoplay with `prefers-reduced-motion: reduce`
+- **Previous/next buttons**: fixed at the sides of the content (flex layout). If `buttons: false`, the content takes up 100%
+- **Dots**: clicking selects the slide directly; the active dot uses the `app-dot-active` utility
+- **Accessibility**: `role="group"`, `aria-label` on the container and buttons, `aria-current` on the active dot
+- **One slide**: buttons and dots are not displayed
 
-#### Comportamento por `itemsPerView`
+#### Behavior by `itemsPerView`
 
-**`itemsPerView: 1`** (padrao):
+**`itemsPerView: 1`** (default):
 
-- 1 slide visivel por vez
-- Transicao: fade com `opacity` e `duration-500`
-- Navegacao circular (volta ao inicio ao chegar no fim)
-- Dots = numero de slides
+- 1 slide visible at a time
+- Transition: fade using `opacity` and `duration-500`
+- Circular navigation (returns to the beginning after reaching the end)
+- Dots = number of slides
 
 **`itemsPerView: N`** (N > 1):
 
-- N slides visiveis lado a lado
-- Transicao: slide horizontal com `translateX` e `duration-500`
-- Cada slide ocupa `100% / N` do espaco disponivel
-- Navegacao por pagina (avanca/retorna N itens por clique)
-- Dots = `ceil(slides.length / N)` (posicoes disponiveis)
-- Navegacao circular (apos a ultima pagina, retorna ao inicio; antes da primeira, retorna ao fim)
+- N slides visible side by side
+- Transition: horizontal slide using `translateX` and `duration-500`
+- Each slide occupies `100% / N` of the available space
+- Page-based navigation (advances/returns N items per click)
+- Dots = `ceil(slides.length / N)` (available positions)
+- Circular navigation (after the last page, returns to the beginning; before the first, returns to the end)
 
-#### Precedencia
+#### Precedence
 
-Se `carousel` esta definido, ele tem precedencia sobre a renderizacao estatica do conteudo. O componente so e renderizado se houver conteudo (`contentFiles` ou `content`).
+If `carousel` is defined, it takes precedence over static content rendering. The component is rendered only if content exists (`contentFiles` or `content`).
 
-### Menu Mobile (Offcanvas)
+### Mobile Menu (Offcanvas)
 
-Em telas pequenas (`< md`), o menu de navegacao e substituido por um icone hamburger (Lucide `Menu`). Ao clicar:
+On small screens (`< md`), the navigation menu is replaced by a hamburger icon (Lucide `Menu`). When clicked:
 
-- Abre um sidebar da direita com titulo + imagem do site + menu + switcher de idioma
-- Backdrop escuro com blur por tras
-- Fecha ao clicar no backdrop, no icone X, ou em qualquer link
-- Animacao de slide-in/slide-out via `<Transition>`
-- Teleport do sidebar para `<body>` via `<Teleport>`
-- Acessibilidade: foco inicial e confinado, fechamento por `Escape`, restauracao de foco, bloqueio de scroll e atributos ARIA de dialog
+- Opens a sidebar from the right with the site title + image + menu + language switcher
+- Dark backdrop with blur behind it
+- Closes when the backdrop, X icon, or any link is clicked
+- Slide-in/slide-out animation through `<Transition>`
+- Teleports the sidebar to `<body>` through `<Teleport>`
+- Accessibility: initial focus and focus trapping, close on `Escape`, focus restoration, scroll locking, and dialog ARIA attributes
 
-### Menu Desktop com Muitos Itens (> 4)
+### Desktop Menu with Many Items (> 4)
 
-Quando o menu tem mais de 4 itens, o header se adapta em todas as telas:
+When the menu has more than 4 items, the header adapts at all screen sizes:
 
-- `<nav>` inline nao e renderizado (em nenhuma resolucao)
-- Bandeira do idioma no header nao e exibida
-- Hamburger aparece em **todas** as telas (inclusive desktop)
-- Ao clicar, abre o mesmo sidebar offcanvas
-- Sidebar funciona em todas as resolucoes (sem `md:hidden`)
+- The inline `<nav>` is not rendered (at any resolution)
+- The language flag is not displayed in the header
+- The hamburger appears on **all** screen sizes (including desktop)
+- Clicking it opens the same offcanvas sidebar
+- The sidebar works at all resolutions (without `md:hidden`)
 
-### Sidebar (Todas as Resolucoes)
+### Sidebar (All Resolutions)
 
-O sidebar agora funciona em desktop e mobile:
+The sidebar now works on desktop and mobile:
 
-- `app-backdrop` e `app-sidebar` nao possuem `md:hidden`
-- Quando > 4 itens de menu, o hamburger aparece em desktop e abre o sidebar
-- Estrutura do sidebar:
-  - **Header** (`shrink-0`): titulo + imagem + botao X
-  - **Menu** (`flex-1 overflow-y-auto`): unica secao que rola
-  - **Footer de idiomas** (`shrink-0`): fixo no fundo, nao rola
-- Link de idioma no footer: mostra bandeira atual + codigo (ex: "🇧🇷 pt-br"), linka para `/languages`
+- `app-backdrop` and `app-sidebar` do not have `md:hidden`
+- With > 4 menu items, the hamburger appears on desktop and opens the sidebar
+- Sidebar structure:
+  - **Header** (`shrink-0`): title + image + X button
+  - **Menu** (`flex-1 overflow-y-auto`): the only scrollable section
+  - **Language footer** (`shrink-0`): fixed at the bottom, does not scroll
+- Language link in the footer: shows the current flag + code (for example, "🇧🇷 pt-br") and links to `/languages`
 
-### Comportamento Condicional (menu + idiomas)
+### Conditional Behavior (Menu + Languages)
 
-O header e sidebar se adaptam ao conteudo:
+The header and sidebar adapt to the content:
 
-- **`menu: []` (array vazio)**: `<nav>` nao e renderizado no header nem no sidebar
-- **Um so idioma**: switcher de bandeiras nao e exibido
-- **Sem menu E um so idioma**: hamburger nao e exibido (sidebar inacessivel)
-- **Hamburger aparece**: quando ha menu OU mais de um idioma
+- **`menu: []` (empty array)**: `<nav>` is not rendered in the header or sidebar
+- **Only one language**: the flag switcher is not displayed
+- **No menu AND only one language**: the hamburger is not displayed (sidebar is inaccessible)
+- **Hamburger appears**: when there is a menu OR more than one language
 
-### Transicoes
+### Transitions
 
-- **Sidebar/Backdrop**: `<Transition name="sidebar">` e `<Transition name="backdrop">` no mobile menu (slide + opacity)
-- **Titulo**: `:key="locale"` no h1 com `app-duration` — fade suave (0.3s) ao trocar idioma
+- **Sidebar/Backdrop**: `<Transition name="sidebar">` and `<Transition name="backdrop">` in the mobile menu (slide + opacity)
+- **Title**: `:key="locale"` on the h1 with `app-duration` — smooth fade (0.3s) when switching languages
 
-### Titulo do Site (Header + Sidebar)
+### Site Title (Header + Sidebar)
 
-O titulo do site (imagem + texto) e um link `<a href="/">` com:
+The site title (image + text) is an `<a href="/">` link with:
 
-- **`app-title`** no container `<a>` — fonte fancy + cor accent
-- **`app-text-accent-hover`** no container `<a>` — hover clareia a cor (secondary-500 → secondary-400)
-- **`app-title-adjustment`** no `<h1>`/`<h2>` — `mt-2 leading-[0]` para alinhar com a imagem
-- **`app-duration`** — transicao suave (0.3s) no hover
-- **Sidebar**: Mesmo esquema, `<a href="/">` com `app-title app-text-accent-hover app-duration` + `@click="closeMenu"` para fechar o menu ao clicar
-- **Opcional**: Campo `title` no config e opcional — se ausente, `<h1>`/`<h2>` nao sao renderizados (permite usar apenas imagem)
+- **`app-title`** on the `<a>` container — fancy font + accent color
+- **`app-text-accent-hover`** on the `<a>` container — hover lightens the color (secondary-500 → secondary-400)
+- **`app-title-adjustment`** on the `<h1>`/`<h2>` — `mt-2 leading-[0]` to align with the image
+- **`app-duration`** — smooth transition (0.3s) on hover
+- **Sidebar**: Same approach, `<a href="/">` with `app-title app-text-accent-hover app-duration` + `@click="closeMenu"` to close the menu when clicked
+- **Optional**: The `title` field in the config is optional—if absent, `<h1>`/`<h2>` are not rendered (allows using only an image)
 
-### Imagem do Site (Header + Sidebar)
+### Site Image (Header + Sidebar)
 
-Campo `site.image` no config controla exibicao de imagem ao lado do titulo:
+The `site.image` field in the config controls the image displayed next to the title:
 
-- **Opcional**: Se nao definido ou vazio, nao exibe nada
-- **Tamanho**: `h-8 w-8` (32px) mobile, `md:h-12 md:w-12` (48px) desktop, `min-h-5 min-w-5` (20px minimo)
-- **Formato**: `app-logo` controla apenas as dimensoes; nao aplica arredondamento nem corte da imagem
-- **Posicao**: Ao lado esquerdo do titulo, com `gap-3` de espacamento
-- **Sidebar**: Mesmo tamanho mobile (`h-8 w-8`) e titulo `text-3xl` (mesmo do header mobile)
+- **Optional**: If undefined or empty, nothing is displayed
+- **Size**: `h-8 w-8` (32px) on mobile, `md:h-12 md:w-12` (48px) on desktop, `min-h-5 min-w-5` (20px minimum)
+- **Shape**: `app-logo` controls dimensions only; it does not apply rounding or image cropping
+- **Position**: To the left of the title, with `gap-3` spacing
+- **Sidebar**: Same mobile size (`h-8 w-8`) and `text-3xl` title (same as the mobile header)
 
-## Sistema de Rotas (Vue Router)
+## Routing System (Vue Router)
 
-### Estrutura
+### Structure
 
-| Rota         | Componente          | Conteudo                                                  |
-| ------------ | ------------------- | --------------------------------------------------------- |
-| `/`          | `HomeView.vue`      | Sections do config JSON                                   |
-| `/languages` | `LanguagesView.vue` | Grid de idiomas disponiveis (bandeira + codigo)           |
-| `/:slug`     | `PageView.vue`      | Markdown carregado de `public/content/{locale}/{slug}.md` |
+| Route        | Component           | Content                                                  |
+| ------------ | ------------------- | -------------------------------------------------------- |
+| `/`          | `HomeView.vue`      | Sections from the JSON config                            |
+| `/languages` | `LanguagesView.vue` | Grid of available languages (flag + code)                |
+| `/:slug`     | `PageView.vue`      | Markdown loaded from `public/content/{locale}/{slug}.md` |
 
-### Configuracao
+### Configuration
 
-- **Hash mode**: `createWebHashHistory(import.meta.env.BASE_URL)` para funcionar sem rewrites em hospedagem estatica e subdiretorios
-- **Catch-all**: rota `/:pathMatch(.*)*` redireciona para `/`
-- **Scroll behavior**: suporta hash anchors, posicao salva, e scroll to top
-- **Arquivo**: `src/router/index.ts`
+- **Hash mode**: `createWebHashHistory(import.meta.env.BASE_URL)` to work without rewrites on static hosting and in subdirectories
+- **Catch-all**: the `/:pathMatch(.*)*` route redirects to `/`
+- **Scroll behavior**: supports hash anchors, saved positions, and scroll to top
+- **File**: `src/router/index.ts`
 
 ### MenuItem (Interface)
 
 ```ts
 export interface MenuItem {
   label: string;
-  href?: string; // anchor link (ex: "#sobre")
-  route?: string; // Vue Router path (ex: "/sobre")
-  content?: string; // override do arquivo markdown (ex: "sobre.md")
+  href?: string; // anchor link (e.g., "#sobre")
+  route?: string; // Vue Router path (e.g., "/sobre")
+  content?: string; // Markdown file override (e.g., "sobre.md")
 }
 ```
 
-### Comportamento do Menu
+### Menu Behavior
 
-- **`route` definido** → renderiza `<router-link :to="item.route">`
-- **`href` com `#`** (anchor) → renderiza `<router-link :to="'/' + item.href">` — navega para `/` e o `scrollBehavior` faz scroll suave ate o anchor
-- **`href` externa** (http/https) → abre em nova aba com `noopener noreferrer`; outros protocolos sao rejeitados por allowlist
-- **`route` + `content`** → rota usa `content` como nome do arquivo markdown
-- **Ambos definidos** → `route` tem precedencia
+- **`route` defined** → renders `<router-link :to="item.route">`
+- **`href` with `#`** (anchor) → renders `<router-link :to="'/' + item.href">` — navigates to `/`, and `scrollBehavior` smoothly scrolls to the anchor
+- **External `href`** (http/https) → opens in a new tab with `noopener noreferrer`; other protocols are rejected by an allowlist
+- **`route` + `content`** → the route uses `content` as the Markdown file name
+- **Both defined** → `route` takes precedence
 
-### Resolucao do Conteudo (PageView)
+### Content Resolution (PageView)
 
-Se `content` nao for definido no menuItem, o sistema busca `{slug}.md`:
+If `content` is not defined on the menuItem, the system fetches `{slug}.md`:
 
-- Rota `/sobre` → busca `public/content/{locale}/sobre.md`
-- Rota `/servicos` → busca `public/content/{locale}/servicos.md`
-- Com `"content": "custom.md"` → busca `public/content/{locale}/custom.md`
+- Route `/sobre` → fetches `public/content/{locale}/sobre.md`
+- Route `/servicos` → fetches `public/content/{locale}/servicos.md`
+- With `"content": "custom.md"` → fetches `public/content/{locale}/custom.md`
 
-### Conteudo das Paginas
+### Page Content
 
-Arquivos markdown em `public/content/{locale}/*.md`:
+Markdown files in `public/content/{locale}/*.md`:
 
-- Buscados em runtime via `useMarkdown()` com cache
-- Parse com `marked`, renderizado com `<article class="prose prose-invert">`
-- Skeleton loader durante carregamento
-- Mensagem de erro "Page not found" se arquivo nao existir
-- **Protecao SPA fallback**: `useMarkdown` checa `Content-Type` da resposta — se for `text/html` (Vite retorna `index.html` para arquivos inexistentes), lança erro em vez de renderizar HTML cru
+- Fetched at runtime through `useMarkdown()` with caching
+- Parsed with `marked`, rendered as `<article class="prose prose-invert">`
+- Skeleton loader while loading
+- "Page not found" error message if the file does not exist
+- **SPA fallback protection**: `useMarkdown` checks the response's `Content-Type`—if it is `text/html` (Vite returns `index.html` for missing files), it throws an error instead of rendering raw HTML
 
-### Footer Customizado
+### Custom Footer
 
-Campo `contentFile` no `footer` do config permite carregar conteudo markdown para o footer:
+The `contentFile` field in the `footer` config allows loading Markdown content into the footer:
 
-- **Opcional**: Se nao definido, footer mostra apenas ownership + "Powered by Mineot"
-- **Arquivo**: `public/content/{locale}/{contentFile}` (ex: `footer.md`)
-- **Renderizacao**: HTML inline sanitizado com Tailwind (grid, links, etc.); classes novas precisam estar presentes durante o build
-- **Estrutura**: Markdown com HTML para layout (grid de colunas)
-- **Separador**: Barra horizontal entre conteudo markdown e a linha de ownership/powered by
-- **Ownership**: Campo `ownership` no config (ex: "© 2026 Nome")
-- **Powered by**: Texto estatico com link para `https://github.com/mineot/taberna`
-- **Links**: Estilizados via `.app-footer-content :deep(a)` — underline + `app-text-subtle` que muda para `app-text-accent` no hover
-- **Layout**: Definido pelo proprio Markdown; a linha de ownership/powered by usa coluna no mobile e `space-between` no desktop
-- **Exemplo de conteudo footer.md**:
+- **Optional**: If undefined, the footer shows only ownership + "Powered by Mineot"
+- **File**: `public/content/{locale}/{contentFile}` (for example, `footer.md`)
+- **Rendering**: Sanitized inline HTML with Tailwind (grid, links, etc.); new classes must be present during the build
+- **Structure**: Markdown with HTML for layout (column grid)
+- **Separator**: Horizontal line between the Markdown content and the ownership/powered-by line
+- **Ownership**: `ownership` field in the config (for example, "© 2026 Name")
+- **Powered by**: Static text with a link to `https://github.com/mineot/taberna`
+- **Links**: Styled through `.app-footer-content :deep(a)` — underline + `app-text-subtle`, changing to `app-text-accent` on hover
+- **Layout**: Defined by the Markdown itself; the ownership/powered-by line uses a column on mobile and `space-between` on desktop
+- **Example footer.md content**:
   ```html
   <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-    <div>### Titulo Descricao</div>
+    <div>### Title Description</div>
 
-    <div>### Links - [Inicio](./#/)</div>
+    <div>### Links - [Home](./#/)</div>
   </div>
   ```
