@@ -127,10 +127,10 @@ taberna/
 
 Color palette mapped through `@theme` in Tailwind v4:
 
-| Token         | Scale           | Actual usage in the code                                                                                                                                                                                                                                                                                                                                                        |
-| ------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `primary-*`   | neutral-50..950 | `app-background` (800), `app-background-hover` (700), `app-background-header` (900/95), `app-background-footer` (950), `app-text` (100), `app-text-muted` (200), `app-text-body` (300), `app-text-subtle` (400), `app-section-subtitle` (500), `app-border` (700), `app-section-destak` (700), `app-dot-inactive` (600, 500), `app-carousel-btn` (800/80), `app-skeleton` (700) |
-| `secondary-*` | emerald-50..950 | `app-text-accent` (500), `app-text-accent-hover` (400), `app-dot-active` (400), `app-ring` (400), `app-carousel-progress` (400)                                                                                                                                                                                                                                                 |
+| Token         | Scale           | Actual usage in the code                                                                                                                                                                                                                                                                                                                                                                             |
+| ------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `primary-*`   | neutral-50..950 | `app-background` (800), `app-background-hover` (700), `app-background-footer` (950), `app-header` (900/95), `app-text` (100), `app-text-muted` (200), `app-text-body` (300), `app-text-dark`/`app-text-subtle` (400), `app-border` (700), `app-skeleton` (700), `app-backdrop` (900/80), `app-section-destak` (700), carousel controls (600–800) |
+| `secondary-*` | emerald-50..950 | `app-text-accent` (500), `app-text-accent-hover` (400), `app-ring` (400), `app-section-carousel-progress` (400), and active carousel dots (400)                                                                                                                                                                                            |
 
 Custom font stacks:
 
@@ -144,38 +144,59 @@ Custom utilities:
 - `app-duration` → `duration-300`
 - `app-background` → `bg-primary-800`
 - `app-background-hover` → `bg-primary-700`
-- `app-background-header` → `bg-primary-900/95`
 - `app-background-footer` → `bg-primary-950`
 - `app-text` → `text-primary-100`
+- `app-text-dark` → `text-primary-400`
 - `app-text-muted` → `text-primary-200`
 - `app-text-body` → `text-primary-300`
 - `app-text-subtle` → `text-primary-400`
 - `app-text-accent` → `text-secondary-500`
 - `app-text-accent-hover` → `hover:text-secondary-400`
-- `app-border` → `border-primary-700`
-- `app-title` → `font-fancy app-text-accent`
-- `app-title-adjustment` → `mt-2 leading-[0]`
-- `app-section` → `flex flex-col gap-4 md:flex-row md:gap-8`
-- `app-section-title` → `text-2xl font-bold`
-- `app-section-subtitle` → `text-primary-500 mt-1`
-- `app-section-content` → `mt-4 flex flex-col flex-wrap gap-6 md:flex-row`
-- `app-section-image` → `w-full rounded-lg object-cover md:w-1/2`
-- `app-section-destak` → `bg-primary-700 -mx-6 px-6 py-8`
-- `app-container` → `mx-auto w-full max-w-4xl px-6`
-- `app-logo` → `h-8 min-h-5 w-8 min-w-5`
-- `app-icon-btn` → `app-text-muted hover:app-text-accent app-duration cursor-pointer transition-colors`
-- `app-flag-btn` → `app-duration cursor-pointer transition-all hover:scale-110`
-- `app-nav-link` → `app-text app-background-hover hover:app-text-accent app-duration rounded-lg px-3 py-2 transition-colors`
-- `app-backdrop` → `fixed inset-0 z-60 bg-black/60 backdrop-blur-sm`
-- `app-sidebar` → `app-background app-text fixed top-0 right-0 z-70 flex h-full w-72 flex-col shadow-xl`
-- `app-footer` → `app-border app-background-footer app-text-subtle border-t py-6 px-6 text-sm flex flex-col items-center`
-- `app-dot-active` → `bg-secondary-400`
-- `app-dot-inactive` → `bg-primary-600 hover:bg-primary-500`
-- `app-carousel-btn` → `flex flex-shrink-0 items-center justify-center app-text-muted hover:app-text-accent bg-primary-800/80 app-duration cursor-pointer rounded-full p-2 transition-colors`
-- `app-carousel-progress-track` → `stroke-primary-600`
-- `app-carousel-progress` → `stroke-secondary-400`
-- `app-skeleton` → `bg-primary-700`
 - `app-ring` → `ring-secondary-400`
+- `app-border` → `border-primary-700`
+- `app-error` → `app-text-accent`
+- `app-skeleton` → `bg-primary-700`
+- `app-backdrop` → `bg-primary-900/80`
+- `app-powered` → accent-colored project credit link
+- `app-markdown` → inverted Tailwind Typography color variables used by Markdown content
+- `app-title` → `font-fancy app-text-accent app-text-accent-hover`
+- `app-title-adjustment` → `mt-2 leading-[0] text-3xl md:text-5xl`
+- `app-section-image` → `w-full rounded-lg object-cover md:w-1/2`
+- `app-logo` → `h-8 min-h-5 w-8 min-w-5 md:h-12 md:w-12`
+- `app-header` → `bg-primary-900/95`
+- `app-header-link` → `app-text hover:app-text-accent`
+- `app-sidebar` → `app-background app-text`
+- `app-sidebar-link` → `app-text app-background-hover hover:app-text-accent`
+- `app-footer` → `app-border app-background-footer app-text-subtle`
+- `app-language-button` → `app-background app-background-hover app-border`
+- `app-language-button-text` → `app-text-body`
+- `app-language-button-selected` → `app-ring`
+- `app-section-title` → `app-text`
+- `app-section-subtitle` → `app-text-dark`
+- `app-section-destak` → `bg-primary-700`
+- `app-section-carousel-transition` → `duration-500`
+- `app-section-carousel-btn` → `app-text-muted hover:app-text-accent bg-primary-800/80`
+- `app-section-carousel-progress-track` → `stroke-primary-600`
+- `app-section-carousel-progress` → `stroke-secondary-400`
+- `app-section-dot-active` → `bg-secondary-400`
+- `app-section-dot-inactive` → `bg-primary-600 hover:bg-primary-500`
+
+### Footer Custom Styles
+
+The custom footer content uses a dedicated class hierarchy in `style.css`:
+
+- `.footer`: responsive grid with one column by default and three equal columns from the `md` breakpoint
+- `.footer-container`: first column containing the brand and summary
+- `.footer-brand`: horizontally aligns the logo and title
+- `.footer-logo`: 48 × 48 pixel image with `object-cover`
+- `.footer-title`: decorative title using `app-title`
+- `.footer-summary`: small text using `app-text-subtle`
+- `.footer-links`: link columns, horizontally centered within their grid tracks from the `md` breakpoint
+- `.footer-links > h4`: link-column headings
+- `.footer-links > ul`: vertical lists without markers or default spacing
+- `.footer-links a`: underlined links with a duration transition and accent color on hover
+
+The child combinators (`>`) require the footer Markdown files to preserve the documented direct-child hierarchy.
 
 Custom z-index utilities (defined in the global `<style>` block in App.vue, not in style.css):
 
@@ -438,7 +459,7 @@ The section's `title` field is optional. If omitted, the `<h2>` is not rendered.
 
 ### Section Subtitle (Optional)
 
-The section's `subtitle` field is optional. If provided, it renders a `<p>` with the `app-section-subtitle` utility below the title.
+The section's `subtitle` field is optional. If provided, it renders a `<p>` with the `app-section-subtitle` utility plus component-level spacing and font-size classes below the title.
 
 ### Layout Reversal (`invert`)
 
@@ -461,7 +482,7 @@ Fields of the `site` object in the config JSON:
 
 The section's optional boolean `destak` field applies a different background using the `primary` (neutral) scale:
 
-- When `true`: applies `app-section-destak` → `bg-primary-700 -mx-6 px-6 py-8`
+- When `true`: applies `app-section-destak` for `bg-primary-700`, plus the component-level `-mx-6 px-6 py-8` layout classes
 - `-mx-6` breaks out of the container margin to "stretch" the background
 - Available on the `Section` interface in `src/types/config.ts`
 - To use it: add `"destak": true` to the desired section's JSON
@@ -509,7 +530,7 @@ All fields are optional. Usage example:
 - **Visibility**: pauses when the tab is in the background
 - **Reduced motion**: disables autoplay with `prefers-reduced-motion: reduce`
 - **Previous/next buttons**: fixed at the sides of the content (flex layout). If `buttons: false`, the content takes up 100%
-- **Dots**: clicking selects the slide directly; the active dot uses the `app-dot-active` utility
+- **Dots**: clicking selects the slide directly; the active dot uses the `app-section-dot-active` utility
 - **Accessibility**: `role="group"`, `aria-label` on the container and buttons, `aria-current` on the active dot
 - **One slide**: buttons and dots are not displayed
 
@@ -586,11 +607,10 @@ The header and sidebar adapt to the content:
 
 The site title (image + text) is an `<a href="/">` link with:
 
-- **`app-title`** on the `<a>` container — fancy font + accent color
-- **`app-text-accent-hover`** on the `<a>` container — hover lightens the color (secondary-500 → secondary-400)
-- **`app-title-adjustment`** on the `<h1>`/`<h2>` — `mt-2 leading-[0]` to align with the image
+- **`app-title`** on the link container — fancy font, accent color, and lighter accent color on hover
+- **`app-title-adjustment`** on the `<h1>`/`<h2>` — `mt-2 leading-[0] text-3xl md:text-5xl` to size and align the title
 - **`app-duration`** — smooth transition (0.3s) on hover
-- **Sidebar**: Same approach, `<a href="/">` with `app-title app-text-accent-hover app-duration` + `@click="closeMenu"` to close the menu when clicked
+- **Sidebar**: Same approach, using `app-title app-duration` plus `@click="closeMenu"` to close the menu when clicked
 - **Optional**: The `title` field in the config is optional—if absent, `<h1>`/`<h2>` are not rendered (allows using only an image)
 
 ### Site Image (Header + Sidebar)
@@ -663,18 +683,38 @@ The `contentFile` field in the `footer` config allows loading Markdown content i
 
 - **Optional**: If undefined, the footer shows only ownership + "Powered by Mineot"
 - **File**: `public/content/{locale}/{contentFile}` (for example, `footer.md`)
-- **Rendering**: Sanitized inline HTML with Tailwind (grid, links, etc.); new classes must be present during the build
-- **Structure**: Markdown with HTML for layout (column grid)
+- **Rendering**: The Markdown is parsed and sanitized by `useMarkdown`, then inserted with `v-html` into a `.container`
+- **Typography**: The footer container does not use `prose`, `prose-invert`, `app-markdown`, or a dedicated `app-footer-markdown` utility
+- **Presentation**: Footer content is styled through the global `.footer` hierarchy in `src/style.css`
+- **Structure**: HTML wrappers use the CSS classes `.footer`, `.footer-container`, `.footer-brand`, `.footer-logo`, `.footer-title`, `.footer-summary`, and `.footer-links`; Markdown syntax is used only for content such as headings and lists
 - **Separator**: Horizontal line between the Markdown content and the ownership/powered-by line
 - **Ownership**: `ownership` field in the config (for example, "© 2026 Name")
 - **Powered by**: Static text with a link to `https://github.com/mineot/taberna`
-- **Links**: Styled through `.app-footer-content :deep(a)` — underline + `app-text-subtle`, changing to `app-text-accent` on hover
-- **Layout**: Defined by the Markdown itself; the ownership/powered-by line uses a column on mobile and `space-between` on desktop
+- **Links**: Styled centrally through `.footer-links a` in `src/style.css`
+- **Layout**: Three equal columns from the `md` breakpoint and one stacked column on smaller screens; the ownership/powered-by line uses a column on mobile and `space-between` on desktop
 - **Example footer.md content**:
   ```html
-  <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-    <div>### Title Description</div>
+  <div class="footer">
+  <div class="footer-container">
+  <div class="footer-brand">
+  <img src="logo.png" alt="Taberna" class="footer-logo" />
+  <span class="footer-title">Taberna</span>
+  </div>
+  <span class="footer-summary">Description</span>
+  </div>
+  <div class="footer-links">
 
-    <div>### Links - [Home](./#/)</div>
+  #### Quick Links
+
+  - [Home](/)
+
+  </div>
+  <div class="footer-links">
+
+  #### Social
+
+  - [GitHub](https://github.com/)
+
+  </div>
   </div>
   ```

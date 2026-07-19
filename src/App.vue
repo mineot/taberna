@@ -3,7 +3,7 @@
     v-if="error"
     class="app-background flex min-h-screen items-center justify-center"
   >
-    <p class="app-text-accent">{{ error }}</p>
+    <p class="app-error">{{ error }}</p>
   </div>
 
   <div
@@ -11,14 +11,14 @@
     class="app-background flex min-h-screen flex-col items-center justify-center gap-6 p-8"
   >
     <div class="flex w-full max-w-2xl flex-col gap-4">
-      <div class="skeleton h-10 w-3/4 rounded"></div>
-      <div class="skeleton h-6 w-1/2 rounded"></div>
+      <div class="app-skeleton skeleton h-10 w-3/4 rounded"></div>
+      <div class="app-skeleton skeleton h-6 w-1/2 rounded"></div>
       <div class="mt-4 flex flex-col gap-3">
-        <div class="skeleton h-4 w-full rounded"></div>
-        <div class="skeleton h-4 w-5/6 rounded"></div>
-        <div class="skeleton h-4 w-4/6 rounded"></div>
+        <div class="app-skeleton skeleton h-4 w-full rounded"></div>
+        <div class="app-skeleton skeleton h-4 w-5/6 rounded"></div>
+        <div class="app-skeleton skeleton h-4 w-4/6 rounded"></div>
       </div>
-      <div class="skeleton mt-4 h-48 w-full rounded"></div>
+      <div class="app-skeleton skeleton mt-4 h-48 w-full rounded"></div>
     </div>
   </div>
 
@@ -27,24 +27,24 @@
     class="app-background app-text flex min-h-screen flex-col font-sans"
   >
     <header
-      class="app-border app-background-header sticky top-0 z-50 border-b backdrop-blur"
+      class="app-border app-header sticky top-0 z-50 border-b backdrop-blur"
     >
-      <div class="app-container flex items-center justify-between py-4">
+      <div class="container flex items-center justify-between py-4">
         <div class="flex items-center gap-3">
           <router-link
             to="/"
-            class="app-title app-text-accent-hover app-duration flex items-center gap-3"
+            class="app-title app-duration flex items-center gap-3"
           >
             <img
               v-if="config?.site.image"
               :src="config.site.image"
               :alt="config.site.title"
-              class="app-logo app-duration md:h-12 md:w-12"
+              class="app-logo app-duration"
             />
             <h1
               v-if="config?.site.title"
               :key="locale"
-              class="app-title-adjustment text-3xl md:text-5xl"
+              class="app-title-adjustment"
             >
               {{ config?.site.title }}
             </h1>
@@ -59,14 +59,14 @@
               <router-link
                 v-if="item.route"
                 :to="item.route"
-                class="hover:app-text-accent app-duration transition-colors"
+                class="app-header-link app-duration transition-colors"
               >
                 {{ item.label }}
               </router-link>
               <router-link
                 v-else-if="item.href?.startsWith('#')"
                 :to="'/' + item.href"
-                class="hover:app-text-accent app-duration transition-colors"
+                class="app-header-link app-duration transition-colors"
               >
                 {{ item.label }}
               </router-link>
@@ -75,7 +75,7 @@
                 :href="item.href"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="hover:app-text-accent app-duration transition-colors"
+                class="app-header-link app-duration transition-colors"
               >
                 {{ item.label }}
               </a>
@@ -85,13 +85,13 @@
             v-if="hasMultipleLangs && !hasTooManyMenuItems"
             class="hidden md:block"
           >
-            <router-link to="/languages" class="app-flag-btn text-2xl">
+            <router-link to="/languages" class="flag-btn text-2xl">
               {{ flags[locale] }}
             </router-link>
           </div>
           <button
             v-if="hasHamburger"
-            class="app-icon-btn"
+            class="app-header-link app-duration cursor-pointer transition-colors"
             :class="hasTooManyMenuItems ? '' : 'md:hidden'"
             aria-label="Menu"
             :aria-expanded="menuOpen"
@@ -105,13 +105,17 @@
 
     <Teleport to="body">
       <Transition name="backdrop">
-        <div v-if="menuOpen" class="app-backdrop" @click="closeMenu" />
+        <div
+          v-if="menuOpen"
+          class="app-backdrop fixed inset-0 z-60 backdrop-blur-sm"
+          @click="closeMenu"
+        />
       </Transition>
       <Transition name="sidebar">
         <aside
           v-if="menuOpen"
           ref="sidebar"
-          class="app-sidebar"
+          class="app-sidebar fixed top-0 right-0 z-70 flex h-full w-72 flex-col shadow-xl"
           role="dialog"
           aria-modal="true"
           aria-label="Menu"
@@ -122,7 +126,7 @@
           >
             <router-link
               to="/"
-              class="app-title app-text-accent-hover app-duration flex items-center gap-3"
+              class="app-title app-duration flex items-center gap-3"
               @click="closeMenu"
             >
               <img
@@ -140,7 +144,7 @@
             </router-link>
             <button
               ref="closeMenuButton"
-              class="app-icon-btn"
+              class="app-icon-btn app-header-link app-duration cursor-pointer transition-colors"
               aria-label="Close menu"
               @click="closeMenu"
             >
@@ -153,7 +157,7 @@
                 <router-link
                   v-if="item.route"
                   :to="item.route"
-                  class="app-nav-link"
+                  class="app-sidebar-link sidebar-link"
                   @click="closeMenu"
                 >
                   {{ item.label }}
@@ -161,7 +165,7 @@
                 <router-link
                   v-else-if="item.href?.startsWith('#')"
                   :to="'/' + item.href"
-                  class="app-nav-link"
+                  class="app-sidebar-link sidebar-link"
                   @click="closeMenu"
                 >
                   {{ item.label }}
@@ -171,7 +175,7 @@
                   :href="item.href"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="app-nav-link"
+                  class="app-sidebar-link sidebar-link"
                   @click="closeMenu"
                 >
                   {{ item.label }}
@@ -185,7 +189,7 @@
           >
             <router-link
               to="/languages"
-              class="app-nav-link flex items-center gap-3 text-xl"
+              class="app-sidebar-link sidebar-link flex items-center gap-3 text-xl"
               @click="closeMenu"
             >
               <span class="text-2xl">{{ flags[locale] }}</span>
@@ -196,18 +200,16 @@
       </Transition>
     </Teleport>
 
-    <main class="app-container flex flex-1 flex-col gap-12 py-12">
+    <main class="container flex flex-1 flex-col gap-12 py-12">
       <router-view />
     </main>
 
-    <footer class="app-footer">
+    <footer
+      class="app-footer flex flex-col items-center border-t px-6 py-6 text-sm"
+    >
+      <div v-if="footerHtml" class="container" v-html="footerHtml" />
       <div
-        v-if="footerHtml"
-        class="app-container app-footer-content"
-        v-html="footerHtml"
-      />
-      <div
-        class="app-border mt-6 flex w-full flex-col items-center gap-2 border-t pt-6 md:flex-row md:justify-between"
+        class="app-border mt-6 flex w-full flex-col items-center gap-2 border-t pt-4 text-xs md:flex-row md:justify-between"
       >
         <p>{{ config?.footer.ownership }}</p>
         <p>
@@ -216,7 +218,7 @@
             href="https://github.com/mineot/taberna"
             target="_blank"
             rel="noopener"
-            class="app-text-accent hover:app-text-accent-hover app-duration transition-colors"
+            class="app-powered app-duration transition-colors"
             >Mineot</a
           >
         </p>
@@ -226,6 +228,13 @@
 </template>
 
 <script setup lang="ts">
+import { Menu, X } from '@lucide/vue';
+import { useConfig } from './composables/useConfig';
+import { useLocale } from './composables/useLocale';
+import { useMarkdown } from './composables/useMarkdown';
+import { isSafeExternalHref } from './utils/links';
+import { setMetaDescription } from './utils/meta';
+
 import {
   computed,
   nextTick,
@@ -234,12 +243,6 @@ import {
   ref,
   watch,
 } from 'vue';
-import { Menu, X } from '@lucide/vue';
-import { useConfig } from './composables/useConfig';
-import { useLocale } from './composables/useLocale';
-import { useMarkdown } from './composables/useMarkdown';
-import { isSafeExternalHref } from './utils/links';
-import { setMetaDescription } from './utils/meta';
 
 const { config, loaded, loading, error, loadConfig } = useConfig();
 
@@ -372,6 +375,18 @@ onBeforeUnmount(() => {
   @apply app-text-subtle underline transition-colors duration-300;
 }
 
+.container {
+  @apply mx-auto w-full max-w-4xl px-6;
+}
+
+.flag-btn {
+  @apply app-duration cursor-pointer transition-all hover:scale-110;
+}
+
+.sidebar-link {
+  @apply app-duration rounded-lg px-3 py-2 transition-colors;
+}
+
 .app-footer-content :deep(a:hover) {
   @apply app-text-accent;
 }
@@ -412,7 +427,6 @@ onBeforeUnmount(() => {
 
 .skeleton {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  @apply app-skeleton;
 }
 
 .z-60 {

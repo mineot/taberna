@@ -3,11 +3,15 @@
     v-for="section in config?.sections"
     :id="section.id"
     :key="section.id"
-    class="app-section rounded-2xl"
     :class="[
-      section.destak ? 'app-section-destak' : '',
-      section.invert ? 'md:flex-row-reverse' : '',
+      'flex',
+      'flex-col',
+      'md:flex-row',
+      'gap-4',
+      'md:gap-8',
       {
+        'app-section-destak -mx-6 px-6 py-8': section.destak,
+        'md:flex-row-reverse': section.invert,
         'md:items-start':
           (section.contentPosition ?? section.imagePosition) === 'top',
         'md:items-center':
@@ -19,14 +23,15 @@
     ]"
   >
     <div class="min-w-0 flex-1">
-      <h2 v-if="section.title" class="app-section-title">
+      <p v-if="section.title" class="app-section-title text-2xl font-bold">
         {{ section.title }}
-      </h2>
-      <p v-if="section.subtitle" class="app-section-subtitle">
+      </p>
+
+      <p v-if="section.subtitle" class="app-section-subtitle mt-1 text-sm">
         {{ section.subtitle }}
       </p>
 
-      <div v-if="section.content" class="app-section-content">
+      <div v-if="section.content" class="section-content">
         <p
           v-for="(item, i) in section.content"
           :key="i"
@@ -40,10 +45,10 @@
         v-else-if="
           section.contentFiles?.length === 1 && markdownContent.get(section.id)
         "
-        class="app-section-content"
+        class="section-content"
       >
         <div
-          class="prose prose-invert w-full"
+          class="prose prose-invert app-markdown w-full"
           v-html="markdownContent.get(section.id)![0]"
         />
       </div>
@@ -65,12 +70,12 @@
           section.contentFiles.length > 1 &&
           markdownContent.get(section.id)
         "
-        class="app-section-content"
+        class="section-content"
       >
         <div
           v-for="(html, i) in markdownContent.get(section.id)"
           :key="i"
-          class="prose prose-invert min-w-0 basis-full overflow-hidden md:basis-[calc(50%-0.75rem)]"
+          class="prose prose-invert app-markdown min-w-0 basis-full overflow-hidden md:basis-[calc(50%-0.75rem)]"
           v-html="html"
         />
       </div>
@@ -92,6 +97,14 @@
     />
   </section>
 </template>
+
+<style scoped>
+@reference "tailwindcss";
+
+.section-content {
+  @apply mt-4 flex flex-col flex-wrap gap-6 md:flex-row;
+}
+</style>
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';

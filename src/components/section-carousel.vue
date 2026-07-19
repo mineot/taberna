@@ -12,7 +12,7 @@
     <div class="flex min-w-0 items-center gap-3">
       <button
         v-if="showButtons && hasMultiplePages"
-        class="app-carousel-btn"
+        class="btn"
         aria-label="Previous slide"
         @click="prev"
       >
@@ -25,21 +25,24 @@
             <div
               v-for="(html, i) in slides"
               :key="i"
-              class="transition-opacity duration-500 ease-in-out"
+              class="app-section-carousel-transition transition-opacity ease-in-out"
               :class="
                 i === currentIndex
                   ? 'relative z-10 opacity-100'
                   : 'pointer-events-none absolute inset-0 z-0 opacity-0'
               "
             >
-              <div class="prose prose-invert max-w-none" v-html="html" />
+              <div
+                class="prose prose-invert app-markdown max-w-none"
+                v-html="html"
+              />
             </div>
           </div>
         </template>
 
         <template v-else>
           <div
-            class="flex transition-transform duration-500 ease-in-out"
+            class="app-section-carousel-transition flex transition-transform ease-in-out"
             :style="{ transform: `translateX(-${currentPage * 100}%)` }"
           >
             <div
@@ -48,7 +51,7 @@
               class="min-w-0 flex-shrink-0 overflow-hidden px-2"
               :style="{ width: slideWidth }"
             >
-              <div class="prose prose-invert" v-html="html" />
+              <div class="prose prose-invert app-markdown" v-html="html" />
             </div>
           </div>
         </template>
@@ -56,7 +59,7 @@
 
       <button
         v-if="showButtons && hasMultiplePages"
-        class="app-carousel-btn"
+        class="btn"
         aria-label="Next slide"
         @click="next"
       >
@@ -72,9 +75,11 @@
         <button
           v-for="(_, i) in totalDots"
           :key="i"
-          class="h-2 w-2 rounded-full transition-all duration-300"
+          class="app-duration h-2 w-2 rounded-full transition-all"
           :class="
-            i === activeDot ? 'app-dot-active scale-125' : 'app-dot-inactive'
+            i === activeDot
+              ? 'app-section-dot-active scale-125'
+              : 'app-section-dot-inactive'
           "
           :aria-label="`Slide ${i + 1}`"
           :aria-current="i === activeDot ? 'true' : undefined"
@@ -83,7 +88,7 @@
       </template>
       <button
         v-if="showPlaybackControl"
-        class="app-carousel-btn relative ml-2"
+        class="btn relative ml-2"
         :aria-label="userPaused ? 'Play carousel' : 'Pause carousel'"
         @click="togglePlayback"
       >
@@ -93,7 +98,7 @@
           aria-hidden="true"
         >
           <circle
-            class="app-carousel-progress-track fill-none"
+            class="app-section-carousel-progress-track fill-none"
             cx="18"
             cy="18"
             r="16"
@@ -101,7 +106,7 @@
             stroke-width="2"
           />
           <circle
-            class="app-carousel-progress fill-none"
+            class="app-section-carousel-progress fill-none"
             cx="18"
             cy="18"
             r="16"
@@ -119,6 +124,17 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+@reference "tailwindcss";
+@reference "../style.css";
+
+.btn {
+  @apply flex flex-shrink-0 items-center justify-center;
+  @apply app-duration cursor-pointer rounded-full p-2 transition-colors;
+  @apply app-section-carousel-btn;
+}
+</style>
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';

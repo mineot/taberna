@@ -1,21 +1,21 @@
 <template>
   <div v-if="pageLoading" class="flex flex-col gap-4">
-    <div class="skeleton h-10 w-3/4 rounded"></div>
-    <div class="skeleton h-6 w-1/2 rounded"></div>
+    <div class="app-skeleton skeleton h-10 w-3/4 rounded"></div>
+    <div class="app-skeleton skeleton h-6 w-1/2 rounded"></div>
     <div class="mt-4 flex flex-col gap-3">
-      <div class="skeleton h-4 w-full rounded"></div>
-      <div class="skeleton h-4 w-5/6 rounded"></div>
-      <div class="skeleton h-4 w-4/6 rounded"></div>
+      <div class="app-skeleton skeleton h-4 w-full rounded"></div>
+      <div class="app-skeleton skeleton h-4 w-5/6 rounded"></div>
+      <div class="app-skeleton skeleton h-4 w-4/6 rounded"></div>
     </div>
   </div>
 
   <div v-else-if="pageError" class="py-12 text-center">
-    <p class="app-text-accent text-xl">{{ pageError }}</p>
+    <p class="app-error text-xl">{{ pageError }}</p>
   </div>
 
   <article
     v-else-if="pageHtml"
-    class="prose prose-invert max-w-none"
+    class="prose prose-invert app-markdown max-w-none"
     v-html="pageHtml"
   />
 </template>

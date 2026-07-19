@@ -96,7 +96,7 @@
   --color-secondary-950: var(--color-emerald-950);
 }
 
-/* BACKGROUND */
+/* APP COLORS */
 
 @utility app-duration {
   @apply duration-300;
@@ -110,18 +110,16 @@
   @apply hover:bg-primary-700;
 }
 
-@utility app-background-header {
-  @apply bg-primary-900/95;
-}
-
 @utility app-background-footer {
   @apply bg-primary-950;
 }
 
-/* TEXT COLOR */
-
 @utility app-text {
   @apply text-primary-100;
+}
+
+@utility app-text-dark {
+  @apply text-primary-400;
 }
 
 @utility app-text-muted {
@@ -144,116 +142,186 @@
   @apply hover:text-secondary-400;
 }
 
-/* APP CUSTOMS */
-
-@utility app-title {
-  @apply font-fancy app-text-accent;
-}
-
-@utility app-title-adjustment {
-  @apply mt-2 leading-[0];
-}
-
-@utility app-logo {
-  @apply h-8 min-h-5 w-8 min-w-5;
-}
-
 @utility app-ring {
   @apply ring-secondary-400;
 }
-
-/* BORDER COLOR */
 
 @utility app-border {
   @apply border-primary-700;
 }
 
-/* SECTION */
-
-@utility app-section {
-  @apply flex flex-col gap-4 md:flex-row md:gap-8;
+@utility app-error {
+  @apply app-text-accent;
 }
 
+@utility app-skeleton {
+  @apply bg-primary-700;
+}
+
+@utility app-backdrop {
+  @apply bg-primary-900/80;
+}
+
+@utility app-powered {
+  @apply app-text-accent hover:app-text-accent-hover;
+}
+
+@utility app-markdown {
+  --tw-prose-invert-body: var(--color-primary-300);
+  --tw-prose-invert-headings: var(--color-red-100);
+  --tw-prose-invert-lead: var(--color-primary-300);
+  --tw-prose-invert-links: var(--color-secondary-400);
+  --tw-prose-invert-bold: var(--color-primary-100);
+  --tw-prose-invert-counters: var(--color-primary-400);
+  --tw-prose-invert-bullets: var(--color-secondary-500);
+  --tw-prose-invert-hr: var(--color-primary-700);
+  --tw-prose-invert-quotes: var(--color-primary-200);
+  --tw-prose-invert-quote-borders: var(--color-secondary-500);
+  --tw-prose-invert-captions: var(--color-primary-400);
+  --tw-prose-invert-kbd: var(--color-primary-100);
+  --tw-prose-invert-code: var(--color-secondary-400);
+  --tw-prose-invert-pre-code: var(--color-primary-200);
+  --tw-prose-invert-pre-bg: var(--color-primary-900);
+  --tw-prose-invert-th-borders: var(--color-primary-600);
+  --tw-prose-invert-td-borders: var(--color-primary-700);
+}
+
+/* APP CUSTOMS */
+
+@utility app-title {
+  @apply font-fancy;
+  @apply app-text-accent app-text-accent-hover;
+}
+
+@utility app-title-adjustment {
+  @apply mt-2 leading-[0];
+  @apply text-3xl md:text-5xl;
+}
+
+@utility app-logo {
+  @apply h-8 min-h-5;
+  @apply w-8 min-w-5;
+  @apply md:h-12 md:w-12;
+}
+
+@utility app-header {
+  @apply bg-primary-900/95;
+}
+
+@utility app-header-link {
+  @apply app-text hover:app-text-accent;
+}
+
+@utility app-sidebar {
+  @apply app-background app-text;
+}
+
+@utility app-sidebar-link {
+  @apply app-text app-background-hover hover:app-text-accent;
+}
+
+@utility app-footer {
+  @apply app-border app-background-footer app-text-subtle;
+}
+
+/* LANGUAGE */
+
+@utility app-language-button {
+  @apply app-background app-background-hover;
+  @apply app-border;
+}
+
+@utility app-language-button-text {
+  @apply app-text-body;
+}
+
+@utility app-language-button-selected {
+  @apply app-ring;
+}
+
+/* SECTION */
+
 @utility app-section-title {
-  @apply text-2xl font-bold;
+  @apply app-text;
 }
 
 @utility app-section-subtitle {
-  @apply text-primary-500 mt-1;
-}
-
-@utility app-section-content {
-  @apply mt-4 flex flex-col flex-wrap gap-6 md:flex-row;
+  @apply app-text-dark;
 }
 
 @utility app-section-destak {
-  @apply bg-primary-700 -mx-6 px-6 py-8;
+  @apply bg-primary-700;
 }
 
 @utility app-section-image {
   @apply w-full rounded-lg object-cover md:w-1/2;
 }
 
-/* BUTTONS AND LINKS */
-
-@utility app-icon-btn {
-  @apply app-text-muted hover:app-text-accent app-duration cursor-pointer transition-colors;
+@utility app-section-carousel-transition {
+  @apply duration-500;
 }
 
-@utility app-flag-btn {
-  @apply app-duration cursor-pointer transition-all hover:scale-110;
-}
-
-@utility app-nav-link {
-  @apply app-text app-background-hover hover:app-text-accent app-duration rounded-lg px-3 py-2 transition-colors;
-}
-
-/* SIDEBAR AND FOOTER */
-
-@utility app-sidebar {
-  @apply app-background app-text fixed top-0 right-0 z-70 flex h-full w-72 flex-col shadow-xl;
-}
-
-@utility app-footer {
-  @apply app-border app-background-footer app-text-subtle flex flex-col items-center border-t px-6 py-6 text-sm;
-}
-
-/* CAROUSEL */
-
-@utility app-dot-active {
-  @apply bg-secondary-400;
-}
-
-@utility app-dot-inactive {
-  @apply bg-primary-600 hover:bg-primary-500;
-}
-
-@utility app-carousel-btn {
-  @apply flex flex-shrink-0 items-center justify-center;
+@utility app-section-carousel-btn {
   @apply app-text-muted hover:app-text-accent bg-primary-800/80;
-  @apply app-duration cursor-pointer rounded-full p-2 transition-colors;
 }
 
-@utility app-carousel-progress-track {
+@utility app-section-carousel-progress-track {
   @apply stroke-primary-600;
 }
 
-@utility app-carousel-progress {
+@utility app-section-carousel-progress {
   @apply stroke-secondary-400;
 }
 
-/* UTILS AND LAYOUT */
-
-@utility app-container {
-  @apply mx-auto w-full max-w-4xl px-6;
+@utility app-section-dot-active {
+  @apply bg-secondary-400;
 }
 
-@utility app-backdrop {
-  @apply fixed inset-0 z-60 bg-black/60 backdrop-blur-sm;
+@utility app-section-dot-inactive {
+  @apply bg-primary-600 hover:bg-primary-500;
 }
 
-@utility app-skeleton {
-  @apply bg-primary-700;
+/* FOOTER CUSTOMS */
+
+.footer {
+  @apply grid grid-cols-1 gap-8 md:grid-cols-3;
+
+  > .footer-container {
+    @apply flex flex-col gap-2;
+
+    > .footer-brand {
+      @apply flex items-center gap-4;
+
+      > .footer-logo {
+        @apply m-0 h-12 w-12 object-cover;
+      }
+
+      > .footer-title {
+        @apply app-title mt-2 text-5xl;
+      }
+    }
+
+    > .footer-summary {
+      @apply app-text-subtle text-sm;
+    }
+  }
+
+  > .footer-links {
+    @apply flex flex-col md:justify-self-center;
+
+    > h4 {
+      @apply app-text mb-3 text-base font-bold;
+    }
+
+    > ul {
+      @apply m-0 flex list-none flex-col gap-2 p-0;
+    }
+
+    a {
+      @apply app-text-subtle app-text-accent-hover;
+      @apply app-duration underline transition-colors;
+    }
+  }
 }
 
 /* WEB DOC CUSTOMS */

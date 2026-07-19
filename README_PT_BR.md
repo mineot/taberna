@@ -111,7 +111,7 @@ taberna/
 ├── src/
 │   ├── App.vue                 # Disposição, cabeçalho, menu lateral e rodapé
 │   ├── main.ts                 # Inicialização do Vue e do roteador
-│   ├── style.css               # Tailwind, fontes, tema e utilitários
+│   ├── style.css               # Tailwind, fontes, tema, utilitários e estilos personalizados do rodapé
 │   ├── components/             # Componentes reutilizáveis e testes
 │   ├── composables/            # Idioma, configuração, Markdown e troca de idioma
 │   ├── router/                 # Definição das rotas
@@ -383,25 +383,37 @@ O roteador restaura a posição salva ao voltar, rola suavemente para âncoras e
 
 ## Markdown e rodapé
 
-Arquivos Markdown são buscados em tempo de execução, convertidos com `marked`, sanitizados com DOMPurify e renderizados com Tailwind Typography.
+Arquivos Markdown são buscados em tempo de execução, convertidos com `marked` e sanitizados com DOMPurify. Páginas, seções e diapositivos do carrossel usam Tailwind Typography. O rodapé personalizado usa sua própria hierarquia de classes definida em `src/style.css`.
 
 Markdown também pode conter HTML, mas conteúdo perigoso é removido. Não dependa de `<script>`, atributos como `onclick` ou HTML não permitido pelo sanitizador.
 
 Para misturar Markdown dentro de HTML, deixe linhas em branco entre as tags e o conteúdo:
 
 ```html
-<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-  <div>### Empresa Descrição da empresa.</div>
-
-  <div>### Links - [Início](./#/) - [Sobre](./#/sobre)</div>
+<div class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <img src="logo.png" alt="Taberna" class="footer-logo" />
+      <span class="footer-title">Taberna</span>
+    </div>
+    <span class="footer-summary">Descrição</span>
+  </div>
+  <div class="footer-links">#### Links rápidos - [Início](./#/)</div>
+  <div class="footer-links">
+    #### Redes sociais - [GitHub](https://github.com/)
+  </div>
 </div>
 ```
 
-A disposição do rodapé é definida pelo próprio Markdown; o componente não cria colunas automaticamente. Classes Tailwind presentes nos arquivos durante a compilação são incluídas no CSS. Se você adicionar classes inéditas diretamente em uma publicação já compilada, refaça a compilação.
+O Markdown do rodapé define somente o conteúdo e a hierarquia estrutural de classes. Sua apresentação é centralizada em `src/style.css`.
+
+A classe `.footer` cria uma coluna em telas pequenas e três colunas iguais a partir do breakpoint `md`. A primeira coluna contém a marca e o resumo, enquanto as demais contêm listas de links.
+
+Os seletores do rodapé usam combinadores de filhos diretos, portanto a hierarquia documentada deve ser preservada.
 
 Sem `footer.contentFile`, somente `ownership` e o crédito “Powered by Mineot” são apresentados. Se o arquivo do rodapé falhar, a aplicação omite apenas o conteúdo personalizado.
 
-Links do rodapé recebem sublinhado e mudança de cor ao passar o ponteiro. Outros detalhes da disposição, como grade e alinhamento das colunas, dependem das classes escritas no Markdown.
+Links do rodapé recebem sublinhado e mudança de cor ao passar o ponteiro. Sua aparência, grade e alinhamento das colunas são definidos em `src/style.css`.
 
 ### Cache
 
@@ -464,15 +476,16 @@ Exemplo de alteração:
 
 ### Principais utilitários
 
-| Grupo      | Utilitários                                                                                          |
-| ---------- | ---------------------------------------------------------------------------------------------------- |
-| Fundos     | `app-background`, `app-background-hover`, `app-background-header`, `app-background-footer`           |
-| Texto      | `app-text`, `app-text-muted`, `app-text-body`, `app-text-subtle`, `app-text-accent`                  |
-| Marca      | `app-title`, `app-title-adjustment`, `app-logo`                                                      |
-| Seções     | `app-section`, `app-section-title`, `app-section-content`, `app-section-image`, `app-section-destak` |
-| Navegação  | `app-icon-btn`, `app-flag-btn`, `app-nav-link`, `app-sidebar`, `app-backdrop`                        |
-| Carrossel  | `app-carousel-btn`, `app-dot-active`, `app-dot-inactive`, `app-carousel-progress`                    |
-| Disposição | `app-container`, `app-footer`, `app-border`, `app-ring`, `app-skeleton`                              |
+| Grupo                  | Utilitários                                                                                                                                                                                 |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Fundos                 | `app-background`, `app-background-hover`, `app-background-footer`, `app-header`, `app-backdrop`                                                                                             |
+| Texto                  | `app-text`, `app-text-dark`, `app-text-muted`, `app-text-body`, `app-text-subtle`, `app-text-accent`, `app-text-accent-hover`, `app-error`, `app-markdown`                                  |
+| Marca                  | `app-title`, `app-title-adjustment`, `app-logo`                                                                                                                                             |
+| Cabeçalho/menu lateral | `app-header-link`, `app-sidebar`, `app-sidebar-link`                                                                                                                                        |
+| Idiomas                | `app-language-button`, `app-language-button-text`, `app-language-button-selected`                                                                                                           |
+| Seções                 | `app-section-title`, `app-section-subtitle`, `app-section-image`, `app-section-destak`                                                                                                      |
+| Carrossel              | `app-section-carousel-transition`, `app-section-carousel-btn`, `app-section-carousel-progress-track`, `app-section-carousel-progress`, `app-section-dot-active`, `app-section-dot-inactive` |
+| Gerais                 | `app-duration`, `app-border`, `app-ring`, `app-skeleton`, `app-footer`, `app-powered`                                                                                                       |
 
 Altere as escalas e fontes para personalizações simples. Mudanças estruturais nos utilitários podem afetar vários componentes e devem ser testadas em dispositivos móveis e telas grandes.
 

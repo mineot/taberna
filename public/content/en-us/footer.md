@@ -1,20 +1,14 @@
-<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-
-<div>
-
-<div class="flex items-center gap-3 font-serif text-4xl mb-3 app-title">
-
-<img src="logo.png" alt="Taberna" class="h-12 w-12 rounded-full object-cover" />
-
-#### Taberna
-
+<div class="footer">
+<div class="footer-container">
+<div class="footer-brand">
+<img src="logo.png" alt="Taberna" class="footer-logo" />
+<span class="footer-title">Taberna</span>
 </div>
-
+<span class="footer-summary">
 A digital space to share ideas, projects, and experiences. Built with passion and technology.
-
+</span>
 </div>
-
-<div class="self-center">
+<div class="footer-links">
 
 #### Quick Links
 
@@ -23,8 +17,7 @@ A digital space to share ideas, projects, and experiences. Built with passion an
 - [Services](/services)
 
 </div>
-
-<div class="self-center">
+<div class="footer-links">
 
 #### Social
 
@@ -32,5 +25,4 @@ A digital space to share ideas, projects, and experiences. Built with passion an
 - [Bluesky](https://bsky.app/)
 
 </div>
-
 </div>

@@ -111,7 +111,7 @@ taberna/
 ├── src/
 │   ├── App.vue                 # Layout, header, sidebar, and footer
 │   ├── main.ts                 # Vue and router initialization
-│   ├── style.css               # Tailwind, fonts, theme, and utilities
+│   ├── style.css               # Tailwind, fonts, theme, utilities, and custom footer styles
 │   ├── components/             # Reusable components and tests
 │   ├── composables/            # Locale, config, Markdown, and language switching
 │   ├── router/                 # Route definitions
@@ -383,25 +383,35 @@ The router restores the saved position when navigating back, smoothly scrolls to
 
 ## Markdown and footer
 
-Markdown files are fetched at runtime, converted with `marked`, sanitized with DOMPurify, and rendered with Tailwind Typography.
+Markdown files are fetched at runtime, converted with `marked`, and sanitized with DOMPurify. Pages, sections, and carousel slides use Tailwind Typography. The custom footer uses its own class hierarchy defined in `src/style.css`.
 
 Markdown may also contain HTML, but dangerous content is removed. Do not rely on `<script>`, attributes such as `onclick`, or HTML that is not allowed by the sanitizer.
 
 To mix Markdown inside HTML, leave blank lines between the tags and the content:
 
 ```html
-<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-  <div>### Company Company description.</div>
-
-  <div>### Links - [Home](./#/) - [About](./#/about)</div>
+<div class="footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <img src="logo.png" alt="Taberna" class="footer-logo" />
+      <span class="footer-title">Taberna</span>
+    </div>
+    <span class="footer-summary">Description</span>
+  </div>
+  <div class="footer-links">#### Quick Links - [Home](./#/)</div>
+  <div class="footer-links">#### Social - [GitHub](https://github.com/)</div>
 </div>
 ```
 
-The footer layout is defined by the Markdown itself; the component does not create columns automatically. Tailwind classes present in the files at build time are included in the CSS. If you add new classes directly to an already compiled deployment, rebuild the project.
+The footer Markdown defines only its content and structural class hierarchy. Its presentation is centralized in `src/style.css`.
+
+The `.footer` class creates one column on small screens and three equal columns from the `md` breakpoint. The first column contains the brand and summary, while the remaining columns contain link lists.
+
+The footer selectors use direct-child combinators, so the documented hierarchy must be preserved.
 
 Without `footer.contentFile`, only `ownership` and the “Powered by Mineot” credit are displayed. If the footer file fails, the application omits only the custom content.
 
-Footer links are underlined and change color on hover. Other layout details, such as the grid and column alignment, depend on the classes written in the Markdown.
+Footer links are underlined and change color on hover. Their appearance, grid, and column alignment are defined in `src/style.css`.
 
 ### Cache
 
@@ -464,15 +474,16 @@ Example customization:
 
 ### Main utilities
 
-| Group       | Utilities                                                                                            |
-| ----------- | ---------------------------------------------------------------------------------------------------- |
-| Backgrounds | `app-background`, `app-background-hover`, `app-background-header`, `app-background-footer`           |
-| Text        | `app-text`, `app-text-muted`, `app-text-body`, `app-text-subtle`, `app-text-accent`                  |
-| Brand       | `app-title`, `app-title-adjustment`, `app-logo`                                                      |
-| Sections    | `app-section`, `app-section-title`, `app-section-content`, `app-section-image`, `app-section-destak` |
-| Navigation  | `app-icon-btn`, `app-flag-btn`, `app-nav-link`, `app-sidebar`, `app-backdrop`                        |
-| Carousel    | `app-carousel-btn`, `app-dot-active`, `app-dot-inactive`, `app-carousel-progress`                    |
-| Layout      | `app-container`, `app-footer`, `app-border`, `app-ring`, `app-skeleton`                              |
+| Group          | Utilities                                                                                                                                                                                   |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Backgrounds    | `app-background`, `app-background-hover`, `app-background-footer`, `app-header`, `app-backdrop`                                                                                             |
+| Text           | `app-text`, `app-text-dark`, `app-text-muted`, `app-text-body`, `app-text-subtle`, `app-text-accent`, `app-text-accent-hover`, `app-error`, `app-markdown`                                  |
+| Brand          | `app-title`, `app-title-adjustment`, `app-logo`                                                                                                                                             |
+| Header/sidebar | `app-header-link`, `app-sidebar`, `app-sidebar-link`                                                                                                                                        |
+| Languages      | `app-language-button`, `app-language-button-text`, `app-language-button-selected`                                                                                                           |
+| Sections       | `app-section-title`, `app-section-subtitle`, `app-section-image`, `app-section-destak`                                                                                                      |
+| Carousel       | `app-section-carousel-transition`, `app-section-carousel-btn`, `app-section-carousel-progress-track`, `app-section-carousel-progress`, `app-section-dot-active`, `app-section-dot-inactive` |
+| General        | `app-duration`, `app-border`, `app-ring`, `app-skeleton`, `app-footer`, `app-powered`                                                                                                       |
 
 Change the scales and fonts for simple customizations. Structural changes to utilities may affect multiple components and should be tested on mobile and desktop.
 
