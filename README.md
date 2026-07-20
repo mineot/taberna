@@ -14,7 +14,7 @@ The project still uses placeholder content. Before publishing, replace the examp
 - Responsive carousel with autoplay, pause, progress, arrows, and indicators
 - Responsive sidebar menu with keyboard navigation and focus trapping
 - Optional footer loaded from Markdown
-- Centralized theme using `app-*` CSS utilities
+- Centralized semantic theme using `:root` tokens and `app-*` CSS utilities
 - HTML sanitization and Content Security Policy (CSP) restrictions
 - Static build compatible with hosting at the root or in subdirectories
 
@@ -111,7 +111,7 @@ taberna/
 ├── src/
 │   ├── App.vue                 # Layout, header, sidebar, and footer
 │   ├── main.ts                 # Vue and router initialization
-│   ├── style.css               # Tailwind, fonts, theme, utilities, and custom footer styles
+│   ├── style.css               # Tailwind, fonts, semantic tokens/utilities, and custom footer styles
 │   ├── components/             # Reusable components and tests
 │   ├── composables/            # Locale, config, Markdown, and language switching
 │   ├── router/                 # Route definitions
@@ -227,7 +227,7 @@ Each item in `sections` accepts:
 | `imagePosition`   | `top`, `center`, `bottom` | No       | Image cropping and fallback for flex alignment        |
 | `contentPosition` | `top`, `center`, `bottom` | No       | Flex alignment; takes precedence over `imagePosition` |
 | `invert`          | boolean                   | No       | Reverses the content and image on desktop             |
-| `destak`          | boolean                   | No       | Applies a highlighted background                      |
+| `emphasis`        | boolean                   | No       | Applies the semantic emphasized background            |
 | `carousel`        | object                    | No       | Configures the carousel for multiple files            |
 
 ### Content precedence
@@ -250,7 +250,7 @@ Each item in `sections` accepts:
   "imagePosition": "top",
   "contentPosition": "center",
   "invert": false,
-  "destak": true
+  "emphasis": true
 }
 ```
 
@@ -311,7 +311,7 @@ The carousel is enabled in a section with two or more `contentFiles`:
 | `dots`         | boolean | `true`  | Shows one indicator per page                                 |
 | `itemsPerView` | number  | `1`     | Integer, minimum 1, and limited to the number of slides      |
 
-With one item at a time, the transition uses a fade effect. With multiple items, it uses horizontal movement and page-based navigation. Navigation is circular in both modes.
+With one item at a time, the transition uses a fade effect. With multiple items, it uses horizontal movement and page-based navigation. Both use `app-section-carousel-transition`, whose duration comes from `--duration-carousel` (500 ms by default). Navigation is circular in both modes.
 
 On screens narrower than 768 px, `itemsPerView` is always 1. With only one page, arrows, dots, and playback controls are hidden.
 
@@ -442,7 +442,7 @@ The policy is defined in a meta tag. For a stricter production policy, configure
 
 ## Visual customization
 
-The theme is defined in `src/style.css`. Components use `app-*` utilities; avoid applying `primary-*` or `secondary-*` directly in templates.
+The theme is defined in `src/style.css`. Components consume semantic `app-*` utilities; application colors belong in the `:root` tokens instead of palette-specific Tailwind classes in templates.
 
 ### Fonts
 
@@ -455,37 +455,47 @@ The theme is defined in `src/style.css`. Components use `app-*` utilities; avoid
 
 To change fonts, replace or add files in `public/fonts/` and update the `@font-face` rules and variables in `style.css`.
 
-### Colors
+### Semantic tokens
 
-The `@theme` block maps two scales:
+The `@theme` block defines the font stacks. Colors, opacities, and transition durations are semantic custom properties in `:root`; their defaults reference Tailwind's neutral palette but may be replaced with any valid CSS color.
 
-- `primary-*`: neutral, used for backgrounds, text, and borders;
-- `secondary-*`: emerald, used for highlights and interactions.
+| Group       | Tokens                                                                                                                                                                         |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Backgrounds | `--background`, `--background-hover`, `--background-emphasis`, `--header-background`, `--header-background-opacity`, `--footer-background`, `--backdrop`, `--backdrop-opacity` |
+| Text        | `--text`, `--text-body`, `--text-muted`, `--emphasis`, `--emphasis-hover`, `--error`                                                                                           |
+| UI          | `--border`, `--ring`, `--skeleton`                                                                                                                                             |
+| Carousel    | `--dot`, `--dot-inactive`, `--dot-active`, `--progress-track`, `--progress`                                                                                                    |
+| Motion      | `--duration`, `--duration-carousel`                                                                                                                                            |
 
 Example customization:
 
 ```css
-@theme {
-  --color-primary-800: #1f2937;
-  --color-primary-950: #030712;
-  --color-secondary-500: #f97316;
+:root {
+  --background: #1f2937;
+  --footer-background: #030712;
+  --emphasis: #f97316;
+  --emphasis-hover: #fdba74;
+  --duration: 250ms;
+  --duration-carousel: 450ms;
 }
 ```
+
+`app-background-hover` and `app-text-emphasis-hover` provide their semantic values but do not add the hover state themselves. Compose them with `hover:` when using them as primitive utilities; higher-level utilities such as `app-title` already include their hover behavior.
 
 ### Main utilities
 
 | Group          | Utilities                                                                                                                                                                                   |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Backgrounds    | `app-background`, `app-background-hover`, `app-background-footer`, `app-header`, `app-backdrop`                                                                                             |
-| Text           | `app-text`, `app-text-dark`, `app-text-muted`, `app-text-body`, `app-text-subtle`, `app-text-accent`, `app-text-accent-hover`, `app-error`, `app-markdown`                                  |
-| Brand          | `app-title`, `app-title-adjustment`, `app-logo`                                                                                                                                             |
+| Backgrounds    | `app-background`, `app-background-hover`, `app-header`, `app-backdrop`, `app-footer`                                                                                                        |
+| Text           | `app-text`, `app-text-muted`, `app-text-body`, `app-text-subtle`, `app-text-emphasis`, `app-text-emphasis-hover`, `app-error`, `app-markdown`                                               |
+| Brand          | `app-title`, `app-title-adjustment`, `app-logo`, `app-powered`                                                                                                                              |
 | Header/sidebar | `app-header-link`, `app-sidebar`, `app-sidebar-link`                                                                                                                                        |
 | Languages      | `app-language-button`, `app-language-button-text`, `app-language-button-selected`                                                                                                           |
-| Sections       | `app-section-title`, `app-section-subtitle`, `app-section-image`, `app-section-destak`                                                                                                      |
+| Sections       | `app-section-title`, `app-section-subtitle`, `app-section-image`, `app-section-emphasis`                                                                                                    |
 | Carousel       | `app-section-carousel-transition`, `app-section-carousel-btn`, `app-section-carousel-progress-track`, `app-section-carousel-progress`, `app-section-dot-active`, `app-section-dot-inactive` |
-| General        | `app-duration`, `app-border`, `app-ring`, `app-skeleton`, `app-footer`, `app-powered`                                                                                                       |
+| General        | `app-duration`, `app-border`, `app-ring`, `app-skeleton`                                                                                                                                    |
 
-Change the scales and fonts for simple customizations. Structural changes to utilities may affect multiple components and should be tested on mobile and desktop.
+Change the semantic tokens and fonts for simple customizations. Structural changes to utilities may affect multiple components and should be tested on mobile and desktop.
 
 ## Build and deployment
 

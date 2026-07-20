@@ -95,7 +95,7 @@ taberna/
 │   ├── main.ts                # Entry point — mounts Vue on #app + router
 │   ├── App.vue                # Root — layout (header/sidebar/footer) + router-view + footer Markdown
 │   ├── env.d.ts               # Types for .vue files
-│   ├── style.css              # Tailwind v4 + @font-face + custom @theme + typography plugin
+│   ├── style.css              # Tailwind v4 + fonts + semantic theme tokens/utilities + typography plugin
 │   ├── components/
 │   │   ├── section-carousel.vue      # Accessible carousel with autoplay, buttons, and dots
 │   │   └── section-carousel.test.ts  # Configuration and reduced-motion tests
@@ -125,12 +125,36 @@ taberna/
 
 ## Theme System (style.css)
 
-Color palette mapped through `@theme` in Tailwind v4:
+`@theme` defines only the custom font stacks. Application colors, opacity, and transition durations are centralized as semantic custom properties in `:root`; components consume them through `app-*` utilities instead of depending on palette-specific Tailwind classes.
 
-| Token         | Scale           | Actual usage in the code                                                                                                                                                                                                                                                                                                                                                                             |
-| ------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `primary-*`   | neutral-50..950 | `app-background` (800), `app-background-hover` (700), `app-background-footer` (950), `app-header` (900/95), `app-text` (100), `app-text-muted` (200), `app-text-body` (300), `app-text-dark`/`app-text-subtle` (400), `app-border` (700), `app-skeleton` (700), `app-backdrop` (900/80), `app-section-destak` (700), carousel controls (600–800) |
-| `secondary-*` | emerald-50..950 | `app-text-accent` (500), `app-text-accent-hover` (400), `app-ring` (400), `app-section-carousel-progress` (400), and active carousel dots (400)                                                                                                                                                                                            |
+Current semantic tokens:
+
+| Token                         | Default value | Purpose                                      |
+| ----------------------------- | ------------- | -------------------------------------------- |
+| `--background`                | `neutral-800` | Main application and sidebar background      |
+| `--background-hover`          | `neutral-700` | Interactive background on hover              |
+| `--background-emphasis`       | `neutral-700` | Emphasized section background                |
+| `--footer-background`         | `neutral-950` | Footer background                            |
+| `--header-background`         | `neutral-950` | Header background base                       |
+| `--header-background-opacity` | `85%`         | Header background opacity                    |
+| `--backdrop`                  | `neutral-900` | Offcanvas backdrop and Markdown code blocks  |
+| `--backdrop-opacity`          | `80%`         | Offcanvas backdrop opacity                   |
+| `--text`                      | `neutral-100` | Main/high-contrast text                      |
+| `--text-body`                 | `neutral-300` | Body and Markdown text                       |
+| `--text-muted`                | `neutral-400` | Muted/subtle text                            |
+| `--emphasis`                  | `neutral-500` | Emphasized text, links, titles, and controls |
+| `--emphasis-hover`            | `neutral-300` | Emphasized hover state                       |
+| `--error`                     | `neutral-400` | Error text                                   |
+| `--border`                    | `neutral-700` | Borders and Markdown separators              |
+| `--ring`                      | `neutral-400` | Selected-language ring                       |
+| `--skeleton`                  | `neutral-700` | Skeleton loading blocks                      |
+| `--dot`                       | `neutral-600` | Inactive carousel dots                       |
+| `--dot-inactive`              | `neutral-500` | Inactive carousel dot hover                  |
+| `--dot-active`                | `neutral-400` | Active carousel dot                          |
+| `--progress-track`            | `neutral-600` | Carousel progress-ring track                 |
+| `--progress`                  | `neutral-400` | Carousel progress-ring indicator             |
+| `--duration`                  | `300ms`       | Standard application transitions             |
+| `--duration-carousel`         | `500ms`       | Carousel slide/fade transitions              |
 
 Custom font stacks:
 
@@ -141,45 +165,43 @@ Custom font stacks:
 
 Custom utilities:
 
-- `app-duration` → `duration-300`
-- `app-background` → `bg-primary-800`
-- `app-background-hover` → `bg-primary-700`
-- `app-background-footer` → `bg-primary-950`
-- `app-text` → `text-primary-100`
-- `app-text-dark` → `text-primary-400`
-- `app-text-muted` → `text-primary-200`
-- `app-text-body` → `text-primary-300`
-- `app-text-subtle` → `text-primary-400`
-- `app-text-accent` → `text-secondary-500`
-- `app-text-accent-hover` → `hover:text-secondary-400`
-- `app-ring` → `ring-secondary-400`
-- `app-border` → `border-primary-700`
-- `app-error` → `app-text-accent`
-- `app-skeleton` → `bg-primary-700`
-- `app-backdrop` → `bg-primary-900/80`
-- `app-powered` → accent-colored project credit link
-- `app-markdown` → inverted Tailwind Typography color variables used by Markdown content
-- `app-title` → `font-fancy app-text-accent app-text-accent-hover`
-- `app-title-adjustment` → `mt-2 leading-[0] text-3xl md:text-5xl`
+- `app-duration` → transition duration from `--duration`
+- `app-background` → background from `--background`
+- `app-background-hover` → background from `--background-hover`; apply it with `hover:` when hover-only behavior is required
+- `app-text` → color from `--text`
+- `app-text-muted` / `app-text-subtle` → color from `--text-muted`
+- `app-text-body` → color from `--text-body`
+- `app-text-emphasis` → color from `--emphasis`
+- `app-text-emphasis-hover` → color from `--emphasis-hover`; apply it with `hover:` when hover-only behavior is required
+- `app-ring` → ring color from `--ring`
+- `app-border` → border color from `--border`
+- `app-error` → color from `--error`
+- `app-skeleton` → background from `--skeleton`
+- `app-backdrop` → `--backdrop` mixed with transparency using `--backdrop-opacity`
+- `app-powered` → emphasized project credit link with the emphasized hover color
+- `app-markdown` → inverted Tailwind Typography variables mapped to the semantic tokens, including emphasized links with a hover transition
+- Markdown containers use `max-w-none` so rendered content can occupy the full width of its section or carousel slide
+- `app-title` → fancy font, emphasized color, emphasized hover color, and `--duration`
+- `app-title-adjustment` → `mt-2 text-3xl md:text-5xl` with zero line height
 - `app-section-image` → `w-full rounded-lg object-cover md:w-1/2`
-- `app-logo` → `h-8 min-h-5 w-8 min-w-5 md:h-12 md:w-12`
-- `app-header` → `bg-primary-900/95`
-- `app-header-link` → `app-text hover:app-text-accent`
+- `app-logo` → `h-8 min-h-5 w-8 min-w-5 md:h-12 md:w-12` with `--duration`
+- `app-header` → `--header-background` mixed with transparency using `--header-background-opacity`
+- `app-header-link` → main text, emphasized hover color, and `--duration`
 - `app-sidebar` → `app-background app-text`
-- `app-sidebar-link` → `app-text app-background-hover hover:app-text-accent`
-- `app-footer` → `app-border app-background-footer app-text-subtle`
-- `app-language-button` → `app-background app-background-hover app-border`
+- `app-sidebar-link` → main text with background and text emphasis on hover
+- `app-footer` → semantic border, footer background, and subtle text
+- `app-language-button` → application background, hover background, and semantic border
 - `app-language-button-text` → `app-text-body`
 - `app-language-button-selected` → `app-ring`
 - `app-section-title` → `app-text`
-- `app-section-subtitle` → `app-text-dark`
-- `app-section-destak` → `bg-primary-700`
-- `app-section-carousel-transition` → `duration-500`
-- `app-section-carousel-btn` → `app-text-muted hover:app-text-accent bg-primary-800/80`
-- `app-section-carousel-progress-track` → `stroke-primary-600`
-- `app-section-carousel-progress` → `stroke-secondary-400`
-- `app-section-dot-active` → `bg-secondary-400`
-- `app-section-dot-inactive` → `bg-primary-600 hover:bg-primary-500`
+- `app-section-subtitle` → `app-text-subtle`
+- `app-section-emphasis` → background from `--background-emphasis`
+- `app-section-carousel-transition` → transition duration from `--duration-carousel`
+- `app-section-carousel-btn` → muted text with emphasized text on hover
+- `app-section-carousel-progress-track` → stroke from `--progress-track`
+- `app-section-carousel-progress` → stroke from `--progress`
+- `app-section-dot-active` → background from `--dot-active`
+- `app-section-dot-inactive` → background from `--dot`, changing to `--dot-inactive` only on devices that support hover
 
 ### Footer Custom Styles
 
@@ -194,7 +216,7 @@ The custom footer content uses a dedicated class hierarchy in `style.css`:
 - `.footer-links`: link columns, horizontally centered within their grid tracks from the `md` breakpoint
 - `.footer-links > h4`: link-column headings
 - `.footer-links > ul`: vertical lists without markers or default spacing
-- `.footer-links a`: underlined links with a duration transition and accent color on hover
+- `.footer-links a`: underlined links with `--duration` and the emphasized color on hover
 
 The child combinators (`>`) require the footer Markdown files to preserve the documented direct-child hierarchy.
 
@@ -303,7 +325,7 @@ Composable that orchestrates language switching: validation + `loadConfig` + `se
 - Tailwind CSS v4 through `@import 'tailwindcss'` (CSS-first config, no tailwind.config.js)
 - Lowercase hyphenated component names: `section-carousel.vue`
 - Scoped styles (App.vue uses `@reference` to access the theme from style.css)
-- Always use custom utilities (`app-*`) in components. Never use theme colors (`primary-*`, `secondary-*`) directly in templates—except in `style.css`, where the utilities are defined
+- Always use custom utilities (`app-*`) for application colors in components. Never use Tailwind palette color classes directly in templates; semantic color values belong in the `:root` tokens in `style.css`
 - Do not add code comments unless requested
 - Site content belongs in JSON (`public/config/`) and Markdown (`public/content/`) files
 - **ALWAYS update this file (AGENTS.md) after any significant code change**
@@ -478,14 +500,14 @@ Fields of the `site` object in the config JSON:
 | `description` | `string` | Yes      | Updates `<meta name="description">` when the config is loaded |
 | `image`       | `string` | No       | URL of the site image (displayed next to the title)           |
 
-### Section Highlight (`destak`)
+### Section Emphasis (`emphasis`)
 
-The section's optional boolean `destak` field applies a different background using the `primary` (neutral) scale:
+The section's optional boolean `emphasis` field applies the semantic emphasized background:
 
-- When `true`: applies `app-section-destak` for `bg-primary-700`, plus the component-level `-mx-6 px-6 py-8` layout classes
+- When `true`: applies `app-section-emphasis`, which uses `--background-emphasis`, plus the component-level `-mx-6 px-6 py-8` layout classes
 - `-mx-6` breaks out of the container margin to "stretch" the background
 - Available on the `Section` interface in `src/types/config.ts`
-- To use it: add `"destak": true` to the desired section's JSON
+- To use it: add `"emphasis": true` to the desired section's JSON
 
 ### Section Carousel
 
@@ -539,14 +561,14 @@ All fields are optional. Usage example:
 **`itemsPerView: 1`** (default):
 
 - 1 slide visible at a time
-- Transition: fade using `opacity` and `duration-500`
+- Transition: fade using `opacity` and `app-section-carousel-transition` (`--duration-carousel`, 500ms by default)
 - Circular navigation (returns to the beginning after reaching the end)
 - Dots = number of slides
 
 **`itemsPerView: N`** (N > 1):
 
 - N slides visible side by side
-- Transition: horizontal slide using `translateX` and `duration-500`
+- Transition: horizontal slide using `translateX` and `app-section-carousel-transition` (`--duration-carousel`, 500ms by default)
 - Each slide occupies `100% / N` of the available space
 - Page-based navigation (advances/returns N items per click)
 - Dots = `ceil(slides.length / N)` (available positions)
@@ -607,8 +629,8 @@ The header and sidebar adapt to the content:
 
 The site title (image + text) is an `<a href="/">` link with:
 
-- **`app-title`** on the link container — fancy font, accent color, and lighter accent color on hover
-- **`app-title-adjustment`** on the `<h1>`/`<h2>` — `mt-2 leading-[0] text-3xl md:text-5xl` to size and align the title
+- **`app-title`** on the link container — fancy font, emphasized color, lighter emphasized color on hover, and the semantic transition duration
+- **`app-title-adjustment`** on the `<h1>`/`<h2>` — `mt-2 text-3xl md:text-5xl` with zero line height to size and align the title
 - **`app-duration`** — smooth transition (0.3s) on hover
 - **Sidebar**: Same approach, using `app-title app-duration` plus `@click="closeMenu"` to close the menu when clicked
 - **Optional**: The `title` field in the config is optional—if absent, `<h1>`/`<h2>` are not rendered (allows using only an image)
@@ -695,26 +717,14 @@ The `contentFile` field in the `footer` config allows loading Markdown content i
 - **Example footer.md content**:
   ```html
   <div class="footer">
-  <div class="footer-container">
-  <div class="footer-brand">
-  <img src="logo.png" alt="Taberna" class="footer-logo" />
-  <span class="footer-title">Taberna</span>
-  </div>
-  <span class="footer-summary">Description</span>
-  </div>
-  <div class="footer-links">
-
-  #### Quick Links
-
-  - [Home](/)
-
-  </div>
-  <div class="footer-links">
-
-  #### Social
-
-  - [GitHub](https://github.com/)
-
-  </div>
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Taberna" class="footer-logo" />
+        <span class="footer-title">Taberna</span>
+      </div>
+      <span class="footer-summary">Description</span>
+    </div>
+    <div class="footer-links">#### Quick Links - [Home](/)</div>
+    <div class="footer-links">#### Social - [GitHub](https://github.com/)</div>
   </div>
   ```

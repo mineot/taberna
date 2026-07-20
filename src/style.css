@@ -70,146 +70,162 @@
     'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
   --font-fancy: 'Italianno', cursive;
+}
 
-  --color-primary-50: var(--color-neutral-50);
-  --color-primary-100: var(--color-neutral-100);
-  --color-primary-200: var(--color-neutral-200);
-  --color-primary-300: var(--color-neutral-300);
-  --color-primary-400: var(--color-neutral-400);
-  --color-primary-500: var(--color-neutral-500);
-  --color-primary-600: var(--color-neutral-600);
-  --color-primary-700: var(--color-neutral-700);
-  --color-primary-800: var(--color-neutral-800);
-  --color-primary-900: var(--color-neutral-900);
-  --color-primary-950: var(--color-neutral-950);
-
-  --color-secondary-50: var(--color-emerald-50);
-  --color-secondary-100: var(--color-emerald-100);
-  --color-secondary-200: var(--color-emerald-200);
-  --color-secondary-300: var(--color-emerald-300);
-  --color-secondary-400: var(--color-emerald-400);
-  --color-secondary-500: var(--color-emerald-500);
-  --color-secondary-600: var(--color-emerald-600);
-  --color-secondary-700: var(--color-emerald-700);
-  --color-secondary-800: var(--color-emerald-800);
-  --color-secondary-900: var(--color-emerald-900);
-  --color-secondary-950: var(--color-emerald-950);
+:root {
+  --backdrop-opacity: 80%;
+  --backdrop: var(--color-neutral-900);
+  --background-emphasis: var(--color-neutral-700);
+  --background-hover: var(--color-neutral-700);
+  --background: var(--color-neutral-800);
+  --border: var(--color-neutral-700);
+  --dot-active: var(--color-emerald-400);
+  --dot-inactive: var(--color-neutral-500);
+  --dot: var(--color-neutral-600);
+  --duration-carousel: 500ms;
+  --duration: 300ms;
+  --emphasis-hover: var(--color-emerald-300);
+  --emphasis: var(--color-emerald-500);
+  --error: var(--color-emerald-400);
+  --footer-background: var(--color-neutral-950);
+  --header-background-opacity: 85%;
+  --header-background: var(--color-neutral-950);
+  --progress-track: var(--color-emerald-600);
+  --progress: var(--color-emerald-400);
+  --ring: var(--color-emerald-400);
+  --skeleton: var(--color-neutral-700);
+  --text-body: var(--color-neutral-300);
+  --text-muted: var(--color-neutral-400);
+  --text: var(--color-neutral-100);
 }
 
 /* APP COLORS */
 
 @utility app-duration {
-  @apply duration-300;
+  --tw-duration: var(--duration);
+  transition-duration: var(--duration);
 }
 
 @utility app-background {
-  @apply bg-primary-800;
+  background-color: var(--background);
 }
 
 @utility app-background-hover {
-  @apply hover:bg-primary-700;
-}
-
-@utility app-background-footer {
-  @apply bg-primary-950;
+  background-color: var(--background-hover);
 }
 
 @utility app-text {
-  @apply text-primary-100;
-}
-
-@utility app-text-dark {
-  @apply text-primary-400;
+  color: var(--text);
 }
 
 @utility app-text-muted {
-  @apply text-primary-200;
+  color: var(--text-muted);
 }
 
 @utility app-text-body {
-  @apply text-primary-300;
+  color: var(--text-body);
 }
 
 @utility app-text-subtle {
-  @apply text-primary-400;
+  color: var(--text-muted);
 }
 
-@utility app-text-accent {
-  @apply text-secondary-500;
+@utility app-text-emphasis {
+  color: var(--emphasis);
 }
 
-@utility app-text-accent-hover {
-  @apply hover:text-secondary-400;
+@utility app-text-emphasis-hover {
+  color: var(--emphasis-hover);
 }
 
 @utility app-ring {
-  @apply ring-secondary-400;
+  --tw-ring-color: var(--ring);
 }
 
 @utility app-border {
-  @apply border-primary-700;
+  border-color: var(--border);
 }
 
 @utility app-error {
-  @apply app-text-accent;
+  color: var(--error);
 }
 
 @utility app-skeleton {
-  @apply bg-primary-700;
+  background-color: var(--skeleton);
 }
 
 @utility app-backdrop {
-  @apply bg-primary-900/80;
+  background-color: color-mix(
+    in oklab,
+    var(--backdrop) var(--backdrop-opacity),
+    transparent
+  );
 }
 
 @utility app-powered {
-  @apply app-text-accent hover:app-text-accent-hover;
-}
-
-@utility app-markdown {
-  --tw-prose-invert-body: var(--color-primary-300);
-  --tw-prose-invert-headings: var(--color-red-100);
-  --tw-prose-invert-lead: var(--color-primary-300);
-  --tw-prose-invert-links: var(--color-secondary-400);
-  --tw-prose-invert-bold: var(--color-primary-100);
-  --tw-prose-invert-counters: var(--color-primary-400);
-  --tw-prose-invert-bullets: var(--color-secondary-500);
-  --tw-prose-invert-hr: var(--color-primary-700);
-  --tw-prose-invert-quotes: var(--color-primary-200);
-  --tw-prose-invert-quote-borders: var(--color-secondary-500);
-  --tw-prose-invert-captions: var(--color-primary-400);
-  --tw-prose-invert-kbd: var(--color-primary-100);
-  --tw-prose-invert-code: var(--color-secondary-400);
-  --tw-prose-invert-pre-code: var(--color-primary-200);
-  --tw-prose-invert-pre-bg: var(--color-primary-900);
-  --tw-prose-invert-th-borders: var(--color-primary-600);
-  --tw-prose-invert-td-borders: var(--color-primary-700);
+  @apply app-text-emphasis hover:app-text-emphasis-hover;
 }
 
 /* APP CUSTOMS */
 
+@utility app-markdown {
+  --tw-prose-invert-body: var(--text-body);
+  --tw-prose-invert-headings: var(--text);
+  --tw-prose-invert-lead: var(--text-body);
+  --tw-prose-invert-links: var(--emphasis);
+  --tw-prose-invert-bold: var(--text);
+  --tw-prose-invert-counters: var(--text-muted);
+  --tw-prose-invert-bullets: var(--emphasis);
+  --tw-prose-invert-hr: var(--border);
+  --tw-prose-invert-quotes: var(--text-muted);
+  --tw-prose-invert-quote-borders: var(--emphasis);
+  --tw-prose-invert-captions: var(--text-muted);
+  --tw-prose-invert-kbd: var(--text);
+  --tw-prose-invert-code: var(--emphasis);
+  --tw-prose-invert-pre-code: var(--text-muted);
+  --tw-prose-invert-pre-bg: var(--backdrop);
+  --tw-prose-invert-th-borders: var(--border);
+  --tw-prose-invert-td-borders: var(--border);
+
+  & a {
+    transition-duration: var(--duration);
+  }
+
+  & a:hover {
+    color: var(--emphasis-hover);
+  }
+}
+
 @utility app-title {
   @apply font-fancy;
-  @apply app-text-accent app-text-accent-hover;
+  @apply app-text-emphasis hover:app-text-emphasis-hover;
+  @apply app-duration;
 }
 
 @utility app-title-adjustment {
-  @apply mt-2 leading-[0];
+  @apply mt-2;
   @apply text-3xl md:text-5xl;
+  --tw-leading: 0;
+  line-height: 0;
 }
 
 @utility app-logo {
-  @apply h-8 min-h-5;
-  @apply w-8 min-w-5;
-  @apply md:h-12 md:w-12;
+  @apply h-8 min-h-5 md:h-12;
+  @apply w-8 min-w-5 md:w-12;
+  @apply app-duration;
 }
 
 @utility app-header {
-  @apply bg-primary-900/95;
+  background-color: color-mix(
+    in oklab,
+    var(--header-background) var(--header-background-opacity),
+    transparent
+  );
 }
 
 @utility app-header-link {
-  @apply app-text hover:app-text-accent;
+  @apply app-text hover:app-text-emphasis;
+  @apply app-duration;
 }
 
 @utility app-sidebar {
@@ -217,17 +233,18 @@
 }
 
 @utility app-sidebar-link {
-  @apply app-text app-background-hover hover:app-text-accent;
+  @apply app-text hover:app-background-hover hover:app-text-emphasis;
 }
 
 @utility app-footer {
-  @apply app-border app-background-footer app-text-subtle;
+  @apply app-border app-text-subtle;
+  background-color: var(--footer-background);
 }
 
 /* LANGUAGE */
 
 @utility app-language-button {
-  @apply app-background app-background-hover;
+  @apply app-background hover:app-background-hover;
   @apply app-border;
 }
 
@@ -246,11 +263,11 @@
 }
 
 @utility app-section-subtitle {
-  @apply app-text-dark;
+  @apply app-text-subtle;
 }
 
-@utility app-section-destak {
-  @apply bg-primary-700;
+@utility app-section-emphasis {
+  background-color: var(--background-emphasis);
 }
 
 @utility app-section-image {
@@ -258,27 +275,34 @@
 }
 
 @utility app-section-carousel-transition {
-  @apply duration-500;
+  --tw-duration: var(--duration-carousel);
+  transition-duration: var(--duration-carousel);
 }
 
 @utility app-section-carousel-btn {
-  @apply app-text-muted hover:app-text-accent bg-primary-800/80;
+  @apply app-text-muted hover:app-text-emphasis;
 }
 
 @utility app-section-carousel-progress-track {
-  @apply stroke-primary-600;
+  stroke: var(--progress-track);
 }
 
 @utility app-section-carousel-progress {
-  @apply stroke-secondary-400;
+  stroke: var(--progress);
 }
 
 @utility app-section-dot-active {
-  @apply bg-secondary-400;
+  background-color: var(--dot-active);
 }
 
 @utility app-section-dot-inactive {
-  @apply bg-primary-600 hover:bg-primary-500;
+  background-color: var(--dot);
+
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--dot-inactive);
+    }
+  }
 }
 
 /* FOOTER CUSTOMS */
@@ -318,7 +342,7 @@
     }
 
     a {
-      @apply app-text-subtle app-text-accent-hover;
+      @apply app-text-subtle hover:app-text-emphasis-hover;
       @apply app-duration underline transition-colors;
     }
   }

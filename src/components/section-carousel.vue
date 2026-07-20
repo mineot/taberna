@@ -16,7 +16,7 @@
         aria-label="Previous slide"
         @click="prev"
       >
-        <ChevronLeft :size="20" />
+        <ChevronLeft :size="30" />
       </button>
 
       <div class="min-h-[120px] flex-1 overflow-hidden">
@@ -51,7 +51,10 @@
               class="min-w-0 flex-shrink-0 overflow-hidden px-2"
               :style="{ width: slideWidth }"
             >
-              <div class="prose prose-invert app-markdown" v-html="html" />
+              <div
+                class="prose prose-invert app-markdown max-w-none"
+                v-html="html"
+              />
             </div>
           </div>
         </template>
@@ -63,7 +66,7 @@
         aria-label="Next slide"
         @click="next"
       >
-        <ChevronRight :size="20" />
+        <ChevronRight :size="30" />
       </button>
     </div>
 

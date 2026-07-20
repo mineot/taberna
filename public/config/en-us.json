@@ -24,7 +24,7 @@
       "content": ["Fictitious content in plain text for this section."],
       "image": "https://placehold.co/600x400",
       "contentPosition": "top",
-      "destak": true
+      "emphasis": true
     },
     {
       "id": "services",
@@ -36,7 +36,7 @@
       "id": "testimonials",
       "title": "Testimonials",
       "subtitle": "What our clients say",
-      "destak": true,
+      "emphasis": true,
       "contentFiles": [
         "testimonials/testimonial-1.md",
         "testimonials/testimonial-2.md",

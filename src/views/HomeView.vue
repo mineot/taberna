@@ -10,7 +10,7 @@
       'gap-4',
       'md:gap-8',
       {
-        'app-section-destak -mx-6 px-6 py-8': section.destak,
+        'app-section-emphasis -mx-6 px-6 py-8': section.emphasis,
         'md:flex-row-reverse': section.invert,
         'md:items-start':
           (section.contentPosition ?? section.imagePosition) === 'top',
@@ -48,7 +48,7 @@
         class="section-content"
       >
         <div
-          class="prose prose-invert app-markdown w-full"
+          class="prose prose-invert app-markdown w-full max-w-none"
           v-html="markdownContent.get(section.id)![0]"
         />
       </div>
@@ -75,7 +75,7 @@
         <div
           v-for="(html, i) in markdownContent.get(section.id)"
           :key="i"
-          class="prose prose-invert app-markdown min-w-0 basis-full overflow-hidden md:basis-[calc(50%-0.75rem)]"
+          class="prose prose-invert app-markdown max-w-none min-w-0 basis-full overflow-hidden md:basis-[calc(50%-0.75rem)]"
           v-html="html"
         />
       </div>

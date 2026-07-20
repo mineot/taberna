@@ -31,15 +31,12 @@
     >
       <div class="container flex items-center justify-between py-4">
         <div class="flex items-center gap-3">
-          <router-link
-            to="/"
-            class="app-title app-duration flex items-center gap-3"
-          >
+          <router-link to="/" class="app-title flex items-center gap-3">
             <img
               v-if="config?.site.image"
               :src="config.site.image"
               :alt="config.site.title"
-              class="app-logo app-duration"
+              class="app-logo"
             />
             <h1
               v-if="config?.site.title"
@@ -59,14 +56,14 @@
               <router-link
                 v-if="item.route"
                 :to="item.route"
-                class="app-header-link app-duration transition-colors"
+                class="app-header-link transition-colors"
               >
                 {{ item.label }}
               </router-link>
               <router-link
                 v-else-if="item.href?.startsWith('#')"
                 :to="'/' + item.href"
-                class="app-header-link app-duration transition-colors"
+                class="app-header-link transition-colors"
               >
                 {{ item.label }}
               </router-link>
@@ -75,7 +72,7 @@
                 :href="item.href"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="app-header-link app-duration transition-colors"
+                class="app-header-link transition-colors"
               >
                 {{ item.label }}
               </a>
@@ -91,7 +88,7 @@
           </div>
           <button
             v-if="hasHamburger"
-            class="app-header-link app-duration cursor-pointer transition-colors"
+            class="app-header-link cursor-pointer transition-colors"
             :class="hasTooManyMenuItems ? '' : 'md:hidden'"
             aria-label="Menu"
             :aria-expanded="menuOpen"
@@ -126,7 +123,7 @@
           >
             <router-link
               to="/"
-              class="app-title app-duration flex items-center gap-3"
+              class="app-title flex items-center gap-3"
               @click="closeMenu"
             >
               <img
@@ -144,7 +141,7 @@
             </router-link>
             <button
               ref="closeMenuButton"
-              class="app-icon-btn app-header-link app-duration cursor-pointer transition-colors"
+              class="app-icon-btn app-header-link cursor-pointer transition-colors"
               aria-label="Close menu"
               @click="closeMenu"
             >
@@ -388,7 +385,7 @@ onBeforeUnmount(() => {
 }
 
 .app-footer-content :deep(a:hover) {
-  @apply app-text-accent;
+  @apply app-text-emphasis;
 }
 
 .backdrop-enter-active,

@@ -31,7 +31,7 @@ export interface Section {
   imagePosition?: VerticalPosition;
   contentPosition?: VerticalPosition;
   invert?: boolean;
-  destak?: boolean;
+  emphasis?: boolean;
   carousel?: CarouselConfig;
 }
 

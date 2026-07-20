@@ -14,7 +14,7 @@ O projeto ainda usa conteúdo fictício. Antes de publicar, substitua os arquivo
 - Carrossel responsivo com reprodução automática, pausa, progresso, setas e indicadores
 - Menu lateral responsivo com navegação por teclado e foco confinado
 - Rodapé opcional carregado de Markdown
-- Tema centralizado em utilitários CSS `app-*`
+- Tema semântico centralizado por tokens em `:root` e utilitários CSS `app-*`
 - Sanitização de HTML e restrições da Política de Segurança de Conteúdo (CSP)
 - Compilação estática compatível com hospedagem na raiz ou em subdiretórios
 
@@ -111,7 +111,7 @@ taberna/
 ├── src/
 │   ├── App.vue                 # Disposição, cabeçalho, menu lateral e rodapé
 │   ├── main.ts                 # Inicialização do Vue e do roteador
-│   ├── style.css               # Tailwind, fontes, tema, utilitários e estilos personalizados do rodapé
+│   ├── style.css               # Tailwind, fontes, tokens/utilitários semânticos e estilos personalizados do rodapé
 │   ├── components/             # Componentes reutilizáveis e testes
 │   ├── composables/            # Idioma, configuração, Markdown e troca de idioma
 │   ├── router/                 # Definição das rotas
@@ -227,7 +227,7 @@ Cada item de `sections` aceita:
 | `imagePosition`   | `top`, `center`, `bottom` | Não         | Corte da imagem e alternativa para o alinhamento flex   |
 | `contentPosition` | `top`, `center`, `bottom` | Não         | Alinhamento flex; tem precedência sobre `imagePosition` |
 | `invert`          | boolean                   | Não         | Inverte conteúdo e imagem em telas grandes              |
-| `destak`          | boolean                   | Não         | Aplica fundo de destaque                                |
+| `emphasis`        | boolean                   | Não         | Aplica o fundo semântico de destaque                    |
 | `carousel`        | objeto                    | Não         | Configura o carrossel para múltiplos arquivos           |
 
 ### Precedência de conteúdo
@@ -250,7 +250,7 @@ Cada item de `sections` aceita:
   "imagePosition": "top",
   "contentPosition": "center",
   "invert": false,
-  "destak": true
+  "emphasis": true
 }
 ```
 
@@ -311,7 +311,7 @@ O carrossel é ativado em uma seção com dois ou mais `contentFiles`:
 | `dots`         | boolean | `true` | Exibe um indicador por página                             |
 | `itemsPerView` | number  | `1`    | Inteiro, mínimo 1 e limitado à quantidade de diapositivos |
 
-Com um item por vez, a transição usa esmaecimento. Com vários itens, usa deslocamento horizontal e navegação por página. A navegação é circular nos dois modos.
+Com um item por vez, a transição usa esmaecimento. Com vários itens, usa deslocamento horizontal e navegação por página. Ambas usam `app-section-carousel-transition`, cuja duração vem de `--duration-carousel` (500 ms por padrão). A navegação é circular nos dois modos.
 
 Em telas menores que 768 px, `itemsPerView` é sempre 1. Com somente uma página, setas, indicadores e controle de reprodução são ocultados.
 
@@ -444,7 +444,7 @@ A política está definida em um elemento `<meta>`. Para uma política de produ�
 
 ## Personalização visual
 
-O tema fica em `src/style.css`. Os componentes usam utilitários `app-*`; evite aplicar `primary-*` ou `secondary-*` diretamente nos blocos `<template>`.
+O tema fica em `src/style.css`. Os componentes consomem utilitários semânticos `app-*`; as cores da aplicação pertencem aos tokens de `:root`, em vez de classes de paleta do Tailwind nos blocos `<template>`.
 
 ### Fontes
 
@@ -457,37 +457,47 @@ O tema fica em `src/style.css`. Os componentes usam utilitários `app-*`; evite 
 
 Para trocar fontes, substitua ou adicione arquivos em `public/fonts/` e atualize os `@font-face` e variáveis em `style.css`.
 
-### Cores
+### Tokens semânticos
 
-O bloco `@theme` mapeia duas escalas:
+O bloco `@theme` define as pilhas de fontes. Cores, opacidades e durações de transição são propriedades personalizadas semânticas em `:root`; os valores padrão referenciam a paleta neutral do Tailwind, mas podem ser substituídos por qualquer cor CSS válida.
 
-- `primary-*`: neutral, usada em fundos, textos e bordas;
-- `secondary-*`: emerald, usada em destaques e interações.
+| Grupo     | Tokens                                                                                                                                                                         |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Fundos    | `--background`, `--background-hover`, `--background-emphasis`, `--header-background`, `--header-background-opacity`, `--footer-background`, `--backdrop`, `--backdrop-opacity` |
+| Texto     | `--text`, `--text-body`, `--text-muted`, `--emphasis`, `--emphasis-hover`, `--error`                                                                                           |
+| UI        | `--border`, `--ring`, `--skeleton`                                                                                                                                             |
+| Carrossel | `--dot`, `--dot-inactive`, `--dot-active`, `--progress-track`, `--progress`                                                                                                    |
+| Movimento | `--duration`, `--duration-carousel`                                                                                                                                            |
 
 Exemplo de alteração:
 
 ```css
-@theme {
-  --color-primary-800: #1f2937;
-  --color-primary-950: #030712;
-  --color-secondary-500: #f97316;
+:root {
+  --background: #1f2937;
+  --footer-background: #030712;
+  --emphasis: #f97316;
+  --emphasis-hover: #fdba74;
+  --duration: 250ms;
+  --duration-carousel: 450ms;
 }
 ```
+
+`app-background-hover` e `app-text-emphasis-hover` fornecem os valores semânticos, mas não adicionam o estado de hover por conta própria. Combine-os com `hover:` ao usá-los como utilitários primitivos; utilitários de nível mais alto, como `app-title`, já incluem o comportamento de hover.
 
 ### Principais utilitários
 
 | Grupo                  | Utilitários                                                                                                                                                                                 |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Fundos                 | `app-background`, `app-background-hover`, `app-background-footer`, `app-header`, `app-backdrop`                                                                                             |
-| Texto                  | `app-text`, `app-text-dark`, `app-text-muted`, `app-text-body`, `app-text-subtle`, `app-text-accent`, `app-text-accent-hover`, `app-error`, `app-markdown`                                  |
-| Marca                  | `app-title`, `app-title-adjustment`, `app-logo`                                                                                                                                             |
+| Fundos                 | `app-background`, `app-background-hover`, `app-header`, `app-backdrop`, `app-footer`                                                                                                        |
+| Texto                  | `app-text`, `app-text-muted`, `app-text-body`, `app-text-subtle`, `app-text-emphasis`, `app-text-emphasis-hover`, `app-error`, `app-markdown`                                               |
+| Marca                  | `app-title`, `app-title-adjustment`, `app-logo`, `app-powered`                                                                                                                              |
 | Cabeçalho/menu lateral | `app-header-link`, `app-sidebar`, `app-sidebar-link`                                                                                                                                        |
 | Idiomas                | `app-language-button`, `app-language-button-text`, `app-language-button-selected`                                                                                                           |
-| Seções                 | `app-section-title`, `app-section-subtitle`, `app-section-image`, `app-section-destak`                                                                                                      |
+| Seções                 | `app-section-title`, `app-section-subtitle`, `app-section-image`, `app-section-emphasis`                                                                                                    |
 | Carrossel              | `app-section-carousel-transition`, `app-section-carousel-btn`, `app-section-carousel-progress-track`, `app-section-carousel-progress`, `app-section-dot-active`, `app-section-dot-inactive` |
-| Gerais                 | `app-duration`, `app-border`, `app-ring`, `app-skeleton`, `app-footer`, `app-powered`                                                                                                       |
+| Gerais                 | `app-duration`, `app-border`, `app-ring`, `app-skeleton`                                                                                                                                    |
 
-Altere as escalas e fontes para personalizações simples. Mudanças estruturais nos utilitários podem afetar vários componentes e devem ser testadas em dispositivos móveis e telas grandes.
+Altere os tokens semânticos e as fontes para personalizações simples. Mudanças estruturais nos utilitários podem afetar vários componentes e devem ser testadas em dispositivos móveis e telas grandes.
 
 ## Compilação e implantação
 

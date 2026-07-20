@@ -25,7 +25,7 @@
       "content": ["Conteudo ficticio em texto simples para esta secao."],
       "image": "https://placehold.co/600x400",
       "contentPosition": "top",
-      "destak": true
+      "emphasis": true
     },
     {
       "id": "servicos",
@@ -37,7 +37,7 @@
       "id": "depoimentos",
       "title": "Depoimentos",
       "subtitle": "O que nossos clientes dizem",
-      "destak": true,
+      "emphasis": true,
       "contentFiles": [
         "depoimentos/depoimento-1.md",
         "depoimentos/depoimento-2.md",
