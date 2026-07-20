@@ -73,30 +73,44 @@
 }
 
 :root {
+  --duration: 300ms;
+  --duration-carousel: 500ms;
+
   --backdrop-opacity: 80%;
   --backdrop: var(--color-neutral-900);
-  --background-emphasis: var(--color-neutral-700);
-  --background-hover: var(--color-neutral-700);
-  --background: var(--color-neutral-800);
+
   --border: var(--color-neutral-700);
-  --dot-active: var(--color-emerald-400);
-  --dot-inactive: var(--color-neutral-500);
-  --dot: var(--color-neutral-600);
-  --duration-carousel: 500ms;
-  --duration: 300ms;
-  --emphasis-hover: var(--color-emerald-300);
-  --emphasis: var(--color-emerald-500);
   --error: var(--color-emerald-400);
-  --footer-background: var(--color-neutral-950);
-  --header-background-opacity: 85%;
-  --header-background: var(--color-neutral-950);
   --progress-track: var(--color-emerald-600);
   --progress: var(--color-emerald-400);
   --ring: var(--color-emerald-400);
   --skeleton: var(--color-neutral-700);
+
+  --dot-active: var(--color-emerald-400);
+  --dot-inactive: var(--color-neutral-500);
+  --dot: var(--color-neutral-600);
+
+  --background: var(--color-neutral-800);
+  --background-emphasis: var(--color-neutral-700);
+
+  --text: var(--color-neutral-100);
   --text-body: var(--color-neutral-300);
   --text-muted: var(--color-neutral-400);
-  --text: var(--color-neutral-100);
+
+  --emphasis: var(--color-emerald-500);
+  --emphasis-hover: var(--color-emerald-300);
+
+  --header-background-opacity: 85%;
+  --header-background: var(--color-neutral-950);
+  --header-link-hover: var(--color-emerald-500);
+  --header-link: var(--color-neutral-100);
+
+  --sidebar-background-hover: var(--color-neutral-700);
+  --sidebar-background: var(--color-neutral-800);
+  --sidebar-link-hover: var(--color-emerald-500);
+  --sidebar-link: var(--color-neutral-100);
+
+  --footer-background: var(--color-neutral-950);
 }
 
 /* APP COLORS */
@@ -224,16 +238,29 @@
 }
 
 @utility app-header-link {
-  @apply app-text hover:app-text-emphasis;
   @apply app-duration;
+  color: var(--header-link);
+
+  &:hover {
+    @media (hover: hover) {
+      color: var(--header-link-hover);
+    }
+  }
 }
 
 @utility app-sidebar {
-  @apply app-background app-text;
+  background-color: var(--sidebar-background);
 }
 
 @utility app-sidebar-link {
-  @apply app-text hover:app-background-hover hover:app-text-emphasis;
+  color: var(--sidebar-link);
+
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--sidebar-background-hover);
+      color: var(--sidebar-link-hover);
+    }
+  }
 }
 
 @utility app-footer {
@@ -321,7 +348,7 @@
       }
 
       > .footer-title {
-        @apply app-title mt-2 text-5xl;
+        @apply app-title mt-2 cursor-pointer text-5xl;
       }
     }
 
@@ -342,7 +369,7 @@
     }
 
     a {
-      @apply app-text-subtle hover:app-text-emphasis-hover;
+      @apply app-text-subtle hover:app-text-emphasis;
       @apply app-duration underline transition-colors;
     }
   }
