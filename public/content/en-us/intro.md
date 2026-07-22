@@ -1,17 +1,9 @@
-## Markdown Content Title
+Taberna is a starting point for anyone who wants a home on the web without beginning with a blank page. It can become a personal website, portfolio, landing page, or small institutional site.
 
-This is fictitious content in markdown format. You can use all markdown features here.
+### Your content remains yours
 
-### Example Subsection
+Long-form text and pages live in Markdown files, while menus, sections, and general information are organized in JSON. Keeping these concerns separate makes editing clearer and lets the message evolve without becoming tangled in the application structure.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+### Start with a foundation, finish with your identity
 
-### Example List
-
-- First list item
-- Second list item
-- Third list item
-
-### Additional Text
-
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Choose the sections, write in your own voice, adjust the colors, and replace the images. The result may begin with Taberna, but it should look and sound like your project.

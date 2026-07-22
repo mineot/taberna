@@ -56,41 +56,33 @@ taberna/
 │       ├── pt-br/
 │       │   ├── intro.md       # Markdown content in Portuguese
 │       │   ├── sobre.md       # About page in Portuguese
-│       │   ├── servicos.md    # Services page in Portuguese
+│       │   ├── recursos.md    # Features page in Portuguese
 │       │   ├── footer.md      # Custom footer in Portuguese
-│       │   ├── servicos/      # Individual services
-│       │   │   ├── servico-1.md
-│       │   │   └── servico-2.md
-│       │   └── depoimentos/   # Customer testimonials
-│       │       ├── depoimento-1.md
-│       │       ├── depoimento-2.md
-│       │       ├── depoimento-3.md
-│       │       ├── depoimento-4.md
-│       │       ├── depoimento-5.md
-│       │       ├── depoimento-6.md
-│       │       ├── depoimento-7.md
-│       │       ├── depoimento-8.md
-│       │       ├── depoimento-9.md
-│       │       └── depoimento-10.md
+│       │   ├── recursos/      # Feature summaries
+│       │   │   ├── conteudo-organizado.md
+│       │   │   └── base-pronta.md
+│       │   └── possibilidades/ # Suggested site use cases
+│       │       ├── site-pessoal.md
+│       │       ├── portfolio.md
+│       │       ├── profissional-independente.md
+│       │       ├── pequeno-negocio.md
+│       │       ├── projeto-criativo.md
+│       │       └── iniciativa-comunitaria.md
 │       └── en-us/
 │           ├── intro.md       # Markdown content in English
 │           ├── about.md       # About page in English
-│           ├── services.md    # Services page in English
+│           ├── features.md    # Features page in English
 │           ├── footer.md      # Custom footer in English
-│           ├── services/      # Individual services
-│           │   ├── service-1.md
-│           │   └── service-2.md
-│           └── testimonials/  # Customer testimonials
-│               ├── testimonial-1.md
-│               ├── testimonial-2.md
-│               ├── testimonial-3.md
-│               ├── testimonial-4.md
-│               ├── testimonial-5.md
-│               ├── testimonial-6.md
-│               ├── testimonial-7.md
-│               ├── testimonial-8.md
-│               ├── testimonial-9.md
-│               └── testimonial-10.md
+│           ├── features/      # Feature summaries
+│           │   ├── organized-content.md
+│           │   └── ready-foundation.md
+│           └── possibilities/ # Suggested site use cases
+│               ├── personal-site.md
+│               ├── portfolio.md
+│               ├── independent-professional.md
+│               ├── small-business.md
+│               ├── creative-project.md
+│               └── community-initiative.md
 ├── src/
 │   ├── main.ts                # Entry point — mounts Vue on #app + router
 │   ├── App.vue                # Root — layout (header/sidebar/footer) + router-view + footer Markdown
@@ -338,7 +330,7 @@ Composable that orchestrates language switching: validation + `loadConfig` + `se
 
 ## Pending FIXMEs
 
-- Configure real content in the config and Markdown files
+- Replace the placeholder images and configure the final project content
 
 ## Git
 
@@ -692,7 +684,8 @@ export interface MenuItem {
 If `content` is not defined on the menuItem, the system fetches `{slug}.md`:
 
 - Route `/sobre` → fetches `public/content/{locale}/sobre.md`
-- Route `/servicos` → fetches `public/content/{locale}/servicos.md`
+- Route `/recursos` → fetches `public/content/pt-br/recursos.md`
+- Route `/features` → fetches `public/content/en-us/features.md`
 - With `"content": "custom.md"` → fetches `public/content/{locale}/custom.md`
 
 ### Page Content

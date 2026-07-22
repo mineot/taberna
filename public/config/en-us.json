@@ -1,53 +1,56 @@
 {
   "site": {
     "title": "Taberna",
-    "description": "Site Description",
+    "description": "A simple, customizable foundation for personal websites, portfolios, landing pages, and small institutional sites.",
     "image": "logo.png"
   },
   "menu": [
     { "label": "Home", "href": "#intro" },
-    { "label": "About", "route": "/about" },
-    { "label": "Services", "route": "/services" }
+    { "label": "About Taberna", "route": "/about" },
+    { "label": "Features", "route": "/features" }
   ],
   "sections": [
     {
       "id": "intro",
-      "title": "Introduction Title",
-      "subtitle": "Optional subtitle for the introduction",
+      "title": "A place where your ideas can find a home",
+      "subtitle": "Simple content, thoughtful presentation, and the freedom to make it your own",
       "contentFiles": ["intro.md"],
       "image": "https://placehold.co/600x400",
       "imagePosition": "top"
     },
     {
       "id": "about",
-      "title": "About Section Title",
-      "content": ["Fictitious content in plain text for this section."],
+      "title": "Made to welcome different stories",
+      "subtitle": "A neutral foundation shaped by the identity of the person using it",
+      "content": [
+        "Like a good tavern, this project was designed to welcome different people, ideas, and stories.",
+        "You bring the message and identity; Taberna provides an organized, responsive foundation ready to customize."
+      ],
       "image": "https://placehold.co/600x400",
       "contentPosition": "top",
       "emphasis": true
     },
     {
-      "id": "services",
-      "title": "Services",
-      "subtitle": "Services offered",
-      "contentFiles": ["services/service-1.md", "services/service-2.md"]
+      "id": "features",
+      "title": "Everything you need to get started",
+      "subtitle": "Content that is easy to organize and a foundation ready to publish",
+      "contentFiles": [
+        "features/organized-content.md",
+        "features/ready-foundation.md"
+      ]
     },
     {
-      "id": "testimonials",
-      "title": "Testimonials",
-      "subtitle": "What our clients say",
+      "id": "possibilities",
+      "title": "What can find a place here",
+      "subtitle": "One foundation, many ways to tell a story",
       "emphasis": true,
       "contentFiles": [
-        "testimonials/testimonial-1.md",
-        "testimonials/testimonial-2.md",
-        "testimonials/testimonial-3.md",
-        "testimonials/testimonial-4.md",
-        "testimonials/testimonial-5.md",
-        "testimonials/testimonial-6.md",
-        "testimonials/testimonial-7.md",
-        "testimonials/testimonial-8.md",
-        "testimonials/testimonial-9.md",
-        "testimonials/testimonial-10.md"
+        "possibilities/personal-site.md",
+        "possibilities/portfolio.md",
+        "possibilities/independent-professional.md",
+        "possibilities/small-business.md",
+        "possibilities/creative-project.md",
+        "possibilities/community-initiative.md"
       ],
       "carousel": {
         "autoPlay": true,
@@ -59,7 +62,7 @@
     }
   ],
   "footer": {
-    "ownership": "© 2026 Owner Name",
+    "ownership": "© 2026 Mineot",
     "contentFile": "footer.md"
   }
 }

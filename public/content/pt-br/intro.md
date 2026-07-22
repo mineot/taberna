@@ -1,17 +1,9 @@
-## Titulo do Conteudo Markdown
+O Taberna é um ponto de partida para quem deseja publicar uma presença própria na web sem começar por uma página em branco. Ele pode se transformar em um site pessoal, portfólio, landing page ou pequeno site institucional.
 
-Este e um conteudo ficticio em formato markdown. Voce pode usar todos os recursos do markdown aqui.
+### Seu conteúdo continua sendo seu
 
-### Subsecao de Exemplo
+Textos e páginas vivem em arquivos Markdown, enquanto menus, seções e informações gerais são organizados em JSON. Essa separação deixa a edição mais clara e permite mudar a mensagem sem misturá-la à estrutura da aplicação.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+### Comece com uma base, termine com a sua identidade
 
-### Lista de Exemplo
-
-- Primeiro item da lista
-- Segundo item da lista
-- Terceiro item da lista
-
-### Texto Adicional
-
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Escolha as seções, escreva no seu tom, ajuste as cores e substitua as imagens. O resultado parte do Taberna, mas deve ter a aparência e a voz do seu projeto.

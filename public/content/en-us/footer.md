@@ -5,24 +5,24 @@
 <span class="footer-title">Taberna</span>
 </div>
 <span class="footer-summary">
-A digital space to share ideas, projects, and experiences. Built with passion and technology.
+An open, customizable foundation for publishing ideas, projects, and stories on the web.
 </span>
 </div>
 <div class="footer-links">
 
 #### Quick Links
 
-- [Home](/)
-- [About](/about)
-- [Services](/services)
+- [Home](./#/)
+- [About Taberna](./#/about)
+- [Features](./#/features)
 
 </div>
 <div class="footer-links">
 
-#### Social
+#### Project
 
 - [GitHub](https://github.com/mineot/taberna)
-- [Bluesky](https://bsky.app/)
+- [Documentation](https://github.com/mineot/taberna/blob/master/README.md)
 
 </div>
 </div>

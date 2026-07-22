@@ -5,24 +5,24 @@
 <span class="footer-title">Taberna</span>
 </div>
 <span class="footer-summary">
-Um espaco digital para compartilhar ideias, projetos e experiencias. Construido com paixao e tecnologia.
+Uma base aberta e personalizável para publicar ideias, projetos e histórias na web.
 </span>
 </div>
 <div class="footer-links">
 
-#### Links Rapidos
+#### Links rápidos
 
-- [Inicio](/)
-- [Sobre](/sobre)
-- [Servicos](/servicos)
+- [Início](./#/)
+- [Sobre o Taberna](./#/sobre)
+- [Recursos](./#/recursos)
 
 </div>
 <div class="footer-links">
 
-#### Redes Sociais
+#### Projeto
 
 - [GitHub](https://github.com/mineot/taberna)
-- [Instagram](https://www.instagram.com/)
+- [Documentação](https://github.com/mineot/taberna/blob/master/README_PT_BR.md)
 
 </div>
 </div>
