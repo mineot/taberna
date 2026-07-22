@@ -73,56 +73,6 @@ npm run build
 
 O ESLint emite avisos para `v-html`. Eles são esperados neste projeto porque todo HTML originado de Markdown passa por DOMPurify antes da renderização.
 
-## Como o projeto funciona
-
-O carregamento inicial segue este fluxo:
-
-1. `useLocale` carrega `public/languages.json` e seleciona o idioma.
-2. `useConfig` busca `public/config/{locale}.json`.
-3. `App.vue` monta cabeçalho, menu, menu lateral e rodapé.
-4. O Vue Router escolhe a página inicial, a seleção de idiomas ou uma página Markdown.
-5. `useMarkdown` busca, converte, sanitiza e armazena o conteúdo em cache.
-
-Os estados de `useLocale` e `useConfig` são compartilhados globalmente: os `ref`s ficam no escopo dos módulos e são usados por todos os componentes. O projeto não usa Pinia ou Vuex.
-
-### Responsabilidade dos composables
-
-| Composable        | Responsabilidade                                                                                 |
-| ----------------- | ------------------------------------------------------------------------------------------------ |
-| `useLocale`       | Carrega o manifesto, detecta e persiste o idioma e atualiza o atributo `lang` do documento       |
-| `useConfig`       | Carrega o JSON do idioma, expõe estados de carregamento/erro e cancela requisições anteriores    |
-| `useMarkdown`     | Busca Markdown, rejeita o HTML alternativo da SPA, converte, sanitiza e mantém cache por caminho |
-| `useSwitchLocale` | Valida o idioma, carrega a configuração, aplica o idioma e navega para a página inicial          |
-
-Requisições de configuração, página, rodapé e seções usam identificadores internos para ignorar respostas antigas que terminem depois de uma solicitação mais recente. Isso evita que uma troca rápida de idioma aplique conteúdo obsoleto.
-
-### Estrutura principal
-
-```text
-taberna/
-├── index.html                  # Shell da SPA, favicon, fontes e CSP
-├── public/
-│   ├── favicon.png
-│   ├── logo.png
-│   ├── fonts/                  # Fontes hospedadas localmente
-│   ├── languages.json          # Manifesto de idiomas
-│   ├── config/                 # Uma configuração JSON completa por idioma
-│   └── content/                # Markdown separado por idioma
-├── src/
-│   ├── App.vue                 # Disposição, cabeçalho, menu lateral e rodapé
-│   ├── main.ts                 # Inicialização do Vue e do roteador
-│   ├── style.css               # Tailwind, fontes, tokens/utilitários semânticos e estilos personalizados do rodapé
-│   ├── components/             # Componentes reutilizáveis e testes
-│   ├── composables/            # Idioma, configuração, Markdown e troca de idioma
-│   ├── router/                 # Definição das rotas
-│   ├── types/                  # Interfaces TypeScript da configuração
-│   ├── utils/                  # Validação de links e caminhos públicos
-│   └── views/                  # Página inicial, idiomas e páginas Markdown
-└── dist/                       # Resultado gerado pela compilação
-```
-
-Edite `public/` para personalizar conteúdo e recursos. Edite `src/` quando precisar alterar comportamento, disposição, tema ou mensagens internas da aplicação. Não edite `dist/` diretamente.
-
 ## Idiomas
 
 ### Manifesto `public/languages.json`
@@ -219,7 +169,7 @@ Cada item de `sections` aceita:
 | Campo             | Tipo                      | Obrigatório | Descrição                                               |
 | ----------------- | ------------------------- | ----------- | ------------------------------------------------------- |
 | `id`              | string                    | Sim         | Identificador e destino de âncoras como `#sobre`        |
-| `title`           | string                    | Não         | Título `<h2>` da seção                                  |
+| `title`           | string                    | Não         | Título da seção exibido acima do conteúdo               |
 | `subtitle`        | string                    | Não         | Texto abaixo do título                                  |
 | `content`         | string[]                  | Não         | Parágrafos de texto simples                             |
 | `contentFiles`    | string[]                  | Não         | Markdown relativo a `public/content/{locale}/`          |
@@ -283,7 +233,7 @@ Se um arquivo de uma seção falhar, os demais continuam sendo apresentados. Se 
 
 ## Carrossel
 
-O carrossel é ativado em uma seção com dois ou mais `contentFiles`:
+O carrossel é ativado ao adicionar um objeto `carousel` a uma seção com dois ou mais `contentFiles`:
 
 ```json
 {
@@ -319,7 +269,7 @@ A reprodução automática:
 
 - pausa ao passar o ponteiro ou durante o foco;
 - pausa quando a aba fica oculta;
-- pode ser pausado pelo usuário;
+- pode ser pausada pelo usuário;
 - mantém o progresso restante ao retomar;
 - é desativado com `prefers-reduced-motion: reduce`;
 - reinicia o intervalo após navegação manual.
@@ -389,19 +339,31 @@ Markdown também pode conter HTML, mas conteúdo perigoso é removido. Não depe
 
 Para misturar Markdown dentro de HTML, deixe linhas em branco entre as tags e o conteúdo:
 
+<!-- prettier-ignore -->
 ```html
 <div class="footer">
-  <div class="footer-container">
-    <div class="footer-brand">
-      <img src="logo.png" alt="Taberna" class="footer-logo" />
-      <span class="footer-title">Taberna</span>
-    </div>
-    <span class="footer-summary">Descrição</span>
-  </div>
-  <div class="footer-links">#### Links rápidos - [Início](./#/)</div>
-  <div class="footer-links">
-    #### Redes sociais - [GitHub](https://github.com/)
-  </div>
+<div class="footer-container">
+<div class="footer-brand">
+<img src="logo.png" alt="Taberna" class="footer-logo" />
+<span class="footer-title">Taberna</span>
+</div>
+<span class="footer-summary">Descrição</span>
+</div>
+<div class="footer-links">
+
+#### Links rápidos
+
+- [Início](./#/)
+- [Sobre](./#/sobre)
+
+</div>
+<div class="footer-links">
+
+#### Redes sociais
+
+- [GitHub](https://github.com/)
+
+</div>
 </div>
 ```
 
@@ -459,15 +421,17 @@ Para trocar fontes, substitua ou adicione arquivos em `public/fonts/` e atualize
 
 ### Tokens semânticos
 
-O bloco `@theme` define as pilhas de fontes. Cores, opacidades e durações de transição são propriedades personalizadas semânticas em `:root`; os valores padrão referenciam a paleta neutral do Tailwind, mas podem ser substituídos por qualquer cor CSS válida.
+O bloco `@theme` define as pilhas de fontes. Cores, opacidades e durações de transição são propriedades personalizadas semânticas em `:root`; os valores padrão referenciam as paletas neutral e emerald do Tailwind, mas podem ser substituídos por qualquer cor CSS válida.
 
-| Grupo     | Tokens                                                                                                                                                                         |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Fundos    | `--background`, `--background-hover`, `--background-emphasis`, `--header-background`, `--header-background-opacity`, `--footer-background`, `--backdrop`, `--backdrop-opacity` |
-| Texto     | `--text`, `--text-body`, `--text-muted`, `--emphasis`, `--emphasis-hover`, `--error`                                                                                           |
-| UI        | `--border`, `--ring`, `--skeleton`                                                                                                                                             |
-| Carrossel | `--dot`, `--dot-inactive`, `--dot-active`, `--progress-track`, `--progress`                                                                                                    |
-| Movimento | `--duration`, `--duration-carousel`                                                                                                                                            |
+| Grupo        | Tokens                                                                                                                   |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Fundos       | `--background`, `--background-hover`, `--background-emphasis`, `--footer-background`, `--backdrop`, `--backdrop-opacity` |
+| Cabeçalho    | `--header-background`, `--header-background-opacity`, `--header-link`, `--header-link-hover`                             |
+| Menu lateral | `--sidebar-background`, `--sidebar-background-hover`, `--sidebar-link`, `--sidebar-link-hover`                           |
+| Texto        | `--text`, `--text-body`, `--text-muted`, `--emphasis`, `--emphasis-hover`, `--error`                                     |
+| UI           | `--border`, `--ring`, `--skeleton`                                                                                       |
+| Carrossel    | `--dot`, `--dot-inactive`, `--dot-active`, `--progress-track`, `--progress`                                              |
+| Movimento    | `--duration`, `--duration-carousel`                                                                                      |
 
 Exemplo de alteração:
 
@@ -526,14 +490,6 @@ Mantenha preferencialmente um fork ou repositório próprio. Dependendo das muda
 - `src/style.css`;
 - `index.html`, se CSP ou metadados foram alterados;
 - quaisquer componentes ou utilitários modificados em `src/`.
-
-## Limitações atuais
-
-- O conteúdo distribuído é fictício.
-- Não há Pinia/Vuex, CI/CD, Docker ou arquivo `.env`.
-- A metadescrição é atualizada no cliente; não há Open Graph, metadados por página ou pré-renderização para rastreadores sem JavaScript.
-- Algumas mensagens internas e rótulos de acessibilidade ainda estão em inglês e fora do sistema de idiomas.
-- O projeto não valida o esquema dos JSONs em tempo de execução; mantenha tipos e campos conforme esta documentação.
 
 ## Contribuindo
 

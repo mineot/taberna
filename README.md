@@ -73,56 +73,6 @@ npm run build
 
 The linter reports warnings for `v-html`. These are expected in this project because all HTML originating from Markdown is processed by DOMPurify before rendering.
 
-## How the project works
-
-The initial loading process follows this flow:
-
-1. `useLocale` loads `public/languages.json` and selects the language.
-2. `useConfig` fetches `public/config/{locale}.json`.
-3. `App.vue` renders the header, menu, sidebar, and footer.
-4. Vue Router selects the home page, language selection page, or a Markdown page.
-5. `useMarkdown` fetches, converts, sanitizes, and caches the content.
-
-The `useLocale` and `useConfig` states are singletons: their `ref`s are declared at module scope and shared by all components. The project does not use Pinia or Vuex.
-
-### Composable responsibilities
-
-| Composable        | Responsibility                                                                                     |
-| ----------------- | -------------------------------------------------------------------------------------------------- |
-| `useLocale`       | Loads the manifest, detects and persists the language, and updates the document's `lang` attribute |
-| `useConfig`       | Loads the locale JSON, exposes loading/error states, and cancels previous requests                 |
-| `useMarkdown`     | Fetches Markdown, rejects the SPA HTML fallback, converts, sanitizes, and caches content by path   |
-| `useSwitchLocale` | Validates the language, loads the config, applies the locale, and navigates to the home page       |
-
-Config, page, footer, and section requests use internal identifiers to ignore stale responses that finish after a newer request. This prevents a rapid language switch from applying outdated content.
-
-### Main structure
-
-```text
-taberna/
-├── index.html                  # SPA shell, favicon, fonts, and CSP
-├── public/
-│   ├── favicon.png
-│   ├── logo.png
-│   ├── fonts/                  # Self-hosted fonts
-│   ├── languages.json          # Language manifest
-│   ├── config/                 # One complete JSON file per language
-│   └── content/                # Markdown organized by language
-├── src/
-│   ├── App.vue                 # Layout, header, sidebar, and footer
-│   ├── main.ts                 # Vue and router initialization
-│   ├── style.css               # Tailwind, fonts, semantic tokens/utilities, and custom footer styles
-│   ├── components/             # Reusable components and tests
-│   ├── composables/            # Locale, config, Markdown, and language switching
-│   ├── router/                 # Route definitions
-│   ├── types/                  # TypeScript interfaces for the config
-│   ├── utils/                  # Link validation and public paths
-│   └── views/                  # Home, languages, and Markdown pages
-└── dist/                       # Generated build output
-```
-
-Edit `public/` to customize content and assets. Edit `src/` when you need to change behavior, layout, theme, or internal application messages. Do not edit `dist/` directly.
-
 ## Languages
 
 ### The `public/languages.json` manifest
@@ -219,7 +169,7 @@ Each item in `sections` accepts:
 | Field             | Type                      | Required | Description                                           |
 | ----------------- | ------------------------- | -------- | ----------------------------------------------------- |
 | `id`              | string                    | Yes      | Identifier and target for anchors such as `#about`    |
-| `title`           | string                    | No       | Section `<h2>` title                                  |
+| `title`           | string                    | No       | Section title displayed above the content             |
 | `subtitle`        | string                    | No       | Text below the title                                  |
 | `content`         | string[]                  | No       | Plain-text paragraphs                                 |
 | `contentFiles`    | string[]                  | No       | Markdown relative to `public/content/{locale}/`       |
@@ -283,7 +233,7 @@ If one of a section's files fails, the others are still displayed. If all of the
 
 ## Carousel
 
-The carousel is enabled in a section with two or more `contentFiles`:
+The carousel is enabled by adding a `carousel` object to a section with two or more `contentFiles`:
 
 ```json
 {
@@ -389,17 +339,31 @@ Markdown may also contain HTML, but dangerous content is removed. Do not rely on
 
 To mix Markdown inside HTML, leave blank lines between the tags and the content:
 
+<!-- prettier-ignore -->
 ```html
 <div class="footer">
-  <div class="footer-container">
-    <div class="footer-brand">
-      <img src="logo.png" alt="Taberna" class="footer-logo" />
-      <span class="footer-title">Taberna</span>
-    </div>
-    <span class="footer-summary">Description</span>
-  </div>
-  <div class="footer-links">#### Quick Links - [Home](./#/)</div>
-  <div class="footer-links">#### Social - [GitHub](https://github.com/)</div>
+<div class="footer-container">
+<div class="footer-brand">
+<img src="logo.png" alt="Taberna" class="footer-logo" />
+<span class="footer-title">Taberna</span>
+</div>
+<span class="footer-summary">Description</span>
+</div>
+<div class="footer-links">
+
+#### Quick Links
+
+- [Home](./#/)
+- [About](./#/about)
+
+</div>
+<div class="footer-links">
+
+#### Social
+
+- [GitHub](https://github.com/)
+
+</div>
 </div>
 ```
 
@@ -457,15 +421,17 @@ To change fonts, replace or add files in `public/fonts/` and update the `@font-f
 
 ### Semantic tokens
 
-The `@theme` block defines the font stacks. Colors, opacities, and transition durations are semantic custom properties in `:root`; their defaults reference Tailwind's neutral palette but may be replaced with any valid CSS color.
+The `@theme` block defines the font stacks. Colors, opacities, and transition durations are semantic custom properties in `:root`; their defaults reference Tailwind's neutral and emerald palettes but may be replaced with any valid CSS color.
 
-| Group       | Tokens                                                                                                                                                                         |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Backgrounds | `--background`, `--background-hover`, `--background-emphasis`, `--header-background`, `--header-background-opacity`, `--footer-background`, `--backdrop`, `--backdrop-opacity` |
-| Text        | `--text`, `--text-body`, `--text-muted`, `--emphasis`, `--emphasis-hover`, `--error`                                                                                           |
-| UI          | `--border`, `--ring`, `--skeleton`                                                                                                                                             |
-| Carousel    | `--dot`, `--dot-inactive`, `--dot-active`, `--progress-track`, `--progress`                                                                                                    |
-| Motion      | `--duration`, `--duration-carousel`                                                                                                                                            |
+| Group       | Tokens                                                                                                                   |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Backgrounds | `--background`, `--background-hover`, `--background-emphasis`, `--footer-background`, `--backdrop`, `--backdrop-opacity` |
+| Header      | `--header-background`, `--header-background-opacity`, `--header-link`, `--header-link-hover`                             |
+| Sidebar     | `--sidebar-background`, `--sidebar-background-hover`, `--sidebar-link`, `--sidebar-link-hover`                           |
+| Text        | `--text`, `--text-body`, `--text-muted`, `--emphasis`, `--emphasis-hover`, `--error`                                     |
+| UI          | `--border`, `--ring`, `--skeleton`                                                                                       |
+| Carousel    | `--dot`, `--dot-inactive`, `--dot-active`, `--progress-track`, `--progress`                                              |
+| Motion      | `--duration`, `--duration-carousel`                                                                                      |
 
 Example customization:
 
@@ -524,14 +490,6 @@ Prefer maintaining a fork or your own repository. Depending on your changes, pre
 - `src/style.css`;
 - `index.html`, if the CSP or metadata were changed;
 - any modified components or utilities in `src/`.
-
-## Current limitations
-
-- The bundled content is fictional.
-- There is no Pinia/Vuex, CI/CD, Docker, or `.env` file.
-- The meta description is updated on the client; there is no Open Graph, per-page metadata, or prerendering for crawlers without JavaScript.
-- Some internal messages and accessibility labels are still in English and outside the language system.
-- The project does not validate the JSON schema at runtime; keep types and fields consistent with this documentation.
 
 ## Contributing
 

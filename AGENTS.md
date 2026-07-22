@@ -131,28 +131,34 @@ Current semantic tokens:
 
 | Token                         | Default value | Purpose                                      |
 | ----------------------------- | ------------- | -------------------------------------------- |
-| `--background`                | `neutral-800` | Main application and sidebar background      |
+| `--background`                | `neutral-800` | Main application background                  |
 | `--background-hover`          | `neutral-700` | Interactive background on hover              |
 | `--background-emphasis`       | `neutral-700` | Emphasized section background                |
 | `--footer-background`         | `neutral-950` | Footer background                            |
 | `--header-background`         | `neutral-950` | Header background base                       |
 | `--header-background-opacity` | `85%`         | Header background opacity                    |
+| `--header-link`               | `neutral-100` | Header link text                             |
+| `--header-link-hover`         | `emerald-500` | Header link hover text                       |
+| `--sidebar-background`        | `neutral-800` | Sidebar background                           |
+| `--sidebar-background-hover`  | `neutral-700` | Sidebar link hover background                |
+| `--sidebar-link`              | `neutral-100` | Sidebar link text                            |
+| `--sidebar-link-hover`        | `emerald-500` | Sidebar link hover text                      |
 | `--backdrop`                  | `neutral-900` | Offcanvas backdrop and Markdown code blocks  |
 | `--backdrop-opacity`          | `80%`         | Offcanvas backdrop opacity                   |
 | `--text`                      | `neutral-100` | Main/high-contrast text                      |
 | `--text-body`                 | `neutral-300` | Body and Markdown text                       |
 | `--text-muted`                | `neutral-400` | Muted/subtle text                            |
-| `--emphasis`                  | `neutral-500` | Emphasized text, links, titles, and controls |
-| `--emphasis-hover`            | `neutral-300` | Emphasized hover state                       |
-| `--error`                     | `neutral-400` | Error text                                   |
+| `--emphasis`                  | `emerald-500` | Emphasized text, links, titles, and controls |
+| `--emphasis-hover`            | `emerald-300` | Emphasized hover state                       |
+| `--error`                     | `emerald-400` | Error text                                   |
 | `--border`                    | `neutral-700` | Borders and Markdown separators              |
-| `--ring`                      | `neutral-400` | Selected-language ring                       |
+| `--ring`                      | `emerald-400` | Selected-language ring                       |
 | `--skeleton`                  | `neutral-700` | Skeleton loading blocks                      |
 | `--dot`                       | `neutral-600` | Inactive carousel dots                       |
 | `--dot-inactive`              | `neutral-500` | Inactive carousel dot hover                  |
-| `--dot-active`                | `neutral-400` | Active carousel dot                          |
-| `--progress-track`            | `neutral-600` | Carousel progress-ring track                 |
-| `--progress`                  | `neutral-400` | Carousel progress-ring indicator             |
+| `--dot-active`                | `emerald-400` | Active carousel dot                          |
+| `--progress-track`            | `emerald-600` | Carousel progress-ring track                 |
+| `--progress`                  | `emerald-400` | Carousel progress-ring indicator             |
 | `--duration`                  | `300ms`       | Standard application transitions             |
 | `--duration-carousel`         | `500ms`       | Carousel slide/fade transitions              |
 
@@ -186,9 +192,9 @@ Custom utilities:
 - `app-section-image` → `w-full rounded-lg object-cover md:w-1/2`
 - `app-logo` → `h-8 min-h-5 w-8 min-w-5 md:h-12 md:w-12` with `--duration`
 - `app-header` → `--header-background` mixed with transparency using `--header-background-opacity`
-- `app-header-link` → main text, emphasized hover color, and `--duration`
-- `app-sidebar` → `app-background app-text`
-- `app-sidebar-link` → main text with background and text emphasis on hover
+- `app-header-link` → text from `--header-link`, changing to `--header-link-hover` only on devices that support hover, with `--duration`
+- `app-sidebar` → background from `--sidebar-background`
+- `app-sidebar-link` → text from `--sidebar-link`, changing its background to `--sidebar-background-hover` and its text to `--sidebar-link-hover` only on devices that support hover
 - `app-footer` → semantic border, footer background, and subtle text
 - `app-language-button` → application background, hover background, and semantic border
 - `app-language-button-text` → `app-text-body`
@@ -211,7 +217,7 @@ The custom footer content uses a dedicated class hierarchy in `style.css`:
 - `.footer-container`: first column containing the brand and summary
 - `.footer-brand`: horizontally aligns the logo and title
 - `.footer-logo`: 48 × 48 pixel image with `object-cover`
-- `.footer-title`: decorative title using `app-title`
+- `.footer-title`: decorative title using `app-title`, with a pointer cursor
 - `.footer-summary`: small text using `app-text-subtle`
 - `.footer-links`: link columns, horizontally centered within their grid tracks from the `md` breakpoint
 - `.footer-links > h4`: link-column headings

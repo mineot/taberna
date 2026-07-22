@@ -79,18 +79,19 @@
   --backdrop-opacity: 80%;
   --backdrop: var(--color-neutral-900);
 
-  --border: var(--color-neutral-700);
-  --error: var(--color-emerald-400);
-  --progress-track: var(--color-emerald-600);
-  --progress: var(--color-emerald-400);
   --ring: var(--color-emerald-400);
+  --error: var(--color-emerald-400);
+  --border: var(--color-neutral-700);
   --skeleton: var(--color-neutral-700);
+  --progress: var(--color-emerald-400);
+  --progress-track: var(--color-emerald-600);
 
+  --dot: var(--color-neutral-600);
   --dot-active: var(--color-emerald-400);
   --dot-inactive: var(--color-neutral-500);
-  --dot: var(--color-neutral-600);
 
   --background: var(--color-neutral-800);
+  --background-hover: var(--color-neutral-700);
   --background-emphasis: var(--color-neutral-700);
 
   --text: var(--color-neutral-100);
@@ -100,15 +101,15 @@
   --emphasis: var(--color-emerald-500);
   --emphasis-hover: var(--color-emerald-300);
 
-  --header-background-opacity: 85%;
-  --header-background: var(--color-neutral-950);
-  --header-link-hover: var(--color-emerald-500);
   --header-link: var(--color-neutral-100);
+  --header-link-hover: var(--color-emerald-500);
+  --header-background: var(--color-neutral-950);
+  --header-background-opacity: 85%;
 
-  --sidebar-background-hover: var(--color-neutral-700);
-  --sidebar-background: var(--color-neutral-800);
-  --sidebar-link-hover: var(--color-emerald-500);
   --sidebar-link: var(--color-neutral-100);
+  --sidebar-link-hover: var(--color-emerald-500);
+  --sidebar-background: var(--color-neutral-800);
+  --sidebar-background-hover: var(--color-neutral-700);
 
   --footer-background: var(--color-neutral-950);
 }
@@ -184,22 +185,22 @@
 
 @utility app-markdown {
   --tw-prose-invert-body: var(--text-body);
+  --tw-prose-invert-bold: var(--text);
+  --tw-prose-invert-bullets: var(--emphasis);
+  --tw-prose-invert-captions: var(--text-muted);
+  --tw-prose-invert-code: var(--emphasis);
+  --tw-prose-invert-counters: var(--text-muted);
   --tw-prose-invert-headings: var(--text);
+  --tw-prose-invert-hr: var(--border);
+  --tw-prose-invert-kbd: var(--text);
   --tw-prose-invert-lead: var(--text-body);
   --tw-prose-invert-links: var(--emphasis);
-  --tw-prose-invert-bold: var(--text);
-  --tw-prose-invert-counters: var(--text-muted);
-  --tw-prose-invert-bullets: var(--emphasis);
-  --tw-prose-invert-hr: var(--border);
-  --tw-prose-invert-quotes: var(--text-muted);
-  --tw-prose-invert-quote-borders: var(--emphasis);
-  --tw-prose-invert-captions: var(--text-muted);
-  --tw-prose-invert-kbd: var(--text);
-  --tw-prose-invert-code: var(--emphasis);
-  --tw-prose-invert-pre-code: var(--text-muted);
   --tw-prose-invert-pre-bg: var(--backdrop);
-  --tw-prose-invert-th-borders: var(--border);
+  --tw-prose-invert-pre-code: var(--text-muted);
+  --tw-prose-invert-quote-borders: var(--emphasis);
+  --tw-prose-invert-quotes: var(--text-muted);
   --tw-prose-invert-td-borders: var(--border);
+  --tw-prose-invert-th-borders: var(--border);
 
   & a {
     transition-duration: var(--duration);
