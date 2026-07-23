@@ -6,8 +6,9 @@
   },
   "menu": [
     { "label": "Início", "href": "#intro" },
-    { "label": "Sobre o Taberna", "route": "/sobre" },
-    { "label": "Recursos", "route": "/recursos" }
+    { "label": "Sobre o Taberna", "route": "/about" },
+    { "label": "Recursos", "route": "/features" },
+    { "label": "Artigos", "route": "/articles" }
   ],
   "sections": [
     {
@@ -19,7 +20,7 @@
       "imagePosition": "top"
     },
     {
-      "id": "sobre",
+      "id": "about",
       "title": "Feito para receber diferentes histórias",
       "subtitle": "Uma estrutura neutra que ganha a identidade de quem a utiliza",
       "content": [
@@ -31,26 +32,26 @@
       "emphasis": true
     },
     {
-      "id": "recursos",
+      "id": "features",
       "title": "Tudo à mão para começar",
       "subtitle": "Conteúdo fácil de organizar e uma base pronta para publicar",
       "contentFiles": [
-        "recursos/conteudo-organizado.md",
-        "recursos/base-pronta.md"
+        "features/organized-content.md",
+        "features/ready-foundation.md"
       ]
     },
     {
-      "id": "possibilidades",
+      "id": "possibilities",
       "title": "O que pode encontrar lugar aqui",
       "subtitle": "Uma mesma estrutura, diferentes maneiras de contar uma história",
       "emphasis": true,
       "contentFiles": [
-        "possibilidades/site-pessoal.md",
-        "possibilidades/portfolio.md",
-        "possibilidades/profissional-independente.md",
-        "possibilidades/pequeno-negocio.md",
-        "possibilidades/projeto-criativo.md",
-        "possibilidades/iniciativa-comunitaria.md"
+        "possibilities/personal-site.md",
+        "possibilities/portfolio.md",
+        "possibilities/independent-professional.md",
+        "possibilities/small-business.md",
+        "possibilities/creative-project.md",
+        "possibilities/community-initiative.md"
       ],
       "carousel": {
         "autoPlay": true,

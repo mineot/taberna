@@ -55,24 +55,32 @@ taberna/
 │   └── content/
 │       ├── pt-br/
 │       │   ├── intro.md       # Markdown content in Portuguese
-│       │   ├── sobre.md       # About page in Portuguese
-│       │   ├── recursos.md    # Features page in Portuguese
+│       │   ├── about.md       # About page in Portuguese
+│       │   ├── features.md    # Features page in Portuguese
+│       │   ├── articles.md    # Article list in Portuguese
 │       │   ├── footer.md      # Custom footer in Portuguese
-│       │   ├── recursos/      # Feature summaries
-│       │   │   ├── conteudo-organizado.md
-│       │   │   └── base-pronta.md
-│       │   └── possibilidades/ # Suggested site use cases
-│       │       ├── site-pessoal.md
+│       │   ├── articles/      # Article content
+│       │   │   ├── article-1.md
+│       │   │   └── article-2.md
+│       │   ├── features/      # Feature summaries
+│       │   │   ├── organized-content.md
+│       │   │   └── ready-foundation.md
+│       │   └── possibilities/ # Suggested site use cases
+│       │       ├── personal-site.md
 │       │       ├── portfolio.md
-│       │       ├── profissional-independente.md
-│       │       ├── pequeno-negocio.md
-│       │       ├── projeto-criativo.md
-│       │       └── iniciativa-comunitaria.md
+│       │       ├── independent-professional.md
+│       │       ├── small-business.md
+│       │       ├── creative-project.md
+│       │       └── community-initiative.md
 │       └── en-us/
 │           ├── intro.md       # Markdown content in English
 │           ├── about.md       # About page in English
 │           ├── features.md    # Features page in English
+│           ├── articles.md    # Article list in English
 │           ├── footer.md      # Custom footer in English
+│           ├── articles/      # Article content
+│           │   ├── article-1.md
+│           │   └── article-2.md
 │           ├── features/      # Feature summaries
 │           │   ├── organized-content.md
 │           │   └── ready-foundation.md
@@ -92,11 +100,11 @@ taberna/
 │   │   ├── section-carousel.vue      # Accessible carousel with autoplay, buttons, and dots
 │   │   └── section-carousel.test.ts  # Configuration and reduced-motion tests
 │   ├── router/
-│   │   └── index.ts           # Vue Router — routes /, /languages, and /:slug
+│   │   └── index.ts           # Vue Router — routes /, /languages, and /:slug(.*)
 │   ├── views/
 │   │   ├── HomeView.vue       # Home — sections from the config
 │   │   ├── LanguagesView.vue  # Language selection page (flag grid)
-│   │   └── PageView.vue       # Page — loads Markdown by slug
+│   │   └── PageView.vue       # Page — loads Markdown by slug (supports multi-segment)
 │   ├── composables/
 │   │   ├── useConfig.ts       # Safe concurrent config fetching by language
 │   │   ├── useConfig.test.ts  # Config error and concurrency tests
@@ -400,6 +408,8 @@ Other literal values—such as internal route names, paths, media queries, `loca
 
 Each `public/config/{locale}.json` is complete and independent. Untranslated data (hrefs, ids, URLs, images) is the same in all languages.
 
+Technical identifiers are normalized across locales: routes, section IDs, directory names, and file names must be English lowercase kebab-case. Locale directories must keep matching content paths; only labels and editorial content are translated.
+
 ### Markdown Content
 
 Sections can use Markdown files through the `contentFiles` field (an array of strings):
@@ -443,7 +453,7 @@ Each `/:slug` route loads an individual Markdown file:
 
 - File: `public/content/{locale}/{slug}.md`
 - If `content` is defined on the menuItem → uses that value as the file name
-- If it is not defined → uses the route slug (for example, `/sobre` → `sobre.md`)
+- If it is not defined → uses the route slug (for example, `/about` → `about.md`)
 - **Slug sanitization**: Regex `[^a-zA-Z0-9\-\/]` removes special characters before using the slug
 - Rendered as `<article class="prose prose-invert">`
 - Skeleton loader while loading
@@ -529,8 +539,8 @@ All fields are optional. Usage example:
 
 ```json
 {
-  "id": "depoimentos",
-  "contentFiles": ["depo-1.md", "depo-2.md", "depo-3.md"],
+  "id": "testimonials",
+  "contentFiles": ["testimonial-1.md", "testimonial-2.md", "testimonial-3.md"],
   "carousel": {
     "autoPlay": true,
     "interval": 4000,
@@ -651,12 +661,12 @@ The `site.image` field in the config controls the image displayed next to the ti
 | ------------ | ------------------- | -------------------------------------------------------- |
 | `/`          | `HomeView.vue`      | Sections from the JSON config                            |
 | `/languages` | `LanguagesView.vue` | Grid of available languages (flag + code)                |
-| `/:slug`     | `PageView.vue`      | Markdown loaded from `public/content/{locale}/{slug}.md` |
+| `/:slug(.*)` | `PageView.vue`      | Markdown loaded from `public/content/{locale}/{slug}.md` |
 
 ### Configuration
 
 - **Hash mode**: `createWebHashHistory(import.meta.env.BASE_URL)` to work without rewrites on static hosting and in subdirectories
-- **Catch-all**: the `/:pathMatch(.*)*` route redirects to `/`
+- **Multi-segment slugs**: `/:slug(.*)` captures full paths (e.g., `articles/article-1`)
 - **Scroll behavior**: supports hash anchors, saved positions, and scroll to top
 - **File**: `src/router/index.ts`
 
@@ -665,9 +675,9 @@ The `site.image` field in the config controls the image displayed next to the ti
 ```ts
 export interface MenuItem {
   label: string;
-  href?: string; // anchor link (e.g., "#sobre")
-  route?: string; // Vue Router path (e.g., "/sobre")
-  content?: string; // Markdown file override (e.g., "sobre.md")
+  href?: string; // anchor link (e.g., "#about")
+  route?: string; // Vue Router path (e.g., "/about")
+  content?: string; // Markdown file override (e.g., "about.md")
 }
 ```
 
@@ -683,10 +693,13 @@ export interface MenuItem {
 
 If `content` is not defined on the menuItem, the system fetches `{slug}.md`:
 
-- Route `/sobre` → fetches `public/content/{locale}/sobre.md`
-- Route `/recursos` → fetches `public/content/pt-br/recursos.md`
+- Route `/about` → fetches `public/content/{locale}/about.md`
+- Route `/features` → fetches `public/content/{locale}/features.md`
 - Route `/features` → fetches `public/content/en-us/features.md`
 - With `"content": "custom.md"` → fetches `public/content/{locale}/custom.md`
+- Route `/articles/article-1` → fetches `public/content/{locale}/articles/article-1.md`
+
+Multi-segment slugs (e.g., `articles/article-1`) are supported through the `/:slug(.*)` route. The slug is used as-is to resolve the Markdown file path, allowing nested content structures like `collection/item.md`.
 
 ### Page Content
 

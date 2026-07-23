@@ -13,8 +13,8 @@ Uma base aberta e personalizável para publicar ideias, projetos e histórias na
 #### Links rápidos
 
 - [Início](./#/)
-- [Sobre o Taberna](./#/sobre)
-- [Recursos](./#/recursos)
+- [Sobre o Taberna](./#/about)
+- [Recursos](./#/features)
 
 </div>
 <div class="footer-links">

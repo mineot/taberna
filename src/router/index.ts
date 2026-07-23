@@ -17,13 +17,9 @@ const router = createRouter({
       component: LanguagesView,
     },
     {
-      path: '/:slug',
+      path: '/:slug(.*)',
       name: 'page',
       component: PageView,
-    },
-    {
-      path: '/:pathMatch(.*)*',
-      redirect: '/',
     },
   ],
   scrollBehavior(_to, _from, savedPosition) {

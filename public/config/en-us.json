@@ -7,7 +7,8 @@
   "menu": [
     { "label": "Home", "href": "#intro" },
     { "label": "About Taberna", "route": "/about" },
-    { "label": "Features", "route": "/features" }
+    { "label": "Features", "route": "/features" },
+    { "label": "Articles", "route": "/articles" }
   ],
   "sections": [
     {

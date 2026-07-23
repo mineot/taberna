@@ -107,7 +107,7 @@ Salve o arquivo e confira o navegador. O título aparece na interface e na aba d
 - Substitua `public/favicon.png` pelo pequeno ícone exibido nas abas do navegador.
 - Mantenha os mesmos nomes de arquivo ou atualize `site.image` se escolher outro nome para o logotipo.
 
-Arquivos dentro de `public/` são referenciados sem o prefixo `public/`. Por exemplo, `public/images/marca.png` é escrito como `images/marca.png` na configuração.
+Arquivos dentro de `public/` são referenciados sem o prefixo `public/`. Por exemplo, `public/images/brand.png` é escrito como `images/brand.png` na configuração.
 
 ### 3. Edite o conteúdo da página inicial
 
@@ -234,7 +234,7 @@ Este exemplo reduzido mostra como as partes se relacionam:
   },
   "menu": [
     { "label": "Início", "href": "#intro" },
-    { "label": "Sobre", "route": "/sobre" }
+    { "label": "Sobre", "route": "/about" }
   ],
   "sections": [
     {
@@ -254,7 +254,7 @@ Neste exemplo:
 
 - `#intro` aponta para a seção cujo `id` é `intro`;
 - `intro.md` é carregado a partir do diretório de conteúdo do idioma atual;
-- `/sobre` carrega `sobre.md` a partir desse mesmo diretório;
+- `/about` carrega `about.md` a partir desse mesmo diretório;
 - `footer.md` fornece o conteúdo personalizado opcional do rodapé.
 
 ### Campos de identidade do site
@@ -267,7 +267,7 @@ Neste exemplo:
 
 Os metadados iniciais em `index.html` são exibidos antes que a configuração seja carregada. Depois do carregamento, `site.title` e `site.description` atualizam o documento do navegador. A troca de idioma os atualiza sem recarregar a página.
 
-Para imagens locais, coloque o arquivo dentro de `public/` e use um caminho relativo, como `images/marca.png`. Evite uma `/` no início caso o site seja publicado em um subdiretório.
+Para imagens locais, coloque o arquivo dentro de `public/` e use um caminho relativo, como `images/brand.png`. Evite uma `/` no início caso o site seja publicado em um subdiretório.
 
 ## Menu e páginas
 
@@ -284,20 +284,20 @@ O valor depois de `#` deve corresponder ao `id` de uma seção.
 ### Link para uma página independente
 
 ```json
-{ "label": "Sobre", "route": "/sobre" }
+{ "label": "Sobre", "route": "/about" }
 ```
 
-Isso carrega `public/content/{locale}/sobre.md`. Para usar outro nome de arquivo ou um subdiretório, adicione `content`:
+Isso carrega `public/content/{locale}/about.md`. Para usar outro nome de arquivo ou um subdiretório, adicione `content`:
 
 ```json
 {
   "label": "Blog",
   "route": "/blog",
-  "content": "paginas/meu-blog.md"
+  "content": "pages/my-blog.md"
 }
 ```
 
-Essa rota exibe `public/content/{locale}/paginas/meu-blog.md`.
+Essa rota exibe `public/content/{locale}/pages/my-blog.md`.
 
 ### Link para um site externo
 
@@ -317,7 +317,7 @@ Links externos do menu abrem em uma nova aba. Somente links HTTP e HTTPS são ac
 | `route` e `content`     | Usa `content` como caminho Markdown dessa rota               |
 | `route` e `href`        | Usa `route` e ignora `href`                                  |
 
-Links dentro de Markdown são links HTML comuns. Como o Taberna usa rotas baseadas em hash, crie um link para uma página interna com uma URL relativa, como `[Sobre](./#/sobre)`. Um link como `/sobre` solicita ao servidor web um caminho `/sobre` real e pode falhar após a implantação.
+Links dentro de Markdown são links HTML comuns. Como o Taberna usa rotas baseadas em hash, crie um link para uma página interna com uma URL relativa, como `[Sobre](./#/about)`. Um link como `/about` solicita ao servidor web um caminho `/about` real e pode falhar após a implantação.
 
 ## Seções da página inicial
 
@@ -325,7 +325,7 @@ Cada item do array `sections` da configuração representa um bloco da página i
 
 | Campo             | Tipo                      | Obrigatório | Descrição                                                      |
 | ----------------- | ------------------------- | ----------- | -------------------------------------------------------------- |
-| `id`              | string                    | Sim         | Identificador único e destino para links como `#sobre`         |
+| `id`              | string                    | Sim         | Identificador único e destino para links como `#about`         |
 | `title`           | string                    | Não         | Título exibido acima do conteúdo da seção                      |
 | `subtitle`        | string                    | Não         | Texto curto exibido abaixo do título                           |
 | `content`         | string[]                  | Não         | Parágrafos de texto simples                                    |
@@ -353,11 +353,11 @@ Para obter resultados previsíveis, não adicione `content` e `contentFiles` à 
 
 ```json
 {
-  "id": "sobre",
+  "id": "about",
   "title": "Sobre",
   "subtitle": "Conheça melhor meu trabalho",
   "content": ["Primeiro parágrafo.", "Segundo parágrafo."],
-  "image": "images/sobre.jpg",
+  "image": "images/about.jpg",
   "imagePosition": "top",
   "contentPosition": "center",
   "invert": false,
@@ -384,9 +384,9 @@ No desktop, a ordem padrão é conteúdo à esquerda e imagem à direita. Com `i
 
 ```json
 {
-  "id": "servicos",
+  "id": "services",
   "title": "Serviços",
-  "contentFiles": ["servicos/servico-1.md", "servicos/servico-2.md"]
+  "contentFiles": ["services/service-1.md", "services/service-2.md"]
 }
 ```
 
@@ -441,7 +441,7 @@ A disposição de rodapé integrada espera a hierarquia de filhos diretos abaixo
 #### Links rápidos
 
 - [Início](./#/)
-- [Sobre](./#/sobre)
+- [Sobre](./#/about)
 
 </div>
 <div class="footer-links">
@@ -510,7 +510,7 @@ Quando o usuário seleciona outro idioma, o Taberna carrega sua configuração a
 4. Adicione `es-es` a `available` e `flags` em `public/languages.json`.
 5. Teste a página inicial, o menu, as páginas, o rodapé e a troca de idioma.
 
-As configurações são independentes. Rotas, nomes de arquivos e conteúdo podem variar entre os idiomas, desde que todas as referências existam.
+As configurações continuam completas por idioma, mas os identificadores técnicos são compartilhados entre as localidades. Mantenha rotas, IDs de seção, nomes de diretórios e nomes de arquivos em inglês, com letras minúsculas e hífens; traduza apenas labels e conteúdo editorial. As árvores de conteúdo devem usar caminhos correspondentes, para que uma rota como `/about` encontre `about.md` em todos os idiomas.
 
 ## Personalização visual
 
@@ -626,15 +626,15 @@ O Markdown é armazenado em cache na memória. Recarregue a página do navegador
 
 ### Uma página independente exibe a mensagem `Page not found`
 
-Sem um valor `content` no menu, a rota `/sobre` espera encontrar `public/content/{locale}/sobre.md`. Se o arquivo usar outro nome ou um subdiretório, configure `content` explicitamente.
+Sem um valor `content` no menu, a rota `/about` espera encontrar `public/content/{locale}/about.md`. Se o arquivo usar outro nome ou um subdiretório, configure `content` explicitamente.
 
 ### Uma imagem não carrega
 
-Para uma imagem local, confirme que ela está dentro de `public/` e use um caminho como `images/foto.jpg`, sem `public/` ou uma `/` no início. Para uma imagem externa, adicione seu domínio à diretiva `img-src` em `index.html`.
+Para uma imagem local, confirme que ela está dentro de `public/` e use um caminho como `images/photo.jpg`, sem `public/` ou uma `/` no início. Para uma imagem externa, adicione seu domínio à diretiva `img-src` em `index.html`.
 
 ### Um link Markdown interno funciona localmente, mas falha após a publicação
 
-Use um link relativo baseado em hash, como `[Sobre](./#/sobre)`, em vez de `/sobre`.
+Use um link relativo baseado em hash, como `[Sobre](./#/about)`, em vez de `/about`.
 
 ### O site publicado não inclui as alterações recentes
 
@@ -654,11 +654,11 @@ Adicione um objeto `carousel` a uma seção com dois ou mais arquivos Markdown:
 
 ```json
 {
-  "id": "depoimentos",
+  "id": "testimonials",
   "contentFiles": [
-    "depoimentos/depoimento-1.md",
-    "depoimentos/depoimento-2.md",
-    "depoimentos/depoimento-3.md"
+    "testimonials/testimonial-1.md",
+    "testimonials/testimonial-2.md",
+    "testimonials/testimonial-3.md"
   ],
   "carousel": {
     "autoPlay": true,
@@ -688,7 +688,7 @@ A reprodução automática pausa durante a passagem do cursor, o foco pelo tecla
 | ------------ | ---------------- | ------------------------------------- |
 | `/`          | `/#/`            | Seções configuradas da página inicial |
 | `/languages` | `/#/languages`   | Seleção de idioma                     |
-| `/:slug`     | `/#/sobre`       | Página Markdown independente          |
+| `/:slug`     | `/#/about`       | Página Markdown independente          |
 
 A rota aceita um segmento de URL, embora o arquivo Markdown configurado possa estar em um subdiretório. Caracteres inválidos são removidos antes que o slug de uma rota seja usado como caminho padrão de conteúdo. Rotas desconhecidas são redirecionadas para a página inicial. A navegação restaura posições salvas de rolagem, rola suavemente até âncoras e retorna ao topo nos demais destinos.
 

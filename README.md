@@ -510,7 +510,7 @@ When a user selects another language, Taberna loads its config before saving the
 4. Add `es-es` to `available` and `flags` in `public/languages.json`.
 5. Test its home page, menu, pages, footer, and language switching.
 
-Configs are independent. Routes, file names, and content can differ between languages as long as every reference exists.
+Configs remain complete per language, but technical identifiers are shared across locales. Keep routes, section IDs, directory names, and file names in English using lowercase kebab-case; translate only labels and editorial content. The content trees should use matching paths so a route such as `/about` resolves to `about.md` in every locale.
 
 ## Visual customization
 
