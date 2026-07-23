@@ -449,7 +449,7 @@ Each section follows strict rules based on its content type:
 
 ### Pages (Routes)
 
-Each `/:slug` route loads an individual Markdown file:
+Each `/:slug(.*)` route loads an individual Markdown file and supports nested paths:
 
 - File: `public/content/{locale}/{slug}.md`
 - If `content` is defined on the menuItem → uses that value as the file name
@@ -458,6 +458,8 @@ Each `/:slug` route loads an individual Markdown file:
 - Rendered as `<article class="prose prose-invert">`
 - Skeleton loader while loading
 - "Page not found" error message if the file does not exist
+
+Parent pages can contain Markdown sublinks to nested pages. The menu remains flat; these links do not create automatic submenu items. Because the router uses hash history, every internal link written inside Markdown must include `#/` before the route, for example `[First article](./#/articles/article-1)`. A link such as `[First article](/articles/article-1)` is invalid for this routing mode because it requests a real server path. Do not include `.md` in the browser URL: `/#/articles/article-1` resolves internally to `public/content/{locale}/articles/article-1.md`.
 
 ### Vertical Positioning
 
@@ -695,11 +697,13 @@ If `content` is not defined on the menuItem, the system fetches `{slug}.md`:
 
 - Route `/about` → fetches `public/content/{locale}/about.md`
 - Route `/features` → fetches `public/content/{locale}/features.md`
-- Route `/features` → fetches `public/content/en-us/features.md`
+- Route `/features/organized-content` → fetches `public/content/{locale}/features/organized-content.md`
 - With `"content": "custom.md"` → fetches `public/content/{locale}/custom.md`
 - Route `/articles/article-1` → fetches `public/content/{locale}/articles/article-1.md`
 
 Multi-segment slugs (e.g., `articles/article-1`) are supported through the `/:slug(.*)` route. The slug is used as-is to resolve the Markdown file path, allowing nested content structures like `collection/item.md`.
+
+**Critical Markdown link rule**: internal links generated from Markdown are plain `<a>` elements, not `<router-link>` components. They must use a relative hash URL such as `./#/articles/article-1` or `./#/features/organized-content`. Omitting `#` can navigate to a server path and produce an incorrect URL such as `/articles/article-1#/`. The correct browser URL places the hash before the route: `/#/articles/article-1`.
 
 ### Page Content
 

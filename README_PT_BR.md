@@ -319,6 +319,43 @@ Links externos do menu abrem em uma nova aba. Somente links HTTP e HTTPS são ac
 
 Links dentro de Markdown são links HTML comuns. Como o Taberna usa rotas baseadas em hash, crie um link para uma página interna com uma URL relativa, como `[Sobre](./#/about)`. Um link como `/about` solicita ao servidor web um caminho `/about` real e pode falhar após a implantação.
 
+### Páginas com sublinks
+
+Uma página Markdown pode conter links para outras páginas Markdown em subdiretórios. Isso permite, por exemplo, que `/articles` apresente uma lista de artigos e que `/features` apresente links para páginas detalhadas:
+
+```text
+public/content/{locale}/
+├── articles.md
+├── articles/
+│   └── article-1.md
+├── features.md
+└── features/
+    └── organized-content.md
+```
+
+O menu continua sendo plano: esses sublinks não viram submenus automaticamente. Eles são escritos dentro de `articles.md` ou `features.md` como links Markdown comuns.
+
+**O `#/` é obrigatório antes da rota em todo sublink interno escrito em Markdown.** Use:
+
+```md
+[Primeiro artigo](./#/articles/article-1)
+[Conteúdo organizado](./#/features/organized-content)
+```
+
+Não use:
+
+```md
+[Primeiro artigo](/articles/article-1)
+```
+
+Sem o `#`, o navegador acessa `/articles/article-1` como um caminho real do servidor e pode produzir uma URL incorreta como `/articles/article-1#/`. A URL correta é `/#/articles/article-1`.
+
+A extensão `.md` pertence somente ao arquivo e não deve aparecer na URL. A rota `/#/articles/article-1` carrega `public/content/{locale}/articles/article-1.md`. Para retornar à página principal a partir do artigo, use:
+
+```md
+[Voltar para os artigos](./#/articles)
+```
+
 ## Seções da página inicial
 
 Cada item do array `sections` da configuração representa um bloco da página inicial.
@@ -684,13 +721,14 @@ A reprodução automática pausa durante a passagem do cursor, o foco pelo tecla
 
 ### Rotas, cabeçalho e menu lateral
 
-| URL lógica   | URL no navegador | Conteúdo                              |
-| ------------ | ---------------- | ------------------------------------- |
-| `/`          | `/#/`            | Seções configuradas da página inicial |
-| `/languages` | `/#/languages`   | Seleção de idioma                     |
-| `/:slug`     | `/#/about`       | Página Markdown independente          |
+| URL lógica            | URL no navegador        | Conteúdo                              |
+| --------------------- | ----------------------- | ------------------------------------- |
+| `/`                   | `/#/`                   | Seções configuradas da página inicial |
+| `/languages`          | `/#/languages`          | Seleção de idioma                     |
+| `/:slug(.*)`          | `/#/about`              | Página Markdown independente          |
+| `/articles/article-1` | `/#/articles/article-1` | Página Markdown em subdiretório       |
 
-A rota aceita um segmento de URL, embora o arquivo Markdown configurado possa estar em um subdiretório. Caracteres inválidos são removidos antes que o slug de uma rota seja usado como caminho padrão de conteúdo. Rotas desconhecidas são redirecionadas para a página inicial. A navegação restaura posições salvas de rolagem, rola suavemente até âncoras e retorna ao topo nos demais destinos.
+A rota `/:slug(.*)` aceita um ou mais segmentos de URL. Sem um valor `content` no item do menu, cada segmento corresponde ao caminho do arquivo dentro de `public/content/{locale}/`, e `.md` é acrescentado internamente. Caracteres inválidos são removidos antes que o slug seja usado. Quando o arquivo correspondente não existe, o `PageView` exibe `Page not found`; a rota não é redirecionada automaticamente para a página inicial. A navegação restaura posições salvas de rolagem, rola suavemente até âncoras e retorna ao topo nos demais destinos.
 
 No desktop, até quatro itens do menu são exibidos em linha. Mais de quatro itens ativam o menu hambúrguer em todos os tamanhos de tela. Telas pequenas também usam o menu hambúrguer. Com um menu vazio e somente um idioma, o botão é omitido.
 

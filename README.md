@@ -319,6 +319,43 @@ External menu links open in a new tab. Only HTTP and HTTPS links are accepted.
 
 Links inside Markdown are regular HTML links. Because Taberna uses hash-based routes, link to an internal page with a relative URL such as `[About](./#/about)`. A link such as `/about` asks the web server for a real `/about` path and may fail after deployment.
 
+### Pages with sublinks
+
+A Markdown page can link to other Markdown pages stored in subdirectories. For example, `/articles` can list articles and `/features` can link to detailed feature pages:
+
+```text
+public/content/{locale}/
+├── articles.md
+├── articles/
+│   └── article-1.md
+├── features.md
+└── features/
+    └── organized-content.md
+```
+
+The menu remains flat: these sublinks do not become submenus automatically. They are regular Markdown links written inside `articles.md` or `features.md`.
+
+**The `#/` is required before the route in every internal sublink written in Markdown.** Use:
+
+```md
+[First article](./#/articles/article-1)
+[Organized content](./#/features/organized-content)
+```
+
+Do not use:
+
+```md
+[First article](/articles/article-1)
+```
+
+Without `#`, the browser requests `/articles/article-1` as a real server path and may produce an incorrect URL such as `/articles/article-1#/`. The correct URL is `/#/articles/article-1`.
+
+The `.md` extension belongs only to the file and must not appear in the URL. The `/#/articles/article-1` route loads `public/content/{locale}/articles/article-1.md`. To return to the parent page from the article, use:
+
+```md
+[Back to articles](./#/articles)
+```
+
 ## Home page sections
 
 Every item in the config's `sections` array represents one block on the home page.
@@ -684,13 +721,14 @@ Autoplay pauses during hover, keyboard focus, and hidden browser tabs. Users can
 
 ### Routes, header, and sidebar
 
-| Logical URL  | Browser URL    | Content                   |
-| ------------ | -------------- | ------------------------- |
-| `/`          | `/#/`          | Configured home sections  |
-| `/languages` | `/#/languages` | Language selection        |
-| `/:slug`     | `/#/about`     | Independent Markdown page |
+| Logical URL           | Browser URL             | Content                         |
+| --------------------- | ----------------------- | ------------------------------- |
+| `/`                   | `/#/`                   | Configured home sections        |
+| `/languages`          | `/#/languages`          | Language selection              |
+| `/:slug(.*)`          | `/#/about`              | Independent Markdown page       |
+| `/articles/article-1` | `/#/articles/article-1` | Markdown page in a subdirectory |
 
-The route accepts one URL segment, although the configured Markdown file can be in a subdirectory. Invalid characters are removed before a route slug is used as a default content path. Unknown routes are redirected to the home page. Navigation restores saved scroll positions, scrolls smoothly to anchors, and returns to the top for other destinations.
+The `/:slug(.*)` route accepts one or more URL segments. Without a menu `content` value, each segment maps to the file path inside `public/content/{locale}/`, and `.md` is appended internally. Invalid characters are removed before the slug is used. When the matching file does not exist, `PageView` displays `Page not found`; the route is not automatically redirected to the home page. Navigation restores saved scroll positions, scrolls smoothly to anchors, and returns to the top for other destinations.
 
 On desktop, up to four menu items are displayed inline. More than four items activate the hamburger menu at every screen size. Small screens also use the hamburger menu. With an empty menu and only one language, the button is omitted.
 
