@@ -1,4 +1,5 @@
 export type VerticalPosition = 'top' | 'center' | 'bottom';
+export type ImageAlign = 'start' | 'center' | 'end';
 
 export interface SiteConfig {
   title?: string;
@@ -28,6 +29,12 @@ export interface Section {
   content?: string[];
   contentFiles?: string[];
   image?: string;
+  imageDimensions?: {
+    width?: number | string;
+    height?: number | string;
+  };
+  imageAlign?: ImageAlign;
+  imageRounded?: boolean;
   imagePosition?: VerticalPosition;
   contentPosition?: VerticalPosition;
   invert?: boolean;

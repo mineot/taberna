@@ -390,10 +390,6 @@
   background-color: var(--background-emphasis);
 }
 
-@utility app-section-image {
-  @apply w-full rounded-lg object-cover md:w-1/2;
-}
-
 @utility app-section-carousel-transition {
   --tw-duration: var(--duration-carousel);
   transition-duration: var(--duration-carousel);

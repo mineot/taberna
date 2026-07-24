@@ -13,12 +13,13 @@
         'app-section-emphasis -mx-6 px-6 py-8': section.emphasis,
         'md:flex-row-reverse': section.invert,
         'md:items-start':
-          (section.contentPosition ?? section.imagePosition) === 'top',
+          (section.contentPosition ?? section.imagePosition ?? 'top') === 'top',
         'md:items-center':
-          !(section.contentPosition ?? section.imagePosition) ||
-          (section.contentPosition ?? section.imagePosition) === 'center',
+          (section.contentPosition ?? section.imagePosition ?? 'top') ===
+          'center',
         'md:items-end':
-          (section.contentPosition ?? section.imagePosition) === 'bottom',
+          (section.contentPosition ?? section.imagePosition ?? 'top') ===
+          'bottom',
       },
     ]"
   >
@@ -81,20 +82,49 @@
       </div>
     </div>
 
-    <img
+    <div
       v-if="
         section.image && (section.content || section.contentFiles?.length === 1)
       "
-      :src="section.image"
-      :alt="section.title ?? ''"
-      class="app-section-image"
+      class="flex w-full md:w-1/2"
       :class="{
-        'object-top': section.imagePosition === 'top',
-        'object-center':
-          !section.imagePosition || section.imagePosition === 'center',
-        'object-bottom': section.imagePosition === 'bottom',
+        'md:justify-start': section.imageAlign === 'start',
+        'md:justify-center':
+          !section.imageAlign || section.imageAlign === 'center',
+        'md:justify-end': section.imageAlign === 'end',
       }"
-    />
+    >
+      <img
+        :src="section.image"
+        :alt="section.title ?? ''"
+        :class="[
+          'h-auto',
+          'w-full',
+          'max-w-full',
+          'md:h-[var(--image-height)]',
+          'md:w-[var(--image-width)]',
+          'object-cover',
+          {
+            'rounded-lg': section.imageRounded !== false,
+            'rounded-none': section.imageRounded === false,
+            'object-top':
+              !section.imagePosition || section.imagePosition === 'top',
+            'object-center': section.imagePosition === 'center',
+            'object-bottom': section.imagePosition === 'bottom',
+          },
+        ]"
+        :style="{
+          '--image-width': resolveImageDimension(
+            section.imageDimensions?.width,
+            '100%',
+          ),
+          '--image-height': resolveImageDimension(
+            section.imageDimensions?.height,
+            'auto',
+          ),
+        }"
+      />
+    </div>
   </section>
 </template>
 
@@ -119,6 +149,20 @@ const { fetchMarkdown } = useMarkdown();
 
 const markdownContent = ref<Map<string, string[]>>(new Map());
 let markdownRequest = 0;
+
+function resolveImageDimension(
+  value: number | string | undefined,
+  fallback: string,
+) {
+  if (typeof value === 'number') {
+    return Number.isFinite(value) && value >= 0 ? `${value}px` : fallback;
+  }
+
+  const dimension = value?.trim();
+  if (!dimension) return fallback;
+
+  return /^(?:\d+\.?\d*|\.\d+)$/.test(dimension) ? `${dimension}px` : dimension;
+}
 
 async function loadMarkdownFiles() {
   const requestId = ++markdownRequest;

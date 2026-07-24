@@ -17,7 +17,13 @@
       "subtitle": "Conteúdo simples, apresentação cuidadosa e liberdade para personalizar",
       "contentFiles": ["intro.md"],
       "image": "https://placehold.co/600x400",
-      "imagePosition": "top"
+      "imageRounded": true,
+      "imagePosition": "top",
+      "imageAlign": "center",
+      "imageDimensions": {
+        "width": 600,
+        "height": null
+      }
     },
     {
       "id": "about",
@@ -28,6 +34,10 @@
         "Você cuida da mensagem e da identidade; o Taberna oferece uma base organizada, responsiva e pronta para personalizar."
       ],
       "image": "https://placehold.co/600x400",
+      "imageDimensions": {
+        "width": 600,
+        "height": null
+      },
       "contentPosition": "top",
       "emphasis": true
     },

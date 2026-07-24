@@ -1,6 +1,6 @@
 # Taberna
 
-[![Licença](https://img.shields.io/badge/Licen%C3%A7a-Apache%202.0-blue.svg)](LICENSE) [![🇺🇸 English](<https://img.shields.io/badge/Language-%F0%9F%87%BA%F0%9F%87%B8%20English-e5e7eb.svg>)](README.md)
+[![Licença](https://img.shields.io/badge/Licen%C3%A7a-Apache%202.0-blue.svg)](LICENSE) [![🇺🇸 English](https://img.shields.io/badge/Language-%F0%9F%87%BA%F0%9F%87%B8%20English-e5e7eb.svg)](README.md)
 
 O Taberna é uma base personalizável para sites pessoais, portfólios, landing pages e pequenos sites institucionais. Textos, páginas, menu, imagens, idiomas e rodapé são configurados principalmente por arquivos JSON e Markdown.
 
@@ -42,14 +42,14 @@ Abra o endereço mostrado no terminal, normalmente `http://localhost:5173`. Mant
 
 Os principais arquivos de personalização são:
 
-| O que alterar | Local |
-| --- | --- |
-| Nome, descrição, menu, seções e rodapé | `public/config/{idioma}.json` |
-| Conteúdo inicial e páginas independentes | `public/content/{idioma}/` |
-| Idiomas disponíveis | `public/languages.json` |
-| Logotipo e ícone do navegador | `public/logo.png` e `public/favicon.png` |
-| Outras imagens | Qualquer diretório dentro de `public/` |
-| Cores e fontes | `src/style.css` e `public/fonts/` |
+| O que alterar                            | Local                                    |
+| ---------------------------------------- | ---------------------------------------- |
+| Nome, descrição, menu, seções e rodapé   | `public/config/{idioma}.json`            |
+| Conteúdo inicial e páginas independentes | `public/content/{idioma}/`               |
+| Idiomas disponíveis                      | `public/languages.json`                  |
+| Logotipo e ícone do navegador            | `public/logo.png` e `public/favicon.png` |
+| Outras imagens                           | Qualquer diretório dentro de `public/`   |
+| Cores e fontes                           | `src/style.css` e `public/fonts/`        |
 
 Cada idioma habilitado possui configuração e conteúdo completos. Repita as alterações de conteúdo em todos os idiomas que permanecerem disponíveis.
 
@@ -111,7 +111,55 @@ O exemplo carrega `public/content/{idioma}/intro.md`. Dois ou mais arquivos são
 }
 ```
 
-Não use `content` e `contentFiles` na mesma seção. Os caminhos das imagens devem apontar para arquivos dentro de `public/`, sem incluir `public/` e sem começar com `/`.
+Não use `content` e `contentFiles` na mesma seção.
+
+### Imagens das seções
+
+As opções abaixo se aplicam à `image` de uma seção da página inicial. Elas não afetam o logotipo configurado em `site.image`:
+
+```json
+{
+  "image": "images/about.jpg",
+  "imageDimensions": {
+    "width": 600,
+    "height": 400
+  },
+  "imageAlign": "center",
+  "imagePosition": "top",
+  "imageRounded": true
+}
+```
+
+| Opção             | Valores aceitos                                     | Padrão                                         | Comportamento                                                                       |
+| ----------------- | --------------------------------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `image`           | Caminho da imagem ou URL permitida                  | —                                              | Define a imagem exibida ao lado do conteúdo da seção                                |
+| `imageDimensions` | `width` e `height` opcionais como números ou textos | Largura total do contêiner e altura automática | Define as dimensões no desktop de forma independente                                |
+| `imageAlign`      | `"start"`, `"center"`, `"end"`                      | `"center"`                                     | Alinha horizontalmente uma imagem menor que seu contêiner                           |
+| `imagePosition`   | `"top"`, `"center"`, `"bottom"`                     | `"top"`                                        | Controla a posição vertical do objeto e serve como fallback de alinhamento da seção |
+| `imageRounded`    | `true`, `false`                                     | `true`                                         | Usa `rounded-lg` quando ativado e `rounded-none` quando desativado                  |
+
+O contêiner da imagem ocupa toda a largura da seção no mobile e metade dela a partir do breakpoint `md`. No mobile, a imagem é sempre forçada a ocupar toda a largura do contêiner com altura automática. A partir de `md`, cada valor de `imageDimensions` é aplicado de forma independente: se `width` for omitido ou estiver vazio, a imagem mantém toda a largura do contêiner; se `height` for omitido ou estiver vazio, a altura permanece automática. Um objeto `imageDimensions` vazio não produz efeito. `imageAlign` posiciona a imagem quando a largura configurada é menor que o contêiner, e `object-cover` pode recortar a origem quando uma altura configurada altera as proporções da caixa da imagem.
+
+Cada dimensão aceita um número ou texto:
+
+- `40` ou `"40"` torna-se `40px`;
+- `"40px"` usa pixels explicitamente;
+- `"4rem"` usa unidades relativas ao elemento raiz;
+- `"100%"` usa uma porcentagem do contêiner.
+
+Por exemplo, esta configuração altera somente a largura no desktop e mantém a altura automática:
+
+```json
+"imageDimensions": {
+  "width": "40rem"
+}
+```
+
+`imagePosition` usa `top` por padrão e controla `object-position` quando `object-cover` recorta a origem. Essa opção também fornece o alinhamento vertical da seção quando `contentPosition` é omitido; um `contentPosition` explícito tem precedência.
+
+Uma imagem de seção é renderizada somente quando a seção usa `content` ou exatamente um item em `contentFiles`. Seções com dois ou mais arquivos de conteúdo ignoram `image`, pois utilizam o layout de múltiplos itens ou de carrossel.
+
+Caminhos de imagens locais devem apontar para arquivos dentro de `public/`, sem incluir `public/` nem começar com `/`, por exemplo, `images/about.jpg`. Imagens remotas exigem que sua origem seja permitida pela diretiva `img-src` da Política de Segurança de Conteúdo em `index.html`; a política padrão permite `https://placehold.co`.
 
 ### Conteúdo e páginas
 

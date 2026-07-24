@@ -42,14 +42,14 @@ Open the address shown in the terminal, normally `http://localhost:5173`. Keep t
 
 The main customization files are:
 
-| What to change | Location |
-| --- | --- |
-| Name, description, menu, sections, and footer | `public/config/{language}.json` |
-| Home content and independent pages | `public/content/{language}/` |
-| Available languages | `public/languages.json` |
-| Logo and browser icon | `public/logo.png` and `public/favicon.png` |
-| Other images | Any directory inside `public/` |
-| Colors and fonts | `src/style.css` and `public/fonts/` |
+| What to change                                | Location                                   |
+| --------------------------------------------- | ------------------------------------------ |
+| Name, description, menu, sections, and footer | `public/config/{language}.json`            |
+| Home content and independent pages            | `public/content/{language}/`               |
+| Available languages                           | `public/languages.json`                    |
+| Logo and browser icon                         | `public/logo.png` and `public/favicon.png` |
+| Other images                                  | Any directory inside `public/`             |
+| Colors and fonts                              | `src/style.css` and `public/fonts/`        |
 
 Each enabled language has its own complete configuration and content. Repeat content changes in every language that remains available.
 
@@ -111,7 +111,55 @@ The example loads `public/content/{language}/intro.md`. Two or more files are di
 }
 ```
 
-Do not use `content` and `contentFiles` in the same section. Image paths must point to files inside `public/` and must not include `public/` or start with `/`.
+Do not use `content` and `contentFiles` in the same section.
+
+### Section images
+
+The following options apply to the `image` of a home section. They do not affect the logo configured in `site.image`:
+
+```json
+{
+  "image": "images/about.jpg",
+  "imageDimensions": {
+    "width": 600,
+    "height": 400
+  },
+  "imageAlign": "center",
+  "imagePosition": "top",
+  "imageRounded": true
+}
+```
+
+| Option            | Accepted values                                  | Default                                 | Behavior                                                                         |
+| ----------------- | ------------------------------------------------ | --------------------------------------- | -------------------------------------------------------------------------------- |
+| `image`           | Image path or allowed URL                        | —                                       | Defines the image displayed beside the section content                           |
+| `imageDimensions` | Optional `width` and `height` numbers or strings | Full wrapper width and automatic height | Defines the desktop dimensions independently                                     |
+| `imageAlign`      | `"start"`, `"center"`, `"end"`                   | `"center"`                              | Aligns an image horizontally when it is narrower than its wrapper                |
+| `imagePosition`   | `"top"`, `"center"`, `"bottom"`                  | `"top"`                                 | Controls the vertical object position and acts as the section alignment fallback |
+| `imageRounded`    | `true`, `false`                                  | `true`                                  | Uses `rounded-lg` when enabled and `rounded-none` when disabled                  |
+
+The image wrapper occupies the full section width on mobile and half of it from the `md` breakpoint. On mobile, the image is always forced to the full wrapper width with automatic height. From `md` onward, each `imageDimensions` value is applied independently: an omitted or empty `width` keeps the image at the full wrapper width, while an omitted or empty `height` keeps its height automatic. An empty `imageDimensions` object has no effect. `imageAlign` positions the image when its configured width is narrower than the wrapper, and `object-cover` may crop the source when a configured height changes the image box proportions.
+
+Each dimension accepts a number or a string:
+
+- `40` or `"40"` becomes `40px`;
+- `"40px"` uses pixels explicitly;
+- `"4rem"` uses root-relative units;
+- `"100%"` uses a percentage of the wrapper.
+
+For example, this changes only the desktop width and leaves the height automatic:
+
+```json
+"imageDimensions": {
+  "width": "40rem"
+}
+```
+
+`imagePosition` uses `top` by default and controls `object-position` when `object-cover` crops the source. It also provides the vertical section alignment when `contentPosition` is omitted; an explicit `contentPosition` takes precedence.
+
+A section image is rendered only when the section uses `content` or exactly one `contentFiles` item. Sections with two or more content files ignore `image` because they use the multi-item or carousel layout.
+
+Local image paths must point to files inside `public/`, without including `public/` or starting with `/`, for example `images/about.jpg`. Remote images require their origin to be allowed by the `img-src` directive in the Content Security Policy in `index.html`; the default policy allows `https://placehold.co`.
 
 ### Content and pages
 

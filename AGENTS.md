@@ -189,7 +189,6 @@ Custom utilities:
 - Markdown containers use `max-w-none` so rendered content can occupy the full width of its section or carousel slide
 - `app-title` → fancy font, emphasized color, emphasized hover color, and `--duration`
 - `app-title-adjustment` → `mt-2 text-3xl md:text-5xl` with zero line height
-- `app-section-image` → `w-full rounded-lg object-cover md:w-1/2`
 - `app-logo` → `h-8 min-h-5 w-8 min-w-5 md:h-12 md:w-12` with `--duration`
 - `app-header` → `--header-background` mixed with transparency using `--header-background-opacity`
 - `app-header-link` → text from `--header-link`, changing to `--header-link-hover` only on devices that support hover, with `--duration`
@@ -461,6 +460,41 @@ Each `/:slug(.*)` route loads an individual Markdown file and supports nested pa
 
 Parent pages can contain Markdown sublinks to nested pages. The menu remains flat; these links do not create automatic submenu items. Because the router uses hash history, every internal link written inside Markdown must include `#/` before the route, for example `[First article](./#/articles/article-1)`. A link such as `[First article](/articles/article-1)` is invalid for this routing mode because it requests a real server path. Do not include `.md` in the browser URL: `/#/articles/article-1` resolves internally to `public/content/{locale}/articles/article-1.md`.
 
+### Image Dimensions
+
+The optional `imageDimensions` field controls the rendered size and aspect ratio of a section image:
+
+```json
+{
+  "imageDimensions": {
+    "width": 600,
+    "height": 400
+  }
+}
+```
+
+Both fields accept a number or a CSS dimension string. Numbers and unitless numeric strings are converted to pixels, so `40` and `"40"` both become `40px`. Strings with units or percentages are used directly, such as `"40px"`, `"4rem"`, and `"100%"`. Empty strings, invalid numbers, and omitted fields use the dimension fallback.
+
+On mobile, the image always uses the full wrapper width and automatic height. From the `md` breakpoint, each configured dimension is applied independently: an omitted `width` falls back to `100%`, and an omitted `height` falls back to `auto`. An empty `imageDimensions` object has no effect.
+
+The image wrapper keeps a fixed responsive layout (`w-full md:w-1/2`) and uses `imageAlign` to position the image horizontally, centered by default. The image uses `object-cover`, and `imagePosition` controls its vertical object position.
+
+### Image Alignment
+
+The optional `imageAlign` field controls the horizontal alignment of a section image inside its wrapper:
+
+| Value      | Behavior                                     |
+| ---------- | -------------------------------------------- |
+| `"start"`  | Aligns the image to the start of the wrapper |
+| `"center"` | Centers the image (default)                  |
+| `"end"`    | Aligns the image to the end of the wrapper   |
+
+The alignment applies from the `md` breakpoint, when a configured image can be narrower than its wrapper. On mobile, the image is always forced to `w-full`, regardless of `imageDimensions`.
+
+### Image Rounded Corners
+
+The optional boolean `imageRounded` field controls the border radius of a section image. It defaults to `true`, applying `rounded-lg` when the field is omitted or explicitly enabled. Setting `"imageRounded": false` applies `rounded-none`.
+
 ### Vertical Positioning
 
 The `imagePosition` field controls the image's vertical alignment in the section:
@@ -468,20 +502,20 @@ The `imagePosition` field controls the image's vertical alignment in the section
 | Value      | Behavior                                  |
 | ---------- | ----------------------------------------- |
 | `"top"`    | Image aligned to the top (`items-start`)  |
-| `"center"` | Image centered (default)                  |
+| `"center"` | Image centered                            |
 | `"bottom"` | Image aligned to the bottom (`items-end`) |
 
-Defaults to `"center"` if omitted.
+Defaults to `"top"` if omitted.
 
 The `contentPosition` field controls the content's vertical alignment in the section:
 
 | Value      | Behavior                                    |
 | ---------- | ------------------------------------------- |
 | `"top"`    | Content aligned to the top (`items-start`)  |
-| `"center"` | Content centered (default)                  |
+| `"center"` | Content centered                            |
 | `"bottom"` | Content aligned to the bottom (`items-end`) |
 
-Defaults to `"center"` if omitted.
+When omitted, it falls back to `imagePosition`, whose default is `"top"`.
 
 **Precedence**: `contentPosition` takes precedence over `imagePosition` for flex alignment. When `contentPosition` does not exist, `imagePosition` also acts as the alignment fallback. Separately, `imagePosition` controls image cropping (`object-position`). Both use the `VerticalPosition` type in `src/types/config.ts`.
 

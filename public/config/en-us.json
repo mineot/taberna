@@ -17,7 +17,13 @@
       "subtitle": "Simple content, thoughtful presentation, and the freedom to make it your own",
       "contentFiles": ["intro.md"],
       "image": "https://placehold.co/600x400",
-      "imagePosition": "top"
+      "imageRounded": true,
+      "imagePosition": "top",
+      "imageAlign": "center",
+      "imageDimensions": {
+        "width": 600,
+        "height": null
+      }
     },
     {
       "id": "about",
@@ -28,6 +34,10 @@
         "You bring the message and identity; Taberna provides an organized, responsive foundation ready to customize."
       ],
       "image": "https://placehold.co/600x400",
+      "imageDimensions": {
+        "width": 600,
+        "height": null
+      },
       "contentPosition": "top",
       "emphasis": true
     },
