@@ -184,28 +184,120 @@
 /* APP CUSTOMS */
 
 @utility app-markdown {
+  /**
+   * Regular body text.
+   * Markdown: `A regular paragraph.`
+   */
   --tw-prose-invert-body: var(--text-body);
+
+  /**
+   * Bold text.
+   * Markdown: `**Bold example**`
+   */
   --tw-prose-invert-bold: var(--text);
+
+  /**
+   * Unordered list markers.
+   * Markdown: `- Example`
+   */
   --tw-prose-invert-bullets: var(--emphasis);
+
+  /**
+   * Figure captions.
+   * HTML: `<figcaption>Example caption</figcaption>`
+   */
   --tw-prose-invert-captions: var(--text-muted);
+
+  /**
+   * Inline code.
+   * Markdown: `Use \`npm run dev\`.`
+   */
   --tw-prose-invert-code: var(--emphasis);
+
+  /**
+   * Ordered list numbers.
+   * Markdown: `1. Example`
+   */
   --tw-prose-invert-counters: var(--text-muted);
+
+  /**
+   * Heading text.
+   * Markdown: `## Example heading`
+   */
   --tw-prose-invert-headings: var(--text);
+
+  /**
+   * Horizontal separators.
+   * Markdown: `---`
+   */
   --tw-prose-invert-hr: var(--border);
+
+  /**
+   * Keyboard input.
+   * HTML: `<kbd>Ctrl</kbd>`
+   */
   --tw-prose-invert-kbd: var(--text);
+
+  /**
+   * Introductory lead text.
+   * HTML: `<p class="lead">Example introduction</p>`
+   */
   --tw-prose-invert-lead: var(--text-body);
+
+  /**
+   * Link text.
+   * Markdown: `[Example](https://example.com)`
+   */
   --tw-prose-invert-links: var(--emphasis);
+
+  /**
+   * Code block background.
+   * Markdown: ` ```js ... ``` `
+   */
   --tw-prose-invert-pre-bg: var(--backdrop);
+
+  /**
+   * Code block text.
+   * Markdown: ` ```js const value = 1; ``` `
+   */
   --tw-prose-invert-pre-code: var(--text-muted);
+
+  /**
+   * Blockquote border.
+   * Markdown: `> Example quote`
+   */
   --tw-prose-invert-quote-borders: var(--emphasis);
+
+  /**
+   * Blockquote text.
+   * Markdown: `> Example quote`
+   */
   --tw-prose-invert-quotes: var(--text-muted);
+
+  /**
+   * Table body cell borders.
+   * Markdown: `| Example | Value |`
+   */
   --tw-prose-invert-td-borders: var(--border);
+
+  /**
+   * Table header cell borders.
+   * Markdown: `| Name | Role |`
+   */
   --tw-prose-invert-th-borders: var(--border);
 
+  /**
+   * Targets links inside app-markdown and smooths color changes.
+   * The `&` represents the generated app-markdown selector.
+   */
   & a {
     transition-duration: var(--duration);
   }
 
+  /**
+   * Applies the semantic hover color only while a link is hovered.
+   * This complements --tw-prose-invert-links, which sets the base color.
+   */
   & a:hover {
     color: var(--emphasis-hover);
   }

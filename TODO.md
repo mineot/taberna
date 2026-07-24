@@ -1,3 +1,3 @@
 # TODO
 
-- Criar Blog/Artigos precisamos ter itens e subitens
+- Para as imagens de seção, temos que criar no json uma configuração de tamanho
