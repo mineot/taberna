@@ -65,6 +65,10 @@ Edite o objeto `site` em `public/config/{idioma}.json`:
 }
 ```
 
+O arquivo `index.html` fornece a descrição inicial antes do carregamento da aplicação. Depois que a configuração do idioma é carregada, `site.description` atualiza `<meta name="description">`; a troca de idioma atualiza essa tag novamente sem recarregar a página.
+
+Essa atualização acontece no navegador. Open Graph, metadados específicos por página e pré-renderização de SEO para crawlers sem JavaScript não estão implementados.
+
 Substitua `public/logo.png` e `public/favicon.png` para alterar a identidade visual padrão.
 
 ### Seções da página inicial
@@ -232,24 +236,29 @@ Mantenha rotas, identificadores de seção, nomes de diretórios e nomes de arqu
 
 ### Cores e fontes
 
-As escalas de cores `agua` e `rosa` são definidas no bloco `@theme` de `src/style.css`. Os componentes usam variáveis semânticas do `:root`; portanto, personalize essas variáveis em vez de adicionar classes específicas da paleta aos templates:
+O bloco `@theme` de `src/style.css` define as famílias de fontes personalizadas. O tema escuro atual usa as escalas nativas `neutral` e `emerald` do Tailwind por meio de variáveis semânticas no `:root`. Personalize essas variáveis em vez de adicionar classes específicas da paleta aos templates:
 
 ```css
 :root {
-  --background: var(--color-white);
-  --text: var(--color-rose-400);
-  --emphasis: var(--color-white);
-  --header-background: var(--color-agua-500);
-  --footer-background: var(--color-agua-500);
-  --footer-statics: var(--color-slate-300);
+  --background: var(--color-neutral-800);
+  --background-hover: var(--color-neutral-700);
+  --background-emphasis: var(--color-neutral-700);
+  --text: var(--color-neutral-100);
+  --text-body: var(--color-neutral-300);
+  --text-muted: var(--color-neutral-400);
+  --emphasis: var(--color-emerald-500);
+  --emphasis-hover: var(--color-emerald-300);
+  --header-background: var(--color-neutral-950);
+  --footer-background: var(--color-neutral-950);
+  --footer-statics: var(--color-neutral-500);
   --footer-powered: var(--emphasis);
   --footer-powered-hover: var(--emphasis-hover);
-  --btn: var(--color-rosa-700);
-  --btn-hover: var(--color-rosa-900);
+  --btn: var(--color-neutral-400);
+  --btn-hover: var(--color-emerald-300);
 }
 ```
 
-Os pontos, anéis de progresso e botões de navegação do carrossel também possuem tokens semânticos próprios no mesmo bloco `:root`.
+Bordas, estados de erro e carregamento, cabeçalho, menu lateral, pontos do carrossel, anéis de progresso e botões de navegação também possuem tokens semânticos próprios no mesmo bloco `:root`.
 
 Os arquivos de fonte estão em `public/fonts/` e suas definições ficam no início de `src/style.css`.
 

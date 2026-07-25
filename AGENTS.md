@@ -125,7 +125,7 @@ taberna/
 
 ## Theme System (style.css)
 
-`@theme` defines the custom font stacks and the `agua` and `rosa` color scales. Application colors, opacity, and transition durations are centralized as semantic custom properties in `:root`; components consume them through `app-*` utilities instead of depending on palette-specific Tailwind classes.
+`@theme` defines the custom font stacks. Application colors, opacity, and transition durations are centralized as semantic custom properties in `:root`; components consume them through `app-*` utilities instead of depending directly on Tailwind palette classes. The current dark theme uses Tailwind's built-in `neutral` and `emerald` color scales.
 
 Current semantic tokens:
 
@@ -133,37 +133,37 @@ Current semantic tokens:
 | ----------------------------- | ------------------ | ------------------------------------------- |
 | `--backdrop-opacity`          | `80%`              | Offcanvas backdrop opacity                  |
 | `--backdrop`                  | `neutral-900`      | Offcanvas backdrop and Markdown code blocks |
-| `--border`                    | `agua-800`         | Borders and Markdown separators             |
+| `--border`                    | `neutral-700`      | Borders and Markdown separators             |
 | `--duration-carousel`         | `500ms`            | Carousel slide/fade transitions             |
 | `--duration`                  | `300ms`            | Standard application transitions            |
 | `--error`                     | `emerald-400`      | Error text                                  |
 | `--skeleton`                  | `neutral-700`      | Skeleton loading blocks                     |
-| `--dot`                       | `rosa-400`         | Inactive carousel dots                      |
-| `--dot-active`                | `rosa-700`         | Active carousel dot                         |
-| `--dot-inactive`              | `rosa-200`         | Inactive carousel dot hover                 |
-| `--progress`                  | `rose-300`         | Carousel progress-ring indicator            |
-| `--progress-track`            | `rose-700`         | Carousel progress-ring track                |
-| `--ring`                      | `yellow-400`       | Selected-language ring                      |
-| `--btn`                       | `rosa-700`         | Carousel navigation button                  |
-| `--btn-hover`                 | `rosa-900`         | Carousel navigation button hover            |
-| `--background`                | `white`            | Main application background                 |
-| `--background-hover`          | `zinc-100`         | Interactive background on hover             |
-| `--background-emphasis`       | `zinc-50`          | Emphasized section background               |
-| `--text`                      | `rose-400`         | Main/high-contrast text                     |
-| `--text-body`                 | `zinc-500`         | Body and Markdown text                      |
-| `--text-muted`                | `agua-500`         | Muted/subtle text                           |
-| `--emphasis`                  | `white`            | Emphasized text and links                   |
-| `--emphasis-hover`            | `rosa-400`         | Emphasized hover state                      |
-| `--header-link`               | `white`            | Header link text                            |
-| `--header-link-hover`         | `rosa-400`         | Header link hover text                      |
-| `--header-background`         | `agua-500`         | Header background base                      |
-| `--header-background-opacity` | `90%`              | Header background opacity                   |
-| `--sidebar-link`              | `neutral-500`      | Sidebar link text                           |
-| `--sidebar-link-hover`        | `emerald-600`      | Sidebar link hover text                     |
+| `--dot`                       | `neutral-600`      | Inactive carousel dots                      |
+| `--dot-active`                | `emerald-400`      | Active carousel dot                         |
+| `--dot-inactive`              | `neutral-500`      | Inactive carousel dot hover                 |
+| `--progress`                  | `emerald-400`      | Carousel progress-ring indicator            |
+| `--progress-track`            | `emerald-600`      | Carousel progress-ring track                |
+| `--ring`                      | `emerald-400`      | Selected-language ring                      |
+| `--btn`                       | `neutral-400`      | Carousel navigation button                  |
+| `--btn-hover`                 | `emerald-300`      | Carousel navigation button hover            |
+| `--background`                | `neutral-800`      | Main application background                 |
+| `--background-hover`          | `neutral-700`      | Interactive background on hover             |
+| `--background-emphasis`       | `neutral-700`      | Emphasized section background               |
+| `--text`                      | `neutral-100`      | Main/high-contrast text                     |
+| `--text-body`                 | `neutral-300`      | Body and Markdown text                      |
+| `--text-muted`                | `neutral-400`      | Muted/subtle text                           |
+| `--emphasis`                  | `emerald-500`      | Emphasized text and links                   |
+| `--emphasis-hover`            | `emerald-300`      | Emphasized hover state                      |
+| `--header-link`               | `neutral-100`      | Header link text                            |
+| `--header-link-hover`         | `emerald-500`      | Header link hover text                      |
+| `--header-background`         | `neutral-950`      | Header background base                      |
+| `--header-background-opacity` | `85%`              | Header background opacity                   |
+| `--sidebar-link`              | `neutral-100`      | Sidebar link text                           |
+| `--sidebar-link-hover`        | `emerald-500`      | Sidebar link hover text                     |
 | `--sidebar-background`        | `neutral-800`      | Sidebar background                          |
 | `--sidebar-background-hover`  | `neutral-700`      | Sidebar link hover background               |
-| `--footer-background`         | `agua-500`         | Footer background                           |
-| `--footer-statics`            | `slate-300`        | Static footer text                          |
+| `--footer-background`         | `neutral-950`      | Footer background                           |
+| `--footer-statics`            | `neutral-500`      | Static footer text                          |
 | `--footer-powered`            | `--emphasis`       | Project credit link                         |
 | `--footer-powered-hover`      | `--emphasis-hover` | Project credit link hover                   |
 

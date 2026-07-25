@@ -65,6 +65,10 @@ Edit the `site` object in `public/config/{language}.json`:
 }
 ```
 
+The `index.html` file provides the initial description before the application loads. After the language configuration is loaded, `site.description` updates `<meta name="description">`; changing languages updates it again without reloading the page.
+
+This update happens in the browser. Open Graph, per-page metadata, and SEO prerendering for crawlers without JavaScript are not implemented.
+
 Replace `public/logo.png` and `public/favicon.png` to change the default visual identity.
 
 ### Home sections
@@ -232,24 +236,29 @@ Keep routes, section IDs, directory names, and file names the same in every lang
 
 ### Colors and fonts
 
-The `agua` and `rosa` color scales are defined in the `@theme` block of `src/style.css`. Components use semantic variables from `:root`, so customize those variables instead of adding palette-specific classes to templates:
+The `@theme` block in `src/style.css` defines the custom font stacks. The current dark theme uses Tailwind's built-in `neutral` and `emerald` scales through semantic variables in `:root`. Customize these variables instead of adding palette-specific classes to templates:
 
 ```css
 :root {
-  --background: var(--color-white);
-  --text: var(--color-rose-400);
-  --emphasis: var(--color-white);
-  --header-background: var(--color-agua-500);
-  --footer-background: var(--color-agua-500);
-  --footer-statics: var(--color-slate-300);
+  --background: var(--color-neutral-800);
+  --background-hover: var(--color-neutral-700);
+  --background-emphasis: var(--color-neutral-700);
+  --text: var(--color-neutral-100);
+  --text-body: var(--color-neutral-300);
+  --text-muted: var(--color-neutral-400);
+  --emphasis: var(--color-emerald-500);
+  --emphasis-hover: var(--color-emerald-300);
+  --header-background: var(--color-neutral-950);
+  --footer-background: var(--color-neutral-950);
+  --footer-statics: var(--color-neutral-500);
   --footer-powered: var(--emphasis);
   --footer-powered-hover: var(--emphasis-hover);
-  --btn: var(--color-rosa-700);
-  --btn-hover: var(--color-rosa-900);
+  --btn: var(--color-neutral-400);
+  --btn-hover: var(--color-emerald-300);
 }
 ```
 
-Carousel dots, progress rings, and navigation buttons also have dedicated semantic tokens in the same `:root` block.
+Borders, error and loading states, the header, sidebar, carousel dots, progress rings, and navigation buttons also have dedicated semantic tokens in the same `:root` block.
 
 Font files are stored in `public/fonts/` and their definitions are at the beginning of `src/style.css`.
 
