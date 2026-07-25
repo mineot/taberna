@@ -208,8 +208,8 @@
       <div
         class="app-border mt-6 flex w-full flex-col items-center gap-2 border-t pt-4 text-xs md:flex-row md:justify-between"
       >
-        <p>{{ config?.footer.ownership }}</p>
-        <p>
+        <p class="app-statics">{{ config?.footer.ownership }}</p>
+        <p class="app-statics">
           Powered by
           <a
             href="https://github.com/mineot/taberna"

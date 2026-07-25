@@ -209,6 +209,8 @@ O rodapé básico é configurado com:
 
 Para usar o rodapé personalizado incluído, mantenha `"contentFile": "footer.md"` e edite `public/content/{idioma}/footer.md`. Preserve sua estrutura HTML e substitua apenas logotipo, textos e links, exceto se também pretender alterar seus estilos.
 
+O texto de propriedade e o prefixo “Powered by” usam a utility `app-statics` e o token `--footer-statics`. O link “Mineot” usa `app-powered`, com suas cores normal e de hover controladas por `--footer-powered` e `--footer-powered-hover`.
+
 ### Idiomas
 
 Os idiomas disponíveis estão em `public/languages.json`:
@@ -230,17 +232,24 @@ Mantenha rotas, identificadores de seção, nomes de diretórios e nomes de arqu
 
 ### Cores e fontes
 
-As cores principais são variáveis do bloco `:root` em `src/style.css`:
+As escalas de cores `agua` e `rosa` são definidas no bloco `@theme` de `src/style.css`. Os componentes usam variáveis semânticas do `:root`; portanto, personalize essas variáveis em vez de adicionar classes específicas da paleta aos templates:
 
 ```css
 :root {
-  --background: #1f2937;
-  --footer-background: #030712;
-  --text: #f9fafb;
-  --emphasis: #f97316;
-  --emphasis-hover: #fdba74;
+  --background: var(--color-white);
+  --text: var(--color-rose-400);
+  --emphasis: var(--color-white);
+  --header-background: var(--color-agua-500);
+  --footer-background: var(--color-agua-500);
+  --footer-statics: var(--color-slate-300);
+  --footer-powered: var(--emphasis);
+  --footer-powered-hover: var(--emphasis-hover);
+  --btn: var(--color-rosa-700);
+  --btn-hover: var(--color-rosa-900);
 }
 ```
+
+Os pontos, anéis de progresso e botões de navegação do carrossel também possuem tokens semânticos próprios no mesmo bloco `:root`.
 
 Os arquivos de fonte estão em `public/fonts/` e suas definições ficam no início de `src/style.css`.
 

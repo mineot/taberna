@@ -125,42 +125,47 @@ taberna/
 
 ## Theme System (style.css)
 
-`@theme` defines only the custom font stacks. Application colors, opacity, and transition durations are centralized as semantic custom properties in `:root`; components consume them through `app-*` utilities instead of depending on palette-specific Tailwind classes.
+`@theme` defines the custom font stacks and the `agua` and `rosa` color scales. Application colors, opacity, and transition durations are centralized as semantic custom properties in `:root`; components consume them through `app-*` utilities instead of depending on palette-specific Tailwind classes.
 
 Current semantic tokens:
 
-| Token                         | Default value | Purpose                                      |
-| ----------------------------- | ------------- | -------------------------------------------- |
-| `--background`                | `neutral-800` | Main application background                  |
-| `--background-hover`          | `neutral-700` | Interactive background on hover              |
-| `--background-emphasis`       | `neutral-700` | Emphasized section background                |
-| `--footer-background`         | `neutral-950` | Footer background                            |
-| `--header-background`         | `neutral-950` | Header background base                       |
-| `--header-background-opacity` | `85%`         | Header background opacity                    |
-| `--header-link`               | `neutral-100` | Header link text                             |
-| `--header-link-hover`         | `emerald-500` | Header link hover text                       |
-| `--sidebar-background`        | `neutral-800` | Sidebar background                           |
-| `--sidebar-background-hover`  | `neutral-700` | Sidebar link hover background                |
-| `--sidebar-link`              | `neutral-100` | Sidebar link text                            |
-| `--sidebar-link-hover`        | `emerald-500` | Sidebar link hover text                      |
-| `--backdrop`                  | `neutral-900` | Offcanvas backdrop and Markdown code blocks  |
-| `--backdrop-opacity`          | `80%`         | Offcanvas backdrop opacity                   |
-| `--text`                      | `neutral-100` | Main/high-contrast text                      |
-| `--text-body`                 | `neutral-300` | Body and Markdown text                       |
-| `--text-muted`                | `neutral-400` | Muted/subtle text                            |
-| `--emphasis`                  | `emerald-500` | Emphasized text, links, titles, and controls |
-| `--emphasis-hover`            | `emerald-300` | Emphasized hover state                       |
-| `--error`                     | `emerald-400` | Error text                                   |
-| `--border`                    | `neutral-700` | Borders and Markdown separators              |
-| `--ring`                      | `emerald-400` | Selected-language ring                       |
-| `--skeleton`                  | `neutral-700` | Skeleton loading blocks                      |
-| `--dot`                       | `neutral-600` | Inactive carousel dots                       |
-| `--dot-inactive`              | `neutral-500` | Inactive carousel dot hover                  |
-| `--dot-active`                | `emerald-400` | Active carousel dot                          |
-| `--progress-track`            | `emerald-600` | Carousel progress-ring track                 |
-| `--progress`                  | `emerald-400` | Carousel progress-ring indicator             |
-| `--duration`                  | `300ms`       | Standard application transitions             |
-| `--duration-carousel`         | `500ms`       | Carousel slide/fade transitions              |
+| Token                         | Default value      | Purpose                                     |
+| ----------------------------- | ------------------ | ------------------------------------------- |
+| `--backdrop-opacity`          | `80%`              | Offcanvas backdrop opacity                  |
+| `--backdrop`                  | `neutral-900`      | Offcanvas backdrop and Markdown code blocks |
+| `--border`                    | `agua-800`         | Borders and Markdown separators             |
+| `--duration-carousel`         | `500ms`            | Carousel slide/fade transitions             |
+| `--duration`                  | `300ms`            | Standard application transitions            |
+| `--error`                     | `emerald-400`      | Error text                                  |
+| `--skeleton`                  | `neutral-700`      | Skeleton loading blocks                     |
+| `--dot`                       | `rosa-400`         | Inactive carousel dots                      |
+| `--dot-active`                | `rosa-700`         | Active carousel dot                         |
+| `--dot-inactive`              | `rosa-200`         | Inactive carousel dot hover                 |
+| `--progress`                  | `rose-300`         | Carousel progress-ring indicator            |
+| `--progress-track`            | `rose-700`         | Carousel progress-ring track                |
+| `--ring`                      | `yellow-400`       | Selected-language ring                      |
+| `--btn`                       | `rosa-700`         | Carousel navigation button                  |
+| `--btn-hover`                 | `rosa-900`         | Carousel navigation button hover            |
+| `--background`                | `white`            | Main application background                 |
+| `--background-hover`          | `zinc-100`         | Interactive background on hover             |
+| `--background-emphasis`       | `zinc-50`          | Emphasized section background               |
+| `--text`                      | `rose-400`         | Main/high-contrast text                     |
+| `--text-body`                 | `zinc-500`         | Body and Markdown text                      |
+| `--text-muted`                | `agua-500`         | Muted/subtle text                           |
+| `--emphasis`                  | `white`            | Emphasized text and links                   |
+| `--emphasis-hover`            | `rosa-400`         | Emphasized hover state                      |
+| `--header-link`               | `white`            | Header link text                            |
+| `--header-link-hover`         | `rosa-400`         | Header link hover text                      |
+| `--header-background`         | `agua-500`         | Header background base                      |
+| `--header-background-opacity` | `90%`              | Header background opacity                   |
+| `--sidebar-link`              | `neutral-500`      | Sidebar link text                           |
+| `--sidebar-link-hover`        | `emerald-600`      | Sidebar link hover text                     |
+| `--sidebar-background`        | `neutral-800`      | Sidebar background                          |
+| `--sidebar-background-hover`  | `neutral-700`      | Sidebar link hover background               |
+| `--footer-background`         | `agua-500`         | Footer background                           |
+| `--footer-statics`            | `slate-300`        | Static footer text                          |
+| `--footer-powered`            | `--emphasis`       | Project credit link                         |
+| `--footer-powered-hover`      | `--emphasis-hover` | Project credit link hover                   |
 
 Custom font stacks:
 
@@ -184,7 +189,8 @@ Custom utilities:
 - `app-error` → color from `--error`
 - `app-skeleton` → background from `--skeleton`
 - `app-backdrop` → `--backdrop` mixed with transparency using `--backdrop-opacity`
-- `app-powered` → emphasized project credit link with the emphasized hover color
+- `app-powered` → project credit link using `--footer-powered` and `--footer-powered-hover`
+- `app-statics` → static footer text using `--footer-statics`
 - `app-markdown` → inverted Tailwind Typography variables mapped to the semantic tokens, including emphasized links with a hover transition
 - Markdown containers use `max-w-none` so rendered content can occupy the full width of its section or carousel slide
 - `app-title` → fancy font, emphasized color, emphasized hover color, and `--duration`
@@ -202,7 +208,7 @@ Custom utilities:
 - `app-section-subtitle` → `app-text-subtle`
 - `app-section-emphasis` → background from `--background-emphasis`
 - `app-section-carousel-transition` → transition duration from `--duration-carousel`
-- `app-section-carousel-btn` → muted text with emphasized text on hover
+- `app-section-carousel-btn` → carousel controls using `--btn` and `--btn-hover`
 - `app-section-carousel-progress-track` → stroke from `--progress-track`
 - `app-section-carousel-progress` → stroke from `--progress`
 - `app-section-dot-active` → background from `--dot-active`
@@ -762,6 +768,7 @@ The `contentFile` field in the `footer` config allows loading Markdown content i
 - **Separator**: Horizontal line between the Markdown content and the ownership/powered-by line
 - **Ownership**: `ownership` field in the config (for example, "© 2026 Name")
 - **Powered by**: Static text with a link to `https://github.com/mineot/taberna`
+- **Static text color**: `footer.ownership` and the "Powered by" prefix use `app-statics`; the "Mineot" link uses `app-powered`
 - **Links**: Styled centrally through `.footer-links a` in `src/style.css`
 - **Layout**: Three equal columns from the `md` breakpoint and one stacked column on smaller screens; the ownership/powered-by line uses a column on mobile and `space-between` on desktop
 - **Example footer.md content**:

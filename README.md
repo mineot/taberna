@@ -209,6 +209,8 @@ The basic footer is configured with:
 
 To use the included custom footer, keep `"contentFile": "footer.md"` and edit `public/content/{language}/footer.md`. Preserve its HTML structure and replace only the logo, text, and links unless you also intend to change its styles.
 
+The ownership text and the “Powered by” prefix use the `app-statics` utility and the `--footer-statics` token. The “Mineot” link uses `app-powered`, with its normal and hover colors controlled by `--footer-powered` and `--footer-powered-hover`.
+
 ### Languages
 
 The available languages are listed in `public/languages.json`:
@@ -230,17 +232,24 @@ Keep routes, section IDs, directory names, and file names the same in every lang
 
 ### Colors and fonts
 
-The main colors are variables in the `:root` block of `src/style.css`:
+The `agua` and `rosa` color scales are defined in the `@theme` block of `src/style.css`. Components use semantic variables from `:root`, so customize those variables instead of adding palette-specific classes to templates:
 
 ```css
 :root {
-  --background: #1f2937;
-  --footer-background: #030712;
-  --text: #f9fafb;
-  --emphasis: #f97316;
-  --emphasis-hover: #fdba74;
+  --background: var(--color-white);
+  --text: var(--color-rose-400);
+  --emphasis: var(--color-white);
+  --header-background: var(--color-agua-500);
+  --footer-background: var(--color-agua-500);
+  --footer-statics: var(--color-slate-300);
+  --footer-powered: var(--emphasis);
+  --footer-powered-hover: var(--emphasis-hover);
+  --btn: var(--color-rosa-700);
+  --btn-hover: var(--color-rosa-900);
 }
 ```
+
+Carousel dots, progress rings, and navigation buttons also have dedicated semantic tokens in the same `:root` block.
 
 Font files are stored in `public/fonts/` and their definitions are at the beginning of `src/style.css`.
 

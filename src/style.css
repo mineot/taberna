@@ -75,20 +75,20 @@
 :root {
   --duration: 300ms;
   --duration-carousel: 500ms;
-
   --backdrop-opacity: 80%;
   --backdrop: var(--color-neutral-900);
-
-  --ring: var(--color-emerald-400);
-  --error: var(--color-emerald-400);
   --border: var(--color-neutral-700);
+  --error: var(--color-emerald-400);
   --skeleton: var(--color-neutral-700);
-  --progress: var(--color-emerald-400);
-  --progress-track: var(--color-emerald-600);
 
   --dot: var(--color-neutral-600);
   --dot-active: var(--color-emerald-400);
   --dot-inactive: var(--color-neutral-500);
+  --progress: var(--color-emerald-400);
+  --progress-track: var(--color-emerald-600);
+  --ring: var(--color-emerald-400);
+  --btn: var(--color-neutral-400);
+  --btn-hover: var(--color-emerald-300);
 
   --background: var(--color-neutral-800);
   --background-hover: var(--color-neutral-700);
@@ -112,6 +112,9 @@
   --sidebar-background-hover: var(--color-neutral-700);
 
   --footer-background: var(--color-neutral-950);
+  --footer-statics: var(--color-neutral-500);
+  --footer-powered: var(--emphasis);
+  --footer-powered-hover: var(--emphasis-hover);
 }
 
 /* APP COLORS */
@@ -178,7 +181,16 @@
 }
 
 @utility app-powered {
-  @apply app-text-emphasis hover:app-text-emphasis-hover;
+  color: var(--footer-powered);
+  &:hover {
+    @media (hover: hover) {
+      color: var(--footer-powered-hover);
+    }
+  }
+}
+
+@utility app-statics {
+  color: var(--footer-statics);
 }
 
 /* APP CUSTOMS */
@@ -396,7 +408,12 @@
 }
 
 @utility app-section-carousel-btn {
-  @apply app-text-muted hover:app-text-emphasis;
+  color: var(--btn);
+  &:hover {
+    @media (hover: hover) {
+      color: var(--btn-hover);
+    }
+  }
 }
 
 @utility app-section-carousel-progress-track {
