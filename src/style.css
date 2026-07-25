@@ -81,6 +81,15 @@
   --error: var(--color-emerald-400);
   --skeleton: var(--color-neutral-700);
 
+  --background-emphasis: var(--color-neutral-700);
+  --background-hover: var(--color-neutral-700);
+  --background: var(--color-neutral-800);
+  --emphasis-hover: var(--color-emerald-300);
+  --emphasis: var(--color-emerald-500);
+  --text-body: var(--color-neutral-300);
+  --text-muted: var(--color-neutral-400);
+  --text: var(--color-neutral-100);
+
   --dot: var(--color-neutral-600);
   --dot-active: var(--color-emerald-400);
   --dot-inactive: var(--color-neutral-500);
@@ -89,17 +98,6 @@
   --ring: var(--color-emerald-400);
   --btn: var(--color-neutral-400);
   --btn-hover: var(--color-emerald-300);
-
-  --background: var(--color-neutral-800);
-  --background-hover: var(--color-neutral-700);
-  --background-emphasis: var(--color-neutral-700);
-
-  --text: var(--color-neutral-100);
-  --text-body: var(--color-neutral-300);
-  --text-muted: var(--color-neutral-400);
-
-  --emphasis: var(--color-emerald-500);
-  --emphasis-hover: var(--color-emerald-300);
 
   --header-link: var(--color-neutral-100);
   --header-link-hover: var(--color-emerald-500);
