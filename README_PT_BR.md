@@ -42,14 +42,14 @@ Abra o endereço mostrado no terminal, normalmente `http://localhost:5173`. Mant
 
 Os principais arquivos de personalização são:
 
-| O que alterar                            | Local                                    |
-| ---------------------------------------- | ---------------------------------------- |
-| Nome, descrição, menu, seções e rodapé   | `public/config/{idioma}.json`            |
-| Conteúdo inicial e páginas independentes | `public/content/{idioma}/`               |
-| Idiomas disponíveis                      | `public/languages.json`                  |
-| Logotipo e ícone do navegador            | `public/logo.png` e `public/favicon.png` |
-| Outras imagens                           | Qualquer diretório dentro de `public/`   |
-| Cores e fontes                           | `src/style.css` e `public/fonts/`        |
+| O que alterar                            | Local                                                   |
+| ---------------------------------------- | ------------------------------------------------------- |
+| Nome, descrição, menu, seções e rodapé   | `public/config/{idioma}.json`                           |
+| Conteúdo inicial e páginas independentes | `public/content/{idioma}/`                              |
+| Idiomas disponíveis                      | `public/languages.json`                                 |
+| Logotipo e ícone do navegador            | `public/logo.png` e `public/favicon.png`                |
+| Outras imagens                           | Qualquer diretório dentro de `public/`                  |
+| Cores, fontes e textura de fundo         | `src/style.css`, `public/fonts/` e `public/texture.png` |
 
 Cada idioma habilitado possui configuração e conteúdo completos. Repita as alterações de conteúdo em todos os idiomas que permanecerem disponíveis.
 
@@ -234,7 +234,7 @@ Para manter somente um idioma, deixe apenas esse idioma em `available` e `flags`
 
 Mantenha rotas, identificadores de seção, nomes de diretórios e nomes de arquivos iguais em todos os idiomas. Traduza somente os textos visíveis.
 
-### Cores e fontes
+### Cores, fontes e textura de fundo
 
 O bloco `@theme` de `src/style.css` define as famílias de fontes personalizadas. O tema escuro atual usa as escalas nativas `neutral` e `emerald` do Tailwind por meio de variáveis semânticas no `:root`. Personalize essas variáveis em vez de adicionar classes específicas da paleta aos templates:
 
@@ -261,6 +261,25 @@ O bloco `@theme` de `src/style.css` define as famílias de fontes personalizadas
 Bordas, estados de erro e carregamento, cabeçalho, menu lateral, pontos do carrossel, anéis de progresso e botões de navegação também possuem tokens semânticos próprios no mesmo bloco `:root`.
 
 Os arquivos de fonte estão em `public/fonts/` e suas definições ficam no início de `src/style.css`.
+
+A textura de fundo repetida está armazenada em `public/texture.png`. A utility `app-texture` em `src/style.css` aplica essa textura ao fundo principal, cabeçalho, menu lateral, rodapé e seções destacadas:
+
+```css
+@utility app-texture {
+  background-image: url('/texture.png');
+  background-repeat: repeat;
+}
+```
+
+Substitua `public/texture.png` por outra imagem para personalizar a textura. Para usar somente as cores de fundo configuradas, sem nenhuma textura, altere a utility para:
+
+```css
+@utility app-texture {
+  background-image: none;
+}
+```
+
+Isso desativa apenas a textura; as cores de fundo semânticas continuam ativas.
 
 ### Lembretes sobre JSON
 

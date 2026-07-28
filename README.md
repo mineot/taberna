@@ -42,14 +42,14 @@ Open the address shown in the terminal, normally `http://localhost:5173`. Keep t
 
 The main customization files are:
 
-| What to change                                | Location                                   |
-| --------------------------------------------- | ------------------------------------------ |
-| Name, description, menu, sections, and footer | `public/config/{language}.json`            |
-| Home content and independent pages            | `public/content/{language}/`               |
-| Available languages                           | `public/languages.json`                    |
-| Logo and browser icon                         | `public/logo.png` and `public/favicon.png` |
-| Other images                                  | Any directory inside `public/`             |
-| Colors and fonts                              | `src/style.css` and `public/fonts/`        |
+| What to change                                | Location                                                   |
+| --------------------------------------------- | ---------------------------------------------------------- |
+| Name, description, menu, sections, and footer | `public/config/{language}.json`                            |
+| Home content and independent pages            | `public/content/{language}/`                               |
+| Available languages                           | `public/languages.json`                                    |
+| Logo and browser icon                         | `public/logo.png` and `public/favicon.png`                 |
+| Other images                                  | Any directory inside `public/`                             |
+| Colors, fonts, and background texture         | `src/style.css`, `public/fonts/`, and `public/texture.png` |
 
 Each enabled language has its own complete configuration and content. Repeat content changes in every language that remains available.
 
@@ -234,7 +234,7 @@ To keep only one language, leave only that language in `available` and `flags`. 
 
 Keep routes, section IDs, directory names, and file names the same in every language. Translate only visible text.
 
-### Colors and fonts
+### Colors, fonts, and background texture
 
 The `@theme` block in `src/style.css` defines the custom font stacks. The current dark theme uses Tailwind's built-in `neutral` and `emerald` scales through semantic variables in `:root`. Customize these variables instead of adding palette-specific classes to templates:
 
@@ -261,6 +261,25 @@ The `@theme` block in `src/style.css` defines the custom font stacks. The curren
 Borders, error and loading states, the header, sidebar, carousel dots, progress rings, and navigation buttons also have dedicated semantic tokens in the same `:root` block.
 
 Font files are stored in `public/fonts/` and their definitions are at the beginning of `src/style.css`.
+
+The repeating background texture is stored in `public/texture.png`. The `app-texture` utility in `src/style.css` applies it to the main background, header, sidebar, footer, and highlighted sections:
+
+```css
+@utility app-texture {
+  background-image: url('/texture.png');
+  background-repeat: repeat;
+}
+```
+
+Replace `public/texture.png` with another image to customize the texture. To use only the configured background colors without any texture, change the utility to:
+
+```css
+@utility app-texture {
+  background-image: none;
+}
+```
+
+This disables only the texture; the semantic background colors remain active.
 
 ### JSON reminders
 

@@ -177,7 +177,8 @@ Custom font stacks:
 Custom utilities:
 
 - `app-duration` → transition duration from `--duration`
-- `app-background` → background from `--background`
+- `app-texture` → repeating background image from `/texture.png`
+- `app-background` → background from `--background` with `app-texture`
 - `app-background-hover` → background from `--background-hover`; apply it with `hover:` when hover-only behavior is required
 - `app-text` → color from `--text`
 - `app-text-muted` / `app-text-subtle` → color from `--text-muted`
@@ -196,17 +197,17 @@ Custom utilities:
 - `app-title` → fancy font, emphasized color, emphasized hover color, and `--duration`
 - `app-title-adjustment` → `mt-2 text-3xl md:text-5xl` with zero line height
 - `app-logo` → `h-8 min-h-5 w-8 min-w-5 md:h-12 md:w-12` with `--duration`
-- `app-header` → `--header-background` mixed with transparency using `--header-background-opacity`
+- `app-header` → `--header-background` mixed with transparency using `--header-background-opacity`, with `app-texture`
 - `app-header-link` → text from `--header-link`, changing to `--header-link-hover` only on devices that support hover, with `--duration`
-- `app-sidebar` → background from `--sidebar-background`
+- `app-sidebar` → background from `--sidebar-background` with `app-texture`
 - `app-sidebar-link` → text from `--sidebar-link`, changing its background to `--sidebar-background-hover` and its text to `--sidebar-link-hover` only on devices that support hover
-- `app-footer` → semantic border, footer background, and subtle text
+- `app-footer` → semantic border, footer background, subtle text, and `app-texture`
 - `app-language-button` → application background, hover background, and semantic border
 - `app-language-button-text` → `app-text-body`
 - `app-language-button-selected` → `app-ring`
 - `app-section-title` → `app-text`
 - `app-section-subtitle` → `app-text-subtle`
-- `app-section-emphasis` → background from `--background-emphasis`
+- `app-section-emphasis` → background from `--background-emphasis` with `app-texture`
 - `app-section-carousel-transition` → transition duration from `--duration-carousel`
 - `app-section-carousel-btn` → carousel controls using `--btn` and `--btn-hover`
 - `app-section-carousel-progress-track` → stroke from `--progress-track`
