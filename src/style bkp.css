@@ -1,0 +1,482 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Serif';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/Roboto_Serif/RobotoSerif-Italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url('/fonts/Roboto_Mono/RobotoMono-Italic-VariableFont_wght.ttf')
+    format('truetype');
+}
+
+@font-face {
+  font-family: 'Italianno';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Italianno/Italianno-Regular.ttf') format('truetype');
+}
+
+@theme {
+  --font-sans:
+    'Roboto', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif:
+    'Roboto Serif', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono:
+    'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+  --font-fancy: 'Italianno', cursive;
+}
+
+:root {
+  --duration: 300ms;
+  --duration-carousel: 500ms;
+  --backdrop-opacity: 80%;
+  --backdrop: var(--color-neutral-900);
+  --border: var(--color-neutral-700);
+  --error: var(--color-emerald-400);
+  --skeleton: var(--color-neutral-700);
+
+  --background-emphasis: var(--color-neutral-700);
+  --background-hover: var(--color-neutral-700);
+  --background: var(--color-neutral-800);
+  --emphasis-hover: var(--color-emerald-300);
+  --emphasis: var(--color-emerald-500);
+  --text-body: var(--color-neutral-300);
+  --text-muted: var(--color-neutral-400);
+  --text: var(--color-neutral-100);
+
+  --dot: var(--color-neutral-600);
+  --dot-active: var(--color-emerald-400);
+  --dot-inactive: var(--color-neutral-500);
+  --progress: var(--color-emerald-400);
+  --progress-track: var(--color-emerald-600);
+  --ring: var(--color-emerald-400);
+  --btn: var(--color-neutral-400);
+  --btn-hover: var(--color-emerald-300);
+
+  --header-link: var(--color-neutral-100);
+  --header-link-hover: var(--color-emerald-500);
+  --header-background: var(--color-neutral-950);
+  --header-background-opacity: 85%;
+
+  --sidebar-link: var(--color-neutral-100);
+  --sidebar-link-hover: var(--color-emerald-500);
+  --sidebar-background: var(--color-neutral-800);
+  --sidebar-background-hover: var(--color-neutral-700);
+
+  --footer-background: var(--color-neutral-950);
+  --footer-statics: var(--color-neutral-500);
+  --footer-powered: var(--emphasis);
+  --footer-powered-hover: var(--emphasis-hover);
+}
+
+/* APP COLORS */
+
+@utility app-duration {
+  --tw-duration: var(--duration);
+  transition-duration: var(--duration);
+}
+
+@utility app-texture {
+  background-image: url('/texture.png');
+  background-repeat: repeat;
+}
+
+@utility app-background {
+  @apply app-texture;
+  background-color: var(--background);
+}
+
+@utility app-background-hover {
+  background-color: var(--background-hover);
+}
+
+@utility app-text {
+  color: var(--text);
+}
+
+@utility app-text-muted {
+  color: var(--text-muted);
+}
+
+@utility app-text-body {
+  color: var(--text-body);
+}
+
+@utility app-text-subtle {
+  color: var(--text-muted);
+}
+
+@utility app-text-emphasis {
+  color: var(--emphasis);
+}
+
+@utility app-text-emphasis-hover {
+  color: var(--emphasis-hover);
+}
+
+@utility app-ring {
+  --tw-ring-color: var(--ring);
+}
+
+@utility app-border {
+  border-color: var(--border);
+}
+
+@utility app-error {
+  color: var(--error);
+}
+
+@utility app-skeleton {
+  background-color: var(--skeleton);
+}
+
+@utility app-backdrop {
+  background-color: color-mix(
+    in oklab,
+    var(--backdrop) var(--backdrop-opacity),
+    transparent
+  );
+}
+
+@utility app-powered {
+  color: var(--footer-powered);
+  &:hover {
+    @media (hover: hover) {
+      color: var(--footer-powered-hover);
+    }
+  }
+}
+
+@utility app-statics {
+  color: var(--footer-statics);
+}
+
+/* APP CUSTOMS */
+
+@utility app-markdown {
+  /**
+   * Regular body text.
+   * Markdown: `A regular paragraph.`
+   */
+  --tw-prose-invert-body: var(--text-body);
+
+  /**
+   * Bold text.
+   * Markdown: `**Bold example**`
+   */
+  --tw-prose-invert-bold: var(--text);
+
+  /**
+   * Unordered list markers.
+   * Markdown: `- Example`
+   */
+  --tw-prose-invert-bullets: var(--emphasis);
+
+  /**
+   * Figure captions.
+   * HTML: `<figcaption>Example caption</figcaption>`
+   */
+  --tw-prose-invert-captions: var(--text-muted);
+
+  /**
+   * Inline code.
+   * Markdown: `Use \`npm run dev\`.`
+   */
+  --tw-prose-invert-code: var(--emphasis);
+
+  /**
+   * Ordered list numbers.
+   * Markdown: `1. Example`
+   */
+  --tw-prose-invert-counters: var(--text-muted);
+
+  /**
+   * Heading text.
+   * Markdown: `## Example heading`
+   */
+  --tw-prose-invert-headings: var(--text);
+
+  /**
+   * Horizontal separators.
+   * Markdown: `---`
+   */
+  --tw-prose-invert-hr: var(--border);
+
+  /**
+   * Keyboard input.
+   * HTML: `<kbd>Ctrl</kbd>`
+   */
+  --tw-prose-invert-kbd: var(--text);
+
+  /**
+   * Introductory lead text.
+   * HTML: `<p class="lead">Example introduction</p>`
+   */
+  --tw-prose-invert-lead: var(--text-body);
+
+  /**
+   * Link text.
+   * Markdown: `[Example](https://example.com)`
+   */
+  --tw-prose-invert-links: var(--emphasis);
+
+  /**
+   * Code block background.
+   * Markdown: ` ```js ... ``` `
+   */
+  --tw-prose-invert-pre-bg: var(--backdrop);
+
+  /**
+   * Code block text.
+   * Markdown: ` ```js const value = 1; ``` `
+   */
+  --tw-prose-invert-pre-code: var(--text-muted);
+
+  /**
+   * Blockquote border.
+   * Markdown: `> Example quote`
+   */
+  --tw-prose-invert-quote-borders: var(--emphasis);
+
+  /**
+   * Blockquote text.
+   * Markdown: `> Example quote`
+   */
+  --tw-prose-invert-quotes: var(--text-muted);
+
+  /**
+   * Table body cell borders.
+   * Markdown: `| Example | Value |`
+   */
+  --tw-prose-invert-td-borders: var(--border);
+
+  /**
+   * Table header cell borders.
+   * Markdown: `| Name | Role |`
+   */
+  --tw-prose-invert-th-borders: var(--border);
+
+  /**
+   * Targets links inside app-markdown and smooths color changes.
+   * The `&` represents the generated app-markdown selector.
+   */
+  & a {
+    transition-duration: var(--duration);
+  }
+
+  /**
+   * Applies the semantic hover color only while a link is hovered.
+   * This complements --tw-prose-invert-links, which sets the base color.
+   */
+  & a:hover {
+    color: var(--emphasis-hover);
+  }
+}
+
+@utility app-title {
+  @apply font-fancy;
+  @apply app-text-emphasis hover:app-text-emphasis-hover;
+  @apply app-duration;
+}
+
+@utility app-title-adjustment {
+  @apply mt-2;
+  @apply text-3xl md:text-5xl;
+  --tw-leading: 0;
+  line-height: 0;
+}
+
+@utility app-logo {
+  @apply h-8 min-h-5 md:h-12;
+  @apply w-8 min-w-5 md:w-12;
+  @apply app-duration;
+}
+
+@utility app-header {
+  @apply app-texture;
+  background-color: color-mix(
+    in oklab,
+    var(--header-background) var(--header-background-opacity),
+    transparent
+  );
+}
+
+@utility app-header-link {
+  @apply app-duration;
+  color: var(--header-link);
+
+  &:hover {
+    @media (hover: hover) {
+      color: var(--header-link-hover);
+    }
+  }
+}
+
+@utility app-sidebar {
+  @apply app-texture;
+  background-color: var(--sidebar-background);
+}
+
+@utility app-sidebar-link {
+  color: var(--sidebar-link);
+
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--sidebar-background-hover);
+      color: var(--sidebar-link-hover);
+    }
+  }
+}
+
+@utility app-footer {
+  @apply app-border app-text-subtle app-texture;
+  background-color: var(--footer-background);
+}
+
+/* LANGUAGE */
+
+@utility app-language-button {
+  @apply app-background hover:app-background-hover;
+  @apply app-border;
+}
+
+@utility app-language-button-text {
+  @apply app-text-body;
+}
+
+@utility app-language-button-selected {
+  @apply app-ring;
+}
+
+/* SECTION */
+
+@utility app-section-title {
+  @apply app-text;
+}
+
+@utility app-section-subtitle {
+  @apply app-text-subtle;
+}
+
+@utility app-section-emphasis {
+  @apply app-texture;
+  background-color: var(--background-emphasis);
+}
+
+@utility app-section-carousel-transition {
+  --tw-duration: var(--duration-carousel);
+  transition-duration: var(--duration-carousel);
+}
+
+@utility app-section-carousel-btn {
+  color: var(--btn);
+  &:hover {
+    @media (hover: hover) {
+      color: var(--btn-hover);
+    }
+  }
+}
+
+@utility app-section-carousel-progress-track {
+  stroke: var(--progress-track);
+}
+
+@utility app-section-carousel-progress {
+  stroke: var(--progress);
+}
+
+@utility app-section-dot-active {
+  background-color: var(--dot-active);
+}
+
+@utility app-section-dot-inactive {
+  background-color: var(--dot);
+
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--dot-inactive);
+    }
+  }
+}
+
+/* FOOTER CUSTOMS */
+
+.footer {
+  @apply grid grid-cols-1 gap-8 md:grid-cols-3;
+
+  > .footer-container {
+    @apply flex flex-col gap-2;
+
+    > .footer-brand {
+      @apply flex items-center gap-4;
+
+      > .footer-logo {
+        @apply m-0 h-12 w-12 object-cover;
+      }
+
+      > .footer-title {
+        @apply app-title mt-2 cursor-pointer text-5xl;
+      }
+    }
+
+    > .footer-summary {
+      @apply app-text-subtle text-sm;
+    }
+  }
+
+  > .footer-links {
+    @apply flex flex-col md:justify-self-center;
+
+    > h4 {
+      @apply app-text mb-3 text-base font-bold;
+    }
+
+    > ul {
+      @apply m-0 flex list-none flex-col gap-2 p-0;
+    }
+
+    a {
+      @apply app-text-subtle hover:app-text-emphasis;
+      @apply app-duration underline transition-colors;
+    }
+  }
+}
+
+/* WEB DOC CUSTOMS */
+
+* {
+  @apply box-border;
+}
+
+html,
+body {
+  @apply m-0 h-full w-full p-0;
+  @apply flex flex-col gap-0;
+  @apply font-sans;
+  @apply overflow-x-hidden;
+
+  > #app {
+    @apply flex-1;
+    @apply flex flex-col gap-0;
+  }
+}

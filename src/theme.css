@@ -1,0 +1,135 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Serif';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/Roboto_Serif/RobotoSerif.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url('/fonts/Roboto_Mono/RobotoMono-VariableFont_wght.ttf')
+    format('truetype');
+}
+
+@font-face {
+  font-family: 'Italianno';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Italianno/Italianno-Regular.ttf') format('truetype');
+}
+
+@theme {
+  --font-sans:
+    'Roboto', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif:
+    'Roboto Serif', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono:
+    'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+  --font-fancy: 'Italianno', cursive;
+}
+
+:root {
+  --block-lg: 6;
+  --block: 4;
+  --container-lg: 30;
+  --container-md: 15;
+  --container: 4;
+  --duration: 300ms;
+  --skeleton: var(--color-neutral-700);
+  --texture: url('texture.png');
+
+  --background-color: var(--color-neutral-800);
+  --text-color: var(--color-neutral-300);
+
+  --border-color: var(--color-neutral-700);
+  --border-size: 1px;
+  --border-style: solid;
+
+  --backdrop-color: var(--color-neutral-900);
+  --backdrop-opacity: 20%;
+  --backdrop-texture: var(--texture);
+
+  --error-background-color: var(--color-red-800);
+  --error-border-color: var(--color-red-200);
+  --error-border-size: var(--border-size);
+  --error-border-style: var(--border-style);
+  --error-text: var(--color-red-200);
+  --error-texture: var(--texture);
+
+  --emphasis-active: var(--color-emerald-400);
+  --emphasis-hover: var(--color-emerald-500);
+  --emphasis-color: var(--color-emerald-600);
+
+  --language-text-color-active: var(--emphasis-active);
+  --language-text-color-hover: var(--emphasis-hover);
+  --language-text-color: var(--emphasis-color);
+
+  --icon-button-active: var(--emphasis-active);
+  --icon-button-hover: var(--emphasis-hover);
+  --icon-button-color: var(--emphasis-color);
+
+  --navigator-background: transparent;
+  --navigator-text: var(--color-emerald-500);
+  --navigator-background-hover: var(--color-emerald-900);
+  --navigator-text-hover: var(--color-emerald-100);
+  --navigator-background-active: var(--color-emerald-950);
+  --navigator-text-active: var(--color-emerald-200);
+  --navigator-texture: var(--texture);
+
+  --brand-image-radius: var(--radius-lg);
+  --brand-image-size-md: 10;
+  --brand-image-size: 8;
+  --brand-title-color-active: var(--emphasis-active);
+  --brand-title-color-hover: var(--emphasis-hover);
+  --brand-title-color: var(--emphasis-color);
+  --brand-title-font: var(--font-fancy);
+  --brand-title-leading: 0;
+  --brand-title-mb: 0;
+  --brand-title-ml: 0;
+  --brand-title-mr: 0;
+  --brand-title-mt: 2;
+  --brand-title-size-md: var(--text-5xl);
+  --brand-title-size: var(--text-4xl);
+
+  --header-background-color: var(--color-neutral-950);
+  --header-background-opacity: 80%;
+  --header-border-color: var(--border-color);
+  --header-border-size: var(--border-size);
+  --header-border-style: var(--border-style);
+  --header-texture: var(--texture);
+
+  --sidebar-background-color: var(--color-neutral-900);
+  --sidebar-border-color: var(--border-color);
+  --sidebar-border-size: var(--border-size);
+  --sidebar-border-style: var(--border-style);
+  --sidebar-texture: var(--texture);
+
+  --footer-background-color: var(--color-neutral-950);
+  --footer-border-color: var(--border-color);
+  --footer-border-size: var(--border-size);
+  --footer-border-style: var(--border-style);
+  --footer-brand-max-size: 75;
+  --footer-brand-text-color: var(--color-neutral-400);
+  --footer-brand-text-size: var(--text-sm);
+  --footer-copyright-color: var(--color-neutral-500);
+  --footer-gap: 4;
+  --footer-texture: var(--texture);
+}

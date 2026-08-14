@@ -1,5 +1,9 @@
 <template>
-  <div
+  <Error />
+  <Skeleton />
+  <Content />
+
+  <!-- <div
     v-if="error"
     class="app-background flex min-h-screen items-center justify-center"
   >
@@ -221,150 +225,154 @@
         </p>
       </div>
     </footer>
-  </div>
+  </div> -->
 </template>
 
 <script setup lang="ts">
-import { Menu, X } from '@lucide/vue';
-import { useConfig } from './composables/useConfig';
-import { useLocale } from './composables/useLocale';
-import { useMarkdown } from './composables/useMarkdown';
-import { isSafeExternalHref } from './utils/links';
-import { setMetaDescription } from './utils/meta';
+import Content from './components/content.vue';
+import Error from './components/error.vue';
+import Skeleton from './components/skeleton.vue';
 
-import {
-  computed,
-  nextTick,
-  onBeforeUnmount,
-  onMounted,
-  ref,
-  watch,
-} from 'vue';
+// import { Menu, X } from '@lucide/vue';
+// import { useConfig } from './composables/useConfig';
+// import { useLocale } from './composables/useLocale';
+// import { useMarkdown } from './composables/useMarkdown';
+// import { isSafeExternalHref } from './utils/links';
+// import { setMetaDescription } from './utils/meta';
 
-const { config, loaded, loading, error, loadConfig } = useConfig();
+// import {
+//   computed,
+//   nextTick,
+//   onBeforeUnmount,
+//   onMounted,
+//   ref,
+//   watch,
+// } from 'vue';
 
-const {
-  locale,
-  loaded: localeLoaded,
-  flags,
-  available,
-  loadLocale,
-} = useLocale();
+// const { config, loaded, loading, error, loadConfig } = useConfig();
 
-const { fetchMarkdown } = useMarkdown();
+// const {
+//   locale,
+//   loaded: localeLoaded,
+//   flags,
+//   available,
+//   loadLocale,
+// } = useLocale();
 
-const menuOpen = ref(false);
-const footerHtml = ref('');
-const sidebar = ref<HTMLElement | null>(null);
-const closeMenuButton = ref<HTMLButtonElement | null>(null);
-let previousFocus: HTMLElement | null = null;
-let previousBodyOverflow = '';
-let footerRequest = 0;
+// const { fetchMarkdown } = useMarkdown();
 
-const hasMenu = computed(() => (config.value?.menu?.length ?? 0) > 0);
-const hasTooManyMenuItems = computed(
-  () => (config.value?.menu?.length ?? 0) > 4,
-);
-const hasMultipleLangs = computed(() => available.value.length > 1);
-const hasHamburger = computed(() => hasMenu.value || hasMultipleLangs.value);
+// const menuOpen = ref(false);
+// const footerHtml = ref('');
+// const sidebar = ref<HTMLElement | null>(null);
+// const closeMenuButton = ref<HTMLButtonElement | null>(null);
+// let previousFocus: HTMLElement | null = null;
+// let previousBodyOverflow = '';
+// let footerRequest = 0;
 
-function toggleMenu() {
-  menuOpen.value = !menuOpen.value;
-}
+// const hasMenu = computed(() => (config.value?.menu?.length ?? 0) > 0);
+// const hasTooManyMenuItems = computed(
+//   () => (config.value?.menu?.length ?? 0) > 4,
+// );
+// const hasMultipleLangs = computed(() => available.value.length > 1);
+// const hasHamburger = computed(() => hasMenu.value || hasMultipleLangs.value);
 
-function closeMenu() {
-  menuOpen.value = false;
-}
+// function toggleMenu() {
+//   menuOpen.value = !menuOpen.value;
+// }
 
-function isSafeHref(href: string): boolean {
-  return isSafeExternalHref(href);
-}
+// function closeMenu() {
+//   menuOpen.value = false;
+// }
 
-function handleMenuKeydown(event: KeyboardEvent) {
-  if (event.key === 'Escape') {
-    event.preventDefault();
-    closeMenu();
-    return;
-  }
+// function isSafeHref(href: string): boolean {
+//   return isSafeExternalHref(href);
+// }
 
-  if (event.key !== 'Tab' || !sidebar.value) return;
+// function handleMenuKeydown(event: KeyboardEvent) {
+//   if (event.key === 'Escape') {
+//     event.preventDefault();
+//     closeMenu();
+//     return;
+//   }
 
-  const focusable = Array.from(
-    sidebar.value.querySelectorAll<HTMLElement>(
-      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
-    ),
-  );
-  const first = focusable[0];
-  const last = focusable.at(-1);
+//   if (event.key !== 'Tab' || !sidebar.value) return;
 
-  if (!first || !last) {
-    event.preventDefault();
-    return;
-  }
+//   const focusable = Array.from(
+//     sidebar.value.querySelectorAll<HTMLElement>(
+//       'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+//     ),
+//   );
+//   const first = focusable[0];
+//   const last = focusable.at(-1);
 
-  if (event.shiftKey && document.activeElement === first) {
-    event.preventDefault();
-    last.focus();
-  } else if (!event.shiftKey && document.activeElement === last) {
-    event.preventDefault();
-    first.focus();
-  }
-}
+//   if (!first || !last) {
+//     event.preventDefault();
+//     return;
+//   }
 
-async function loadFooter() {
-  const requestId = ++footerRequest;
+//   if (event.shiftKey && document.activeElement === first) {
+//     event.preventDefault();
+//     last.focus();
+//   } else if (!event.shiftKey && document.activeElement === last) {
+//     event.preventDefault();
+//     first.focus();
+//   }
+// }
 
-  if (!config.value?.footer.contentFile || !locale.value) {
-    footerHtml.value = '';
-    return;
-  }
-  try {
-    const html = await fetchMarkdown(
-      `/content/${locale.value}/${config.value.footer.contentFile}`,
-    );
-    if (requestId === footerRequest) footerHtml.value = html;
-  } catch {
-    if (requestId === footerRequest) footerHtml.value = '';
-  }
-}
+// async function loadFooter() {
+//   const requestId = ++footerRequest;
 
-onMounted(async () => {
-  await loadLocale();
-  await loadConfig(locale.value);
-});
+//   if (!config.value?.footer.contentFile || !locale.value) {
+//     footerHtml.value = '';
+//     return;
+//   }
+//   try {
+//     const html = await fetchMarkdown(
+//       `/content/${locale.value}/${config.value.footer.contentFile}`,
+//     );
+//     if (requestId === footerRequest) footerHtml.value = html;
+//   } catch {
+//     if (requestId === footerRequest) footerHtml.value = '';
+//   }
+// }
 
-watch([config, locale], async ([newConfig]) => {
-  if (newConfig?.site.title) {
-    document.title = newConfig.site.title;
-  }
-  if (newConfig?.site.description) {
-    setMetaDescription(newConfig.site.description);
-  }
-  await loadFooter();
-});
+// onMounted(async () => {
+//   await loadLocale();
+//   await loadConfig(locale.value);
+// });
 
-watch(menuOpen, async (isOpen) => {
-  if (isOpen) {
-    previousFocus = document.activeElement as HTMLElement | null;
-    previousBodyOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    await nextTick();
-    closeMenuButton.value?.focus();
-    return;
-  }
+// watch([config, locale], async ([newConfig]) => {
+//   if (newConfig?.site.title) {
+//     document.title = newConfig.site.title;
+//   }
+//   if (newConfig?.site.description) {
+//     setMetaDescription(newConfig.site.description);
+//   }
+//   await loadFooter();
+// });
 
-  document.body.style.overflow = previousBodyOverflow;
-  await nextTick();
-  previousFocus?.focus();
-  previousFocus = null;
-});
+// watch(menuOpen, async (isOpen) => {
+//   if (isOpen) {
+//     previousFocus = document.activeElement as HTMLElement | null;
+//     previousBodyOverflow = document.body.style.overflow;
+//     document.body.style.overflow = 'hidden';
+//     await nextTick();
+//     closeMenuButton.value?.focus();
+//     return;
+//   }
 
-onBeforeUnmount(() => {
-  document.body.style.overflow = previousBodyOverflow;
-});
+//   document.body.style.overflow = previousBodyOverflow;
+//   await nextTick();
+//   previousFocus?.focus();
+//   previousFocus = null;
+// });
+
+// onBeforeUnmount(() => {
+//   document.body.style.overflow = previousBodyOverflow;
+// });
 </script>
 
-<style scoped>
+<!-- <style scoped>
 @reference 'tailwindcss';
 @reference "./style.css"
 
@@ -412,20 +420,6 @@ onBeforeUnmount(() => {
 <style>
 @reference './style.css';
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
-}
-
-.skeleton {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
 .z-60 {
   z-index: 60;
 }
@@ -433,4 +427,4 @@ onBeforeUnmount(() => {
 .z-70 {
   z-index: 70;
 }
-</style>
+</style> -->
