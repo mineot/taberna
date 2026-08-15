@@ -8,6 +8,7 @@
 }
 
 @utility app-container {
+  @apply app-duration;
   padding-inline: calc(var(--spacing) * var(--container));
 
   @media (width >= 48rem) {
@@ -20,6 +21,7 @@
 }
 
 @utility app-block {
+  @apply app-duration;
   padding-block: calc(var(--spacing) * var(--block));
 
   @media (width >= 48rem) {

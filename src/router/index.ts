@@ -1,16 +1,16 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-// import HomeView from '../views/HomeView.vue';
+import HomePage from '../pages/home.page.vue';
 // import LanguagesView from '../views/LanguagesView.vue';
 // import PageView from '../views/PageView.vue';
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'home',
-    //   component: HomeView,
-    // },
+    {
+      path: '/',
+      name: 'home',
+      component: HomePage,
+    },
     // {
     //   path: '/languages',
     //   name: 'languages',
