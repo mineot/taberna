@@ -11,7 +11,7 @@
           <Navigator vertical :hidden="false" @click="closeMenu" />
         </div>
 
-        <Language complete />
+        <Language complete @click="closeMenu" />
       </aside>
     </Transition>
 

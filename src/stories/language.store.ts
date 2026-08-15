@@ -63,6 +63,7 @@ export const useLanguageStore = defineStore('language-store', () => {
   const locale = ref<string>('');
   const flag = ref<string>('');
   const fullName = ref<string>('');
+  const languages = ref<LanguageManifest | null>(null);
 
   async function setLaguage(locale: string) {
     try {
@@ -81,17 +82,17 @@ export const useLanguageStore = defineStore('language-store', () => {
       const currentLanguage =
         (await loadStorage()) ?? (await detectBrowserLanguage());
 
-      const config = await loadConfig();
+      languages.value = await loadConfig();
 
-      if (config?.available.includes(currentLanguage)) {
+      if (languages.value?.available.includes(currentLanguage)) {
         locale.value = currentLanguage;
-        flag.value = config.flags[currentLanguage];
-        fullName.value = config.names[currentLanguage];
+        flag.value = languages.value.flags[currentLanguage];
+        fullName.value = languages.value.names[currentLanguage];
       } else {
-        locale.value = config.default;
-        flag.value = config.flags[config.default];
-        fullName.value = config.names[config.default];
-        updateStorage(config.default);
+        locale.value = languages.value.default;
+        flag.value = languages.value.flags[languages.value.default];
+        fullName.value = languages.value.names[languages.value.default];
+        updateStorage(languages.value.default);
       }
     } catch (err) {
       throw new Error('Failed to load locale', { cause: err });
@@ -103,6 +104,7 @@ export const useLanguageStore = defineStore('language-store', () => {
   return {
     flag,
     fullName,
+    languages,
     loadLanguage,
     locale,
     setLaguage,

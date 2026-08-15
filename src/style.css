@@ -3,8 +3,7 @@
 @plugin '@tailwindcss/typography';
 
 @utility app-duration {
-  --tw-duration: var(--duration);
-  transition-duration: var(--duration);
+  @apply duration-[var(--duration)] ease-in-out;
 }
 
 @utility app-container {

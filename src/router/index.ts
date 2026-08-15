@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import HomePage from '../pages/home.page.vue';
-// import LanguagesView from '../views/LanguagesView.vue';
+import LanguageSwitcherPage from '../pages/language-switcher.page.vue';
 // import PageView from '../views/PageView.vue';
 
 const router = createRouter({
@@ -11,11 +11,11 @@ const router = createRouter({
       name: 'home',
       component: HomePage,
     },
-    // {
-    //   path: '/languages',
-    //   name: 'languages',
-    //   component: LanguagesView,
-    // },
+    {
+      path: '/language-switcher',
+      name: 'language-switcher',
+      component: LanguageSwitcherPage,
+    },
     // {
     //   path: '/:slug(.*)',
     //   name: 'page',

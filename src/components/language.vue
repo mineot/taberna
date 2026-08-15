@@ -1,12 +1,16 @@
 <template>
-  <div :class="['language', props.class]">
+  <a
+    href="#/language-switcher"
+    :class="['language', props.class]"
+    @click="emit('click')"
+  >
     <div :class="{ 'language-complete': props.complete }">
       <div :title="fullName">{{ flag }}</div>
     </div>
     <div v-if="props.complete">
       <span>{{ fullName }}</span>
     </div>
-  </div>
+  </a>
 </template>
 
 <script setup lang="ts">
@@ -15,6 +19,8 @@ import { useLanguageStore } from '../stories/language.store';
 
 const langStore = useLanguageStore();
 const { flag, fullName } = storeToRefs(langStore);
+
+const emit = defineEmits(['click']);
 
 const props = defineProps({
   class: {
