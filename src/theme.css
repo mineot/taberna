@@ -54,7 +54,7 @@
   --container: 4;
   --duration: 300ms;
   --skeleton: var(--color-neutral-700);
-  --texture: url('texture.png');
+  --texture: url('images/texture.png');
 
   --background-color: var(--color-neutral-800);
   --text-color: var(--color-neutral-300);

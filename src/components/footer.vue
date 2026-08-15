@@ -4,9 +4,7 @@
       <div class="footer-brand">
         <Brand />
         <p class="footer-brand-title">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est deleniti
-          nam quas veniam, ipsam atque architecto unde repellendus autem.
-          Corrupti!
+          {{ config?.site.description }}
         </p>
       </div>
 
@@ -38,13 +36,27 @@
       </div>
     </div>
     <div class="footer-copyright">
-      <div>Copyright</div>
-      <div>Powered</div>
+      <div>{{ config?.site.ownership }}</div>
+      <a
+        href="https://github.com/mineot/taberna"
+        target="_blank"
+        class="footer-powered"
+      >
+        <span>Powered by Mineot</span>
+        <ExternalLink :size="12" />
+      </a>
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
+import { ExternalLink } from '@lucide/vue';
+import { storeToRefs } from 'pinia';
+import { useConfigStore } from '../stories/config.store.ts';
+
+const storeConfig = useConfigStore();
+const { config } = storeToRefs(storeConfig);
+
 import Brand from './brand.vue';
 </script>
 
@@ -87,5 +99,10 @@ import Brand from './brand.vue';
   @apply border-t border-solid;
   border-color: var(--footer-copyright-color);
   color: var(--footer-copyright-color);
+}
+
+.footer-powered {
+  @apply flex flex-row items-center gap-1;
+  @apply underline;
 }
 </style>

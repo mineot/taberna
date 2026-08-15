@@ -1,13 +1,23 @@
 <template>
   <a class="brand" href="#" @click="emit('click')">
-    <img class="brand-image" src="https://placehold.co/64x64" alt="Taberna" />
+    <img
+      class="brand-image"
+      :src="config?.site.image"
+      :alt="config?.site.title"
+    />
     <div class="brand-title">
-      <span>Taberna</span>
+      <span>{{ config?.site.title }}</span>
     </div>
   </a>
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { useConfigStore } from '../stories/config.store';
+
+const storeConfig = useConfigStore();
+const { config } = storeToRefs(storeConfig);
+
 const emit = defineEmits(['click']);
 </script>
 
