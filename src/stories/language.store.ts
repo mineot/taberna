@@ -1,12 +1,63 @@
 import { defineStore } from 'pinia';
+import { publicPath } from '../utils/paths.util';
 import { ref } from 'vue';
+import { useLoadingStore } from './loading.store';
 
-import {
-  detectBrowserLanguage,
-  loadConfig,
-  loadStorage,
-  updateStorage,
-} from './language.helper';
+export const STORAGE_KEY = 'taberna-lang';
+
+export interface LanguageManifest {
+  default: string;
+  available: string[];
+  flags: Record<string, string>;
+  names: Record<string, string>;
+}
+
+export async function loadStorage(): Promise<string> {
+  try {
+    const local = localStorage.getItem(STORAGE_KEY) as string;
+
+    if (!local) {
+      return 'nn-nn';
+    }
+
+    return local.toLowerCase();
+  } catch (err) {
+    throw new Error('Failed to load locale storage', { cause: err });
+  }
+}
+
+export async function updateStorage(locale: string): Promise<void> {
+  try {
+    localStorage.setItem(STORAGE_KEY, locale);
+  } catch (err) {
+    throw new Error('Failed to update locale storage', { cause: err });
+  }
+}
+
+export async function loadConfig(): Promise<LanguageManifest> {
+  try {
+    const path = publicPath('config/languages.json');
+    const response = await fetch(path);
+    return response.json();
+  } catch (err) {
+    throw new Error('Failed to load config languages JSON', { cause: err });
+  }
+}
+
+export async function detectBrowserLanguage(): Promise<string | null> {
+  try {
+    const rawLocale =
+      (navigator.languages && navigator.languages[0]) || navigator.language;
+
+    if (!rawLocale) {
+      return null;
+    }
+
+    return rawLocale.toLowerCase();
+  } catch (err) {
+    throw new Error('Failed to detect locale', { cause: err });
+  }
+}
 
 export const useLanguageStore = defineStore('language-store', () => {
   const locale = ref<string>('');
@@ -23,9 +74,13 @@ export const useLanguageStore = defineStore('language-store', () => {
   }
 
   async function loadLanguage() {
+    const loadingStore = useLoadingStore();
+    const token = loadingStore.startLoading();
+
     try {
       const currentLanguage =
         (await loadStorage()) ?? (await detectBrowserLanguage());
+
       const config = await loadConfig();
 
       if (config?.available.includes(currentLanguage)) {
@@ -40,6 +95,8 @@ export const useLanguageStore = defineStore('language-store', () => {
       }
     } catch (err) {
       throw new Error('Failed to load locale', { cause: err });
+    } finally {
+      loadingStore.stopLoading(token);
     }
   }
 

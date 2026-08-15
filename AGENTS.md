@@ -309,6 +309,13 @@ default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src
 
 `useConfig` and `useLocale` use module-scoped `ref`s (outside the exported function). Every call to `useConfig()` returns the same reactive instance. This is the Vue 3 pattern for global state without a store, but it can cause confusion in tests.
 
+### Loading Store
+
+- `useLoadingStore` tracks concurrent loading operations with unique `symbol` tokens.
+- `startLoading()` returns the token that its caller must pass to `stopLoading(token)` in a `finally` block.
+- `loading` remains `true` while at least one token is pending; `pendingCount` exposes the number of pending operations.
+- Repeated completion of the same token is ignored safely.
+
 ### useLocale
 
 - **Fallback**: If `languages.json` fails, initializes `pt-br`, its flag, available languages, localStorage, and `document.lang`.
