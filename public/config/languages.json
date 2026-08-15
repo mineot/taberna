@@ -4,5 +4,9 @@
   "flags": {
     "pt-br": "🇧🇷",
     "en-us": "🇺🇸"
+  },
+  "names": {
+    "pt-br": "Português (Brasil)",
+    "en-us": "English (America)"
   }
 }

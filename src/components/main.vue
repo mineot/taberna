@@ -1,72 +1,7 @@
 <template>
-    <main class="main">
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-      <div>Content</div>
-    </main>
+  <main class="main">
+    <router-view />
+  </main>
 </template>
 
 <style>
@@ -75,6 +10,6 @@
 
 .main {
   @apply app-container;
-  @apply py-2 md:py-4;
+  @apply flex-1 py-2 md:py-4;
 }
 </style>

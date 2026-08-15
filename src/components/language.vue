@@ -1,13 +1,21 @@
 <template>
   <div :class="['language', props.class]">
-    <div :class="{ 'language-complete': props.complete }">🇧🇷</div>
+    <div :class="{ 'language-complete': props.complete }">
+      <div :title="fullName">{{ flag }}</div>
+    </div>
     <div v-if="props.complete">
-      <span>Português Brasil</span>
+      <span>{{ fullName }}</span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { useLanguageStore } from '../stories/language.store';
+
+const langStore = useLanguageStore();
+const { flag, fullName } = storeToRefs(langStore);
+
 const props = defineProps({
   class: {
     type: String,
