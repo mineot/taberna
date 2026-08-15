@@ -116,7 +116,7 @@ const showBrandSection = computed(
 }
 
 .footer-brand {
-  @apply flex flex-col items-start justify-center;
+  @apply flex flex-col items-start justify-start;
 
   gap: calc(var(--spacing) * var(--footer-gap));
 
