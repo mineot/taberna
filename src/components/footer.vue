@@ -1,38 +1,51 @@
 <template>
   <footer class="footer">
     <div class="footer-content">
-      <div class="footer-brand">
-        <Brand />
-        <p class="footer-brand-title">
+      <div v-if="showBrandSection" class="footer-brand">
+        <Brand :visible="config?.site.footer.showBrand" />
+        <p
+          v-if="config?.site.footer.showDescription"
+          class="footer-brand-title"
+        >
           {{ config?.site.description }}
         </p>
       </div>
 
-      <div>
-        <div>Titulo 1</div>
-        <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-        </ul>
-      </div>
+      <div
+        class="footer-section"
+        v-for="section in config?.site.footer.sections"
+      >
+        <div class="footer-section-title">
+          {{ section.title }}
+        </div>
 
-      <div>
-        <div>Titulo 2</div>
-        <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-        </ul>
-      </div>
+        <div v-for="item in section.items">
+          <a
+            v-if="item.type === 'internal' || item.type === 'external'"
+            :href="item.href"
+            class="footer-section-link"
+            :target="item.type === 'external' ? '_blank' : '_self'"
+          >
+            <Link
+              v-if="item.type === 'internal'"
+              :size="section.iconSize ?? DEFAULT_ICON_SIZE"
+            />
+            <ExternalLink
+              v-if="item.type === 'external'"
+              :size="section.iconSize ?? DEFAULT_ICON_SIZE"
+            />
+            <span>{{ item.text }}</span>
+          </a>
 
-      <div>
-        <div>Titulo 3</div>
-        <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-        </ul>
+          <img
+            v-else-if="item.type === 'image'"
+            :class="{ 'rounded-lg': section.imageRounded ?? false }"
+            :height="section.imageSize ?? DEFAULT_IMAGE_SIZE"
+            :width="section.imageSize ?? DEFAULT_IMAGE_SIZE"
+            :src="item.href"
+            :alt="item.text"
+          />
+        </div>
       </div>
     </div>
     <div class="footer-copyright">
@@ -50,14 +63,22 @@
 </template>
 
 <script setup lang="ts">
-import { ExternalLink } from '@lucide/vue';
+import { computed } from 'vue';
+import { ExternalLink, Link } from '@lucide/vue';
 import { storeToRefs } from 'pinia';
 import { useConfigStore } from '../stories/config.store.ts';
+import Brand from './brand.vue';
+
+const DEFAULT_ICON_SIZE = 14;
+const DEFAULT_IMAGE_SIZE = 82;
 
 const storeConfig = useConfigStore();
 const { config } = storeToRefs(storeConfig);
-
-import Brand from './brand.vue';
+const showBrandSection = computed(
+  () =>
+    config.value?.site.footer.showBrand ||
+    config.value?.site.footer.showDescription,
+);
 </script>
 
 <style>
@@ -79,8 +100,23 @@ import Brand from './brand.vue';
   gap: calc(var(--spacing) * var(--footer-gap));
 }
 
+.footer-section {
+  @apply flex flex-col items-start gap-2;
+}
+
+.footer-section-title {
+  @apply font-bold text-nowrap;
+  color: var(--footer-brand-text-color);
+}
+
+.footer-section-link {
+  @apply flex items-center justify-center gap-1;
+  @apply hover:font-semibold hover:underline;
+  color: var(--footer-brand-text-color);
+}
+
 .footer-brand {
-  @apply flex flex-col items-start;
+  @apply flex flex-col items-start justify-center;
 
   gap: calc(var(--spacing) * var(--footer-gap));
 

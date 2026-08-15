@@ -3,6 +3,54 @@
     "title": "Taberna",
     "description": "Uma base simples e personalizável para criar sites pessoais, portfólios, landing pages e pequenos sites institucionais.",
     "image": "images/logo.png",
-    "ownership": "© 2026 Mineot"
+    "ownership": "© 2026 Mineot",
+    "footer": {
+      "showBrand": true,
+      "showDescription": true,
+      "sections": [
+        {
+          "title": "Links Internos",
+          "iconSize": 14,
+          "items": [
+            { "type": "internal", "text": "Link 1", "href": "#/link1" },
+            { "type": "internal", "text": "Link 2", "href": "#/link2" },
+            { "type": "internal", "text": "Link 3", "href": "#/link3" }
+          ]
+        },
+        {
+          "title": "Links Externos",
+          "iconSize": 14,
+          "items": [
+            {
+              "type": "external",
+              "text": "Github",
+              "href": "https://github.com/mineot/"
+            },
+            {
+              "type": "external",
+              "text": "Instagram",
+              "href": "https://www.instagram.com/"
+            },
+            {
+              "type": "external",
+              "text": "Whatsapp",
+              "href": "https://web.whatsapp.com/"
+            }
+          ]
+        },
+        {
+          "title": "Imagem",
+          "imageSize": 82,
+          "imageRounded": true,
+          "items": [
+            {
+              "type": "image",
+              "text": "Placehold",
+              "href": "https://placehold.co/82x82"
+            }
+          ]
+        }
+      ]
+    }
   }
 }

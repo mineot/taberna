@@ -1,5 +1,5 @@
 <template>
-  <a class="brand" href="#" @click="emit('click')">
+  <a v-if="props.visible" class="brand" href="#" @click="emit('click')">
     <img
       class="brand-image"
       :src="config?.site.image"
@@ -17,6 +17,14 @@ import { useConfigStore } from '../stories/config.store';
 
 const storeConfig = useConfigStore();
 const { config } = storeToRefs(storeConfig);
+
+const props = defineProps({
+  visible: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
+});
 
 const emit = defineEmits(['click']);
 </script>

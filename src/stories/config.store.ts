@@ -4,12 +4,33 @@ import { ref } from 'vue';
 import { useLanguageStore } from './language.store';
 import { useLoadingStore } from './loading.store';
 
+type FooterItem = {
+  type: 'internal' | 'external' | 'image';
+  text: string;
+  href?: string;
+};
+
+interface FooterSection {
+  title: string;
+  iconSize?: number;
+  imageSize?: number;
+  imageRounded?: boolean;
+  items: FooterItem[];
+}
+
+interface FooterManifest {
+  showBrand: boolean;
+  showDescription: boolean;
+  sections: FooterSection[];
+}
+
 interface ConfigurationManifest {
   site: {
     title: string;
     description: string;
     image: string;
     ownership: string;
+    footer: FooterManifest;
   };
 }
 

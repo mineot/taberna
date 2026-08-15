@@ -3,6 +3,54 @@
     "title": "Taberna",
     "description": "A simple, customizable foundation for personal websites, portfolios, landing pages, and small institutional sites.",
     "image": "images/logo.png",
-    "ownership": "© 2026 Mineot"
+    "ownership": "© 2026 Mineot",
+    "footer": {
+      "showBrand": true,
+      "showDescription": true,
+      "sections": [
+        {
+          "title": "Internal Links",
+          "iconSize": 14,
+          "items": [
+            { "type": "internal", "text": "Link 1", "href": "#/link1" },
+            { "type": "internal", "text": "Link 2", "href": "#/link2" },
+            { "type": "internal", "text": "Link 3", "href": "#/link3" }
+          ]
+        },
+        {
+          "title": "External Links",
+          "iconSize": 14,
+          "items": [
+            {
+              "type": "external",
+              "text": "Github",
+              "href": "https://github.com/mineot/"
+            },
+            {
+              "type": "external",
+              "text": "Instagram",
+              "href": "https://www.instagram.com/"
+            },
+            {
+              "type": "external",
+              "text": "Whatsapp",
+              "href": "https://web.whatsapp.com/"
+            }
+          ]
+        },
+        {
+          "title": "Image",
+          "imageSize": 82,
+          "imageRounded": true,
+          "items": [
+            {
+              "type": "image",
+              "text": "Placehold",
+              "href": "https://placehold.co/82x82"
+            }
+          ]
+        }
+      ]
+    }
   }
 }
