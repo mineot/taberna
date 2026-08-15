@@ -5,9 +5,9 @@
     "image": "images/logo.png",
     "ownership": "© 2026 Mineot",
     "navigator": [
-      { "text": "Page 1", "href": "#/page1" },
-      { "text": "Page 2", "href": "#/page2" },
-      { "text": "Page 3", "href": "#/page3" }
+      { "text": "Página 1", "href": "#/page1" },
+      { "text": "Página 2", "href": "#/page2" },
+      { "text": "Página 3", "href": "#/page3" }
     ],
     "footer": {
       "showBrand": true,
@@ -17,9 +17,9 @@
           "title": "Links Internos",
           "iconSize": 14,
           "items": [
-            { "type": "internal", "text": "Page 1", "href": "#/page1" },
-            { "type": "internal", "text": "Page 2", "href": "#/page2" },
-            { "type": "internal", "text": "Page 3", "href": "#/page3" }
+            { "type": "internal", "text": "Página 1", "href": "#/page1" },
+            { "type": "internal", "text": "Página 2", "href": "#/page2" },
+            { "type": "internal", "text": "Página 3", "href": "#/page3" }
           ]
         },
         {
