@@ -6,9 +6,9 @@
     }"
   >
     <a
-      v-for="item in items"
-      :key="item.label"
-      :href="item.href"
+      v-for="navItem in config?.site.navigator"
+      :key="navItem.text"
+      :href="navItem.href"
       :class="{
         'navigator-item': true,
         'navigator-item-vertical': props.vertical,
@@ -16,7 +16,7 @@
       }"
       @click="emit('click')"
     >
-      <span>{{ item.label }}</span>
+      <span>{{ navItem.text }}</span>
     </a>
 
     <IconButton v-if="props.menu" class="navigator-menu" @click="openMenu" />
@@ -27,8 +27,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useConfigStore } from '../stories/config.store.ts';
 import IconButton from './icon-button.vue';
 import Sidebar from './sidebar.vue';
+
+const storeConfig = useConfigStore();
+const { config } = storeToRefs(storeConfig);
 
 const visible = ref(false);
 const openMenu = () => (visible.value = true);
@@ -53,19 +58,6 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['click']);
-
-interface MenuItem {
-  label: string;
-  href: string;
-}
-
-const items: MenuItem[] = [
-  { label: 'Item 1', href: '#/item1' },
-  { label: 'Item 2', href: '#/item2' },
-  { label: 'Item 3', href: '#/item3' },
-  { label: 'Item 4', href: '#/item4' },
-  { label: 'Item 5', href: '#/item5' },
-];
 </script>
 
 <style>

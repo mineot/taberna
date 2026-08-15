@@ -4,6 +4,11 @@ import { ref } from 'vue';
 import { useLanguageStore } from './language.store';
 import { useLoadingStore } from './loading.store';
 
+interface NavigatorItem {
+  text: string;
+  href: string;
+}
+
 type FooterItem = {
   type: 'internal' | 'external' | 'image';
   text: string;
@@ -30,6 +35,7 @@ interface ConfigurationManifest {
     description: string;
     image: string;
     ownership: string;
+    navigator: NavigatorItem[];
     footer: FooterManifest;
   };
 }

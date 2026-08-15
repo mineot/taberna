@@ -64,6 +64,7 @@ export const useLanguageStore = defineStore('language-store', () => {
   const flag = ref<string>('');
   const fullName = ref<string>('');
   const languages = ref<LanguageManifest | null>(null);
+  const availableCount = ref<number>(0);
 
   async function setLaguage(locale: string) {
     try {
@@ -83,6 +84,7 @@ export const useLanguageStore = defineStore('language-store', () => {
         (await loadStorage()) ?? (await detectBrowserLanguage());
 
       languages.value = await loadConfig();
+      availableCount.value = languages.value.available.length;
 
       if (languages.value?.available.includes(currentLanguage)) {
         locale.value = currentLanguage;
@@ -102,6 +104,7 @@ export const useLanguageStore = defineStore('language-store', () => {
   }
 
   return {
+    availableCount,
     flag,
     fullName,
     languages,

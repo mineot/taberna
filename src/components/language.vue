@@ -1,5 +1,6 @@
 <template>
   <a
+    v-if="availableCount > 1"
     href="#/language-switcher"
     :class="['language', props.class]"
     @click="emit('click')"
@@ -18,7 +19,7 @@ import { storeToRefs } from 'pinia';
 import { useLanguageStore } from '../stories/language.store';
 
 const langStore = useLanguageStore();
-const { flag, fullName } = storeToRefs(langStore);
+const { availableCount, flag, fullName } = storeToRefs(langStore);
 
 const emit = defineEmits(['click']);
 
