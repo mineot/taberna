@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import HomePage from '../pages/home.page.vue';
-import LanguageSwitcherPage from '../pages/language-switcher.page.vue';
-// import PageView from '../views/PageView.vue';
+import HomePage from './pages/home.page.vue';
+import LanguageSwitcherPage from './pages/language-switcher.page.vue';
+import SlugPage from './pages/slug.page.vue';
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -16,11 +16,11 @@ const router = createRouter({
       name: 'language-switcher',
       component: LanguageSwitcherPage,
     },
-    // {
-    //   path: '/:slug(.*)',
-    //   name: 'page',
-    //   component: PageView,
-    // },
+    {
+      path: '/:slug(.*)',
+      name: 'page',
+      component: SlugPage,
+    },
   ],
   scrollBehavior(_to, _from, savedPosition) {
     if (savedPosition) return savedPosition;
