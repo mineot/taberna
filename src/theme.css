@@ -53,6 +53,7 @@
   --container-md: 15;
   --container: 4;
   --duration: 300ms;
+  --gap: 4;
   --skeleton: var(--color-neutral-700);
   --texture: url('images/texture.png');
 
@@ -130,6 +131,15 @@
   --footer-brand-text-color: var(--color-neutral-400);
   --footer-brand-text-size: var(--text-sm);
   --footer-copyright-color: var(--color-neutral-500);
-  --footer-gap: 4;
+  --footer-gap: var(--gap);
   --footer-texture: var(--texture);
+
+  --content-block-subtitle-color: var(--color-emerald-600);
+  --content-block-title-color: var(--color-emerald-500);
+  --content-emphasis-color: var(--color-neutral-700);
+  --content-emphasis-margin: 2;
+  --content-emphasis-rounded: var(--radius-sm);
+  --content-emphasis-texture: var(--texture);
+  --content-paragraph-subtitle-color: var(--color-emerald-600);
+  --content-paragraph-title-color: var(--color-emerald-500);
 }

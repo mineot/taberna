@@ -8,6 +8,7 @@
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useConfigStore } from './stories/config.store.ts';
+import { useHomeStore } from './stories/home.store.ts';
 import { useLanguageStore } from './stories/language.store.ts';
 import { useLoadingStore } from './stories/loading.store.ts';
 import Content from './components/content.vue';
@@ -17,13 +18,17 @@ import Skeleton from './components/skeleton.vue';
 const storeLocale = useLanguageStore();
 const storeLoading = useLoadingStore();
 const storeConfig = useConfigStore();
+const storeHome = useHomeStore();
 
-const { loadLanguage } = storeLocale;
 const { loadConfiguration } = storeConfig;
+const { loadHome } = storeHome;
 const { loading } = storeToRefs(storeLoading);
+const { loadLanguage } = storeLocale;
+
 const showContent = computed(() => !loading.value);
 
 loadLanguage().then(() => {
   loadConfiguration();
+  loadHome();
 });
 </script>
