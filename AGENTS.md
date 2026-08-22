@@ -763,6 +763,13 @@ Markdown files in `public/content/{locale}/*.md`:
 - "Page not found" error message if the file does not exist
 - **SPA fallback protection**: `useMarkdown` checks the response's `Content-Type`—if it is `text/html` (Vite returns `index.html` for missing files), it throws an error instead of rendering raw HTML
 
+### Home Store
+
+- `public/content/{locale}/home.json` is an array whose entries are block-file names or inline home blocks
+- Referenced block files resolve relative to the active locale directory and contain complete `HomeBlock` objects
+- `loadHome()` resolves referenced block files concurrently before assigning them to `homeData`
+- JSON responses are checked for successful HTTP status and an `application/json` content type so SPA HTML fallbacks produce a descriptive error
+
 ### Custom Footer
 
 The `contentFile` field in the `footer` config allows loading Markdown content into the footer:

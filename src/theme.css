@@ -48,12 +48,14 @@
 
 :root {
   --block-lg: 6;
-  --block: 4;
+  --block-sm: 4;
   --container-lg: 30;
   --container-md: 15;
-  --container: 4;
+  --container-sm: 4;
   --duration: 300ms;
-  --gap: 4;
+  --gap-lg: 6;
+  --gap-md: 4;
+  --gap-sm: 2;
   --skeleton: var(--color-neutral-700);
   --texture: url('images/texture.png');
 
@@ -134,12 +136,11 @@
   --footer-gap: var(--gap);
   --footer-texture: var(--texture);
 
-  --content-block-subtitle-color: var(--color-emerald-600);
-  --content-block-title-color: var(--color-emerald-500);
-  --content-emphasis-color: var(--color-neutral-700);
-  --content-emphasis-margin: 2;
-  --content-emphasis-rounded: var(--radius-sm);
-  --content-emphasis-texture: var(--texture);
-  --content-paragraph-subtitle-color: var(--color-emerald-600);
-  --content-paragraph-title-color: var(--color-emerald-500);
+  --home-emphasis-color: var(--color-neutral-700);
+  --home-emphasis-margin: 2;
+  --home-emphasis-rounded: var(--radius-sm);
+  --home-emphasis-texture: var(--texture);
+
+  --content-subtitle-color: var(--color-emerald-600);
+  --content-title-color: var(--color-emerald-500);
 }
