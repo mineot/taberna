@@ -59,16 +59,17 @@
   --skeleton: var(--color-neutral-700);
   --texture: url('images/texture.png');
 
-  --background-color: var(--color-neutral-800);
-  --text-color: var(--color-neutral-300);
-
-  --border-color: var(--color-neutral-700);
-  --border-size: 1px;
-  --border-style: solid;
-
   --backdrop-color: var(--color-neutral-900);
   --backdrop-opacity: 20%;
   --backdrop-texture: var(--texture);
+  --background-color: var(--color-neutral-800);
+  --border-color: var(--color-neutral-700);
+  --border-size: 1px;
+  --border-style: solid;
+  --emphasis-active: var(--color-emerald-400);
+  --emphasis-color: var(--color-emerald-600);
+  --emphasis-hover: var(--color-emerald-500);
+  --text-color: var(--color-neutral-300);
 
   --error-background-color: var(--color-red-800);
   --error-border-color: var(--color-red-200);
@@ -76,10 +77,6 @@
   --error-border-style: var(--border-style);
   --error-text: var(--color-red-200);
   --error-texture: var(--texture);
-
-  --emphasis-active: var(--color-emerald-400);
-  --emphasis-hover: var(--color-emerald-500);
-  --emphasis-color: var(--color-emerald-600);
 
   --language-text-color-active: var(--emphasis-active);
   --language-text-color-hover: var(--emphasis-hover);
@@ -125,22 +122,17 @@
   --sidebar-border-style: var(--border-style);
   --sidebar-texture: var(--texture);
 
+  --content-background-color: transparent;
+  --content-emphasis-color: var(--color-neutral-700);
+  --content-emphasis-texture: var(--texture);
+  --content-rounded: var(--radius-md);
+  --content-spacing: var(--gap-md);
+  --content-texture: none;
+
   --footer-background-color: var(--color-neutral-950);
   --footer-border-color: var(--border-color);
   --footer-border-size: var(--border-size);
   --footer-border-style: var(--border-style);
-  --footer-brand-max-size: 75;
-  --footer-brand-text-color: var(--color-neutral-400);
-  --footer-brand-text-size: var(--text-sm);
   --footer-copyright-color: var(--color-neutral-500);
-  --footer-gap: var(--gap);
   --footer-texture: var(--texture);
-
-  --home-emphasis-color: var(--color-neutral-700);
-  --home-emphasis-margin: 4;
-  --home-emphasis-rounded: var(--radius-sm);
-  --home-emphasis-texture: var(--texture);
-
-  --content-subtitle-color: var(--color-emerald-600);
-  --content-title-color: var(--color-emerald-500);
 }

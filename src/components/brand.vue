@@ -1,12 +1,8 @@
 <template>
   <a v-if="props.visible" class="brand" href="#" @click="emit('click')">
-    <img
-      class="brand-image"
-      :src="config?.site.image"
-      :alt="config?.site.title"
-    />
+    <img class="brand-image" :src="config?.image" :alt="config?.title" />
     <div class="brand-title">
-      <span>{{ config?.site.title }}</span>
+      <span>{{ config?.title }}</span>
     </div>
   </a>
 </template>

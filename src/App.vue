@@ -1,34 +1,26 @@
 <template>
   <Error />
   <Skeleton :visible="loading" />
-  <Content :visible="showContent" />
+  <Container :visible="showContent" />
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useConfigStore } from './stories/config.store.ts';
-import { useHomeStore } from './stories/home.store.ts';
 import { useLanguageStore } from './stories/language.store.ts';
 import { useLoadingStore } from './stories/loading.store.ts';
-import Content from './components/content.vue';
+import Container from './components/container.vue';
 import Error from './components/error.vue';
 import Skeleton from './components/skeleton.vue';
 
-const storeLocale = useLanguageStore();
-const storeLoading = useLoadingStore();
-const storeConfig = useConfigStore();
-const storeHome = useHomeStore();
-
-const { loadConfiguration } = storeConfig;
-const { loadHome } = storeHome;
-const { loading } = storeToRefs(storeLoading);
-const { loadLanguage } = storeLocale;
+const { loadConfiguration } = useConfigStore();
+const { loading } = storeToRefs(useLoadingStore());
+const { loadLanguage } = useLanguageStore();
 
 const showContent = computed(() => !loading.value);
 
 loadLanguage().then(() => {
   loadConfiguration();
-  loadHome();
 });
 </script>

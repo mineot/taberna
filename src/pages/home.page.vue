@@ -19,14 +19,8 @@
       ]"
     >
       <div v-for="content in block.contents" class="block-contents">
-        <ContentTitle :data="content" />
-        <ContentItems :items="content.items" />
-        <!-- 
-        <div v-for="item in content.items">
-          <template v-if="item.type === 'image'">
-           
-          </template>
-        </div> -->
+        <!-- <ContentTitle :data="content" />
+        <ContentItems :items="content.items" /> -->
       </div>
     </div>
   </div>
@@ -35,8 +29,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useHomeStore } from '../stories/home.store';
-import ContentTitle from '../components/contents/content-title.vue';
-import ContentItems from '../components/contents/content-items.vue';
+// import ContentTitle from '../components/contents/content-title.vue';
+// import ContentItems from '../components/contents/content-items.vue';
 
 const { homeData } = storeToRefs(useHomeStore());
 </script>

@@ -1,0 +1,61 @@
+{
+  "site": {
+    "title": "Taberna",
+    "description": "Uma base simples e personalizável para criar sites pessoais, portfólios, landing pages e pequenos sites institucionais.",
+    "image": "images/logo.png",
+    "ownership": "© 2026 Mineot",
+    "navigator": [
+      { "text": "Página 1", "href": "#/page1" },
+      { "text": "Página 2", "href": "#/page2" },
+      { "text": "Página 3", "href": "#/page3" }
+    ],
+    "footer": {
+      "showBrand": true,
+      "showDescription": true,
+      "sections": [
+        {
+          "title": "Links Internos",
+          "iconSize": 14,
+          "items": [
+            { "type": "internal", "text": "Página 1", "href": "#/page1" },
+            { "type": "internal", "text": "Página 2", "href": "#/page2" },
+            { "type": "internal", "text": "Página 3", "href": "#/page3" }
+          ]
+        },
+        {
+          "title": "Links Externos",
+          "iconSize": 14,
+          "items": [
+            {
+              "type": "external",
+              "text": "Github",
+              "href": "https://github.com/mineot/"
+            },
+            {
+              "type": "external",
+              "text": "Instagram",
+              "href": "https://www.instagram.com/"
+            },
+            {
+              "type": "external",
+              "text": "Whatsapp",
+              "href": "https://web.whatsapp.com/"
+            }
+          ]
+        },
+        {
+          "title": "Imagem",
+          "imageSize": 82,
+          "imageRounded": true,
+          "items": [
+            {
+              "type": "image",
+              "text": "Placehold",
+              "href": "https://placehold.co/82x82"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

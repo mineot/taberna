@@ -3,51 +3,13 @@ import { publicPath } from '../utils/paths.util';
 import { ref } from 'vue';
 import { useLanguageStore } from './language.store';
 import { useLoadingStore } from './loading.store';
-
-interface NavigatorItem {
-  text: string;
-  href: string;
-}
-
-type FooterItem = {
-  type: 'internal' | 'external' | 'image';
-  text: string;
-  href?: string;
-};
-
-interface FooterSection {
-  title: string;
-  iconSize?: number;
-  imageSize?: number;
-  imageRounded?: boolean;
-  items: FooterItem[];
-}
-
-interface FooterManifest {
-  showBrand: boolean;
-  showDescription: boolean;
-  sections: FooterSection[];
-}
-
-interface ConfigurationManifest {
-  site: {
-    title: string;
-    description: string;
-    image: string;
-    ownership: string;
-    navigator: NavigatorItem[];
-    footer: FooterManifest;
-  };
-}
+import type { ConfigurationManifest } from '../utils/configuration';
 
 export const useConfigStore = defineStore('config-store', () => {
-  const storeLanguage = useLanguageStore();
-  const storeLoading = useLoadingStore();
+  const { locale } = storeToRefs(useLanguageStore());
+  const { startLoading, stopLoading } = useLoadingStore();
 
-  const { locale } = storeToRefs(storeLanguage);
-  const { startLoading, stopLoading } = storeLoading;
-
-  const config = ref<ConfigurationManifest | null>(null);
+  const config = ref<ConfigurationManifest>();
 
   async function loadConfiguration() {
     const token = startLoading();
@@ -56,6 +18,16 @@ export const useConfigStore = defineStore('config-store', () => {
       const path = publicPath(`config/${locale.value}.json`);
       const response = await fetch(path);
       config.value = (await response.json()) as ConfigurationManifest;
+
+      if (config.value.footer) {
+        const footerPath = publicPath(
+          `content/${locale.value}/${config.value.footer}`,
+        );
+        const footerResponse = await fetch(footerPath);
+        config.value.footer = (await footerResponse.text()) as string;
+      }
+
+      console.log(config.value);
     } catch (err) {
       throw new Error('Failed to load config', { cause: err });
     } finally {

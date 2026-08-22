@@ -6,7 +6,7 @@
     }"
   >
     <a
-      v-for="navItem in config?.site.navigator"
+      v-for="navItem in config?.navigator"
       :key="navItem.text"
       :href="navItem.href"
       :class="{
