@@ -13,7 +13,7 @@ const props = defineProps<{
 const sanitizedHtml = computed(() =>
   DOMPurify.sanitize(props.data, {
     CUSTOM_ELEMENT_HANDLING: {
-      tagNameCheck: /^content-(container|row|column|brand)$/,
+      tagNameCheck: /^content-(container|block)$/,
       attributeNameCheck: /^(rowspan)$/,
       allowCustomizedBuiltInElements: false,
     },
