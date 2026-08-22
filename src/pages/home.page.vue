@@ -5,7 +5,7 @@
       :class="[
         'grid',
         'grid-cols-1',
-        'gap-2',
+        'gap-4',
         {
           'home-emphasis-color': block.emphasis ?? false,
           'home-emphasis-margin': block.emphasis ?? false,
@@ -47,7 +47,7 @@ const { homeData } = storeToRefs(useHomeStore());
 
 .home {
   @apply flex flex-col;
-  gap: calc(var(--spacing) * var(--gap));
+  gap: calc(var(--spacing) * var(--gap-lg));
 }
 
 .home-emphasis-color {
@@ -68,6 +68,6 @@ const { homeData } = storeToRefs(useHomeStore());
 }
 
 .block-contents {
-  @apply flex flex-col gap-4;
+  @apply flex flex-col gap-2;
 }
 </style>

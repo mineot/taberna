@@ -60,7 +60,7 @@ const wrapClasses = {
 } satisfies Record<ToggleState, ResponsiveClasses>;
 
 const marginClasses = {
-  enabled: { mobile: 'm-2', desktop: 'md:m-2' },
+  enabled: { mobile: 'm-4', desktop: 'md:m-4' },
   disabled: { mobile: 'm-0', desktop: 'md:m-0' },
 } satisfies Record<ToggleState, ResponsiveClasses>;
 
@@ -125,11 +125,11 @@ const classes = computed(() => [
 const imageDimensions = computed(() =>
   props.data.images.map((image) => ({
     width: isDesktop.value
-      ? (image.width ?? 64)
-      : (image['mobile:width'] ?? image.width ?? 64),
+      ? image.width
+      : (image['mobile:width'] ?? image.width),
     height: isDesktop.value
-      ? (image.height ?? 64)
-      : (image['mobile:height'] ?? image.height ?? 64),
+      ? image.height
+      : (image['mobile:height'] ?? image.height),
   })),
 );
 

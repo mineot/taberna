@@ -137,7 +137,7 @@
   --footer-texture: var(--texture);
 
   --home-emphasis-color: var(--color-neutral-700);
-  --home-emphasis-margin: 2;
+  --home-emphasis-margin: 4;
   --home-emphasis-rounded: var(--radius-sm);
   --home-emphasis-texture: var(--texture);
 
