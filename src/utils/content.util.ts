@@ -16,9 +16,11 @@ export interface Alert extends Header {
 export interface Image {
   src: string;
   alt: string;
+  rounded?: boolean;
   height?: number | string;
   width?: number | string;
-  rounded?: boolean;
+  'mobile:height'?: number | string;
+  'mobile:width'?: number | string;
 }
 
 export interface ImageBlock extends Header {

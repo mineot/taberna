@@ -105,6 +105,7 @@
         {
           "type": "image",
           "direction": "col",
+          "mobile:direction": "row",
           "align": "center",
           "justify": "center",
           "images": [
