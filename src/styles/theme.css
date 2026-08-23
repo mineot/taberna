@@ -120,18 +120,4 @@
   --sidebar-border-size: var(--border-size);
   --sidebar-border-style: var(--border-style);
   --sidebar-texture: var(--texture);
-
-  --content-background-color: transparent;
-  --content-emphasis-color: var(--color-neutral-700);
-  --content-emphasis-texture: var(--texture);
-  --content-rounded: var(--radius-md);
-  --content-spacing: var(--gap-md);
-  --content-texture: none;
-
-  --footer-background-color: var(--color-neutral-950);
-  --footer-border-color: var(--border-color);
-  --footer-border-size: var(--border-size);
-  --footer-border-style: var(--border-style);
-  --footer-copyright-color: var(--color-neutral-500);
-  --footer-texture: var(--texture);
 }
