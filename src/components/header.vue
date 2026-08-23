@@ -21,10 +21,11 @@ import Language from './language.vue';
 .header {
   @apply app-container app-block;
   @apply sticky top-0 z-40 backdrop-blur;
-  @apply flex flex-row items-center justify-between gap-2;
+  @apply app-gap-sm flex flex-row items-center justify-between;
 
   background-image: var(--header-texture);
   background-repeat: repeat;
+
   border-bottom-color: var(--header-border-color);
   border-bottom-style: var(--header-border-style);
   border-bottom-width: var(--header-border-size);
@@ -37,7 +38,7 @@ import Language from './language.vue';
 }
 
 .header-menu {
-  @apply flex flex-row items-center justify-between gap-4;
+  @apply app-gap-md flex flex-row items-center justify-between;
 }
 
 .header-language {

@@ -1,5 +1,4 @@
 <template>
-  <Error />
   <Skeleton :visible="loading" />
   <Container :visible="showContent" />
 </template>
@@ -11,7 +10,6 @@ import { useConfigStore } from './stories/config.store.ts';
 import { useLanguageStore } from './stories/language.store.ts';
 import { useLoadingStore } from './stories/loading.store.ts';
 import Container from './components/container.vue';
-import Error from './components/error.vue';
 import Skeleton from './components/skeleton.vue';
 
 const { loadConfiguration } = useConfigStore();

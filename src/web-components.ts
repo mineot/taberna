@@ -1,12 +1,12 @@
 import { defineCustomElement } from 'vue';
-import ContentContainer from './content-container.vue';
-import ContentBlock from './content-block.vue';
+import Brand from './components/brand.vue';
+import Link from './components/link.vue';
 
 const elements = {
-  ['content-container' as string]: defineCustomElement(ContentContainer, {
+  ['twc-brand' as string]: defineCustomElement(Brand, {
     shadowRoot: false,
   }),
-  ['content-block' as string]: defineCustomElement(ContentBlock, {
+  ['twc-link' as string]: defineCustomElement(Link, {
     shadowRoot: false,
   }),
 };

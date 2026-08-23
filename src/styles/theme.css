@@ -47,36 +47,34 @@
 }
 
 :root {
+  --duration: 300ms;
+  --skeleton: var(--color-neutral-700);
+  --spacing-lg: 6;
+  --spacing-md: 4;
+  --spacing-sm: 2;
+  --texture: url('../images/texture.png');
+
   --block-lg: 6;
   --block-sm: 4;
   --container-lg: 30;
   --container-md: 15;
   --container-sm: 4;
-  --duration: 300ms;
-  --gap-lg: 6;
-  --gap-md: 4;
-  --gap-sm: 2;
-  --skeleton: var(--color-neutral-700);
-  --texture: url('images/texture.png');
 
   --backdrop-color: var(--color-neutral-900);
   --backdrop-opacity: 20%;
   --backdrop-texture: var(--texture);
+
   --background-color: var(--color-neutral-800);
+  --background-emphasis-color: var(--color-neutral-700);
+  --text-color: var(--color-neutral-300);
+
   --border-color: var(--color-neutral-700);
   --border-size: 1px;
   --border-style: solid;
+
   --emphasis-active: var(--color-emerald-400);
   --emphasis-color: var(--color-emerald-600);
   --emphasis-hover: var(--color-emerald-500);
-  --text-color: var(--color-neutral-300);
-
-  --error-background-color: var(--color-red-800);
-  --error-border-color: var(--color-red-200);
-  --error-border-size: var(--border-size);
-  --error-border-style: var(--border-style);
-  --error-text: var(--color-red-200);
-  --error-texture: var(--texture);
 
   --language-text-color-active: var(--emphasis-active);
   --language-text-color-hover: var(--emphasis-hover);
@@ -97,6 +95,7 @@
   --brand-image-radius: var(--radius-lg);
   --brand-image-size-md: 10;
   --brand-image-size: 8;
+  --brand-description-color: var(--color-neutral-400);
   --brand-title-color-active: var(--emphasis-active);
   --brand-title-color-hover: var(--emphasis-hover);
   --brand-title-color: var(--emphasis-color);

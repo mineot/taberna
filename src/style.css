@@ -1,32 +1,9 @@
 @import 'tailwindcss';
-@import './theme.css';
 @plugin '@tailwindcss/typography';
 
-@utility app-duration {
-  @apply duration-[var(--duration)] ease-in-out;
-}
-
-@utility app-container {
-  @apply app-duration;
-  padding-inline: calc(var(--spacing) * var(--container-sm));
-
-  @media (width >= 48rem) {
-    padding-inline: calc(var(--spacing) * var(--container-md));
-  }
-
-  @media (width >= 64rem) {
-    padding-inline: calc(var(--spacing) * var(--container-lg));
-  }
-}
-
-@utility app-block {
-  @apply app-duration;
-  padding-block: calc(var(--spacing) * var(--block-sm));
-
-  @media (width >= 48rem) {
-    padding-block: calc(var(--spacing) * var(--block-lg));
-  }
-}
+@import './styles/theme.css';
+@import './styles/utilities.css';
+@import './styles/customs.css';
 
 * {
   @apply box-border;
@@ -37,11 +14,7 @@ body {
   @apply flex flex-col gap-0;
   @apply m-0 h-full w-full p-0;
   @apply overflow-x-hidden font-sans;
-
-  background-color: var(--background-color);
-  background-image: var(--texture);
-  background-repeat: repeat;
-  color: var(--text-color);
+  @apply app-bg-color app-texture app-text-color;
 
   > #app {
     @apply m-0 flex-1 p-0;

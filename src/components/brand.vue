@@ -1,10 +1,15 @@
 <template>
-  <a v-if="props.visible" class="brand" href="#" @click="emit('click')">
-    <img class="brand-image" :src="config?.image" :alt="config?.title" />
-    <div class="brand-title">
-      <span>{{ config?.title }}</span>
+  <div class="brand-block">
+    <a v-if="props.visible" class="brand" href="#" @click="emit('click')">
+      <img class="brand-image" :src="config?.image" :alt="config?.title" />
+      <div class="brand-title">
+        <span>{{ config?.title }}</span>
+      </div>
+    </a>
+    <div v-if="props.description" class="brand-description">
+      {{ config?.description }}
     </div>
-  </a>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -20,6 +25,11 @@ const props = defineProps({
     required: false,
     default: true,
   },
+  description: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['click']);
@@ -28,6 +38,10 @@ const emit = defineEmits(['click']);
 <style>
 @import 'tailwindcss';
 @import '../style.css';
+
+.brand-block {
+  @apply flex flex-col items-start gap-2;
+}
 
 .brand {
   @apply app-duration cursor-pointer;
@@ -84,5 +98,10 @@ const emit = defineEmits(['click']);
   @media (width >= 48rem) {
     font-size: var(--brand-title-size-md);
   }
+}
+
+.brand-description {
+  @apply max-w-75 text-sm md:text-xs;
+  color: var(--brand-description-color);
 }
 </style>

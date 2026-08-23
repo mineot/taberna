@@ -43,7 +43,7 @@ const props = defineProps({
 
 .language {
   @apply app-duration cursor-pointer;
-  @apply flex flex-row items-center gap-2;
+  @apply app-gap-sm flex flex-row items-center;
   @apply grayscale-75 hover:grayscale-0;
   @apply text-lg;
 

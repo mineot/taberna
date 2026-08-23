@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div
+    <!-- <div
       v-for="block in homeData"
       :class="[
         'grid',
@@ -19,20 +19,16 @@
       ]"
     >
       <div v-for="content in block.contents" class="block-contents">
-        <!-- <ContentTitle :data="content" />
-        <ContentItems :items="content.items" /> -->
+         <ContentTitle :data="content" />
+        <ContentItems :items="content.items" /> 
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { useHomeStore } from '../stories/home.store';
 // import ContentTitle from '../components/contents/content-title.vue';
 // import ContentItems from '../components/contents/content-items.vue';
-
-const { homeData } = storeToRefs(useHomeStore());
 </script>
 
 <style>

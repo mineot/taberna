@@ -1,6 +1,7 @@
 {
   "title": "Taberna",
   "image": "images/logo.png",
+  "description": "Uma base simples e personalizável para criar sites pessoais, portfólios, landing pages e pequenos sites institucionais.",
   "ownership": "© 2026 Mineot",
   "footer": "footer.htm",
   "navigator": [

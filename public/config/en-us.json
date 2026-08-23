@@ -1,61 +1,12 @@
 {
-  "site": {
-    "title": "Taberna",
-    "description": "A simple, customizable foundation for personal websites, portfolios, landing pages, and small institutional sites.",
-    "image": "images/logo.png",
-    "ownership": "© 2026 Mineot",
-    "navigator": [
-      { "text": "Page 1", "href": "#/page1" },
-      { "text": "Page 2", "href": "#/page2" },
-      { "text": "Page 3", "href": "#/page3" }
-    ],
-    "footer": {
-      "showBrand": true,
-      "showDescription": true,
-      "sections": [
-        {
-          "title": "Internal Links",
-          "iconSize": 14,
-          "items": [
-            { "type": "internal", "text": "Page 1", "href": "#/page1" },
-            { "type": "internal", "text": "Page 2", "href": "#/page2" },
-            { "type": "internal", "text": "Page 3", "href": "#/page3" }
-          ]
-        },
-        {
-          "title": "External Links",
-          "iconSize": 14,
-          "items": [
-            {
-              "type": "external",
-              "text": "Github",
-              "href": "https://github.com/mineot/"
-            },
-            {
-              "type": "external",
-              "text": "Instagram",
-              "href": "https://www.instagram.com/"
-            },
-            {
-              "type": "external",
-              "text": "Whatsapp",
-              "href": "https://web.whatsapp.com/"
-            }
-          ]
-        },
-        {
-          "title": "Image",
-          "imageSize": 82,
-          "imageRounded": true,
-          "items": [
-            {
-              "type": "image",
-              "text": "Placehold",
-              "href": "https://placehold.co/82x82"
-            }
-          ]
-        }
-      ]
-    }
-  }
+  "title": "Taberna",
+  "description": "A simple, customizable foundation for personal websites, portfolios, landing pages, and small institutional sites.",
+  "image": "images/logo.png",
+  "ownership": "© 2026 Mineot",
+  "footer": "footer.htm",
+  "navigator": [
+    { "text": "Page 1", "href": "#/page1" },
+    { "text": "Page 2", "href": "#/page2" },
+    { "text": "Page 3", "href": "#/page3" }
+  ]
 }

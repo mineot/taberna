@@ -13,17 +13,11 @@ const props = defineProps<{
 const sanitizedHtml = computed(() =>
   DOMPurify.sanitize(props.data, {
     CUSTOM_ELEMENT_HANDLING: {
-      tagNameCheck: /^content-(container|block)$/,
+      tagNameCheck: /^twc-(brand|link)$/,
       attributeNameCheck: /^(rowspan)$/,
       allowCustomizedBuiltInElements: false,
     },
-    ADD_ATTR: [
-      'emphasis',
-      'rounded',
-      'spacing-large',
-      'spacing-small',
-      'spacing',
-    ],
+    ADD_ATTR: ['description', 'href', 'label', 'external'],
   }),
 );
 </script>

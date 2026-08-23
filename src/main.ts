@@ -1,5 +1,6 @@
 import './style.css';
-import './components/contents/content.register.ts';
+import './web-components.ts';
+
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import App from './App.vue';

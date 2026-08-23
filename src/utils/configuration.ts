@@ -6,6 +6,7 @@ export interface NavigatorItem {
 export interface ConfigurationManifest {
   title: string;
   image: string;
+  description: string;
   ownership: string;
   footer?: string;
   navigator: NavigatorItem[];
