@@ -13,11 +13,19 @@ const props = defineProps<{
 const sanitizedHtml = computed(() =>
   DOMPurify.sanitize(props.data, {
     CUSTOM_ELEMENT_HANDLING: {
-      tagNameCheck: /^twc-(brand|link)$/,
+      tagNameCheck: /^twc-(brand|link|carousel|carousel-item)$/,
       attributeNameCheck: /^(rowspan)$/,
       allowCustomizedBuiltInElements: false,
     },
-    ADD_ATTR: ['description', 'href', 'label', 'external'],
+    ADD_ATTR: [
+      'description',
+      'href',
+      'label',
+      'external',
+      'limit',
+      'delay',
+      'show-timer',
+    ],
   }),
 );
 </script>

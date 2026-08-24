@@ -103,6 +103,10 @@
       }
     }
   }
+
+  > .custom-home-block5 {
+    @apply app-gap-md custom-emphasis-block grid grid-rows-1;
+  }
 }
 
 .custom-footer-panel {
