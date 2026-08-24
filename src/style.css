@@ -3,7 +3,7 @@
 
 @import './styles/theme.css';
 @import './styles/utilities.css';
-@import './styles/customs.css';
+@import './styles/custom.css';
 
 * {
   @apply box-border;

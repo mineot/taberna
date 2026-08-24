@@ -1,13 +1,13 @@
 <template>
   <div class="languages">
     <div
-      :class="['item', { selected: locale === language }]"
+      :class="['laguage-item', { 'language-selected': locale === language }]"
       v-for="language in languages?.available"
       :key="language"
       @click="selectLanguage(language)"
     >
-      <div class="flag">{{ languages?.flags[language] }}</div>
-      <div class="text">{{ languages?.names[language] }}</div>
+      <div class="language-flag">{{ languages?.flags[language] }}</div>
+      <div class="language-text">{{ languages?.names[language] }}</div>
     </div>
   </div>
 </template>
@@ -35,7 +35,7 @@ function selectLanguage(newLanguage: string) {
   @apply flex flex-row flex-wrap justify-around gap-4;
 }
 
-.item {
+.laguage-item {
   @apply flex flex-col items-center gap-2;
   @apply cursor-pointer rounded-lg px-8 py-6;
 
@@ -59,17 +59,17 @@ function selectLanguage(newLanguage: string) {
   }
 }
 
-.flag {
+.language-flag {
   @apply app-duration;
   @apply text-3xl md:text-5xl;
 }
 
-.text {
+.language-text {
   @apply app-duration;
   @apply text-base text-nowrap md:text-lg;
 }
 
-.selected {
+.language-selected {
   background-color: var(--navigator-background-hover);
   background-image: var(--navigator-texture);
   background-repeat: repeat;

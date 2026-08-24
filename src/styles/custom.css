@@ -1,0 +1,129 @@
+@utility custom-emphasis-block {
+  @apply app-padding-md app-texture rounded-lg;
+  background-color: var(--background-emphasis-color);
+}
+
+@utility custom-title-block {
+  @apply text-2xl font-semibold;
+  color: var(--emphasis-color);
+}
+
+.custom-home {
+  @apply app-gap-md;
+  @apply grid grid-rows-1;
+
+  > .custom-home-black1 {
+    @apply app-gap-md;
+    @apply grid grid-cols-1 md:grid-cols-2;
+
+    > div.content {
+      @apply app-gap-md;
+      @apply grid grid-cols-1;
+
+      > h1 {
+        @apply font-fancy text-7xl;
+        color: var(--emphasis-color);
+      }
+
+      > h2 {
+        @apply text-lg font-thin;
+      }
+
+      > h3 {
+        @apply app-padding-md rounded-lg;
+        background-color: var(--background-color);
+        border-color: var(--border-color);
+        border-style: var(--border-style);
+        border-width: var(--border-size);
+      }
+    }
+
+    > div.image {
+      @apply flex items-end justify-center;
+
+      > img {
+        @apply w-full rounded-lg md:w-90;
+      }
+    }
+  }
+
+  > .custom-home-block2 {
+    @apply app-gap-md app-padding-md custom-emphasis-block;
+    @apply grid grid-cols-1 md:grid-cols-2;
+
+    > div.image {
+      @apply flex items-start justify-center;
+
+      > img {
+        @apply w-full rounded-lg;
+      }
+    }
+
+    > div.content {
+      @apply app-gap-md flex flex-col;
+
+      > h1 {
+        @apply custom-title-block;
+      }
+    }
+  }
+
+  > .custom-home-block3 {
+    @apply app-gap-md grid grid-rows-1;
+
+    > h1 {
+      @apply custom-title-block;
+    }
+
+    > div {
+      @apply app-gap-md grid grid-cols-1 md:grid-cols-3;
+
+      > img {
+        @apply w-full rounded-lg;
+      }
+    }
+  }
+
+  > .custom-home-block4 {
+    @apply app-gap-md custom-emphasis-block grid grid-rows-1;
+
+    > h1 {
+      @apply custom-title-block;
+    }
+
+    > div {
+      @apply app-gap-md grid grid-cols-1 md:grid-cols-3;
+
+      > div.service-item {
+        @apply app-gap-sm grid grid-rows-1;
+
+        > h2 {
+          color: var(--emphasis-color);
+        }
+      }
+    }
+  }
+}
+
+.custom-footer-panel {
+  @apply app-gap-md;
+  @apply flex flex-col flex-nowrap md:flex-row;
+  @apply items-start justify-between;
+
+  > .custom-footer-item {
+    @apply app-gap-md flex flex-col;
+
+    > .custom-footer-item-title {
+      @apply font-bold text-nowrap;
+      color: var(--emphasis-color);
+    }
+
+    > .custom-footer-item-content {
+      @apply app-gap-sm flex flex-col;
+    }
+  }
+}
+
+.custom-footer-image {
+  @apply rounded-lg;
+}
