@@ -4,6 +4,7 @@
   "description": "Uma base simples e personalizável para criar sites pessoais, portfólios, landing pages e pequenos sites institucionais.",
   "ownership": "© 2026 Mineot",
   "footer": "footer.htm",
+  "home": "home.htm",
   "navigator": [
     { "text": "Página 1", "href": "#/page1" },
     { "text": "Página 2", "href": "#/page2" },

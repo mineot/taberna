@@ -120,4 +120,11 @@
   --sidebar-border-size: var(--border-size);
   --sidebar-border-style: var(--border-style);
   --sidebar-texture: var(--texture);
+
+  --footer-background-color: var(--color-neutral-950);
+  --footer-border-color: var(--border-color);
+  --footer-border-size: var(--border-size);
+  --footer-border-style: var(--border-style);
+  --footer-copyright-color: var(--color-neutral-500);
+  --footer-texture: var(--texture);
 }

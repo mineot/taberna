@@ -4,6 +4,7 @@
   "image": "images/logo.png",
   "ownership": "© 2026 Mineot",
   "footer": "footer.htm",
+  "home": "home.htm",
   "navigator": [
     { "text": "Page 1", "href": "#/page1" },
     { "text": "Page 2", "href": "#/page2" },

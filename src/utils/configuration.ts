@@ -9,5 +9,6 @@ export interface ConfigurationManifest {
   description: string;
   ownership: string;
   footer?: string;
+  home?: string;
   navigator: NavigatorItem[];
 }

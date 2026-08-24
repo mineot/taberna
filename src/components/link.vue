@@ -37,9 +37,16 @@ const props = defineProps({
 @import '../style.css';
 
 .link {
-  @apply app-text-color;
-  @apply flex flex-row items-center justify-start gap-1;
-  @apply hover:app-emphasis-hover-text-color;
+  @apply flex flex-row gap-1;
+  @apply items-center justify-start;
   @apply hover:underline;
+
+  color: var(--text-color);
+
+  &:hover {
+    @media (hover: hover) {
+      color: var(--emphasis-color);
+    }
+  }
 }
 </style>

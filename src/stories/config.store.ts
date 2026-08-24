@@ -26,6 +26,14 @@ export const useConfigStore = defineStore('config-store', () => {
         const footerResponse = await fetch(footerPath);
         config.value.footer = (await footerResponse.text()) as string;
       }
+
+      if (config.value.home) {
+        const homePath = publicPath(
+          `content/${locale.value}/${config.value.home}`,
+        );
+        const homeResponse = await fetch(homePath);
+        config.value.home = (await homeResponse.text()) as string;
+      }
     } catch (err) {
       throw new Error('Failed to load config', { cause: err });
     } finally {
