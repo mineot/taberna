@@ -1,0 +1,9 @@
+@utility custom-emphasis-block {
+  @apply app-padding-md app-texture rounded-lg;
+  background-color: var(--background-emphasis-color);
+}
+
+@utility custom-title-block {
+  @apply text-2xl font-semibold;
+  color: var(--emphasis-color);
+}

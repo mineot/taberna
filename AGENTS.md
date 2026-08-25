@@ -804,3 +804,9 @@ The `contentFile` field in the `footer` config allows loading Markdown content i
     <div class="footer-links">#### Social - [GitHub](https://github.com/)</div>
   </div>
   ```
+
+### Custom-element Carousel Sizing
+
+- `twc-carousel` and `twc-carousel-item` are block-level, full-width elements with `min-width: 0`.
+- The carousel root, its flex content row, and containing home grid must preserve `min-width: 0` so long slide content cannot widen the page on small screens.
+- The document-level `overflow-x-hidden` is only a clipping safeguard and must not be used as the carousel's responsive sizing mechanism.

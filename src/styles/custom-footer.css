@@ -1,0 +1,22 @@
+.custom-footer {
+  @apply app-gap-md;
+  @apply flex flex-col flex-nowrap md:flex-row;
+  @apply items-start justify-between;
+}
+
+.custom-footer-item {
+  @apply app-gap-md flex flex-col;
+}
+
+.custom-footer-item-title {
+  @apply font-bold text-nowrap;
+  color: var(--emphasis-color);
+}
+
+.custom-footer-item-content {
+  @apply app-gap-sm flex flex-col;
+}
+
+.custom-footer-image {
+  @apply rounded-lg;
+}

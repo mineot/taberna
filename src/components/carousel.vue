@@ -323,12 +323,16 @@ function updateBreakpoint(event: MediaQueryListEvent) {
 @import 'tailwindcss';
 @import '@/style.css';
 
+twc-carousel {
+  @apply block w-full min-w-0;
+}
+
 .carousel {
-  @apply app-gap-md flex w-full flex-col;
+  @apply app-gap-md flex w-full min-w-0 flex-col;
 }
 
 .carousel-content {
-  @apply flex w-full items-center gap-2;
+  @apply flex w-full min-w-0 items-center gap-2;
 }
 
 .carousel-navigation-button {
