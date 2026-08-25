@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex w-full flex-col gap-4"
+    class="carousel"
     @mouseenter="pauseCarousel"
     @mouseleave="resumeCarousel"
   >
@@ -73,6 +73,7 @@
 
 <script setup lang="ts">
 import { ChevronLeft, ChevronRight, ClockFading, Pause } from '@lucide/vue';
+
 import {
   computed,
   nextTick,
@@ -102,6 +103,7 @@ const itemsContainer = ref<HTMLElement>();
 const mediumScreen = ref(false);
 const paused = ref(false);
 const remainingSeconds = ref(0);
+
 let timer: ReturnType<typeof setTimeout> | undefined;
 let countdownTimer: ReturnType<typeof setInterval> | undefined;
 let breakpointQuery: MediaQueryList | undefined;
@@ -122,12 +124,15 @@ function normalizeDelay(delay: number): number {
 
 const normalizedLimit = computed(() => normalizeLimit(props.limit));
 const normalizedDelay = computed(() => normalizeDelay(props.delay));
+
 const effectiveLimit = computed(() =>
   mediumScreen.value ? normalizedLimit.value : 1,
 );
+
 const timerVisible = computed(
   () => props.showTimer !== false && props.showTimer !== 'false',
 );
+
 const totalPages = computed(() =>
   Math.ceil(itemCount.value / effectiveLimit.value),
 );
@@ -322,6 +327,13 @@ function updateBreakpoint(event: MediaQueryListEvent) {
 </script>
 
 <style>
+@import 'tailwindcss';
+@import '@/style.css';
+
+.carousel {
+  @apply app-gap-md flex w-full flex-col;
+}
+
 .carousel-track > * {
   min-width: 0;
   flex: 0 0 calc(var(--carousel-item-width) - var(--carousel-item-gap-offset));
