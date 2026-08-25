@@ -17,16 +17,15 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { useConfigStore } from '../stories/config.store.ts';
-import Content from './content.vue';
+import { useConfigStore } from '@store/config.store.ts';
+import Content from '@layout/content.vue';
 
-const storeConfig = useConfigStore();
-const { config } = storeToRefs(storeConfig);
+const { config } = storeToRefs(useConfigStore());
 </script>
 
 <style>
 @import 'tailwindcss';
-@import '../style.css';
+@import '@/style.css';
 
 .footer {
   @apply app-container app-block;

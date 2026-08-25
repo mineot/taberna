@@ -20,11 +20,11 @@
 </template>
 
 <script setup lang="ts">
-import Backdrop from './backdrop.vue';
-import Brand from './brand.vue';
-import IconButton from './icon-button.vue';
-import Language from './language.vue';
-import Navigator from './navigator.vue';
+import Backdrop from '@semantic/backdrop.vue';
+import Brand from '@component/brand.vue';
+import IconButton from '@semantic/icon-button.vue';
+import Language from '@semantic/language.vue';
+import Navigator from '@semantic/navigator.vue';
 
 const props = defineProps({
   visible: {
@@ -43,7 +43,7 @@ const closeMenu = () => {
 
 <style>
 @import 'tailwindcss';
-@import '../style.css';
+@import '@/style.css';
 
 .sidebar {
   @apply border-l shadow-xl;

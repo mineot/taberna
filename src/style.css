@@ -1,9 +1,9 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
-@import './styles/theme.css';
-@import './styles/utilities.css';
-@import './styles/custom.css';
+@import '@style/theme.css';
+@import '@style/utilities.css';
+@import '@style/custom.css';
 
 * {
   @apply box-border;

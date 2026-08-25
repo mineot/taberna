@@ -1,7 +1,7 @@
 import { defineCustomElement } from 'vue';
-import Brand from './components/brand.vue';
-import Carousel from './components/carousel.vue';
-import CarouselItem from './components/carousel-item.vue';
+import Brand from '@component/brand.vue';
+import Carousel from '@component/carousel.vue';
+import CarouselItem from '@component/carousel-item.vue';
 import Link from './components/link.vue';
 
 const elements = {

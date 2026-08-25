@@ -6,11 +6,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useConfigStore } from './stories/config.store.ts';
-import { useLanguageStore } from './stories/language.store.ts';
-import { useLoadingStore } from './stories/loading.store.ts';
-import Container from './components/container.vue';
-import Skeleton from './components/skeleton.vue';
+import { useConfigStore } from '@store/config.store.ts';
+import { useLanguageStore } from '@store/language.store.ts';
+import { useLoadingStore } from '@store/loading.store.ts';
+import Container from '@layout/container.vue';
+import Skeleton from '@semantic/skeleton.vue';
 
 const { loadConfiguration } = useConfigStore();
 const { loading } = storeToRefs(useLoadingStore());

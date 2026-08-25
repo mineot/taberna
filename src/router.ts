@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import HomePage from './pages/home.page.vue';
-import LanguageSwitcherPage from './pages/language-switcher.page.vue';
-import SlugPage from './pages/slug.page.vue';
+import HomePage from '@page/home.page.vue';
+import LanguageSwitcherPage from '@page/language-switcher.page.vue';
+import SlugPage from '@page/slug.page.vue';
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),

@@ -9,14 +9,14 @@
 </template>
 
 <script setup lang="ts">
-import Navigator from './navigator.vue';
-import Brand from './brand.vue';
-import Language from './language.vue';
+import Brand from '@component/brand.vue';
+import Language from '@semantic/language.vue';
+import Navigator from '@semantic/navigator.vue';
 </script>
 
 <style>
 @import 'tailwindcss';
-@import '../style.css';
+@import '@/style.css';
 
 .header {
   @apply app-container app-block;

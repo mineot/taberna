@@ -16,10 +16,9 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { useLanguageStore } from '../stories/language.store';
+import { useLanguageStore } from '@store/language.store';
 
-const langStore = useLanguageStore();
-const { availableCount, flag, fullName } = storeToRefs(langStore);
+const { availableCount, flag, fullName } = storeToRefs(useLanguageStore());
 
 const emit = defineEmits(['click']);
 
@@ -39,7 +38,7 @@ const props = defineProps({
 
 <style>
 @import 'tailwindcss';
-@import '../style.css';
+@import '@/style.css';
 
 .language {
   @apply app-duration cursor-pointer;

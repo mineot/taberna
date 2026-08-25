@@ -22,7 +22,7 @@ const closeMenu = () => {
 
 <style>
 @import 'tailwindcss';
-@import '../style.css';
+@import '@/style.css';
 
 .backdrop-enter-active,
 .backdrop-leave-active {

@@ -1,10 +1,11 @@
-import './style.css';
-import './web-components.ts';
+import '@/style.css';
+import '@/web-components.ts';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import App from './App.vue';
-import router from './router.ts';
+
+import App from '@/App.vue';
+import router from '@/router';
 
 const pinia = createPinia();
 const app = createApp(App);

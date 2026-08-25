@@ -250,7 +250,8 @@ Custom z-index utilities (defined in the global `<style>` block in App.vue, not 
 
 - Plugins: `@vitejs/plugin-vue`, `@tailwindcss/vite`
 - Relative base (`./`) for deployment at the root or in subdirectories
-- No custom aliases
+- Source aliases: `@`, `@component`, `@layout`, `@page`, `@semantic`, `@store`, `@style`, `@util`, and `@widget`
+- Vite alias replacements use absolute directory paths without glob wildcards; matching `paths` entries in `tsconfig.json` retain their `/*` mappings
 
 ### .prettierrc
 

@@ -14,11 +14,10 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { useLanguageStore } from '../stories/language.store';
+import { useLanguageStore } from '@store/language.store';
 
-const storeLanguage = useLanguageStore();
-const { setLaguage } = storeLanguage;
-const { languages, locale } = storeToRefs(storeLanguage);
+const { languages, locale } = storeToRefs(useLanguageStore());
+const { setLaguage } = useLanguageStore();
 
 function selectLanguage(newLanguage: string) {
   if (newLanguage !== locale.value) {
@@ -29,7 +28,7 @@ function selectLanguage(newLanguage: string) {
 
 <style>
 @import 'tailwindcss';
-@import '../style.css';
+@import '@/style.css';
 
 .languages {
   @apply flex flex-row flex-wrap justify-around gap-4;

@@ -28,9 +28,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useConfigStore } from '../stories/config.store.ts';
-import IconButton from './icon-button.vue';
-import Sidebar from './sidebar.vue';
+import { useConfigStore } from '@store/config.store.ts';
+import IconButton from '@semantic/icon-button.vue';
+import Sidebar from '@widget/sidebar.vue';
 
 const storeConfig = useConfigStore();
 const { config } = storeToRefs(storeConfig);
@@ -62,7 +62,7 @@ const emit = defineEmits(['click']);
 
 <style>
 @import 'tailwindcss';
-@import '../style.css';
+@import '@/style.css';
 
 .navigator {
   @apply flex flex-row items-center justify-center;

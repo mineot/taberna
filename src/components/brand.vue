@@ -14,10 +14,9 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { useConfigStore } from '../stories/config.store';
+import { useConfigStore } from '@store/config.store';
 
-const storeConfig = useConfigStore();
-const { config } = storeToRefs(storeConfig);
+const { config } = storeToRefs(useConfigStore());
 
 const props = defineProps({
   visible: {
@@ -37,7 +36,7 @@ const emit = defineEmits(['click']);
 
 <style>
 @import 'tailwindcss';
-@import '../style.css';
+@import '@/style.css';
 
 .brand-block {
   @apply flex flex-col items-start gap-2;

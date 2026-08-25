@@ -25,7 +25,7 @@ const props = defineProps({
 
 <style>
 @import 'tailwindcss';
-@import '../style.css';
+@import '@/style.css';
 
 @keyframes pulse {
   0%,

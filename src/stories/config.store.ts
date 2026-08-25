@@ -1,9 +1,9 @@
 import { defineStore, storeToRefs } from 'pinia';
-import { publicPath } from '../utils/paths.util';
+import { publicPath } from '@util/paths.util';
 import { ref } from 'vue';
-import { useLanguageStore } from './language.store';
-import { useLoadingStore } from './loading.store';
-import type { ConfigurationManifest } from '../utils/configuration';
+import { useLanguageStore } from '@store/language.store';
+import { useLoadingStore } from '@store/loading.store';
+import type { ConfigurationManifest } from '@util/configuration';
 
 export const useConfigStore = defineStore('config-store', () => {
   const { locale } = storeToRefs(useLanguageStore());

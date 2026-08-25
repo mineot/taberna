@@ -34,7 +34,7 @@ const props = defineProps({
 
 <style>
 @import 'tailwindcss';
-@import '../style.css';
+@import '@/style.css';
 
 .link {
   @apply flex flex-row gap-1;

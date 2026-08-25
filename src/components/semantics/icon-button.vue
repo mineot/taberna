@@ -34,7 +34,7 @@ const emit = defineEmits(['click']);
 
 <style>
 @import 'tailwindcss';
-@import '../style.css';
+@import '@/style.css';
 
 .icon-button {
   @apply app-duration cursor-pointer;

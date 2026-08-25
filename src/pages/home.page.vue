@@ -4,13 +4,13 @@
 </template>
 
 <script setup lang="ts">
-import { useConfigStore } from '../stories/config.store.ts';
-import Content from '../components/content.vue';
+import { useConfigStore } from '@store/config.store.ts';
+import Content from '@layout/content.vue';
 
 const { config } = useConfigStore();
 </script>
 
 <style>
 @import 'tailwindcss';
-@import '../style.css';
+@import '@/style.css';
 </style>

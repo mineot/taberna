@@ -2,6 +2,17 @@
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": ["src/**/*", "src/**/*.vue"],
   "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@component/*": ["./src/components/*"],
+      "@layout/*": ["./src/components/layouts/*"],
+      "@page/*": ["./src/pages/*"],
+      "@semantic/*": ["./src/components/semantics/*"],
+      "@store/*": ["./src/stories/*"],
+      "@style/*": ["./src/styles/*"],
+      "@util/*": ["./src/utils/*"],
+      "@widget/*": ["./src/components/widgets/*"]
+    },
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",

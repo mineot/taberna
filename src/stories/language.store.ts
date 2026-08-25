@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
-import { publicPath } from '../utils/paths.util';
+import { publicPath } from '@util/paths.util';
 import { ref } from 'vue';
-import { useLoadingStore } from './loading.store';
+import { useLoadingStore } from '@store/loading.store';
 
 export const STORAGE_KEY = 'taberna-lang';
 
@@ -69,7 +69,7 @@ export const useLanguageStore = defineStore('language-store', () => {
   async function setLaguage(locale: string) {
     try {
       await updateStorage(locale);
-      navigation.reload();
+      window.location.reload();
     } catch (err) {
       throw new Error('Failed to set locale', { cause: err });
     }
