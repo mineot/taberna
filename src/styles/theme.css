@@ -127,4 +127,13 @@
   --footer-border-style: var(--border-style);
   --footer-copyright-color: var(--color-neutral-500);
   --footer-texture: var(--texture);
+
+  --carousel-button-active: var(--emphasis-active);
+  --carousel-button-color: var(--emphasis-color);
+  --carousel-button-hover: var(--emphasis-hover);
+  --carousel-dot-active: var(--emphasis-color);
+  --carousel-dot-border-color: var(--emphasis-color);
+  --carousel-dot-border-size: var(--border-size);
+  --carousel-dot-border-style: var(--border-style);
+  --carousel-timer-color: var(--emphasis-color);
 }

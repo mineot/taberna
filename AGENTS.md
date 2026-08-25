@@ -344,6 +344,9 @@ Composable that orchestrates language switching: validation + `loadConfig` + `se
 - TypeScript strict mode
 - Tailwind CSS v4 through `@import 'tailwindcss'` (CSS-first config, no tailwind.config.js)
 - Lowercase hyphenated component names: `section-carousel.vue`
+- Component templates use semantic classes; static Tailwind utilities belong in
+  the component `<style>` block through `@apply`. Keep inline bindings only for
+  values that depend on runtime state or component props.
 - Scoped styles (App.vue uses `@reference` to access the theme from style.css)
 - Always use custom utilities (`app-*`) for application colors in components. Never use Tailwind palette color classes directly in templates; semantic color values belong in the `:root` tokens in `style.css`
 - Do not add code comments unless requested

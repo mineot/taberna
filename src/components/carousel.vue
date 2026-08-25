@@ -4,23 +4,19 @@
     @mouseenter="pauseCarousel"
     @mouseleave="resumeCarousel"
   >
-    <div class="flex w-full items-center gap-2">
+    <div class="carousel-content">
       <button
         v-if="totalPages > 1"
         type="button"
-        class="shrink-0 cursor-pointer"
+        class="carousel-navigation-button"
         aria-label="Previous page"
         @click="previousPage"
       >
         <ChevronLeft aria-hidden="true" />
       </button>
 
-      <div class="min-w-0 flex-1 overflow-hidden">
-        <div
-          ref="itemsContainer"
-          class="carousel-track flex w-full gap-4 transition-transform duration-500 ease-in-out [--carousel-item-gap-offset:0rem] [--carousel-item-width:100%] motion-reduce:transition-none md:[--carousel-item-gap-offset:var(--carousel-desktop-gap-offset)] md:[--carousel-item-width:var(--carousel-desktop-item-width)]"
-          :style="trackStyle"
-        >
+      <div class="carousel-viewport">
+        <div ref="itemsContainer" class="carousel-track" :style="trackStyle">
           <slot />
         </div>
       </div>
@@ -28,7 +24,7 @@
       <button
         v-if="totalPages > 1"
         type="button"
-        class="shrink-0 cursor-pointer"
+        class="carousel-navigation-button"
         aria-label="Next page"
         @click="nextPage"
       >
@@ -36,16 +32,13 @@
       </button>
     </div>
 
-    <div v-if="totalPages > 1" class="flex items-center justify-center gap-2">
-      <div class="flex items-center gap-2">
+    <div v-if="totalPages > 1" class="carousel-controls">
+      <div class="carousel-pagination">
         <button
           v-for="page in totalPages"
           :key="page"
           type="button"
-          :class="[
-            'h-3 w-3 cursor-pointer rounded-full border',
-            page - 1 === selectedPage ? 'bg-current' : 'bg-transparent',
-          ]"
+          class="carousel-page-button"
           :aria-label="`Page ${page}`"
           :aria-current="page - 1 === selectedPage ? 'page' : undefined"
           :data-active="page - 1 === selectedPage ? '' : undefined"
@@ -55,7 +48,7 @@
 
       <div
         v-if="timerVisible && normalizedDelay > 0"
-        class="flex items-center gap-1 tabular-nums"
+        class="carousel-timer"
         role="timer"
         :aria-label="
           paused
@@ -63,8 +56,8 @@
             : `${remainingSeconds} seconds until next page`
         "
       >
-        <Pause v-if="paused" class="h-4 w-4" aria-hidden="true" />
-        <ClockFading v-else class="h-4 w-4" aria-hidden="true" />
+        <Pause v-if="paused" aria-hidden="true" />
+        <ClockFading v-else aria-hidden="true" />
         <span>{{ remainingSeconds }}s</span>
       </div>
     </div>
@@ -149,7 +142,7 @@ const trackStyle = computed(
       '--carousel-desktop-gap-offset': `${
         (normalizedLimit.value - 1) / normalizedLimit.value
       }rem`,
-      transform: `translateX(calc(-${selectedPage.value * 100}% - ${selectedPage.value}rem))`,
+      '--carousel-track-offset': `calc(-${selectedPage.value * 100}% - ${selectedPage.value}rem)`,
     }) as CSSProperties,
 );
 
@@ -334,8 +327,75 @@ function updateBreakpoint(event: MediaQueryListEvent) {
   @apply app-gap-md flex w-full flex-col;
 }
 
-.carousel-track > * {
-  min-width: 0;
-  flex: 0 0 calc(var(--carousel-item-width) - var(--carousel-item-gap-offset));
+.carousel-content {
+  @apply flex w-full items-center gap-2;
+}
+
+.carousel-navigation-button {
+  @apply app-padding-sm shrink-0 cursor-pointer;
+  color: var(--carousel-button-color);
+
+  &:hover {
+    @media (hover: hover) {
+      color: var(--carousel-button-hover);
+    }
+  }
+
+  &:active {
+    color: var(--carousel-button-active);
+  }
+}
+
+.carousel-viewport {
+  @apply min-w-0 flex-1 overflow-hidden;
+}
+
+.carousel-track {
+  --carousel-item-gap-offset: 0rem;
+  --carousel-item-width: 100%;
+
+  @apply flex w-full gap-4 transition-transform duration-500 ease-in-out;
+  @apply motion-reduce:transition-none;
+
+  transform: translateX(var(--carousel-track-offset, 0));
+
+  @media (width >= 48rem) {
+    --carousel-item-gap-offset: var(--carousel-desktop-gap-offset);
+    --carousel-item-width: var(--carousel-desktop-item-width);
+  }
+
+  > * {
+    min-width: 0;
+    flex: 0 0 calc(var(--carousel-item-width) - var(--carousel-item-gap-offset));
+  }
+}
+
+.carousel-controls {
+  @apply flex items-center justify-center gap-2;
+}
+
+.carousel-pagination {
+  @apply flex items-center gap-2;
+}
+
+.carousel-page-button {
+  @apply h-3 w-3 cursor-pointer rounded-full bg-transparent;
+
+  border-color: var(--carousel-dot-border-color);
+  border-style: var(--carousel-dot-border-style);
+  border-width: var(--carousel-dot-border-size);
+
+  &[data-active] {
+    background-color: var(--carousel-dot-active);
+  }
+}
+
+.carousel-timer {
+  @apply flex items-center gap-1 tabular-nums;
+  color: var(--carousel-timer-color);
+
+  > svg {
+    @apply h-4 w-4;
+  }
 }
 </style>
