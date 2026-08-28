@@ -29,7 +29,7 @@
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useConfigStore } from '@store/config.store.ts';
-import IconButton from '@semantic/icon-button.vue';
+import IconButton from '@widget/icon-button.vue';
 import Sidebar from '@widget/sidebar.vue';
 
 const storeConfig = useConfigStore();

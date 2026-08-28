@@ -10,8 +10,8 @@
 
 <script setup lang="ts">
 import Brand from '@component/brand.vue';
-import Language from '@semantic/language.vue';
-import Navigator from '@semantic/navigator.vue';
+import Language from '@widget/language.vue';
+import Navigator from '@widget/navigator.vue';
 </script>
 
 <style>

@@ -20,11 +20,11 @@
 </template>
 
 <script setup lang="ts">
-import Backdrop from '@semantic/backdrop.vue';
+import Backdrop from '@layout/backdrop.vue';
 import Brand from '@component/brand.vue';
-import IconButton from '@semantic/icon-button.vue';
-import Language from '@semantic/language.vue';
-import Navigator from '@semantic/navigator.vue';
+import IconButton from '@widget/icon-button.vue';
+import Language from '@widget/language.vue';
+import Navigator from '@widget/navigator.vue';
 
 const props = defineProps({
   visible: {

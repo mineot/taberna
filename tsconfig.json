@@ -7,7 +7,6 @@
       "@component/*": ["./src/components/*"],
       "@layout/*": ["./src/components/layouts/*"],
       "@page/*": ["./src/pages/*"],
-      "@semantic/*": ["./src/components/semantics/*"],
       "@store/*": ["./src/stories/*"],
       "@style/*": ["./src/styles/*"],
       "@util/*": ["./src/utils/*"],
