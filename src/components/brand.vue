@@ -100,7 +100,7 @@ const emit = defineEmits(['click']);
 }
 
 .brand-description {
-  @apply max-w-75 text-sm md:text-xs;
+  @apply text-base md:text-sm;
   color: var(--brand-description-color);
 }
 </style>

@@ -67,6 +67,7 @@
   --background-color: var(--color-neutral-800);
   --background-emphasis-color: var(--color-neutral-700);
   --text-color: var(--color-neutral-300);
+  --text-muted-color: var(--color-neutral-500);
 
   --border-color: var(--color-neutral-700);
   --border-size: 1px;
@@ -95,7 +96,7 @@
   --brand-image-radius: var(--radius-lg);
   --brand-image-size-md: 10;
   --brand-image-size: 8;
-  --brand-description-color: var(--color-neutral-400);
+  --brand-description-color: var(--text-muted-color);
   --brand-title-color-active: var(--emphasis-active);
   --brand-title-color-hover: var(--emphasis-hover);
   --brand-title-color: var(--emphasis-color);
@@ -136,4 +137,8 @@
   --carousel-dot-border-size: var(--border-size);
   --carousel-dot-border-style: var(--border-style);
   --carousel-timer-color: var(--emphasis-color);
+
+  --panel-emphasis-color: var(--background-emphasis-color);
+  --panel-emphasis-spacing: var(--spacing-md);
+  --panel-spacing: var(--spacing-sm);
 }

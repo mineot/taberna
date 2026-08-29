@@ -2,7 +2,10 @@ import { defineCustomElement } from 'vue';
 import Brand from '@component/brand.vue';
 import Carousel from '@component/carousel.vue';
 import CarouselItem from '@component/carousel-item.vue';
-import Link from './components/link.vue';
+import Columns from '@component/columns.vue';
+import Link from '@component/link.vue';
+import Panel from '@component/panel.vue';
+import Rows from '@component/rows.vue';
 
 const elements = {
   ['twc-brand' as string]: defineCustomElement(Brand, {
@@ -15,6 +18,15 @@ const elements = {
     shadowRoot: false,
   }),
   ['twc-link' as string]: defineCustomElement(Link, {
+    shadowRoot: false,
+  }),
+  ['twc-panel' as string]: defineCustomElement(Panel, {
+    shadowRoot: false,
+  }),
+  ['twc-columns' as string]: defineCustomElement(Columns, {
+    shadowRoot: false,
+  }),
+  ['twc-rows' as string]: defineCustomElement(Rows, {
     shadowRoot: false,
   }),
 };
