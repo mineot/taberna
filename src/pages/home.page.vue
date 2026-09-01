@@ -11,6 +11,5 @@ const { config } = useConfigStore();
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 </style>

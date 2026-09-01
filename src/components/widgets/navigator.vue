@@ -32,8 +32,7 @@ import { useConfigStore } from '@store/config.store.ts';
 import IconButton from '@widget/icon-button.vue';
 import Sidebar from '@widget/sidebar.vue';
 
-const storeConfig = useConfigStore();
-const { config } = storeToRefs(storeConfig);
+const { config } = storeToRefs(useConfigStore());
 
 const visible = ref(false);
 const openMenu = () => (visible.value = true);
@@ -61,8 +60,7 @@ const emit = defineEmits(['click']);
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 
 .navigator {
   @apply flex flex-row items-center justify-center;

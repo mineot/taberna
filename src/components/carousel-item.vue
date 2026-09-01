@@ -5,8 +5,7 @@
 </template>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 
 twc-carousel-item {
   @apply block w-full min-w-0;

@@ -28,8 +28,7 @@ const props = defineProps({
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 
 .panel {
   @apply flex h-full w-full flex-col;

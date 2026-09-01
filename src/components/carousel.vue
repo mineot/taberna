@@ -320,8 +320,7 @@ function updateBreakpoint(event: MediaQueryListEvent) {
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 
 twc-carousel {
   @apply block w-full min-w-0;

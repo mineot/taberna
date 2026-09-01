@@ -37,8 +37,7 @@ const props = defineProps({
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 
 .language {
   @apply app-duration cursor-pointer;

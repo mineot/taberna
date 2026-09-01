@@ -33,8 +33,7 @@ const props = withDefaults(
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 
 .columns {
   @apply grid w-full grid-cols-1;

@@ -22,8 +22,7 @@ const props = defineProps({
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 
 .main {
   @apply app-container;

@@ -3,21 +3,21 @@ import { publicPath } from '@util/paths.util';
 import { ref } from 'vue';
 import { useLoadingStore } from '@store/loading.store';
 
-export const STORAGE_KEY = 'taberna-lang';
+const STORAGE_KEY = 'taberna-lang';
 
-export interface LanguageManifest {
+interface LanguageManifest {
   default: string;
   available: string[];
   flags: Record<string, string>;
   names: Record<string, string>;
 }
 
-export async function loadStorage(): Promise<string> {
+async function loadStorage(): Promise<string | null> {
   try {
-    const local = localStorage.getItem(STORAGE_KEY) as string;
+    const local = localStorage.getItem(STORAGE_KEY);
 
     if (!local) {
-      return 'nn-nn';
+      return null;
     }
 
     return local.toLowerCase();
@@ -26,7 +26,7 @@ export async function loadStorage(): Promise<string> {
   }
 }
 
-export async function updateStorage(locale: string): Promise<void> {
+async function updateStorage(locale: string): Promise<void> {
   try {
     localStorage.setItem(STORAGE_KEY, locale);
   } catch (err) {
@@ -34,7 +34,7 @@ export async function updateStorage(locale: string): Promise<void> {
   }
 }
 
-export async function loadConfig(): Promise<LanguageManifest> {
+async function loadConfig(): Promise<LanguageManifest> {
   try {
     const path = publicPath('config/languages.json');
     const response = await fetch(path);
@@ -44,7 +44,7 @@ export async function loadConfig(): Promise<LanguageManifest> {
   }
 }
 
-export async function detectBrowserLanguage(): Promise<string | null> {
+async function detectBrowserLanguage(): Promise<string | null> {
   try {
     const rawLocale =
       (navigator.languages && navigator.languages[0]) || navigator.language;
@@ -66,7 +66,7 @@ export const useLanguageStore = defineStore('language-store', () => {
   const languages = ref<LanguageManifest | null>(null);
   const availableCount = ref<number>(0);
 
-  async function setLaguage(locale: string) {
+  async function setLanguage(locale: string) {
     try {
       await updateStorage(locale);
       window.location.reload();
@@ -86,7 +86,10 @@ export const useLanguageStore = defineStore('language-store', () => {
       languages.value = await loadConfig();
       availableCount.value = languages.value.available.length;
 
-      if (languages.value?.available.includes(currentLanguage)) {
+      if (
+        currentLanguage &&
+        languages.value.available.includes(currentLanguage)
+      ) {
         locale.value = currentLanguage;
         flag.value = languages.value.flags[currentLanguage];
         fullName.value = languages.value.names[currentLanguage];
@@ -110,6 +113,6 @@ export const useLanguageStore = defineStore('language-store', () => {
     languages,
     loadLanguage,
     locale,
-    setLaguage,
+    setLanguage,
   };
 });

@@ -33,8 +33,7 @@ const emit = defineEmits(['click']);
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 
 .icon-button {
   @apply app-duration cursor-pointer;

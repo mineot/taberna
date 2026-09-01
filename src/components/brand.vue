@@ -1,6 +1,6 @@
 <template>
   <div class="brand-block">
-    <a v-if="props.visible" class="brand" href="#" @click="emit('click')">
+    <a class="brand" href="#" @click="emit('click')">
       <img class="brand-image" :src="config?.image" :alt="config?.title" />
       <div class="brand-title">
         <span>{{ config?.title }}</span>
@@ -19,11 +19,6 @@ import { useConfigStore } from '@store/config.store';
 const { config } = storeToRefs(useConfigStore());
 
 const props = defineProps({
-  visible: {
-    type: Boolean,
-    required: false,
-    default: true,
-  },
   description: {
     type: Boolean,
     required: false,
@@ -35,8 +30,7 @@ const emit = defineEmits(['click']);
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 
 .brand-block {
   @apply flex flex-col items-start gap-2;

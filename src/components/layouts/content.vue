@@ -15,7 +15,6 @@ const sanitizedHtml = computed(() =>
     CUSTOM_ELEMENT_HANDLING: {
       tagNameCheck:
         /^twc-(brand|link|carousel|carousel-item|panel|columns|rows)$/,
-      attributeNameCheck: /^(rowspan)$/,
       allowCustomizedBuiltInElements: false,
     },
     ADD_ATTR: [

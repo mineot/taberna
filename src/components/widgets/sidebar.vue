@@ -42,8 +42,17 @@ const closeMenu = () => {
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
+
+.sidebar-enter-active,
+.sidebar-leave-active {
+  transition: transform 0.3s ease;
+}
+
+.sidebar-enter-from,
+.sidebar-leave-to {
+  transform: translateX(100%);
+}
 
 .sidebar {
   @apply border-l shadow-xl;

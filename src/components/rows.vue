@@ -6,7 +6,7 @@
       '--rows-align': getAlign(props.align),
     }"
   >
-    <slot class="test"></slot>
+    <slot></slot>
   </div>
 </template>
 
@@ -34,8 +34,7 @@ const getAlign = (align: string) => {
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 
 .rows {
   @apply grid grid-rows-1;

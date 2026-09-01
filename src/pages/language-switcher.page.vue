@@ -17,18 +17,17 @@ import { storeToRefs } from 'pinia';
 import { useLanguageStore } from '@store/language.store';
 
 const { languages, locale } = storeToRefs(useLanguageStore());
-const { setLaguage } = useLanguageStore();
+const { setLanguage } = useLanguageStore();
 
 function selectLanguage(newLanguage: string) {
   if (newLanguage !== locale.value) {
-    setLaguage(newLanguage);
+    setLanguage(newLanguage);
   }
 }
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 
 .languages {
   @apply flex flex-row flex-wrap justify-around gap-4;

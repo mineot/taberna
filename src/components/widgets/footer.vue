@@ -24,8 +24,7 @@ const { config } = storeToRefs(useConfigStore());
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 
 .footer {
   @apply app-container app-block;

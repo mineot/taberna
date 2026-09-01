@@ -24,8 +24,7 @@ const props = defineProps({
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 
 @keyframes pulse {
   0%,
@@ -35,16 +34,6 @@ const props = defineProps({
   50% {
     opacity: 0.4;
   }
-}
-
-.sidebar-enter-active,
-.sidebar-leave-active {
-  transition: transform 0.3s ease;
-}
-
-.sidebar-enter-from,
-.sidebar-leave-to {
-  transform: translateX(100%);
 }
 
 .skeleton {

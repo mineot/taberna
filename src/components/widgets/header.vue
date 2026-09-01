@@ -15,8 +15,7 @@ import Navigator from '@widget/navigator.vue';
 </script>
 
 <style>
-@import 'tailwindcss';
-@import '@/style.css';
+@reference '@/style.css';
 
 .header {
   @apply app-container app-block;
