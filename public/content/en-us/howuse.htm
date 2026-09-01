@@ -1,0 +1,597 @@
+<twc-rows gap="6">
+  <twc-rows gap="4">
+    <h1 class="text-5xl" style="color: var(--emphasis-color)">
+      How to Use Taberna
+    </h1>
+    <p class="text-2xl font-thin" style="color: var(--text-muted-color)">
+      Customize the identity, organize languages, and publish pages without
+      changing the application's main structure.
+    </p>
+    <p>
+      Taberna separates site configuration, editorial content, and visual
+      components. Most of the time, you will work only with JSON and HTML files
+      inside the "public" directory.
+    </p>
+    <p>
+      This guide introduces the project's current organization and shows how
+      these parts connect, from choosing a language to building a complete page.
+    </p>
+  </twc-rows>
+
+  <twc-columns cols="3" gap="4">
+    <twc-panel emphasis rounded>
+      <twc-rows gap="2">
+        <h2
+          class="text-lg tracking-wider uppercase"
+          style="color: var(--emphasis-color)"
+        >
+          Configuration
+        </h2>
+        <h3 class="text-lg font-thin">Identity and navigation</h3>
+        <p>
+          The files in "public/config" define languages, title, logo,
+          description, navigation, home page, and footer.
+        </p>
+      </twc-rows>
+    </twc-panel>
+    <twc-panel emphasis rounded>
+      <twc-rows gap="2">
+        <h2
+          class="text-lg tracking-wider uppercase"
+          style="color: var(--emphasis-color)"
+        >
+          Content
+        </h2>
+        <h3 class="text-lg font-thin">Pages for each language</h3>
+        <p>
+          The files in "public/content" hold the home page, footer, and every
+          page accessed through the site's routes.
+        </p>
+      </twc-rows>
+    </twc-panel>
+    <twc-panel emphasis rounded>
+      <twc-rows gap="2">
+        <h2
+          class="text-lg tracking-wider uppercase"
+          style="color: var(--emphasis-color)"
+        >
+          Presentation
+        </h2>
+        <h3 class="text-lg font-thin">Reusable components</h3>
+        <p>
+          The "twc-*" elements organize columns, panels, links, carousels, and
+          other blocks inside HTML files.
+        </p>
+      </twc-rows>
+    </twc-panel>
+  </twc-columns>
+
+  <twc-rows gap="4">
+    <h2 class="text-3xl" style="color: var(--emphasis-color)">
+      Language-based organization
+    </h2>
+    <p>
+      Each enabled language needs two corresponding parts: a JSON file in
+      "public/config" and a directory inside "public/content". The language code
+      identifies both.
+    </p>
+    <div class="w-full">
+      <pre
+        class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+        style="background-color: var(--panel-emphasis-color)"
+      ><code>public/
+├── config/
+│   ├── languages.json
+│   ├── pt-br.json
+│   └── en-us.json
+└── content/
+    ├── pt-br/
+    │   ├── home.htm
+    │   ├── footer.htm
+    │   ├── about.htm
+    │   └── articles/
+    │       └── article1.htm
+    └── en-us/
+        ├── home.htm
+        ├── footer.htm
+        ├── about.htm
+        └── articles/
+            └── article1.htm</code></pre>
+    </div>
+    <p>
+      Page and directory names should remain the same across languages. Only
+      visible text is translated. This allows a route such as "#/about.htm" to
+      work regardless of the selected language.
+    </p>
+    <twc-panel emphasis rounded>
+      <twc-rows gap="2">
+        <h3 class="text-xl" style="color: var(--emphasis-color)">
+          Even with only one language
+        </h3>
+        <p>
+          This separation is still required. A website available only in English
+          still needs "public/config/en-us.json" and the "public/content/en-us"
+          directory. The language is part of the path the application uses to
+          locate each file.
+        </p>
+      </twc-rows>
+    </twc-panel>
+  </twc-rows>
+
+  <twc-rows gap="4">
+    <h2 class="text-3xl" style="color: var(--emphasis-color)">
+      Defining the available languages
+    </h2>
+    <p>
+      The "public/config/languages.json" file is the global language manifest.
+      It specifies which language is used by default and which options visitors
+      can select.
+    </p>
+    <div class="w-full">
+      <pre
+        class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+        style="background-color: var(--panel-emphasis-color)"
+      ><code>{
+  "default": "pt-br",
+  "available": ["pt-br", "en-us"],
+  "flags": {
+    "pt-br": "🇧🇷",
+    "en-us": "🇺🇸"
+  },
+  "names": {
+    "pt-br": "Português (Brasil)",
+    "en-us": "English (America)"
+  }
+}</code></pre>
+    </div>
+    <twc-columns cols="2" gap="4">
+      <twc-panel emphasis rounded>
+        <twc-rows gap="2">
+          <h3 class="text-lg" style="color: var(--emphasis-color)">
+            default and available
+          </h3>
+          <p>
+            "default" defines the language used when there is no valid saved
+            choice. "available" contains every enabled language code.
+          </p>
+        </twc-rows>
+      </twc-panel>
+      <twc-panel emphasis rounded>
+        <twc-rows gap="2">
+          <h3 class="text-lg" style="color: var(--emphasis-color)">
+            flags and names
+          </h3>
+          <p>
+            "flags" associates a flag with each code, while "names" provides the
+            name displayed in the language selector.
+          </p>
+        </twc-rows>
+      </twc-panel>
+    </twc-columns>
+    <p>To keep only English, the manifest can be reduced to:</p>
+    <div class="w-full">
+      <pre
+        class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+        style="background-color: var(--panel-emphasis-color)"
+      ><code>{
+  "default": "en-us",
+  "available": ["en-us"],
+  "flags": {
+    "en-us": "🇺🇸"
+  },
+  "names": {
+    "en-us": "English (America)"
+  }
+}</code></pre>
+    </div>
+    <p>
+      Every code included in "available" must also exist in "flags" and "names",
+      and it must have its own configuration file and content directory.
+    </p>
+  </twc-rows>
+
+  <twc-rows gap="4">
+    <h2 class="text-3xl" style="color: var(--emphasis-color)">
+      Configuring each version of the site
+    </h2>
+    <p>
+      Each "public/config/{language}.json" file is independent. It contains the
+      identity and navigation used while that language is active.
+    </p>
+    <div class="w-full">
+      <pre
+        class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+        style="background-color: var(--panel-emphasis-color)"
+      ><code>{
+  "title": "Taberna",
+  "image": "images/logo.png",
+  "description": "A short introduction to the website.",
+  "ownership": "© 2026 Your Name",
+  "footer": "footer.htm",
+  "home": "home.htm",
+  "navigator": [
+    { "text": "Articles", "href": "#/articles.htm" },
+    { "text": "How to Use", "href": "#/howuse.htm" },
+    { "text": "About", "href": "#/about.htm" }
+  ]
+}</code></pre>
+    </div>
+    <twc-columns cols="2" gap="4">
+      <twc-panel emphasis rounded>
+        <twc-rows gap="2">
+          <h3 class="text-lg" style="color: var(--emphasis-color)">title</h3>
+          <p>The name displayed in the visual identity and beside the logo.</p>
+        </twc-rows>
+      </twc-panel>
+      <twc-panel emphasis rounded>
+        <twc-rows gap="2">
+          <h3 class="text-lg" style="color: var(--emphasis-color)">image</h3>
+          <p>
+            The path to an image inside "public", without including the word
+            "public" in the value.
+          </p>
+        </twc-rows>
+      </twc-panel>
+      <twc-panel emphasis rounded>
+        <twc-rows gap="2">
+          <h3 class="text-lg" style="color: var(--emphasis-color)">
+            description
+          </h3>
+          <p>
+            A summary of the website that can be displayed by the brand
+            component.
+          </p>
+        </twc-rows>
+      </twc-panel>
+      <twc-panel emphasis rounded>
+        <twc-rows gap="2">
+          <h3 class="text-lg" style="color: var(--emphasis-color)">
+            ownership
+          </h3>
+          <p>The authorship or copyright text displayed in the footer.</p>
+        </twc-rows>
+      </twc-panel>
+      <twc-panel emphasis rounded>
+        <twc-rows gap="2">
+          <h3 class="text-lg" style="color: var(--emphasis-color)">
+            home and footer
+          </h3>
+          <p>
+            The names of the HTML files loaded from the language's content
+            directory to build the home page and footer.
+          </p>
+        </twc-rows>
+      </twc-panel>
+      <twc-panel emphasis rounded>
+        <twc-rows gap="2">
+          <h3 class="text-lg" style="color: var(--emphasis-color)">
+            navigator
+          </h3>
+          <p>
+            A list of navigation links. Each item has visible text in "text" and
+            its destination in "href".
+          </p>
+        </twc-rows>
+      </twc-panel>
+    </twc-columns>
+  </twc-rows>
+
+  <twc-rows gap="4">
+    <h2 class="text-3xl" style="color: var(--emphasis-color)">
+      Creating pages and content
+    </h2>
+    <p>
+      The values of "home" and "footer" are loaded directly from the active
+      language's directory. With the previous configuration, the English version
+      uses:
+    </p>
+
+    <div class="w-full">
+      <pre
+        class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+        style="background-color: var(--panel-emphasis-color)"
+      ><code>public/content/en-us/home.htm
+public/content/en-us/footer.htm</code></pre>
+    </div>
+
+    <p>
+      Other pages do not need to be declared separately. The path in the route
+      is looked up inside the same directory. For example:
+    </p>
+
+    <twc-columns cols="2" gap="4">
+      <twc-panel emphasis rounded>
+        <twc-rows gap="2">
+          <h3 class="text-lg" style="color: var(--emphasis-color)">
+            Simple page
+          </h3>
+          <p><code>#/about.htm</code></p>
+          <p>Loads "public/content/en-us/about.htm".</p>
+        </twc-rows>
+      </twc-panel>
+
+      <twc-panel emphasis rounded>
+        <twc-rows gap="2">
+          <h3 class="text-lg" style="color: var(--emphasis-color)">
+            Page in a subdirectory
+          </h3>
+          <p><code>#/articles/article1.htm</code></p>
+          <p>Loads "public/content/en-us/articles/article1.htm".</p>
+        </twc-rows>
+      </twc-panel>
+    </twc-columns>
+
+    <p>
+      Internal links use hash navigation, begin with "#/", and include the
+      ".htm" extension. A link can be added to the configuration or directly to
+      the content:
+    </p>
+
+    <div class="w-full">
+      <pre
+        class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+        style="background-color: var(--panel-emphasis-color)"
+      ><code>&lt;twc-link
+  href="#/about.htm"
+  label="Learn about the project"
+&gt;&lt;/twc-link&gt;</code></pre>
+    </div>
+
+    <twc-panel emphasis rounded>
+      <twc-rows gap="2">
+        <h3 class="text-xl" style="color: var(--emphasis-color)">
+          Equivalent content in every language
+        </h3>
+        <p>
+          If "about.htm" exists in English, create the corresponding file in
+          every other enabled language. Keeping the same paths allows visitors
+          to switch languages without requiring different routes for each
+          translation.
+        </p>
+      </twc-rows>
+    </twc-panel>
+  </twc-rows>
+
+  <twc-rows gap="4">
+    <h2 class="text-3xl" style="color: var(--emphasis-color)">
+      How web components work
+    </h2>
+    <p>
+      The "src/web-components.ts" file imports Vue components and registers them
+      in the browser with names beginning with "twc-". Once registered, they can
+      be written as HTML tags inside content files.
+    </p>
+    <p>
+      Each element is registered only once. The "shadowRoot: false" option keeps
+      the component in the same visual context as the page, allowing it to use
+      Taberna's theme and global styles.
+    </p>
+
+    <div class="w-full">
+      <pre
+        class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+        style="background-color: var(--panel-emphasis-color)"
+      ><code>const elements = {
+  "twc-brand": defineCustomElement(Brand, { shadowRoot: false }),
+  "twc-link": defineCustomElement(Link, { shadowRoot: false }),
+  "twc-panel": defineCustomElement(Panel, { shadowRoot: false })
+};</code></pre>
+    </div>
+
+    <p>
+      In addition to the components, you can use standard HTML elements such as
+      headings, paragraphs, lists, images, quotations, and code blocks. Content
+      is sanitized before it is displayed, removing potentially dangerous
+      elements or attributes.
+    </p>
+  </twc-rows>
+
+  <twc-rows gap="6">
+    <h2 class="text-3xl" style="color: var(--emphasis-color)">
+      Available components
+    </h2>
+
+    <twc-rows gap="3">
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">twc-brand</h3>
+      <p>
+        Displays the image and title defined in the configuration. The
+        "description" attribute adds the website description.
+      </p>
+      <div class="w-full">
+        <pre
+          class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+          style="background-color: var(--panel-emphasis-color)"
+        ><code>&lt;twc-brand description&gt;&lt;/twc-brand&gt;</code></pre>
+      </div>
+    </twc-rows>
+
+    <twc-rows gap="3">
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">twc-link</h3>
+      <p>
+        Creates a link with an icon. Use "href" for the destination, "label" for
+        its text, and "external" when the address should open in a new tab.
+      </p>
+      <div class="w-full">
+        <pre
+          class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+          style="background-color: var(--panel-emphasis-color)"
+        ><code>&lt;twc-link
+  href="https://example.com"
+  label="Visit website"
+  external
+&gt;&lt;/twc-link&gt;</code></pre>
+      </div>
+    </twc-rows>
+
+    <twc-rows gap="3">
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">twc-panel</h3>
+      <p>
+        Groups any kind of content. "emphasis" applies the emphasized background
+        and inner spacing; "rounded" adds rounded corners.
+      </p>
+      <div class="w-full">
+        <pre
+          class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+          style="background-color: var(--panel-emphasis-color)"
+        ><code>&lt;twc-panel emphasis rounded&gt;
+  &lt;p&gt;Emphasized content.&lt;/p&gt;
+&lt;/twc-panel&gt;</code></pre>
+      </div>
+    </twc-rows>
+
+    <twc-rows gap="3">
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">twc-columns</h3>
+      <p>
+        Arranges its children in columns. "cols" accepts values from 1 to 12,
+        "gap" controls the space between items, and "align" accepts "start",
+        "center", or "end". On small screens, content always uses a single
+        column.
+      </p>
+      <div class="w-full">
+        <pre
+          class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+          style="background-color: var(--panel-emphasis-color)"
+        ><code>&lt;twc-columns cols="3" gap="4" align="center"&gt;
+  &lt;div&gt;First column&lt;/div&gt;
+  &lt;div&gt;Second column&lt;/div&gt;
+  &lt;div&gt;Third column&lt;/div&gt;
+&lt;/twc-columns&gt;</code></pre>
+      </div>
+    </twc-rows>
+
+    <twc-rows gap="3">
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">twc-rows</h3>
+      <p>
+        Stacks its children vertically. "gap" controls spacing and "align"
+        positions each item at the start, center, or end of the available space.
+      </p>
+      <div class="w-full">
+        <pre
+          class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+          style="background-color: var(--panel-emphasis-color)"
+        ><code>&lt;twc-rows gap="4" align="start"&gt;
+  &lt;h2&gt;Section title&lt;/h2&gt;
+  &lt;p&gt;First paragraph.&lt;/p&gt;
+  &lt;p&gt;Second paragraph.&lt;/p&gt;
+&lt;/twc-rows&gt;</code></pre>
+      </div>
+    </twc-rows>
+
+    <twc-rows gap="3">
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">
+        twc-carousel and twc-carousel-item
+      </h3>
+      <p>
+        The carousel receives its items through "twc-carousel-item". The "limit"
+        attribute defines how many items appear on each page on desktop; on
+        mobile, only one is displayed at a time.
+      </p>
+      <p>
+        "delay" defines the automatic advance interval in milliseconds. Use
+        "delay="0"" to disable it. "show-timer="false"" hides the timer. When
+        the pointer remains over the carousel, automatic movement is temporarily
+        paused.
+      </p>
+      <div class="w-full">
+        <pre
+          class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+          style="background-color: var(--panel-emphasis-color)"
+        ><code>&lt;twc-carousel limit="3" delay="5000" show-timer="true"&gt;
+  &lt;twc-carousel-item&gt;
+    &lt;p&gt;First item&lt;/p&gt;
+  &lt;/twc-carousel-item&gt;
+  &lt;twc-carousel-item&gt;
+    &lt;p&gt;Second item&lt;/p&gt;
+  &lt;/twc-carousel-item&gt;
+  &lt;twc-carousel-item&gt;
+    &lt;p&gt;Third item&lt;/p&gt;
+  &lt;/twc-carousel-item&gt;
+&lt;/twc-carousel&gt;</code></pre>
+      </div>
+    </twc-rows>
+  </twc-rows>
+
+  <twc-rows gap="4">
+    <h2 class="text-3xl" style="color: var(--emphasis-color)">
+      Example of a complete page
+    </h2>
+    <p>
+      Components can be combined with standard HTML. The example below creates
+      an introduction, an area with two columns, and a link to another page on
+      the website.
+    </p>
+
+    <div class="w-full">
+      <pre
+        class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+        style="background-color: var(--panel-emphasis-color)"
+      ><code>&lt;twc-rows gap="6"&gt;
+  &lt;h1 class="text-4xl" style="color: var(--emphasis-color)"&gt;
+    My project
+  &lt;/h1&gt;
+
+  &lt;p&gt;A short introduction to the content on this page.&lt;/p&gt;
+
+  &lt;twc-columns cols="2" gap="4"&gt;
+    &lt;twc-panel emphasis rounded&gt;
+      &lt;twc-rows gap="2"&gt;
+        &lt;h2 class="text-xl"&gt;First highlight&lt;/h2&gt;
+        &lt;p&gt;A description of the first subject.&lt;/p&gt;
+      &lt;/twc-rows&gt;
+    &lt;/twc-panel&gt;
+
+    &lt;twc-panel emphasis rounded&gt;
+      &lt;twc-rows gap="2"&gt;
+        &lt;h2 class="text-xl"&gt;Second highlight&lt;/h2&gt;
+        &lt;p&gt;A description of the second subject.&lt;/p&gt;
+      &lt;/twc-rows&gt;
+    &lt;/twc-panel&gt;
+  &lt;/twc-columns&gt;
+
+  &lt;twc-link
+    href="#/about.htm"
+    label="Learn more"
+  &gt;&lt;/twc-link&gt;
+&lt;/twc-rows&gt;</code></pre>
+    </div>
+
+    <p>
+      Save this content as an ".htm" file inside the language directory. Then
+      add a link to "navigator" or another page to make it accessible.
+    </p>
+  </twc-rows>
+
+  <twc-panel emphasis rounded>
+    <twc-rows gap="4">
+      <h2 class="text-3xl" style="color: var(--emphasis-color)">
+        Content publishing checklist
+      </h2>
+      <twc-rows gap="2">
+        <p>1. Define the languages in "config/languages.json".</p>
+        <p>2. Create a configuration file for each language.</p>
+        <p>3. Create a content directory for each language.</p>
+        <p>4. Keep the same names and paths across translations.</p>
+        <p>5. Use internal paths beginning with "#/".</p>
+        <p>6. Include the ".htm" extension in page links.</p>
+        <p>7. Use the "twc-*" components to organize the layout.</p>
+        <p>8. Test navigation in every enabled language.</p>
+      </twc-rows>
+    </twc-rows>
+  </twc-panel>
+
+  <twc-rows gap="4">
+    <h2 class="text-3xl" style="color: var(--emphasis-color)">
+      Creating a new web component
+    </h2>
+    <p>
+      To expand the library, create the Vue component, import it into
+      "src/web-components.ts", and register a new tag. Because HTML content is
+      sanitized, the tag and its attributes must also be added to the allowlist
+      in "src/components/layouts/content.vue".
+    </p>
+    <p>
+      This validation keeps content files flexible without allowing unrecognized
+      elements to run on the page.
+    </p>
+  </twc-rows>
+</twc-rows>

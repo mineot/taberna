@@ -6,8 +6,8 @@
   "footer": "footer.htm",
   "home": "home.htm",
   "navigator": [
-    { "text": "Page 1", "href": "#/page1" },
-    { "text": "Page 2", "href": "#/page2" },
-    { "text": "Page 3", "href": "#/page3" }
+    { "text": "Articles", "href": "#/articles.htm" },
+    { "text": "How to Use", "href": "#/howuse.htm" },
+    { "text": "About", "href": "#/about.htm" }
   ]
 }

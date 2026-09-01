@@ -37,7 +37,7 @@ const props = withDefaults(
 @import '@/style.css';
 
 .columns {
-  @apply grid grid-cols-1;
+  @apply grid w-full grid-cols-1;
   gap: calc(var(--spacing) * var(--columns-gap));
 
   @media (width >= 48rem) {
