@@ -10,7 +10,8 @@
     <p>
       O Taberna separa a configuração do site, o conteúdo editorial e os
       componentes visuais. Na maior parte do tempo, você trabalhará apenas com
-      arquivos JSON e HTML dentro da pasta "public".
+      arquivos JSON e HTML dentro da pasta
+      <span class="app-code">public</span> .
     </p>
     <p>
       Este guia apresenta a organização atual do projeto e mostra como essas
@@ -436,6 +437,23 @@ public/content/pt-br/footer.htm</code></pre>
         ><code>&lt;twc-panel emphasis rounded&gt;
   &lt;p&gt;Conteúdo em destaque.&lt;/p&gt;
 &lt;/twc-panel&gt;</code></pre>
+      </div>
+    </twc-rows>
+
+    <twc-rows gap="3">
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">twc-quote</h3>
+      <p>
+        Destaca uma citação ou um trecho de conteúdo. O atributo opcional
+        "title" exibe um título acima do conteúdo; quando omitido, somente os
+        elementos colocados entre as tags são exibidos.
+      </p>
+      <div class="w-full">
+        <pre
+          class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+          style="background-color: var(--panel-emphasis-color)"
+        ><code>&lt;twc-quote title="Nota do autor"&gt;
+  &lt;p&gt;Uma boa estrutura torna o conteúdo mais fácil de explorar.&lt;/p&gt;
+&lt;/twc-quote&gt;</code></pre>
       </div>
     </twc-rows>
 

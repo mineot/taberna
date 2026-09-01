@@ -5,6 +5,7 @@ import CarouselItem from '@component/carousel-item.vue';
 import Columns from '@component/columns.vue';
 import Link from '@component/link.vue';
 import Panel from '@component/panel.vue';
+import Quote from '@component/quote.vue';
 import Rows from '@component/rows.vue';
 
 const elements = {
@@ -27,6 +28,9 @@ const elements = {
     shadowRoot: false,
   }),
   ['twc-rows' as string]: defineCustomElement(Rows, {
+    shadowRoot: false,
+  }),
+  ['twc-quote' as string]: defineCustomElement(Quote, {
     shadowRoot: false,
   }),
 };

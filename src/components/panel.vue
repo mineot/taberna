@@ -5,6 +5,7 @@
       {
         'panel-emphasis': props.emphasis,
         'panel-rounded': props.rounded,
+        'panel-bordered': props.bordered,
       },
     ]"
   >
@@ -20,6 +21,11 @@ const props = defineProps({
     default: false,
   },
   rounded: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  bordered: {
     type: Boolean,
     required: false,
     default: false,
@@ -42,5 +48,11 @@ const props = defineProps({
 
 .panel-rounded {
   @apply rounded-lg;
+}
+
+.panel-bordered {
+  border-color: var(--panel-border-color);
+  border-style: var(--panel-border-style);
+  border-width: var(--panel-border-size);
 }
 </style>

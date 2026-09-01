@@ -14,11 +14,12 @@ const sanitizedHtml = computed(() =>
   DOMPurify.sanitize(props.data, {
     CUSTOM_ELEMENT_HANDLING: {
       tagNameCheck:
-        /^twc-(brand|link|carousel|carousel-item|panel|columns|rows)$/,
+        /^twc-(brand|link|carousel|carousel-item|panel|columns|rows|quote)$/,
       allowCustomizedBuiltInElements: false,
     },
     ADD_ATTR: [
       'align',
+      'bordered',
       'cols',
       'delay',
       'description',
@@ -30,6 +31,7 @@ const sanitizedHtml = computed(() =>
       'limit',
       'rounded',
       'show-timer',
+      'title',
     ],
   }),
 );

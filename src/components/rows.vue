@@ -3,7 +3,7 @@
     class="rows"
     :style="{
       '--rows-gap': props.gap,
-      '--rows-align': getAlign(props.align),
+      '--rows-align': props.align,
     }"
   >
     <slot></slot>
@@ -21,16 +21,6 @@ const props = withDefaults(
     gap: 0,
   },
 );
-
-const getAlign = (align: string) => {
-  if (align === 'start') {
-    return 'flex-start';
-  } else if (align === 'end') {
-    return 'flex-end';
-  }
-
-  return 'center';
-};
 </script>
 
 <style>
@@ -42,7 +32,6 @@ const getAlign = (align: string) => {
 }
 
 .rows > :is(*) {
-  @apply flex;
-  justify-content: var(--rows-align);
+  text-align: var(--rows-align);
 }
 </style>

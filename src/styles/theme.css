@@ -161,7 +161,19 @@
   --carousel-dot-border-style: var(--border-style);
   --carousel-timer-color: var(--emphasis-color);
 
+  --panel-border-color: var(--color-neutral-400);
+  --panel-border-size: var(--border-size);
+  --panel-border-style: var(--border-style);
   --panel-emphasis-color: var(--background-emphasis-color);
   --panel-emphasis-spacing: var(--spacing-md);
   --panel-spacing: var(--spacing-sm);
+
+  --quote-background-color: var(--color-neutral-900);
+  --quote-border-color: var(--emphasis-color);
+  --quote-title-color: var(--emphasis-color);
+  --quote-border-size: 5px;
+  --quote-border-style: var(--border-style);
+  --quote-spacing: var(--spacing-md);
+  --quote-text-color: var(--text-color);
+  --quote-gap: var(--spacing-sm);
 }

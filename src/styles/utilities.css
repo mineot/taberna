@@ -52,3 +52,8 @@
     padding-block: calc(var(--spacing) * var(--block-lg));
   }
 }
+
+@utility app-code {
+  @apply px-1 font-mono font-thin;
+  background-color: var(--background-emphasis-color);
+}
