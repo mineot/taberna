@@ -10,7 +10,7 @@
     <p>
       Taberna separates site configuration, editorial content, and visual
       components. Most of the time, you will work only with JSON and HTML files
-      inside the "public" directory.
+      inside the <code class="app-code">public</code> directory.
     </p>
     <p>
       This guide introduces the project's current organization and shows how
@@ -29,8 +29,9 @@
         </h2>
         <h3 class="text-lg font-thin">Identity and navigation</h3>
         <p>
-          The files in "public/config" define languages, title, logo,
-          description, navigation, home page, and footer.
+          The files in <code class="app-code">public/config</code> define
+          languages, title, logo, description, navigation, home page, and
+          footer.
         </p>
       </twc-rows>
     </twc-panel>
@@ -44,8 +45,8 @@
         </h2>
         <h3 class="text-lg font-thin">Pages for each language</h3>
         <p>
-          The files in "public/content" hold the home page, footer, and every
-          page accessed through the site's routes.
+          The files in <code class="app-code">public/content</code> hold the
+          home page, footer, and every page accessed through the site's routes.
         </p>
       </twc-rows>
     </twc-panel>
@@ -59,8 +60,8 @@
         </h2>
         <h3 class="text-lg font-thin">Reusable components</h3>
         <p>
-          The "twc-*" elements organize columns, panels, links, carousels, and
-          other blocks inside HTML files.
+          The <code class="app-code">twc-*</code> elements organize columns,
+          panels, links, carousels, and other blocks inside HTML files.
         </p>
       </twc-rows>
     </twc-panel>
@@ -72,8 +73,9 @@
     </h2>
     <p>
       Each enabled language needs two corresponding parts: a JSON file in
-      "public/config" and a directory inside "public/content". The language code
-      identifies both.
+      <code class="app-code">public/config</code> and a directory inside
+      <code class="app-code">public/content</code>. The language code identifies
+      both.
     </p>
     <div class="w-full">
       <pre
@@ -100,8 +102,9 @@
     </div>
     <p>
       Page and directory names should remain the same across languages. Only
-      visible text is translated. This allows a route such as "#/about.htm" to
-      work regardless of the selected language.
+      visible text is translated. This allows a route such as
+      <code class="app-code">#/about.htm</code> to work regardless of the
+      selected language.
     </p>
     <twc-panel emphasis rounded>
       <twc-rows gap="2">
@@ -110,9 +113,9 @@
         </h3>
         <p>
           This separation is still required. A website available only in English
-          still needs "public/config/en-us.json" and the "public/content/en-us"
-          directory. The language is part of the path the application uses to
-          locate each file.
+          still needs <code class="app-code">public/config/en-us.json</code> and
+          the <code class="app-code">public/content/en-us</code> directory. The
+          language is part of the path the application uses to locate each file.
         </p>
       </twc-rows>
     </twc-panel>
@@ -123,9 +126,9 @@
       Defining the available languages
     </h2>
     <p>
-      The "public/config/languages.json" file is the global language manifest.
-      It specifies which language is used by default and which options visitors
-      can select.
+      The <code class="app-code">public/config/languages.json</code> file is the
+      global language manifest. It specifies which language is used by default
+      and which options visitors can select.
     </p>
     <div class="w-full">
       <pre
@@ -148,22 +151,27 @@
       <twc-panel emphasis rounded>
         <twc-rows gap="2">
           <h3 class="text-lg" style="color: var(--emphasis-color)">
-            default and available
+            <code class="app-code">default</code> and
+            <code class="app-code">available</code>
           </h3>
           <p>
-            "default" defines the language used when there is no valid saved
-            choice. "available" contains every enabled language code.
+            <code class="app-code">default</code> defines the language used when
+            there is no valid saved choice.
+            <code class="app-code">available</code> contains every enabled
+            language code.
           </p>
         </twc-rows>
       </twc-panel>
       <twc-panel emphasis rounded>
         <twc-rows gap="2">
           <h3 class="text-lg" style="color: var(--emphasis-color)">
-            flags and names
+            <code class="app-code">flags</code> and
+            <code class="app-code">names</code>
           </h3>
           <p>
-            "flags" associates a flag with each code, while "names" provides the
-            name displayed in the language selector.
+            <code class="app-code">flags</code> associates a flag with each
+            code, while <code class="app-code">names</code> provides the name
+            displayed in the language selector.
           </p>
         </twc-rows>
       </twc-panel>
@@ -185,8 +193,10 @@
 }</code></pre>
     </div>
     <p>
-      Every code included in "available" must also exist in "flags" and "names",
-      and it must have its own configuration file and content directory.
+      Every code included in <code class="app-code">available</code> must also
+      exist in <code class="app-code">flags</code> and
+      <code class="app-code">names</code>, and it must have its own
+      configuration file and content directory.
     </p>
   </twc-rows>
 
@@ -195,8 +205,9 @@
       Configuring each version of the site
     </h2>
     <p>
-      Each "public/config/{language}.json" file is independent. It contains the
-      identity and navigation used while that language is active.
+      Each <code class="app-code">public/config/{language}.json</code> file is
+      independent. It contains the identity and navigation used while that
+      language is active.
     </p>
     <div class="w-full">
       <pre
@@ -219,23 +230,28 @@
     <twc-columns cols="2" gap="4">
       <twc-panel emphasis rounded>
         <twc-rows gap="2">
-          <h3 class="text-lg" style="color: var(--emphasis-color)">title</h3>
+          <h3 class="text-lg" style="color: var(--emphasis-color)">
+            <code class="app-code">title</code>
+          </h3>
           <p>The name displayed in the visual identity and beside the logo.</p>
         </twc-rows>
       </twc-panel>
       <twc-panel emphasis rounded>
         <twc-rows gap="2">
-          <h3 class="text-lg" style="color: var(--emphasis-color)">image</h3>
+          <h3 class="text-lg" style="color: var(--emphasis-color)">
+            <code class="app-code">image</code>
+          </h3>
           <p>
-            The path to an image inside "public", without including the word
-            "public" in the value.
+            The path to an image inside <code class="app-code">public</code>,
+            without including the word <code class="app-code">public</code> in
+            the value.
           </p>
         </twc-rows>
       </twc-panel>
       <twc-panel emphasis rounded>
         <twc-rows gap="2">
           <h3 class="text-lg" style="color: var(--emphasis-color)">
-            description
+            <code class="app-code">description</code>
           </h3>
           <p>
             A summary of the website that can be displayed by the brand
@@ -246,7 +262,7 @@
       <twc-panel emphasis rounded>
         <twc-rows gap="2">
           <h3 class="text-lg" style="color: var(--emphasis-color)">
-            ownership
+            <code class="app-code">ownership</code>
           </h3>
           <p>The authorship or copyright text displayed in the footer.</p>
         </twc-rows>
@@ -254,7 +270,8 @@
       <twc-panel emphasis rounded>
         <twc-rows gap="2">
           <h3 class="text-lg" style="color: var(--emphasis-color)">
-            home and footer
+            <code class="app-code">home</code> and
+            <code class="app-code">footer</code>
           </h3>
           <p>
             The names of the HTML files loaded from the language's content
@@ -265,11 +282,12 @@
       <twc-panel emphasis rounded>
         <twc-rows gap="2">
           <h3 class="text-lg" style="color: var(--emphasis-color)">
-            navigator
+            <code class="app-code">navigator</code>
           </h3>
           <p>
-            A list of navigation links. Each item has visible text in "text" and
-            its destination in "href".
+            A list of navigation links. Each item has visible text in
+            <code class="app-code">text</code> and its destination in
+            <code class="app-code">href</code>.
           </p>
         </twc-rows>
       </twc-panel>
@@ -281,7 +299,8 @@
       Creating pages and content
     </h2>
     <p>
-      The values of "home" and "footer" are loaded directly from the active
+      The values of <code class="app-code">home</code> and
+      <code class="app-code">footer</code> are loaded directly from the active
       language's directory. With the previous configuration, the English version
       uses:
     </p>
@@ -305,8 +324,10 @@ public/content/en-us/footer.htm</code></pre>
           <h3 class="text-lg" style="color: var(--emphasis-color)">
             Simple page
           </h3>
-          <p><code>#/about.htm</code></p>
-          <p>Loads "public/content/en-us/about.htm".</p>
+          <p><code class="app-code">#/about.htm</code></p>
+          <p>
+            Loads <code class="app-code">public/content/en-us/about.htm</code>.
+          </p>
         </twc-rows>
       </twc-panel>
 
@@ -315,16 +336,22 @@ public/content/en-us/footer.htm</code></pre>
           <h3 class="text-lg" style="color: var(--emphasis-color)">
             Page in a subdirectory
           </h3>
-          <p><code>#/articles/article1.htm</code></p>
-          <p>Loads "public/content/en-us/articles/article1.htm".</p>
+          <p><code class="app-code">#/articles/article1.htm</code></p>
+          <p>
+            Loads
+            <code class="app-code"
+              >public/content/en-us/articles/article1.htm</code
+            >.
+          </p>
         </twc-rows>
       </twc-panel>
     </twc-columns>
 
     <p>
-      Internal links use hash navigation, begin with "#/", and include the
-      ".htm" extension. A link can be added to the configuration or directly to
-      the content:
+      Internal links use hash navigation, begin with
+      <code class="app-code">#/</code>, and include the
+      <code class="app-code">.htm</code> extension. A link can be added to the
+      configuration or directly to the content:
     </p>
 
     <div class="w-full">
@@ -343,10 +370,10 @@ public/content/en-us/footer.htm</code></pre>
           Equivalent content in every language
         </h3>
         <p>
-          If "about.htm" exists in English, create the corresponding file in
-          every other enabled language. Keeping the same paths allows visitors
-          to switch languages without requiring different routes for each
-          translation.
+          If <code class="app-code">about.htm</code> exists in English, create
+          the corresponding file in every other enabled language. Keeping the
+          same paths allows visitors to switch languages without requiring
+          different routes for each translation.
         </p>
       </twc-rows>
     </twc-panel>
@@ -357,14 +384,16 @@ public/content/en-us/footer.htm</code></pre>
       How web components work
     </h2>
     <p>
-      The "src/web-components.ts" file imports Vue components and registers them
-      in the browser with names beginning with "twc-". Once registered, they can
-      be written as HTML tags inside content files.
+      The <code class="app-code">src/web-components.ts</code> file imports Vue
+      components and registers them in the browser with names beginning with
+      <code class="app-code">twc-</code>. Once registered, they can be written
+      as HTML tags inside content files.
     </p>
     <p>
-      Each element is registered only once. The "shadowRoot: false" option keeps
-      the component in the same visual context as the page, allowing it to use
-      Taberna's theme and global styles.
+      Each element is registered only once. The
+      <code class="app-code">shadowRoot: false</code> option keeps the component
+      in the same visual context as the page, allowing it to use Taberna's theme
+      and global styles.
     </p>
 
     <div class="w-full">
@@ -388,14 +417,284 @@ public/content/en-us/footer.htm</code></pre>
 
   <twc-rows gap="6">
     <h2 class="text-3xl" style="color: var(--emphasis-color)">
+      Customizing the visual theme
+    </h2>
+    <p>
+      The <code class="app-code">src/style.css</code> file loads Tailwind CSS,
+      <code class="app-code">src/styles/theme.css</code>, and finally
+      <code class="app-code">src/styles/utilities.css</code>. This order allows
+      the theme to use Tailwind tokens and the utilities to consume the
+      variables defined by the theme.
+    </p>
+    <div class="w-full">
+      <pre
+        class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+        style="background-color: var(--panel-emphasis-color)"
+      ><code>@import 'tailwindcss';
+@import '@style/theme.css';
+@import '@style/utilities.css';</code></pre>
+    </div>
+
+    <twc-rows gap="3">
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">
+        Fonts and Tailwind integration
+      </h3>
+      <p>
+        The <code class="app-code">@font-face</code> declarations load Roboto,
+        Roboto Serif, Roboto Mono, and Italianno from the
+        <code class="app-code">public/fonts</code> directory. The
+        <code class="app-code">@theme</code> block associates these families
+        with the <code class="app-code">--font-sans</code>,
+        <code class="app-code">--font-serif</code>,
+        <code class="app-code">--font-mono</code>, and
+        <code class="app-code">--font-fancy</code> tokens used by the
+        corresponding Tailwind classes.
+      </p>
+    </twc-rows>
+
+    <twc-rows gap="3">
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">
+        Global tokens
+      </h3>
+      <p>
+        The properties in <code class="app-code">:root</code> form the project's
+        visual API. Components and utilities reference these tokens, so changing
+        a value in the theme updates every place that consumes it.
+      </p>
+      <twc-columns cols="2" gap="4">
+        <twc-panel emphasis rounded>
+          <twc-rows gap="2">
+            <h4 class="text-lg" style="color: var(--emphasis-color)">
+              Foundation and identity
+            </h4>
+            <p>
+              <code class="app-code">--duration</code>,
+              <code class="app-code">--skeleton</code>,
+              <code class="app-code">--texture</code>, and
+              <code class="app-code">--spacing-*</code> define motion, loading,
+              texture, and spacing scales.
+            </p>
+            <p>
+              <code class="app-code">--background-*</code>,
+              <code class="app-code">--text-*</code>,
+              <code class="app-code">--border-*</code>, and
+              <code class="app-code">--emphasis-*</code> control the shared
+              palette and emphasis states.
+            </p>
+          </twc-rows>
+        </twc-panel>
+
+        <twc-panel emphasis rounded>
+          <twc-rows gap="2">
+            <h4 class="text-lg" style="color: var(--emphasis-color)">
+              Responsive layout
+            </h4>
+            <p>
+              <code class="app-code">--container-sm</code>,
+              <code class="app-code">--container-md</code>, and
+              <code class="app-code">--container-lg</code> define the content's
+              horizontal padding for each screen width.
+            </p>
+            <p>
+              <code class="app-code">--block-sm</code> and
+              <code class="app-code">--block-lg</code> define the blocks'
+              vertical spacing.
+            </p>
+          </twc-rows>
+        </twc-panel>
+
+        <twc-panel emphasis rounded>
+          <twc-rows gap="2">
+            <h4 class="text-lg" style="color: var(--emphasis-color)">
+              Navigation and structure
+            </h4>
+            <p>
+              The <code class="app-code">--backdrop-*</code>,
+              <code class="app-code">--language-*</code>,
+              <code class="app-code">--icon-button-*</code>, and
+              <code class="app-code">--navigator-*</code> groups configure
+              controls and their default, hover, and active states.
+            </p>
+            <p>
+              <code class="app-code">--header-*</code>,
+              <code class="app-code">--sidebar-*</code>, and
+              <code class="app-code">--footer-*</code> control the background,
+              border, texture, and text of the structural areas.
+            </p>
+          </twc-rows>
+        </twc-panel>
+
+        <twc-panel emphasis rounded>
+          <twc-rows gap="2">
+            <h4 class="text-lg" style="color: var(--emphasis-color)">
+              Components
+            </h4>
+            <p>
+              <code class="app-code">--brand-*</code> controls the image, title,
+              and description; <code class="app-code">--carousel-*</code>
+              controls buttons, indicators, and the timer.
+            </p>
+            <p>
+              <code class="app-code">--panel-*</code> configures panel borders,
+              backgrounds, and spacing. <code class="app-code">--quote-*</code>
+              configures quotation backgrounds, borders, titles, text, padding,
+              and gaps.
+            </p>
+          </twc-rows>
+        </twc-panel>
+      </twc-columns>
+    </twc-rows>
+
+    <twc-quote title="Token units">
+      <p>
+        Numeric spacing and layout values are multipliers of Tailwind's
+        <code class="app-code">--spacing</code> token wherever they appear
+        inside <code class="app-code">calc()</code>. Colors, opacities,
+        durations, borders, and other direct CSS values must retain a unit that
+        is compatible with the property that consumes them.
+      </p>
+    </twc-quote>
+
+    <p>
+      To create a different visual identity, change the existing values in
+      <code class="app-code">:root</code>. Prefer redefining general tokens;
+      customize a component group only when it needs to differ from the shared
+      defaults.
+    </p>
+    <div class="w-full">
+      <pre
+        class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+        style="background-color: var(--panel-emphasis-color)"
+      ><code>:root {
+  --background-color: var(--color-neutral-900);
+  --background-emphasis-color: var(--color-neutral-800);
+  --emphasis-color: var(--color-emerald-500);
+  --container-lg: 24;
+  --quote-border-size: 3px;
+}</code></pre>
+    </div>
+  </twc-rows>
+
+  <twc-rows gap="6">
+    <h2 class="text-3xl" style="color: var(--emphasis-color)">
+      Project CSS utilities
+    </h2>
+    <p>
+      The <code class="app-code">src/styles/utilities.css</code> file declares
+      reusable classes with <code class="app-code">@utility</code>. They can be
+      applied in Vue styles with <code class="app-code">@apply</code> or used
+      directly in an element's <code class="app-code">class</code> attribute.
+    </p>
+
+    <twc-columns cols="2" gap="4">
+      <twc-panel emphasis rounded>
+        <twc-rows gap="2">
+          <h3 class="text-xl" style="color: var(--emphasis-color)">
+            Motion and spacing
+          </h3>
+          <p>
+            <code class="app-code">app-duration</code> applies the global
+            duration and the <code class="app-code">ease-in-out</code> timing
+            function to transitions.
+          </p>
+          <p>
+            <code class="app-code">app-gap-sm</code>,
+            <code class="app-code">app-gap-md</code>, and
+            <code class="app-code">app-gap-lg</code> apply the three levels of
+            spacing between items.
+          </p>
+          <p>
+            <code class="app-code">app-padding-sm</code>,
+            <code class="app-code">app-padding-md</code>, and
+            <code class="app-code">app-padding-lg</code> apply the same levels
+            as inner spacing.
+          </p>
+        </twc-rows>
+      </twc-panel>
+
+      <twc-panel emphasis rounded>
+        <twc-rows gap="2">
+          <h3 class="text-xl" style="color: var(--emphasis-color)">
+            Surface and code
+          </h3>
+          <p>
+            <code class="app-code">app-texture</code> applies the image defined
+            by <code class="app-code">--texture</code> as a repeating
+            background.
+          </p>
+          <p>
+            <code class="app-code">app-code</code> highlights short code
+            fragments with horizontal padding, a thin monospaced font, and the
+            emphasized background. Prefer using it on a
+            <code class="app-code">&lt;code&gt;</code> element.
+          </p>
+        </twc-rows>
+      </twc-panel>
+
+      <twc-panel emphasis rounded>
+        <twc-rows gap="2">
+          <h3 class="text-xl" style="color: var(--emphasis-color)">
+            Responsive container
+          </h3>
+          <p>
+            <code class="app-code">app-container</code> applies
+            <code class="app-code">app-duration</code> and uses
+            <code class="app-code">--container-sm</code> as horizontal padding.
+            From <code class="app-code">48rem</code>, it uses
+            <code class="app-code">--container-md</code>; from
+            <code class="app-code">64rem</code>, it uses
+            <code class="app-code">--container-lg</code>.
+          </p>
+        </twc-rows>
+      </twc-panel>
+
+      <twc-panel emphasis rounded>
+        <twc-rows gap="2">
+          <h3 class="text-xl" style="color: var(--emphasis-color)">
+            Responsive block
+          </h3>
+          <p>
+            <code class="app-code">app-block</code> also applies
+            <code class="app-code">app-duration</code>. Its vertical padding
+            uses <code class="app-code">--block-sm</code> by default and
+            <code class="app-code">--block-lg</code> from
+            <code class="app-code">48rem</code>.
+          </p>
+        </twc-rows>
+      </twc-panel>
+    </twc-columns>
+
+    <div class="w-full">
+      <pre
+        class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+        style="background-color: var(--panel-emphasis-color)"
+      ><code>.example-section {
+  @apply app-container app-block app-gap-md flex flex-col;
+}</code></pre>
+    </div>
+    <div class="w-full">
+      <pre
+        class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+        style="background-color: var(--panel-emphasis-color)"
+      ><code>&lt;p&gt;
+  Edit &lt;code class="app-code"&gt;src/styles/theme.css&lt;/code&gt;.
+&lt;/p&gt;</code></pre>
+    </div>
+  </twc-rows>
+
+  <twc-rows gap="6">
+    <h2 class="text-3xl" style="color: var(--emphasis-color)">
       Available components
     </h2>
 
     <twc-rows gap="3">
-      <h3 class="text-2xl" style="color: var(--emphasis-color)">twc-brand</h3>
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">
+        <code class="app-code">twc-brand</code>
+      </h3>
       <p>
         Displays the image and title defined in the configuration. The
-        "description" attribute adds the website description.
+        <code class="app-code">description</code> attribute adds the website
+        description.
       </p>
       <div class="w-full">
         <pre
@@ -406,10 +705,14 @@ public/content/en-us/footer.htm</code></pre>
     </twc-rows>
 
     <twc-rows gap="3">
-      <h3 class="text-2xl" style="color: var(--emphasis-color)">twc-link</h3>
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">
+        <code class="app-code">twc-link</code>
+      </h3>
       <p>
-        Creates a link with an icon. Use "href" for the destination, "label" for
-        its text, and "external" when the address should open in a new tab.
+        Creates a link with an icon. Use <code class="app-code">href</code> for
+        the destination, <code class="app-code">label</code> for its text, and
+        <code class="app-code">external</code> when the address should open in a
+        new tab.
       </p>
       <div class="w-full">
         <pre
@@ -424,10 +727,14 @@ public/content/en-us/footer.htm</code></pre>
     </twc-rows>
 
     <twc-rows gap="3">
-      <h3 class="text-2xl" style="color: var(--emphasis-color)">twc-panel</h3>
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">
+        <code class="app-code">twc-panel</code>
+      </h3>
       <p>
-        Groups any kind of content. "emphasis" applies the emphasized background
-        and inner spacing; "rounded" adds rounded corners.
+        Groups any kind of content.
+        <code class="app-code">emphasis</code> applies the emphasized background
+        and inner spacing; <code class="app-code">rounded</code> adds rounded
+        corners.
       </p>
       <div class="w-full">
         <pre
@@ -440,11 +747,14 @@ public/content/en-us/footer.htm</code></pre>
     </twc-rows>
 
     <twc-rows gap="3">
-      <h3 class="text-2xl" style="color: var(--emphasis-color)">twc-quote</h3>
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">
+        <code class="app-code">twc-quote</code>
+      </h3>
       <p>
-        Highlights a quotation or a section of content. The optional "title"
-        attribute displays a heading above the content; when omitted, only the
-        elements placed between the tags are displayed.
+        Highlights a quotation or a section of content. The optional
+        <code class="app-code">title</code> attribute displays a heading above
+        the content; when omitted, only the elements placed between the tags are
+        displayed.
       </p>
       <div class="w-full">
         <pre
@@ -457,12 +767,18 @@ public/content/en-us/footer.htm</code></pre>
     </twc-rows>
 
     <twc-rows gap="3">
-      <h3 class="text-2xl" style="color: var(--emphasis-color)">twc-columns</h3>
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">
+        <code class="app-code">twc-columns</code>
+      </h3>
       <p>
-        Arranges its children in columns. "cols" accepts values from 1 to 12,
-        "gap" controls the space between items, and "align" accepts "start",
-        "center", or "end". On small screens, content always uses a single
-        column.
+        Arranges its children in columns.
+        <code class="app-code">cols</code> accepts values from 1 to 12,
+        <code class="app-code">gap</code> controls the space between items, and
+        <code class="app-code">align</code> accepts
+        <code class="app-code">start</code>,
+        <code class="app-code">center</code>, or
+        <code class="app-code">end</code>. On small screens, content always uses
+        a single column.
       </p>
       <div class="w-full">
         <pre
@@ -477,10 +793,14 @@ public/content/en-us/footer.htm</code></pre>
     </twc-rows>
 
     <twc-rows gap="3">
-      <h3 class="text-2xl" style="color: var(--emphasis-color)">twc-rows</h3>
+      <h3 class="text-2xl" style="color: var(--emphasis-color)">
+        <code class="app-code">twc-rows</code>
+      </h3>
       <p>
-        Stacks its children vertically. "gap" controls spacing and "align"
-        positions each item at the start, center, or end of the available space.
+        Stacks its children vertically.
+        <code class="app-code">gap</code> controls spacing and
+        <code class="app-code">align</code> positions each item at the start,
+        center, or end of the available space.
       </p>
       <div class="w-full">
         <pre
@@ -496,18 +816,22 @@ public/content/en-us/footer.htm</code></pre>
 
     <twc-rows gap="3">
       <h3 class="text-2xl" style="color: var(--emphasis-color)">
-        twc-carousel and twc-carousel-item
+        <code class="app-code">twc-carousel</code> and
+        <code class="app-code">twc-carousel-item</code>
       </h3>
       <p>
-        The carousel receives its items through "twc-carousel-item". The "limit"
-        attribute defines how many items appear on each page on desktop; on
-        mobile, only one is displayed at a time.
+        The carousel receives its items through
+        <code class="app-code">twc-carousel-item</code>. The
+        <code class="app-code">limit</code> attribute defines how many items
+        appear on each page on desktop; on mobile, only one is displayed at a
+        time.
       </p>
       <p>
-        "delay" defines the automatic advance interval in milliseconds. Use
-        "delay="0"" to disable it. "show-timer="false"" hides the timer. When
-        the pointer remains over the carousel, automatic movement is temporarily
-        paused.
+        <code class="app-code">delay</code> defines the automatic advance
+        interval in milliseconds. Use <code class="app-code">delay="0"</code> to
+        disable it. <code class="app-code">show-timer="false"</code> hides the
+        timer. When the pointer remains over the carousel, automatic movement is
+        temporarily paused.
       </p>
       <div class="w-full">
         <pre
@@ -573,8 +897,10 @@ public/content/en-us/footer.htm</code></pre>
     </div>
 
     <p>
-      Save this content as an ".htm" file inside the language directory. Then
-      add a link to "navigator" or another page to make it accessible.
+      Save this content as an <code class="app-code">.htm</code> file inside the
+      language directory. Then add a link to
+      <code class="app-code">navigator</code> or another page to make it
+      accessible.
     </p>
   </twc-rows>
 
@@ -584,13 +910,25 @@ public/content/en-us/footer.htm</code></pre>
         Content publishing checklist
       </h2>
       <twc-rows gap="2">
-        <p>1. Define the languages in "config/languages.json".</p>
+        <p>
+          1. Define the languages in
+          <code class="app-code">config/languages.json</code>.
+        </p>
         <p>2. Create a configuration file for each language.</p>
         <p>3. Create a content directory for each language.</p>
         <p>4. Keep the same names and paths across translations.</p>
-        <p>5. Use internal paths beginning with "#/".</p>
-        <p>6. Include the ".htm" extension in page links.</p>
-        <p>7. Use the "twc-*" components to organize the layout.</p>
+        <p>
+          5. Use internal paths beginning with
+          <code class="app-code">#/</code>.
+        </p>
+        <p>
+          6. Include the <code class="app-code">.htm</code> extension in page
+          links.
+        </p>
+        <p>
+          7. Use the <code class="app-code">twc-*</code> components to organize
+          the layout.
+        </p>
         <p>8. Test navigation in every enabled language.</p>
       </twc-rows>
     </twc-rows>
@@ -602,9 +940,10 @@ public/content/en-us/footer.htm</code></pre>
     </h2>
     <p>
       To expand the library, create the Vue component, import it into
-      "src/web-components.ts", and register a new tag. Because HTML content is
-      sanitized, the tag and its attributes must also be added to the allowlist
-      in "src/components/layouts/content.vue".
+      <code class="app-code">src/web-components.ts</code>, and register a new
+      tag. Because HTML content is sanitized, the tag and its attributes must
+      also be added to the allowlist in
+      <code class="app-code">src/components/layouts/content.vue</code>.
     </p>
     <p>
       This validation keeps content files flexible without allowing unrecognized
