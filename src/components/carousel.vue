@@ -1,8 +1,14 @@
 <template>
   <div
+    ref="carouselElement"
     class="carousel"
-    @mouseenter="pauseCarousel"
-    @mouseleave="resumeCarousel"
+    role="region"
+    aria-roledescription="carousel"
+    :aria-label="`Carousel: page ${selectedPage + 1} of ${Math.max(totalPages, 1)}`"
+    @mouseenter="hoverPaused = true"
+    @mouseleave="hoverPaused = false"
+    @focusin="focusPaused = true"
+    @focusout="handleFocusOut"
   >
     <div class="carousel-content">
       <button
@@ -33,6 +39,17 @@
     </div>
 
     <div v-if="totalPages > 1" class="carousel-controls">
+      <button
+        v-if="normalizedDelay > 0"
+        type="button"
+        class="carousel-playback-button"
+        :aria-label="playbackEnabled ? 'Pause carousel' : 'Play carousel'"
+        @click="togglePlayback"
+      >
+        <Pause v-if="playbackEnabled" aria-hidden="true" />
+        <Play v-else aria-hidden="true" />
+      </button>
+
       <div class="carousel-pagination">
         <button
           v-for="page in totalPages"
@@ -56,8 +73,7 @@
             : `${remainingSeconds} seconds until next page`
         "
       >
-        <Pause v-if="paused" aria-hidden="true" />
-        <ClockFading v-else aria-hidden="true" />
+        <ClockFading aria-hidden="true" />
         <span>{{ remainingSeconds }}s</span>
       </div>
     </div>
@@ -65,7 +81,13 @@
 </template>
 
 <script setup lang="ts">
-import { ChevronLeft, ChevronRight, ClockFading, Pause } from '@lucide/vue';
+import {
+  ChevronLeft,
+  ChevronRight,
+  ClockFading,
+  Pause,
+  Play,
+} from '@lucide/vue';
 
 import {
   computed,
@@ -90,16 +112,22 @@ const props = withDefaults(
   },
 );
 
+const carouselElement = ref<HTMLElement>();
 const currentPage = ref(0);
+const focusPaused = ref(false);
+const hoverPaused = ref(false);
 const itemCount = ref(0);
 const itemsContainer = ref<HTMLElement>();
 const mediumScreen = ref(false);
-const paused = ref(false);
 const remainingSeconds = ref(0);
+const reducedMotion = ref(false);
+const userPaused = ref(false);
+const userPlaying = ref(false);
 
 let timer: ReturnType<typeof setTimeout> | undefined;
 let countdownTimer: ReturnType<typeof setInterval> | undefined;
 let breakpointQuery: MediaQueryList | undefined;
+let reducedMotionQuery: MediaQueryList | undefined;
 let itemsObserver: MutationObserver | undefined;
 let mounted = false;
 let countdownDeadline = 0;
@@ -124,6 +152,16 @@ const effectiveLimit = computed(() =>
 
 const timerVisible = computed(
   () => props.showTimer !== false && props.showTimer !== 'false',
+);
+
+const playbackEnabled = computed(
+  () => userPlaying.value || (!userPaused.value && !reducedMotion.value),
+);
+
+const paused = computed(
+  () =>
+    !playbackEnabled.value ||
+    ((hoverPaused.value || focusPaused.value) && !userPlaying.value),
 );
 
 const totalPages = computed(() =>
@@ -233,20 +271,14 @@ function scheduleNextPage() {
   if (!paused.value) startTimer(delay);
 }
 
-function pauseCarousel() {
-  if (paused.value) return;
-  paused.value = true;
-
+function pauseTimer() {
   if (timer !== undefined) {
     updateCountdown();
     clearScheduledTimers();
   }
 }
 
-function resumeCarousel() {
-  if (!paused.value) return;
-  paused.value = false;
-
+function resumeTimer() {
   if (!mounted || normalizedDelay.value === 0 || totalPages.value <= 1) {
     return;
   }
@@ -257,6 +289,29 @@ function resumeCarousel() {
   }
 
   startTimer(remainingDelay);
+}
+
+function togglePlayback() {
+  if (playbackEnabled.value) {
+    userPaused.value = true;
+    userPlaying.value = false;
+  } else {
+    userPaused.value = false;
+    userPlaying.value = true;
+  }
+}
+
+function handleFocusOut(event: FocusEvent) {
+  const nextTarget = event.relatedTarget;
+
+  if (
+    nextTarget instanceof Node &&
+    carouselElement.value?.contains(nextTarget)
+  ) {
+    return;
+  }
+
+  focusPaused.value = false;
 }
 
 function previousPage() {
@@ -282,6 +337,14 @@ watch(
   () => scheduleNextPage(),
 );
 
+watch(paused, (isPaused) => {
+  if (isPaused) {
+    pauseTimer();
+  } else {
+    resumeTimer();
+  }
+});
+
 watch(effectiveLimit, (limit, previousLimit) => {
   const firstVisibleItem = currentPage.value * previousLimit;
 
@@ -298,6 +361,9 @@ onMounted(() => {
   breakpointQuery = window.matchMedia('(min-width: 48rem)');
   mediumScreen.value = breakpointQuery.matches;
   breakpointQuery.addEventListener('change', updateBreakpoint);
+  reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  reducedMotion.value = reducedMotionQuery.matches;
+  reducedMotionQuery.addEventListener('change', updateReducedMotion);
   itemsObserver = new MutationObserver(updateItems);
 
   if (itemsContainer.value) {
@@ -310,12 +376,17 @@ onMounted(() => {
 onBeforeUnmount(() => {
   mounted = false;
   breakpointQuery?.removeEventListener('change', updateBreakpoint);
+  reducedMotionQuery?.removeEventListener('change', updateReducedMotion);
   itemsObserver?.disconnect();
   clearTimer();
 });
 
 function updateBreakpoint(event: MediaQueryListEvent) {
   mediumScreen.value = event.matches;
+}
+
+function updateReducedMotion(event: MediaQueryListEvent) {
+  reducedMotion.value = event.matches;
 }
 </script>
 
@@ -335,7 +406,22 @@ twc-carousel {
 }
 
 .carousel-navigation-button {
-  @apply app-padding-sm shrink-0 cursor-pointer;
+  @apply app-padding-sm focus-visible:app-focus-ring shrink-0 cursor-pointer;
+  color: var(--carousel-button-color);
+
+  &:hover {
+    @media (hover: hover) {
+      color: var(--carousel-button-hover);
+    }
+  }
+
+  &:active {
+    color: var(--carousel-button-active);
+  }
+}
+
+.carousel-playback-button {
+  @apply app-padding-sm focus-visible:app-focus-ring shrink-0 cursor-pointer rounded-full;
   color: var(--carousel-button-color);
 
   &:hover {
@@ -357,9 +443,11 @@ twc-carousel {
   --carousel-item-gap-offset: 0rem;
   --carousel-item-width: 100%;
 
-  @apply flex w-full gap-4 transition-transform duration-500 ease-in-out;
+  @apply flex w-full gap-4 ease-in-out;
   @apply motion-reduce:transition-none;
 
+  transition-duration: var(--carousel-duration);
+  transition-property: transform;
   transform: translateX(var(--carousel-track-offset, 0));
 
   @media (width >= 48rem) {
@@ -382,7 +470,7 @@ twc-carousel {
 }
 
 .carousel-page-button {
-  @apply h-3 w-3 cursor-pointer rounded-full bg-transparent;
+  @apply focus-visible:app-focus-ring h-3 w-3 cursor-pointer rounded-full bg-transparent;
 
   border-color: var(--carousel-dot-border-color);
   border-style: var(--carousel-dot-border-style);

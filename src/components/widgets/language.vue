@@ -40,7 +40,7 @@ const props = defineProps({
 @reference '@/style.css';
 
 .language {
-  @apply app-duration cursor-pointer;
+  @apply app-duration focus-visible:app-focus-ring cursor-pointer;
   @apply app-gap-sm flex flex-row items-center;
   @apply grayscale-75 hover:grayscale-0;
   @apply text-lg;

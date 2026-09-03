@@ -1,12 +1,15 @@
 <template>
   <footer class="footer">
-    <Content v-if="config?.footer" :data="config.footer" />
+    <Content v-if="config?.footerContent" :data="config.footerContent" />
 
-    <div :class="['footer-copyright', { 'footer-divider': config?.footer }]">
+    <div
+      :class="['footer-copyright', { 'footer-divider': config?.footerContent }]"
+    >
       <div>{{ config?.ownership }}</div>
       <a
         href="https://github.com/mineot/taberna"
         target="_blank"
+        rel="noopener noreferrer"
         class="footer-powered"
       >
         <span>Powered by Mineot</span>
@@ -51,7 +54,7 @@ const { config } = storeToRefs(useConfigStore());
 }
 
 .footer-powered {
-  @apply flex flex-row items-center gap-1;
+  @apply focus-visible:app-focus-ring flex flex-row items-center gap-1;
   @apply underline;
 }
 </style>

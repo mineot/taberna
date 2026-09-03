@@ -1,15 +1,13 @@
 <template>
-  <Menu
-    v-if="icon === 'MENU'"
+  <button
     :class="['icon-button', props.class]"
+    type="button"
+    :aria-label="props.label"
     @click="emit('click')"
-  />
-
-  <X
-    v-if="icon === 'CLOSE'"
-    :class="['icon-button', props.class]"
-    @click="emit('click')"
-  />
+  >
+    <Menu v-if="icon === 'MENU'" aria-hidden="true" />
+    <X v-else aria-hidden="true" />
+  </button>
 </template>
 
 <script setup lang="ts">
@@ -21,6 +19,10 @@ const props = defineProps({
     type: String as PropType<'MENU' | 'CLOSE'>,
     required: false,
     default: 'MENU',
+  },
+  label: {
+    type: String,
+    required: true,
   },
   class: {
     type: String,
@@ -36,7 +38,7 @@ const emit = defineEmits(['click']);
 @reference '@/style.css';
 
 .icon-button {
-  @apply app-duration cursor-pointer;
+  @apply app-duration focus-visible:app-focus-ring inline-flex cursor-pointer items-center justify-center border-0 bg-transparent p-0;
 
   color: var(--icon-button-color);
 

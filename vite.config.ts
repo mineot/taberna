@@ -13,7 +13,7 @@ export default defineConfig({
         new URL('./src/components/layouts', import.meta.url),
       ),
       '@page': fileURLToPath(new URL('./src/pages', import.meta.url)),
-      '@store': fileURLToPath(new URL('./src/stories', import.meta.url)),
+      '@store': fileURLToPath(new URL('./src/stores', import.meta.url)),
       '@style': fileURLToPath(new URL('./src/styles', import.meta.url)),
       '@util': fileURLToPath(new URL('./src/utils', import.meta.url)),
       '@widget': fileURLToPath(
@@ -23,7 +23,9 @@ export default defineConfig({
   },
   plugins: [vue(), tailwindcss()],
   test: {
+    clearMocks: true,
     environment: 'jsdom',
     restoreMocks: true,
+    setupFiles: ['./src/test/setup.ts'],
   },
 });

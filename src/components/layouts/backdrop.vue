@@ -1,6 +1,11 @@
 <template>
   <Transition name="backdrop">
-    <div v-if="props.visible" class="backdrop" @click="closeMenu"></div>
+    <div
+      v-if="props.visible"
+      class="backdrop"
+      aria-hidden="true"
+      @click="closeMenu"
+    ></div>
   </Transition>
 </template>
 
@@ -25,7 +30,8 @@ const closeMenu = () => {
 
 .backdrop-enter-active,
 .backdrop-leave-active {
-  transition: opacity 0.3s ease;
+  @apply app-duration;
+  transition-property: opacity;
 }
 
 .backdrop-enter-from,

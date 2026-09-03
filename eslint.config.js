@@ -21,6 +21,12 @@ export default tseslint.config(
     },
   },
   {
+    files: ['src/components/layouts/content.vue'],
+    rules: {
+      'vue/no-v-html': 'off',
+    },
+  },
+  {
     files: ['**/*.ts'],
     extends: [...tseslint.configs.recommended],
     rules: {

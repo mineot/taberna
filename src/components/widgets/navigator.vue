@@ -19,7 +19,12 @@
       <span>{{ navItem.text }}</span>
     </a>
 
-    <IconButton v-if="props.menu" class="navigator-menu" @click="openMenu" />
+    <IconButton
+      v-if="props.menu"
+      class="navigator-menu"
+      label="Open menu"
+      @click="openMenu"
+    />
   </div>
 
   <Sidebar :visible="visible" @close="closeMenu" />
@@ -75,7 +80,7 @@ const emit = defineEmits(['click']);
 }
 
 .navigator-item {
-  @apply app-duration cursor-pointer;
+  @apply app-duration focus-visible:app-focus-ring cursor-pointer;
   @apply rounded-md px-2 py-1;
 
   background-color: var(--navigator-background);

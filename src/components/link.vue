@@ -1,8 +1,10 @@
 <template>
   <a
     class="link"
-    :href="props.href"
-    :target="props.external ? '_blank' : '_self'"
+    :href="safeHref ?? undefined"
+    :target="safeHref && props.external ? '_blank' : undefined"
+    :rel="safeHref && props.external ? 'noopener noreferrer' : undefined"
+    :aria-disabled="safeHref ? undefined : 'true'"
   >
     <ExternalLink v-if="props.external" :size="14" />
     <Link v-if="!props.external" :size="14" />
@@ -12,17 +14,17 @@
 
 <script setup lang="ts">
 import { ExternalLink, Link } from '@lucide/vue';
+import { computed } from 'vue';
+import { normalizeLinkHref } from '@util/link.util';
 
 const props = defineProps({
   href: {
     type: String,
     required: true,
-    default: '#',
   },
   label: {
     type: String,
     required: true,
-    default: 'Link',
   },
   external: {
     type: Boolean,
@@ -30,13 +32,15 @@ const props = defineProps({
     default: false,
   },
 });
+
+const safeHref = computed(() => normalizeLinkHref(props.href, props.external));
 </script>
 
 <style>
 @reference '@/style.css';
 
 .link {
-  @apply flex flex-row gap-1;
+  @apply focus-visible:app-focus-ring flex flex-row gap-1;
   @apply items-center justify-start;
   @apply hover:underline;
 

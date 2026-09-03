@@ -155,6 +155,7 @@
   --carousel-button-active: var(--emphasis-active);
   --carousel-button-color: var(--emphasis-color);
   --carousel-button-hover: var(--emphasis-hover);
+  --carousel-duration: 500ms;
   --carousel-dot-active: var(--emphasis-color);
   --carousel-dot-border-color: var(--emphasis-color);
   --carousel-dot-border-size: var(--border-size);

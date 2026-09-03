@@ -2,6 +2,13 @@
   @apply duration-[var(--duration)] ease-in-out;
 }
 
+@utility app-focus-ring {
+  outline-color: var(--emphasis-color);
+  outline-offset: 0.25rem;
+  outline-style: solid;
+  outline-width: 2px;
+}
+
 @utility app-gap-lg {
   gap: calc(var(--spacing) * var(--spacing-lg));
 }

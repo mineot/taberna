@@ -7,7 +7,7 @@
       "@component/*": ["./src/components/*"],
       "@layout/*": ["./src/components/layouts/*"],
       "@page/*": ["./src/pages/*"],
-      "@store/*": ["./src/stories/*"],
+      "@store/*": ["./src/stores/*"],
       "@style/*": ["./src/styles/*"],
       "@util/*": ["./src/utils/*"],
       "@widget/*": ["./src/components/widgets/*"]

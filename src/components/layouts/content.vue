@@ -3,36 +3,12 @@
 </template>
 
 <script setup lang="ts">
-import DOMPurify from 'dompurify';
 import { computed } from 'vue';
+import { sanitizeContentHtml } from '@util/html.util';
 
 const props = defineProps<{
   data: string;
 }>();
 
-const sanitizedHtml = computed(() =>
-  DOMPurify.sanitize(props.data, {
-    CUSTOM_ELEMENT_HANDLING: {
-      tagNameCheck:
-        /^twc-(brand|link|carousel|carousel-item|panel|columns|rows|quote)$/,
-      allowCustomizedBuiltInElements: false,
-    },
-    ADD_ATTR: [
-      'align',
-      'bordered',
-      'cols',
-      'delay',
-      'description',
-      'emphasis',
-      'external',
-      'gap',
-      'href',
-      'label',
-      'limit',
-      'rounded',
-      'show-timer',
-      'title',
-    ],
-  }),
-);
+const sanitizedHtml = computed(() => sanitizeContentHtml(props.data));
 </script>

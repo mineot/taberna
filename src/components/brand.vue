@@ -37,7 +37,7 @@ const emit = defineEmits(['click']);
 }
 
 .brand {
-  @apply app-duration cursor-pointer;
+  @apply app-duration focus-visible:app-focus-ring cursor-pointer;
   @apply flex flex-row items-center justify-center;
   @apply gap-2 md:gap-3;
 }

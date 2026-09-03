@@ -29,6 +29,18 @@ npm run lint       # ESLint on src/
 npm run format     # Prettier on src/ (ts, vue, css)
 ```
 
+## Data Loading Boundary
+
+- `src/utils/fetch.util.ts` centralizes JSON and HTML-fragment requests.
+- Requests distinguish aborted, network, HTTP, not-found, content-type, invalid-data, and unexpected-document failures through `ResourceError`.
+- JSON manifests are validated at runtime through the type guards in `src/utils/configuration.ts`.
+- `ConfigurationManifest` represents file references from JSON; `LoadedConfiguration` exposes hydrated `homeContent` and `footerContent` fields.
+- The configuration store fetches referenced home and footer fragments in parallel and publishes the hydrated configuration atomically after every request succeeds.
+- HTML-fragment loading rejects full HTML documents to prevent an SPA fallback page from being rendered as site content.
+- `App.vue` owns the bootstrap state (`loading`, `ready`, or `error`), awaits language and configuration sequentially, and exposes a retry action without allowing rejected bootstrap promises to escape.
+- Pages and widgets must access Pinia state through `storeToRefs()` when retaining a reactive property outside the store object.
+- Vitest helpers live in `src/test/`; known unfixed regressions use expected-failure or todo tests until their corresponding implementation step is completed.
+
 ## Current Structure (Working Tree)
 
 ```
