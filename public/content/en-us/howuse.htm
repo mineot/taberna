@@ -69,6 +69,31 @@
 
   <twc-rows gap="4">
     <h2 class="text-3xl" style="color: var(--emphasis-color)">
+      Running and publishing the project
+    </h2>
+    <p>
+      Install dependencies once and run the commands below from the project
+      root. The development server lets you review changes in the browser; the
+      build checks types and produces the static version.
+    </p>
+    <div class="w-full">
+      <pre
+        class="w-full overflow-x-auto rounded-lg p-4 text-sm"
+        style="background-color: var(--panel-emphasis-color)"
+      ><code>npm install
+npm run dev
+npm run build</code></pre>
+    </div>
+    <p>
+      After <code class="app-code">npm run build</code>, publish the contents of
+      the <code class="app-code">dist</code> directory on a static hosting
+      service. The build uses relative paths, so it can be hosted at a domain
+      root or in a subdirectory.
+    </p>
+  </twc-rows>
+
+  <twc-rows gap="4">
+    <h2 class="text-3xl" style="color: var(--emphasis-color)">
       Language-based organization
     </h2>
     <p>
@@ -143,7 +168,7 @@
   },
   "names": {
     "pt-br": "Português (Brasil)",
-    "en-us": "English (America)"
+    "en-us": "English (United States)"
   }
 }</code></pre>
     </div>
@@ -155,8 +180,9 @@
             <code class="app-code">available</code>
           </h3>
           <p>
-            <code class="app-code">default</code> defines the language used when
-            there is no valid saved choice.
+            The application first looks for a valid saved choice, then for a
+            compatible language among the browser preferences, and finally uses
+            <code class="app-code">default</code>.
             <code class="app-code">available</code> contains every enabled
             language code.
           </p>
@@ -188,7 +214,7 @@
     "en-us": "🇺🇸"
   },
   "names": {
-    "en-us": "English (America)"
+    "en-us": "English (United States)"
   }
 }</code></pre>
     </div>
@@ -197,6 +223,12 @@
       exist in <code class="app-code">flags</code> and
       <code class="app-code">names</code>, and it must have its own
       configuration file and content directory.
+    </p>
+    <p>
+      Use lowercase codes such as <code class="app-code">en-us</code>. When
+      there is only one compatible variant, a broader browser preference can
+      also select it, such as <code class="app-code">en</code> for
+      <code class="app-code">en-us</code>.
     </p>
   </twc-rows>
 
@@ -233,7 +265,10 @@
           <h3 class="text-lg" style="color: var(--emphasis-color)">
             <code class="app-code">title</code>
           </h3>
-          <p>The name displayed in the visual identity and beside the logo.</p>
+          <p>
+            The name displayed in the visual identity and used as the browser
+            document title.
+          </p>
         </twc-rows>
       </twc-panel>
       <twc-panel emphasis rounded>
@@ -255,7 +290,7 @@
           </h3>
           <p>
             A summary of the website that can be displayed by the brand
-            component.
+            component and used as the document meta description.
           </p>
         </twc-rows>
       </twc-panel>
@@ -274,8 +309,12 @@
             <code class="app-code">footer</code>
           </h3>
           <p>
-            The names of the HTML files loaded from the language's content
-            directory to build the home page and footer.
+            Optional fields containing the names of HTML files loaded from the
+            language's content directory. Without
+            <code class="app-code">home</code>, the home page displays
+            <code class="app-code">No Home Page</code>; without
+            <code class="app-code">footer</code>, only the ownership and fixed
+            project credit remain.
           </p>
         </twc-rows>
       </twc-panel>
@@ -292,6 +331,13 @@
         </twc-rows>
       </twc-panel>
     </twc-columns>
+    <p>
+      A configuration replaces the current version only after the JSON and the
+      files referenced by <code class="app-code">home</code> and
+      <code class="app-code">footer</code> finish loading successfully. Invalid
+      JSON, a missing file, or an incompatible response interrupts the switch
+      without publishing a partial configuration.
+    </p>
   </twc-rows>
 
   <twc-rows gap="4">
@@ -364,6 +410,18 @@ public/content/en-us/footer.htm</code></pre>
 &gt;&lt;/twc-link&gt;</code></pre>
     </div>
 
+    <twc-quote title="Content file requirements">
+      <p>
+        Each file must be an HTML fragment, without
+        <code class="app-code">&lt;!doctype html&gt;</code> or
+        <code class="app-code">&lt;html&gt;</code>, and must be served as
+        <code class="app-code">text/html</code> or
+        <code class="app-code">application/xhtml+xml</code>. Page names must end
+        in <code class="app-code">.htm</code>. Directory segments accept
+        letters, numbers, underscores, and hyphens.
+      </p>
+    </twc-quote>
+
     <twc-panel emphasis rounded>
       <twc-rows gap="2">
         <h3 class="text-xl" style="color: var(--emphasis-color)">
@@ -413,6 +471,38 @@ public/content/en-us/footer.htm</code></pre>
       is sanitized before it is displayed, removing potentially dangerous
       elements or attributes.
     </p>
+    <p>
+      Scripts, HTML events, and dangerous attributes are removed. Links accept
+      only the HTTP and HTTPS protocols; an invalid destination loses its
+      <code class="app-code">href</code> attribute. On
+      <code class="app-code">twc-link</code>, use
+      <code class="app-code">external</code> only with an absolute HTTP or HTTPS
+      address.
+    </p>
+  </twc-rows>
+
+  <twc-rows gap="4">
+    <h2 class="text-3xl" style="color: var(--emphasis-color)">
+      Security and loading failures
+    </h2>
+    <p>
+      The browser receives a Content Security Policy that restricts scripts,
+      styles, fonts, and images to permitted sources. DOMPurify sanitization is
+      a second layer applied to every HTML fragment before rendering.
+    </p>
+    <p>
+      The application distinguishes network, HTTP, missing-file, incorrect
+      content-type, invalid-JSON, and full-HTML-document failures. During
+      initialization, a failure offers a retry; on content pages, missing files
+      and other errors receive separate states.
+    </p>
+    <twc-quote title="Current language limitation">
+      <p>
+        Technical loading, error, and page-not-found messages still appear in
+        English. Editorial content and navigation already have language-specific
+        versions.
+      </p>
+    </twc-quote>
   </twc-rows>
 
   <twc-rows gap="6">
@@ -598,6 +688,10 @@ public/content/en-us/footer.htm</code></pre>
             function to transitions.
           </p>
           <p>
+            <code class="app-code">app-focus-ring</code> applies the visible
+            focus outline used by keyboard controls.
+          </p>
+          <p>
             <code class="app-code">app-gap-sm</code>,
             <code class="app-code">app-gap-md</code>, and
             <code class="app-code">app-gap-lg</code> apply the three levels of
@@ -712,7 +806,8 @@ public/content/en-us/footer.htm</code></pre>
         Creates a link with an icon. Use <code class="app-code">href</code> for
         the destination, <code class="app-code">label</code> for its text, and
         <code class="app-code">external</code> when the address should open in a
-        new tab.
+        new tab. External links require an absolute HTTP or HTTPS address;
+        invalid destinations are displayed without navigation.
       </p>
       <div class="w-full">
         <pre
@@ -734,7 +829,8 @@ public/content/en-us/footer.htm</code></pre>
         Groups any kind of content.
         <code class="app-code">emphasis</code> applies the emphasized background
         and inner spacing; <code class="app-code">rounded</code> adds rounded
-        corners.
+        corners; and <code class="app-code">bordered</code> adds the border
+        defined by the theme.
       </p>
       <div class="w-full">
         <pre
@@ -799,8 +895,10 @@ public/content/en-us/footer.htm</code></pre>
       <p>
         Stacks its children vertically.
         <code class="app-code">gap</code> controls spacing and
-        <code class="app-code">align</code> positions each item at the start,
-        center, or end of the available space.
+        <code class="app-code">align</code> controls text alignment on direct
+        children with <code class="app-code">start</code>,
+        <code class="app-code">center</code>, or
+        <code class="app-code">end</code>.
       </p>
       <div class="w-full">
         <pre
@@ -830,8 +928,11 @@ public/content/en-us/footer.htm</code></pre>
         <code class="app-code">delay</code> defines the automatic advance
         interval in milliseconds. Use <code class="app-code">delay="0"</code> to
         disable it. <code class="app-code">show-timer="false"</code> hides the
-        timer. When the pointer remains over the carousel, automatic movement is
-        temporarily paused.
+        timer. Defaults are <code class="app-code">limit="1"</code>,
+        <code class="app-code">delay="5000"</code>, and a visible timer. A
+        pointer or focus inside the carousel temporarily pauses automatic
+        movement. Autoplay respects the reduced-motion preference, and the
+        controls let visitors navigate and manually pause or resume playback.
       </p>
       <div class="w-full">
         <pre
@@ -929,7 +1030,15 @@ public/content/en-us/footer.htm</code></pre>
           7. Use the <code class="app-code">twc-*</code> components to organize
           the layout.
         </p>
-        <p>8. Test navigation in every enabled language.</p>
+        <p>
+          8. Save HTML fragments without a doctype or an
+          <code class="app-code">html</code> tag.
+        </p>
+        <p>9. Replace example images and links with real destinations.</p>
+        <p>10. Test navigation in every enabled language.</p>
+        <p>
+          11. Run <code class="app-code">npm run build</code> before publishing.
+        </p>
       </twc-rows>
     </twc-rows>
   </twc-panel>
@@ -943,7 +1052,9 @@ public/content/en-us/footer.htm</code></pre>
       <code class="app-code">src/web-components.ts</code>, and register a new
       tag. Because HTML content is sanitized, the tag and its attributes must
       also be added to the allowlist in
-      <code class="app-code">src/components/layouts/content.vue</code>.
+      <code class="app-code">src/utils/html.util.ts</code>, in
+      <code class="app-code">CUSTOM_ELEMENT_PATTERN</code> and, when needed, in
+      <code class="app-code">CUSTOM_ATTRIBUTES</code>.
     </p>
     <p>
       This validation keeps content files flexible without allowing unrecognized
