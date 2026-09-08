@@ -2,222 +2,101 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE) [![🇧🇷 Português (Brasil)](<https://img.shields.io/badge/Idioma-%F0%9F%87%A7%F0%9F%87%B7%20Portugu%C3%AAs%20(Brasil)-e5e7eb.svg>)](README_PT_BR.md)
 
-Taberna is a customizable starting point for personal websites, portfolios, landing pages, and small institutional websites. Text, pages, menus, images, languages, and the footer are configured mainly through JSON and Markdown files.
+Taberna is a configurable foundation for personal websites, portfolios, landing
+pages, and small institutional sites. It combines a Vue application shell with
+language-specific JSON manifests and HTML fragments, allowing most site content
+to be maintained without changing the application code.
 
-The project includes a responsive layout, language detection, independent pages, configurable home sections, and an optional carousel. The included content and images are fictional placeholders and must be replaced before publication.
+The project is entirely client-side and produces a static build suitable for a
+domain root or a subdirectory. The bundled content and remote images are
+fictional placeholders and should be replaced before publishing.
 
-## What it offers
+## Features
 
-- a responsive home page built from configurable sections;
-- independent Markdown pages and internal or external menu links;
-- automatic language detection and language selection;
-- text, images, highlighted sections, custom footer, and optional carousel;
-- a static build that works at a domain root or in a subdirectory.
+- responsive, mobile-first layout;
+- browser-language detection and manual language switching;
+- configurable identity, navigation, home page, and footer per language;
+- hash-based routes for standalone and nested content pages;
+- reusable custom elements for panels, columns, links, quotations, and
+  carousels;
+- sanitized HTML content and validated file, URL, and configuration boundaries;
+- semantic theme tokens and self-hosted fonts;
+- static output with relative asset paths.
 
 ## Requirements
 
 - [Node.js](https://nodejs.org/) 20.19 or newer, or 22.12 or newer;
-- npm, installed together with Node.js;
-- a code editor, such as Visual Studio Code.
+- npm, included with Node.js.
 
-## Install and run
+## Quick start
 
-Download the repository as a ZIP file and extract it, or clone it with Git:
+Clone the repository and install its dependencies:
 
 ```bash
 git clone https://github.com/mineot/taberna.git
 cd taberna
+npm install
 ```
 
-Open a terminal in the project directory and run:
+Start the development server:
 
 ```bash
-npm install
 npm run dev
 ```
 
-Open the address shown in the terminal, normally `http://localhost:5173`. Keep the command running while editing the website and press `Ctrl+C` to stop it.
+Open the URL printed in the terminal, usually `http://localhost:5173`. Vite
+reloads the page as project files change. Press `Ctrl+C` to stop the server.
 
-## Customize
+Create and preview a production build with:
 
-The main customization files are:
-
-| What to change                                | Location                                                   |
-| --------------------------------------------- | ---------------------------------------------------------- |
-| Name, description, menu, sections, and footer | `public/config/{language}.json`                            |
-| Home content and independent pages            | `public/content/{language}/`                               |
-| Available languages                           | `public/languages.json`                                    |
-| Logo and browser icon                         | `public/logo.png` and `public/favicon.png`                 |
-| Other images                                  | Any directory inside `public/`                             |
-| Colors, fonts, and background texture         | `src/style.css`, `public/fonts/`, and `public/texture.png` |
-
-Each enabled language has its own complete configuration and content. Repeat content changes in every language that remains available.
-
-### Name, description, and logo
-
-Edit the `site` object in `public/config/{language}.json`:
-
-```json
-"site": {
-  "title": "My Website",
-  "description": "A short description of my website",
-  "image": "logo.png"
-}
+```bash
+npm run build
+npm run preview
 ```
 
-The `index.html` file provides the initial description before the application loads. After the language configuration is loaded, `site.description` updates `<meta name="description">`; changing languages updates it again without reloading the page.
+## Project structure
 
-This update happens in the browser. Open Graph, per-page metadata, and SEO prerendering for crawlers without JavaScript are not implemented.
-
-Replace `public/logo.png` and `public/favicon.png` to change the default visual identity.
-
-### Home sections
-
-Each item in `sections` creates a block on the home page. A simple section can contain text and an image:
-
-```json
-{
-  "id": "about",
-  "title": "About",
-  "subtitle": "Learn more about my work",
-  "content": ["First paragraph.", "Second paragraph."],
-  "image": "images/about.jpg",
-  "invert": false,
-  "emphasis": true
-}
+```text
+public/
+  config/
+    languages.json          Enabled languages and display information
+    en-us.json              English site manifest
+    pt-br.json              Brazilian Portuguese site manifest
+  content/{locale}/         Home, footer, and routed .htm fragments
+  fonts/                    Self-hosted fonts
+  images/                   Logo, texture, and other public images
+  favicon.png
+src/
+  components/
+    layouts/                Application shell and sanitized content outlet
+    widgets/                Header, footer, navigation, and controls
+    *.vue                   Content-facing custom elements
+  pages/                    Home, language selector, and dynamic content pages
+  stores/                   Pinia stores for configuration and language state
+  styles/                   Theme tokens and shared utilities
+  utils/                    Fetching, validation, sanitization, and paths
+  App.vue                   Bootstrap and document metadata synchronization
+  main.ts                   Application entry point
+  router.ts                 Hash-based routes
+  style.css                 Global stylesheet entry point
+  web-components.ts         Content custom-element registration
+index.html                  SPA shell, fallback metadata, and CSP
+vite.config.ts              Vite, Tailwind, aliases, and Vitest configuration
 ```
 
-To write the content in Markdown, use `contentFiles` instead of `content`:
+Configuration, editorial content, and presentation are deliberately separate:
 
-```json
-{
-  "id": "intro",
-  "title": "Welcome",
-  "contentFiles": ["intro.md"],
-  "image": "images/intro.jpg"
-}
-```
+- `public/config/` defines languages, identity, navigation, and content entry
+  points;
+- `public/content/` contains the HTML fragments rendered for each language;
+- `src/components/` and `src/styles/` define reusable behavior and visual
+  presentation.
 
-The example loads `public/content/{language}/intro.md`. Two or more files are displayed side by side. Add a `carousel` object to display them as slides:
+For normal content maintenance, only files under `public/` need to change.
 
-```json
-{
-  "id": "services",
-  "title": "Services",
-  "contentFiles": ["services/first.md", "services/second.md"],
-  "carousel": {
-    "autoPlay": true,
-    "interval": 5000,
-    "buttons": true,
-    "dots": true,
-    "itemsPerView": 1
-  }
-}
-```
+## Configure languages
 
-Do not use `content` and `contentFiles` in the same section.
-
-### Section images
-
-The following options apply to the `image` of a home section. They do not affect the logo configured in `site.image`:
-
-```json
-{
-  "image": "images/about.jpg",
-  "imageDimensions": {
-    "width": 600,
-    "height": 400
-  },
-  "imageAlign": "center",
-  "imagePosition": "top",
-  "imageRounded": true
-}
-```
-
-| Option            | Accepted values                                  | Default                                 | Behavior                                                                         |
-| ----------------- | ------------------------------------------------ | --------------------------------------- | -------------------------------------------------------------------------------- |
-| `image`           | Image path or allowed URL                        | —                                       | Defines the image displayed beside the section content                           |
-| `imageDimensions` | Optional `width` and `height` numbers or strings | Full wrapper width and automatic height | Defines the desktop dimensions independently                                     |
-| `imageAlign`      | `"start"`, `"center"`, `"end"`                   | `"center"`                              | Aligns an image horizontally when it is narrower than its wrapper                |
-| `imagePosition`   | `"top"`, `"center"`, `"bottom"`                  | `"top"`                                 | Controls the vertical object position and acts as the section alignment fallback |
-| `imageRounded`    | `true`, `false`                                  | `true`                                  | Uses `rounded-lg` when enabled and `rounded-none` when disabled                  |
-
-The image wrapper occupies the full section width on mobile and half of it from the `md` breakpoint. On mobile, the image is always forced to the full wrapper width with automatic height. From `md` onward, each `imageDimensions` value is applied independently: an omitted or empty `width` keeps the image at the full wrapper width, while an omitted or empty `height` keeps its height automatic. An empty `imageDimensions` object has no effect. `imageAlign` positions the image when its configured width is narrower than the wrapper, and `object-cover` may crop the source when a configured height changes the image box proportions.
-
-Each dimension accepts a number or a string:
-
-- `40` or `"40"` becomes `40px`;
-- `"40px"` uses pixels explicitly;
-- `"4rem"` uses root-relative units;
-- `"100%"` uses a percentage of the wrapper.
-
-For example, this changes only the desktop width and leaves the height automatic:
-
-```json
-"imageDimensions": {
-  "width": "40rem"
-}
-```
-
-`imagePosition` uses `top` by default and controls `object-position` when `object-cover` crops the source. It also provides the vertical section alignment when `contentPosition` is omitted; an explicit `contentPosition` takes precedence.
-
-A section image is rendered only when the section uses `content` or exactly one `contentFiles` item. Sections with two or more content files ignore `image` because they use the multi-item or carousel layout.
-
-Local image paths must point to files inside `public/`, without including `public/` or starting with `/`, for example `images/about.jpg`. Remote images require their origin to be allowed by the `img-src` directive in the Content Security Policy in `index.html`; the default policy allows `https://placehold.co`.
-
-### Content and pages
-
-Markdown files use ordinary text with simple formatting:
-
-```md
-# Page title
-
-A paragraph with **bold text**.
-
-- First item
-- Second item
-
-[External link](https://example.com)
-```
-
-Configure menu items in `public/config/{language}.json`:
-
-```json
-"menu": [
-  { "label": "Home", "href": "#intro" },
-  { "label": "About", "route": "/about" },
-  { "label": "GitHub", "href": "https://github.com/" }
-]
-```
-
-The route `/about` loads `public/content/{language}/about.md`. To use another file, add `"content": "pages/my-page.md"` to the menu item.
-
-Links to internal pages written inside Markdown must include `./#/`:
-
-```md
-[About](./#/about)
-[First article](./#/articles/article-1)
-```
-
-Do not include `.md` in the browser link.
-
-### Footer
-
-The basic footer is configured with:
-
-```json
-"footer": {
-  "ownership": "© 2026 Your Name"
-}
-```
-
-To use the included custom footer, keep `"contentFile": "footer.md"` and edit `public/content/{language}/footer.md`. Preserve its HTML structure and replace only the logo, text, and links unless you also intend to change its styles.
-
-The ownership text and the “Powered by” prefix use the `app-statics` utility and the `--footer-statics` token. The “Mineot” link uses `app-powered`, with its normal and hover colors controlled by `--footer-powered` and `--footer-powered-hover`.
-
-### Languages
-
-The available languages are listed in `public/languages.json`:
+`public/config/languages.json` is the global language manifest:
 
 ```json
 {
@@ -226,106 +105,466 @@ The available languages are listed in `public/languages.json`:
   "flags": {
     "pt-br": "🇧🇷",
     "en-us": "🇺🇸"
+  },
+  "names": {
+    "pt-br": "Português (Brasil)",
+    "en-us": "English (United States)"
   }
 }
 ```
 
-To keep only one language, leave only that language in `available` and `flags`. To add a language, copy an existing file in `public/config/`, copy its directory in `public/content/`, translate both, and add the new code and flag to this manifest.
+The application resolves the active language in this order:
 
-Keep routes, section IDs, directory names, and file names the same in every language. Translate only visible text.
+1. a valid choice previously stored under `taberna-lang`;
+2. a compatible browser language;
+3. the configured `default` language.
 
-### Colors, fonts, and background texture
+Every entry in `available` must:
 
-The `@theme` block in `src/style.css` defines the custom font stacks. The current dark theme uses Tailwind's built-in `neutral` and `emerald` scales through semantic variables in `:root`. Customize these variables instead of adding palette-specific classes to templates:
+- use a normalized, lowercase locale such as `en-us`;
+- have a corresponding value in both `flags` and `names`;
+- have a `public/config/{locale}.json` file;
+- have a `public/content/{locale}/` directory with the required content.
+
+The default locale must also appear in `available`. Locale identifiers must be
+unique.
+
+To run a single-language site, keep only that locale in the manifest. The locale
+configuration file and content directory are still required because the
+application uses the locale when resolving every resource.
+
+To add a language, copy an existing locale configuration and content directory,
+translate the visible content, then register the new locale in all four manifest
+fields. Keep routes, directory names, and file names aligned across languages so
+the current page remains available after a language switch.
+
+## Configure a site version
+
+Each `public/config/{locale}.json` file defines one language-specific version of
+the site:
+
+```json
+{
+  "title": "Taberna",
+  "description": "A short introduction to the website.",
+  "image": "images/logo.png",
+  "ownership": "© 2026 Your Name",
+  "footer": "footer.htm",
+  "home": "home.htm",
+  "navigator": [
+    { "text": "Articles", "href": "#/articles.htm" },
+    { "text": "How to Use", "href": "#/howuse.htm" },
+    { "text": "About", "href": "#/about.htm" }
+  ]
+}
+```
+
+| Field         | Required | Description                                                             |
+| ------------- | -------- | ----------------------------------------------------------------------- |
+| `title`       | yes      | Site name shown by the brand component and used as the document title.  |
+| `description` | yes      | Site summary used by the brand component and document meta description. |
+| `image`       | yes      | Brand image path, normally relative to `public/`.                       |
+| `ownership`   | yes      | Copyright or authorship text shown in the footer.                       |
+| `home`        | no       | `.htm` fragment loaded at `#/`.                                         |
+| `footer`      | no       | `.htm` fragment rendered above the footer ownership line.               |
+| `navigator`   | yes      | Array of `{ "text", "href" }` navigation entries.                       |
+
+Do not include the `public/` prefix in resource paths. For example,
+`"image": "images/logo.png"` resolves to `public/images/logo.png`.
+
+The `home` and `footer` paths are resolved inside the active locale directory.
+For `en-us`, the example above loads:
+
+```text
+public/content/en-us/home.htm
+public/content/en-us/footer.htm
+```
+
+Both fields are optional. Without `home`, the application renders its empty-home
+state. Without `footer`, the ownership and project credit remain visible without
+a custom footer fragment.
+
+Configuration loading is atomic. The application publishes a locale only after
+its JSON manifest and any referenced home and footer fragments load and validate
+successfully. A failed language switch leaves the current language and
+configuration intact.
+
+### JSON rules
+
+- use double quotes around property names and strings;
+- separate entries with commas, without a trailing comma;
+- do not add comments;
+- treat file names and paths as case-sensitive;
+- keep every configured path inside the corresponding public content tree.
+
+## Create content pages
+
+Content files are HTML fragments stored under `public/content/{locale}/`. They
+may contain safe standard HTML, supported attributes, Tailwind utility classes,
+inline styles accepted by the sanitizer, and the registered `twc-*` elements.
+
+A fragment must not contain `<!doctype>`, `<html>`, `<head>`, or `<body>`. Page
+file names must end in `.htm`; full HTML documents and unsupported file types are
+rejected.
+
+For example, create an English page at:
+
+```text
+public/content/en-us/about.htm
+```
+
+Then link to it with:
+
+```text
+#/about.htm
+```
+
+Nested pages use the same route-to-file mapping:
+
+```text
+Route: #/articles/article1.htm
+File:  public/content/en-us/articles/article1.htm
+```
+
+Valid page paths are relative, include the `.htm` suffix, and may contain safe
+nested directory segments. Leading slashes, empty segments, traversal such as
+`..`, and unsupported extensions are rejected.
+
+Internal navigation must use hash URLs:
+
+- `#/` for the home page;
+- `#/language-switcher` for the language selector;
+- `#/{relative-path}.htm` for a content page.
+
+Do not use server paths such as `/about.htm`, and do not omit the `.htm` suffix.
+
+Use the same relative content paths in every enabled language. For example, if
+`public/content/en-us/about.htm` exists, add the translated equivalent at
+`public/content/pt-br/about.htm`.
+
+### Minimal page example
+
+```html
+<twc-rows gap="6">
+  <h1 class="text-4xl" style="color: var(--emphasis-color)">My project</h1>
+
+  <p>A short introduction to the content on this page.</p>
+
+  <twc-columns cols="2" gap="4">
+    <twc-panel emphasis rounded>
+      <h2 class="text-xl">First highlight</h2>
+      <p>A description of the first subject.</p>
+    </twc-panel>
+
+    <twc-panel emphasis rounded>
+      <h2 class="text-xl">Second highlight</h2>
+      <p>A description of the second subject.</p>
+    </twc-panel>
+  </twc-columns>
+
+  <twc-link href="#/about.htm" label="Learn more"></twc-link>
+</twc-rows>
+```
+
+Save the fragment as a `.htm` file and expose it through `navigator` or a link in
+another content file.
+
+## Content components
+
+Taberna registers Vue components as custom elements without a shadow root, so
+they can be used directly in content fragments and share the global theme.
+
+| Element             | Attributes                                                  | Defaults and behavior                                                                          |
+| ------------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `twc-brand`         | `description`                                               | Displays the configured logo and title. `description` also displays the site description.      |
+| `twc-link`          | required `href`, required `label`, optional `external`      | Renders `label` as link text. `external` opens an absolute HTTP(S) URL in a new tab.           |
+| `twc-panel`         | `emphasis`, `rounded`, `bordered`                           | All options default to `false`.                                                                |
+| `twc-columns`       | `cols="1..12"`, numeric `gap`, `align="start\|center\|end"` | Defaults to one column, no gap, and start alignment. Collapses to one column on small screens. |
+| `twc-rows`          | numeric `gap`, `align="start\|center\|end"`                 | Defaults to no gap and start alignment.                                                        |
+| `twc-quote`         | optional `title`                                            | Renders a highlighted quotation or note, with an optional heading.                             |
+| `twc-carousel`      | numeric `limit`, millisecond `delay`, boolean `show-timer`  | Defaults to `1`, `5000`, and `true`.                                                           |
+| `twc-carousel-item` | none                                                        | Wraps one carousel item.                                                                       |
+
+Boolean attributes follow HTML semantics: their presence means `true`. Where
+supported, an explicit string value of `"false"` disables the option.
+
+### Links
+
+`twc-link` always uses its `label` attribute as the visible link text; child
+content is not used as its label.
+
+Internal link:
+
+```html
+<twc-link href="#/about.htm" label="About"></twc-link>
+```
+
+External link:
+
+```html
+<twc-link href="https://example.com" label="Visit website" external></twc-link>
+```
+
+External destinations must be absolute HTTP or HTTPS URLs. Invalid URLs are
+rendered without navigation. Links opened in a new tab receive
+`rel="noopener noreferrer"`.
+
+### Layout elements
+
+Use `twc-columns` for a responsive grid and `twc-rows` for vertical groups:
+
+```html
+<twc-columns cols="3" gap="4" align="center">
+  <div>First column</div>
+  <div>Second column</div>
+  <div>Third column</div>
+</twc-columns>
+
+<twc-rows gap="2" align="start">
+  <h2>Section title</h2>
+  <p>Section content.</p>
+</twc-rows>
+```
+
+`gap` values are numeric multipliers of Tailwind's spacing token. Columns become
+active at the `48rem` medium breakpoint; below it, all items are stacked.
+
+### Panels and quotations
+
+```html
+<twc-panel emphasis rounded bordered>
+  <p>Highlighted content.</p>
+</twc-panel>
+
+<twc-quote title="Author's note">
+  <p>A short quotation or contextual note.</p>
+</twc-quote>
+```
+
+### Carousel
+
+```html
+<twc-carousel limit="3" delay="5000" show-timer="true">
+  <twc-carousel-item>
+    <p>First item</p>
+  </twc-carousel-item>
+  <twc-carousel-item>
+    <p>Second item</p>
+  </twc-carousel-item>
+  <twc-carousel-item>
+    <p>Third item</p>
+  </twc-carousel-item>
+</twc-carousel>
+```
+
+The carousel displays one item per page on small screens and up to `limit` items
+from the medium breakpoint. `limit` is floored and clamped to at least one.
+`delay` is clamped to zero or greater, and `delay="0"` disables autoplay.
+`show-timer="false"` hides the countdown.
+
+Autoplay pauses while pointer hover or keyboard focus is inside the carousel,
+respects reduced-motion preferences, and can be paused or resumed manually. The
+component also provides pagination, keyboard-accessible controls, and hides
+off-page items from the accessibility tree.
+
+## Assets and visual customization
+
+Public assets are referenced without the `public/` prefix and normally without a
+leading slash:
+
+```text
+images/logo.png     -> public/images/logo.png
+images/photo.jpg    -> public/images/photo.jpg
+fonts/MyFont.woff2  -> public/fonts/MyFont.woff2
+```
+
+Replace these files to update the default identity:
+
+- `public/images/logo.png` for the site logo;
+- `public/favicon.png` for the browser icon;
+- `public/images/texture.png` for the repeating background texture.
+
+Global CSS is loaded in this order:
+
+```css
+@import 'tailwindcss';
+@import '@style/theme.css';
+@import '@style/utilities.css';
+```
+
+Edit `src/styles/theme.css` to customize fonts, colors, borders, spacing, motion,
+textures, and component-specific tokens. Components consume semantic custom
+properties such as:
 
 ```css
 :root {
-  --background: var(--color-neutral-800);
-  --background-hover: var(--color-neutral-700);
-  --background-emphasis: var(--color-neutral-700);
-  --text: var(--color-neutral-100);
-  --text-body: var(--color-neutral-300);
-  --text-muted: var(--color-neutral-400);
-  --emphasis: var(--color-emerald-500);
-  --emphasis-hover: var(--color-emerald-300);
-  --header-background: var(--color-neutral-950);
-  --footer-background: var(--color-neutral-950);
-  --footer-statics: var(--color-neutral-500);
-  --footer-powered: var(--emphasis);
-  --footer-powered-hover: var(--emphasis-hover);
-  --btn: var(--color-neutral-400);
-  --btn-hover: var(--color-emerald-300);
+  --background-color: var(--color-neutral-900);
+  --background-emphasis-color: var(--color-neutral-800);
+  --emphasis-color: var(--color-emerald-500);
+  --text-color: var(--color-neutral-200);
+  --container-lg: 24;
+  --quote-border-size: 3px;
 }
 ```
 
-Borders, error and loading states, the header, sidebar, carousel dots, progress rings, and navigation buttons also have dedicated semantic tokens in the same `:root` block.
+Prefer changing existing semantic tokens instead of adding palette-specific
+classes throughout templates and content. Numeric spacing and layout tokens are
+used as multipliers of Tailwind's `--spacing`; direct CSS values such as colors,
+durations, and border widths must keep units appropriate to their properties.
 
-Font files are stored in `public/fonts/` and their definitions are at the beginning of `src/style.css`.
+The bundled Roboto, Roboto Serif, Roboto Mono, and Italianno font faces are
+defined at the start of `src/styles/theme.css` and loaded from `public/fonts/`.
 
-The repeating background texture is stored in `public/texture.png`. The `app-texture` utility in `src/style.css` applies it to the main background, header, sidebar, footer, and highlighted sections:
+Shared utilities are defined in `src/styles/utilities.css`:
 
-```css
-@utility app-texture {
-  background-image: url('/texture.png');
-  background-repeat: repeat;
-}
-```
+| Utility                | Purpose                                |
+| ---------------------- | -------------------------------------- |
+| `app-duration`         | Shared transition duration and easing. |
+| `app-focus-ring`       | Visible keyboard focus outline.        |
+| `app-gap-sm/md/lg`     | Semantic gaps between elements.        |
+| `app-padding-sm/md/lg` | Semantic internal spacing.             |
+| `app-container`        | Responsive horizontal page padding.    |
+| `app-block`            | Responsive vertical block padding.     |
+| `app-texture`          | Repeating background texture.          |
+| `app-code`             | Inline-code presentation.              |
 
-Replace `public/texture.png` with another image to customize the texture. To use only the configured background colors without any texture, change the utility to:
+Content authors may use these utilities and Tailwind classes in HTML fragments.
+Stable application-component styling belongs in each component's style block.
 
-```css
-@utility app-texture {
-  background-image: none;
-}
-```
+## Security model
 
-This disables only the texture; the semantic background colors remain active.
+Content files are treated as untrusted HTML. Before rendering them, Taberna uses
+DOMPurify with an explicit allowlist for the supported `twc-*` elements and
+attributes. Scripts, event handlers, unknown custom elements, and unsafe URLs are
+removed.
 
-### JSON reminders
+All dynamic JSON and HTML resources also pass through runtime validation:
 
-- Use double quotes around property names and text.
-- Separate items with commas, but do not add a comma after the last item.
-- Do not add comments to JSON files.
-- File names and paths are case-sensitive on most hosting services.
+- JSON responses must use a JSON content type and match the expected manifest;
+- content responses must use an HTML content type and be fragments rather than
+  complete documents;
+- content paths reject traversal and unsupported extensions;
+- links allow only HTTP and HTTPS protocols;
+- stale page requests are aborted and ignored during route or language changes.
 
-## Publish
+`index.html` adds a Content Security Policy restricting scripts and fonts to the
+same origin, styles to the same origin plus required inline styles, and images to
+the same origin, `data:` URLs, and `https://placehold.co`.
 
-Generate the production version:
+When adding an external image host, update only the `img-src` directive in
+`index.html` with the exact required origin. Do not weaken the sanitizer, URL
+validation, path validation, or CSP to make content load.
+
+To register another content custom element, update all of the following together:
+
+1. create the Vue component and its focused tests;
+2. register its `twc-*` tag in `src/web-components.ts`;
+3. add the tag and supported attributes to `src/utils/html.util.ts`;
+4. add sanitization and component tests for the public contract;
+5. document the element and its attributes.
+
+## Application behavior and limitations
+
+- The application is a client-only static SPA. It has no backend, database, or
+  authentication.
+- Routing uses URL hashes, so static hosting does not need per-route rewrites.
+- The document language, title, and description follow the active site
+  configuration.
+- Rendering is client-side; SSR, prerendering, and per-route SEO metadata are not
+  implemented.
+- Open Graph and other social-sharing metadata are not generated per page.
+- Loading, retry, empty, error, menu, carousel, and ARIA shell messages are
+  currently hardcoded in English. Editorial content and navigation are localized.
+- The repository does not include a deployment workflow or hosting-level CSP
+  header.
+
+## Commands
+
+| Command             | Description                                         |
+| ------------------- | --------------------------------------------------- |
+| `npm run dev`       | Start the Vite development server.                  |
+| `npm run build`     | Type-check the project and generate `dist/`.        |
+| `npm run preview`   | Serve the production build locally.                 |
+| `npm run test`      | Run the Vitest suite once.                          |
+| `npm run typecheck` | Run `vue-tsc` without emitting files.               |
+| `npm run lint`      | Lint files under `src/`.                            |
+| `npm run format`    | Format TypeScript, Vue, and CSS files under `src/`. |
+
+## Build and deploy
+
+Generate the static website:
 
 ```bash
 npm run build
 ```
 
-The publishable website is created in `dist/`. Check it locally before publishing:
+The deployable output is written to `dist/`. Verify it locally before release:
 
 ```bash
 npm run preview
 ```
 
-You can publish in either of these ways:
+Upload the contents of `dist/` to a static host, or configure a hosting service
+with:
 
-- upload the contents of `dist/` to a static hosting service;
-- connect the repository to Netlify, Vercel, or another service using `npm run build` as the build command and `dist` as the output directory.
+```text
+Build command: npm run build
+Output directory: dist
+```
 
-Use Node.js 22 in the hosting service when a version must be selected. GitHub Pages also works, but requires a deployment workflow because this repository does not include one.
+Vite is configured with a relative base, and routing uses hashes, so the output
+can be hosted at a domain root or under a subdirectory. GitHub Pages is also
+compatible, but this repository does not include a deployment workflow.
 
-Run `npm run build` and publish the new `dist/` after every change. Do not edit `dist/` directly because it is replaced on the next build.
+Rebuild and redeploy after every change. Do not edit `dist/` manually because it
+is generated from the source and replaced by the next build.
 
-### Before publishing
+### Publishing checklist
 
-- replace the placeholder text and `placehold.co` images;
-- review the logo, favicon, site name, description, links, and footer;
-- check every enabled language;
-- test the website on desktop and mobile;
-- run `npm run build` and `npm run preview`.
+- replace all fictional text and placeholder images;
+- review the logo, favicon, title, description, links, and footer;
+- verify that every enabled locale has a complete configuration and content set;
+- test all routes and language switches on desktop and mobile;
+- confirm that any remote asset origin is allowed by the CSP;
+- run `npm run test`, `npm run typecheck`, and `npm run lint`;
+- run `npm run build` and inspect the result with `npm run preview`.
 
-## Common problems
+## Troubleshooting
 
-- **The page is empty:** check the edited JSON for missing quotes, commas, or brackets.
-- **Content is missing:** confirm the file path and selected language, then reload the browser.
-- **An image does not load:** place it inside `public/` and use a path such as `images/photo.jpg`.
-- **A page shows `Page not found`:** confirm that its Markdown file matches the configured route or `content` value.
-- **Published changes do not appear:** rebuild and publish the new contents of `dist/`.
+### The application fails during startup
+
+Check `public/config/languages.json` and the active locale manifest for malformed
+JSON, missing required fields, duplicate locales, or invalid paths. Confirm that
+the server returns JSON files with a JSON content type.
+
+### A page is not found
+
+Confirm that the route includes `#/` and the `.htm` extension, and that the file
+exists under the active language directory with the same capitalization. For
+example, `#/about.htm` requires `public/content/{locale}/about.htm`.
+
+### Home or footer content does not load
+
+Check the `home` or `footer` path in `public/config/{locale}.json`. The file must
+exist in that locale's content directory and must be an HTML fragment, not a full
+document.
+
+### An image does not load
+
+Place local images under `public/` and reference them without the `public/`
+prefix, for example `images/photo.jpg`. For remote images, add the exact origin
+to the CSP `img-src` directive.
+
+### A link is visible but cannot be opened
+
+The sanitizer removes malformed or unsafe destinations. Use a `#/page.htm` hash
+URL for internal navigation or an absolute HTTP(S) URL with `external` for an
+external `twc-link`.
+
+### Published changes do not appear
+
+Run `npm run build` again and publish the newly generated contents of `dist/`.
+Also check whether the hosting service or browser is serving a cached build.
 
 ## License
 
