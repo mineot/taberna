@@ -51,4 +51,8 @@
   --navigator-color-text-hover: var(--color-white);
   --navigator-color-bg-active: var(--color-emerald-600);
   --navigator-color-text-active: var(--color-white);
+
+  --nav-button-color: var(--color-emerald-300);
+  --nav-button-color-hover: var(--color-emerald-400);
+  --nav-button-color-active: var(--color-emerald-500);
 }

@@ -1,6 +1,6 @@
 @utility utbc-duration {
-  @apply duration-[var(--duration)];
   @apply ease-in-out;
+  transition-duration: var(--duration);
 }
 
 @utility utbc-texture {

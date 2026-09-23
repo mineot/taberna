@@ -1,10 +1,9 @@
 <template>
   <tbc-container>
     <tbc-block>
-      <tbc-rows>
-        <tbc-link />
-        <tbc-navigator />
-      </tbc-rows>
+      <tbc-panel muted rounded bordered>
+        <span>Welcome to Taberna!</span>
+      </tbc-panel>
     </tbc-block>
   </tbc-container>
 

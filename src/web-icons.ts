@@ -1,9 +1,13 @@
 import { defineCustomElement, h } from 'vue';
-import { Home } from '@lucide/vue';
+import { Home, Menu } from '@lucide/vue';
 
 const icons = {
   ['icon-home' as string]: defineCustomElement(
     { setup: () => () => h(Home) },
+    { shadowRoot: false },
+  ),
+  ['icon-menu' as string]: defineCustomElement(
+    { setup: () => () => h(Menu) },
     { shadowRoot: false },
   ),
 };

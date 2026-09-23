@@ -5,8 +5,6 @@ import Columns from '@/components/layouts/columns.vue';
 import Rows from '@/components/layouts/rows.vue';
 import Grid from '@/components/layouts/grid.vue';
 import Panel from '@/components/layouts/panel.vue';
-import Link from '@/components/interactors/link.vue';
-import Navigator from '@/components/interactors/navigator.vue';
 
 const elements = {
   ['tbc-container' as string]: defineCustomElement(Container, {
@@ -25,12 +23,6 @@ const elements = {
     shadowRoot: false,
   }),
   ['tbc-panel' as string]: defineCustomElement(Panel, {
-    shadowRoot: false,
-  }),
-  ['tbc-link' as string]: defineCustomElement(Link, {
-    shadowRoot: false,
-  }),
-  ['tbc-navigator' as string]: defineCustomElement(Navigator, {
     shadowRoot: false,
   }),
 };
