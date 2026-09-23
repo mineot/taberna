@@ -1,5 +1,12 @@
 <template>
-  <span>Taberna</span>
+  <tbc-container>
+    <tbc-block>
+      <tbc-panel muted rounded>
+        <span>Welcome to Taberna</span>
+      </tbc-panel>
+    </tbc-block>
+  </tbc-container>
+
   <!-- <Skeleton :visible="showSkeleton" />
   <BootstrapError
     v-if="bootstrapStatus === 'error'"

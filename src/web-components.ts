@@ -1,42 +1,34 @@
-// import { defineCustomElement } from 'vue';
-// // import Brand from '@component/brand.vue';
-// // import Carousel from '@component/carousel.vue';
-// // import CarouselItem from '@component/carousel-item.vue';
-// // import Columns from '@component/columns.vue';
-// // import Link from '@component/link.vue';
-// // import Panel from '@component/panel.vue';
-// // import Quote from '@component/quote.vue';
-// // import Rows from '@component/rows.vue';
+import { defineCustomElement } from 'vue';
+import Container from '@/components/layouts/container.vue';
+import Block from '@/components/layouts/block.vue';
+import Columns from '@/components/layouts/columns.vue';
+import Rows from '@/components/layouts/rows.vue';
+import Grid from '@/components/layouts/grid.vue';
+import Panel from '@/components/layouts/panel.vue';
 
-// const elements = {
-//   // ['twc-brand' as string]: defineCustomElement(Brand, {
-//   //   shadowRoot: false,
-//   // }),
-//   // ['twc-carousel' as string]: defineCustomElement(Carousel, {
-//   //   shadowRoot: false,
-//   // }),
-//   // ['twc-carousel-item' as string]: defineCustomElement(CarouselItem, {
-//   //   shadowRoot: false,
-//   // }),
-//   // ['twc-link' as string]: defineCustomElement(Link, {
-//   //   shadowRoot: false,
-//   // }),
-//   // ['twc-panel' as string]: defineCustomElement(Panel, {
-//   //   shadowRoot: false,
-//   // }),
-//   // ['twc-columns' as string]: defineCustomElement(Columns, {
-//   //   shadowRoot: false,
-//   // }),
-//   // ['twc-rows' as string]: defineCustomElement(Rows, {
-//   //   shadowRoot: false,
-//   // }),
-//   // ['twc-quote' as string]: defineCustomElement(Quote, {
-//   //   shadowRoot: false,
-//   // }),
-// };
+const elements = {
+  ['tbc-container' as string]: defineCustomElement(Container, {
+    shadowRoot: false,
+  }),
+  ['tbc-block' as string]: defineCustomElement(Block, {
+    shadowRoot: false,
+  }),
+  ['tbc-columns' as string]: defineCustomElement(Columns, {
+    shadowRoot: false,
+  }),
+  ['tbc-rows' as string]: defineCustomElement(Rows, {
+    shadowRoot: false,
+  }),
+  ['tbc-grid' as string]: defineCustomElement(Grid, {
+    shadowRoot: false,
+  }),
+  ['tbc-panel' as string]: defineCustomElement(Panel, {
+    shadowRoot: false,
+  }),
+};
 
-// // Object.keys(elements).forEach((name: string) => {
-// //   // if (!customElements.get(name)) {
-// //   //   customElements.define(name, elements[name]);
-// //   // }
-// // });
+Object.keys(elements).forEach((name: string) => {
+  if (!customElements.get(name)) {
+    customElements.define(name, elements[name]);
+  }
+});

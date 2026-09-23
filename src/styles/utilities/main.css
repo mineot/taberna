@@ -1,0 +1,29 @@
+@utility utbc-duration {
+  @apply duration-[var(--duration)];
+  @apply ease-in-out;
+}
+
+@utility utbc-texture {
+  background-image: var(--texture);
+  background-repeat: repeat;
+}
+
+@utility utbc-rounded {
+  border-radius: var(--rounded);
+}
+
+@utility utbc-background {
+  background-color: var(--bg-color);
+}
+
+@utility utbc-muted-background {
+  background-color: var(--bg-muted-color);
+}
+
+@utility utbc-foreground {
+  color: var(--text-color);
+}
+
+@utility utbc-muted-foreground {
+  color: var(--text-muted-color);
+}
