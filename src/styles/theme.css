@@ -36,4 +36,19 @@
   --spacing-sm: 2;
   --spacing-md: 4;
   --spacing-lg: 6;
+
+  --link-color: var(--color-emerald-300);
+  --link-color-hover: var(--color-emerald-400);
+  --link-color-active: var(--color-emerald-500);
+
+  --navigator-rounded: var(--radius-sm);
+  --navigator-texture: var(--texture);
+  --navigator-spacing-x: 3;
+  --navigator-spacing-y: 2;
+  --navigator-color-bg: transparent;
+  --navigator-color-text: var(--color-emerald-300);
+  --navigator-color-bg-hover: var(--color-emerald-500);
+  --navigator-color-text-hover: var(--color-white);
+  --navigator-color-bg-active: var(--color-emerald-600);
+  --navigator-color-text-active: var(--color-white);
 }

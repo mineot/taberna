@@ -50,7 +50,7 @@ const props = defineProps({
     padding-block: calc(var(--spacing) * var(--spacing-sm));
   }
 
-  @media (width >= 48rem) and (width < 64rem) {
+  @media (width >= 48rem) {
     padding-inline: calc(var(--spacing) * var(--spacing-md));
     padding-block: calc(var(--spacing) * var(--spacing-md));
   }

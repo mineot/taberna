@@ -1,5 +1,6 @@
 import '@/style.css';
-import '@/web-components.ts';
+import '@/web-components';
+import '@/web-icons';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';

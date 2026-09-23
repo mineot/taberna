@@ -49,7 +49,7 @@ const resolvedCols = computed(() => {
     gap: calc(var(--spacing) * var(--spacing-sm));
   }
 
-  @media (width >= 48rem) and (width < 64rem) {
+  @media (width >= 48rem) {
     gap: calc(var(--spacing) * var(--spacing-md));
     grid-template-columns: repeat(var(--inner-grid-size), minmax(0, 1fr));
   }

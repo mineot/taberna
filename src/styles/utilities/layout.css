@@ -5,7 +5,7 @@
     padding-inline: calc(var(--spacing) * var(--container-sm));
   }
 
-  @media (width >= 48rem) and (width < 64rem) {
+  @media (width >= 48rem) {
     padding-inline: calc(var(--spacing) * var(--container-md));
   }
 
@@ -21,7 +21,7 @@
     padding-block: calc(var(--spacing) * var(--block-sm));
   }
 
-  @media (width >= 48rem) and (width < 64rem) {
+  @media (width >= 48rem) {
     padding-block: calc(var(--spacing) * var(--block-md));
   }
 
@@ -38,7 +38,7 @@
     gap: calc(var(--spacing) * var(--spacing-sm));
   }
 
-  @media (width >= 48rem) and (width < 64rem) {
+  @media (width >= 48rem) {
     gap: calc(var(--spacing) * var(--spacing-md));
   }
 
@@ -54,7 +54,7 @@
     gap: calc(var(--spacing) * var(--spacing-sm));
   }
 
-  @media (width >= 48rem) and (width < 64rem) {
+  @media (width >= 48rem) {
     gap: calc(var(--spacing) * var(--spacing-md));
   }
 
