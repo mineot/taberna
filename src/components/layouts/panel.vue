@@ -6,6 +6,7 @@
         'utbc-rounded': props.rounded,
         'utbc-muted-background': props.muted,
         'utbc-texture': props.muted,
+        'utbc-border': props.bordered,
       },
     ]"
   >
@@ -26,6 +27,11 @@ const props = defineProps({
     default: false,
   },
   rounded: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  bordered: {
     type: Boolean,
     required: false,
     default: false,

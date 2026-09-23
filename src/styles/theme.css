@@ -21,6 +21,10 @@
   --text-color: var(--color-neutral-100);
   --text-muted-color: var(--color-neutral-400);
 
+  --border-color: var(--color-neutral-400);
+  --border-size: 1px;
+  --border-style: solid;
+
   --container-sm: 2;
   --container-md: 20;
   --container-lg: 40;

@@ -20,10 +20,16 @@
   background-color: var(--bg-muted-color);
 }
 
-@utility utbc-foreground {
+@utility utbc-text {
   color: var(--text-color);
 }
 
-@utility utbc-muted-foreground {
+@utility utbc-muted-text {
   color: var(--text-muted-color);
+}
+
+@utility utbc-border {
+  border-color: var(--border-color);
+  border-style: var(--border-style);
+  border-width: var(--border-size);
 }
