@@ -1,11 +1,14 @@
 <template>
-  <tbc-container>
-    <tbc-block>
-      <tbc-panel muted rounded bordered>
-        <span>Welcome to Taberna!</span>
-      </tbc-panel>
-    </tbc-block>
-  </tbc-container>
+  <tbc-header>
+    <div slot="brand">Header</div>
+    <div slot="content">Navigator</div>
+  </tbc-header>
+
+  <tbc-footer>
+    <div>Footer</div>
+    <div slot="owner">Owner</div>
+    <div slot="year">2026</div>
+  </tbc-footer>
 
   <!-- <Skeleton :visible="showSkeleton" />
   <BootstrapError

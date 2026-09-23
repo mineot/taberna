@@ -1,5 +1,6 @@
 @import './utilities/main.css';
 @import './utilities/layout.css';
+@import './utilities/widgets.css';
 
 /* @utility app-duration {
   @apply duration-[var(--duration)] ease-in-out;

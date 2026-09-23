@@ -17,42 +17,29 @@
 
   --bg-color: var(--color-neutral-500);
   --bg-muted-color: var(--color-neutral-600);
-
-  --text-color: var(--color-neutral-100);
-  --text-muted-color: var(--color-neutral-400);
-
   --border-color: var(--color-neutral-400);
   --border-size: 1px;
   --border-style: solid;
+  --text-color: var(--color-neutral-100);
+  --text-muted-color: var(--color-neutral-400);
 
-  --container-sm: 2;
-  --container-md: 20;
-  --container-lg: 40;
-
-  --block-sm: 2;
-  --block-md: 4;
-  --block-lg: 6;
-
-  --spacing-sm: 2;
-  --spacing-md: 4;
+  --block-lg: 8;
+  --block-md: 8;
+  --block-sm: 6;
+  --container-lg: 48;
+  --container-md: 28;
+  --container-sm: 8;
   --spacing-lg: 6;
+  --spacing-md: 4;
+  --spacing-sm: 2;
 
-  --link-color: var(--color-emerald-300);
-  --link-color-hover: var(--color-emerald-400);
-  --link-color-active: var(--color-emerald-500);
+  --header-texture: var(--texture);
+  --header-bg-color: var(--bg-muted-color);
 
-  --navigator-rounded: var(--radius-sm);
-  --navigator-texture: var(--texture);
-  --navigator-spacing-x: 3;
-  --navigator-spacing-y: 2;
-  --navigator-color-bg: transparent;
-  --navigator-color-text: var(--color-emerald-300);
-  --navigator-color-bg-hover: var(--color-emerald-500);
-  --navigator-color-text-hover: var(--color-white);
-  --navigator-color-bg-active: var(--color-emerald-600);
-  --navigator-color-text-active: var(--color-white);
-
-  --nav-button-color: var(--color-emerald-300);
-  --nav-button-color-hover: var(--color-emerald-400);
-  --nav-button-color-active: var(--color-emerald-500);
+  --footer-texture: var(--texture);
+  --footer-bg-color: var(--bg-muted-color);
+  --footer-owner-text-color: var(--text-muted-color);
+  --footer-owner-border-color: var(--text-muted-color);
+  --footer-owner-border-style: var(--border-style);
+  --footer-owner-border-size: var(--border-size);
 }
