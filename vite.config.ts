@@ -8,17 +8,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@component': fileURLToPath(new URL('./src/components', import.meta.url)),
-      '@layout': fileURLToPath(
-        new URL('./src/components/layouts', import.meta.url),
-      ),
-      '@page': fileURLToPath(new URL('./src/pages', import.meta.url)),
-      '@store': fileURLToPath(new URL('./src/stores', import.meta.url)),
-      '@style': fileURLToPath(new URL('./src/styles', import.meta.url)),
-      '@util': fileURLToPath(new URL('./src/utils', import.meta.url)),
-      '@widget': fileURLToPath(
-        new URL('./src/components/widgets', import.meta.url),
-      ),
     },
   },
   plugins: [vue(), tailwindcss()],

@@ -3,14 +3,7 @@
   "include": ["src/**/*", "src/**/*.vue"],
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"],
-      "@component/*": ["./src/components/*"],
-      "@layout/*": ["./src/components/layouts/*"],
-      "@page/*": ["./src/pages/*"],
-      "@store/*": ["./src/stores/*"],
-      "@style/*": ["./src/styles/*"],
-      "@util/*": ["./src/utils/*"],
-      "@widget/*": ["./src/components/widgets/*"]
+      "@/*": ["./src/*"]
     },
     "target": "ESNext",
     "useDefineForClassFields": true,
