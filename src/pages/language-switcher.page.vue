@@ -1,5 +1,5 @@
 <template>
-  <div class="languages" :aria-busy="switching">
+  <!-- <div class="languages" :aria-busy="switching">
     <button
       v-for="language in languages?.available"
       :key="language"
@@ -15,52 +15,52 @@
     <div v-if="switchError" class="language-error" role="alert">
       Failed to switch language
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useConfigStore } from '@store/config.store';
-import { useLanguageStore } from '@store/language.store';
+// import { ref } from 'vue';
+// import { storeToRefs } from 'pinia';
+// import { useConfigStore } from '@store/config.store';
+// import { useLanguageStore } from '@store/language.store';
 
-const configStore = useConfigStore();
-const languageStore = useLanguageStore();
-const { languages, locale } = storeToRefs(languageStore);
+// const configStore = useConfigStore();
+// const languageStore = useLanguageStore();
+// const { languages, locale } = storeToRefs(languageStore);
 
-const switchError = ref(false);
-const switching = ref(false);
+// const switchError = ref(false);
+// const switching = ref(false);
 
-async function selectLanguage(newLanguage: string) {
-  if (
-    switching.value ||
-    newLanguage === locale.value ||
-    !languageStore.isLanguageAvailable(newLanguage)
-  ) {
-    return;
-  }
+// async function selectLanguage(newLanguage: string) {
+//   if (
+//     switching.value ||
+//     newLanguage === locale.value ||
+//     !languageStore.isLanguageAvailable(newLanguage)
+//   ) {
+//     return;
+//   }
 
-  switching.value = true;
-  switchError.value = false;
+//   switching.value = true;
+//   switchError.value = false;
 
-  try {
-    const configuration = await configStore.prepareConfiguration(newLanguage);
+//   try {
+//     const configuration = await configStore.prepareConfiguration(newLanguage);
 
-    if (!languageStore.setLanguage(newLanguage)) return;
+//     if (!languageStore.setLanguage(newLanguage)) return;
 
-    configStore.applyConfiguration(configuration);
-  } catch {
-    switchError.value = true;
-  } finally {
-    switching.value = false;
-  }
-}
+//     configStore.applyConfiguration(configuration);
+//   } catch {
+//     switchError.value = true;
+//   } finally {
+//     switching.value = false;
+//   }
+// }
 </script>
 
 <style>
 @reference '@/style.css';
 
-.languages {
+/*.languages {
   @apply flex flex-row flex-wrap justify-around gap-4;
 }
 
@@ -112,5 +112,5 @@ async function selectLanguage(newLanguage: string) {
 .language-error {
   @apply w-full text-center;
   color: var(--text-muted-color);
-}
+}*/
 </style>

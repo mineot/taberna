@@ -1,4 +1,4 @@
-@utility app-duration {
+/* @utility app-duration {
   @apply duration-[var(--duration)] ease-in-out;
 }
 
@@ -63,4 +63,4 @@
 @utility app-code {
   @apply px-1 font-mono font-thin;
   background-color: var(--background-emphasis-color);
-}
+} */
