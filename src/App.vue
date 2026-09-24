@@ -1,9 +1,10 @@
 <template>
-  <div class="utbc-container utbc-block">
+  <tbc-image />
+  <!-- <div class="utbc-container utbc-block">
     <tbc-panel emphasis rounded bordered>
       <span>Welcome to Taberna!</span>
     </tbc-panel>
-  </div>
+  </div> -->
 </template>
 
 <!-- <Skeleton :visible="showSkeleton" />
