@@ -72,6 +72,12 @@
   border-left-width: var(--border-size);
 }
 
+/*SHADOWS*/
+
+@utility tbu-shadow {
+  box-shadow: var(--shadow);
+}
+
 /* LAYOUTS */
 
 @utility tbu-container {

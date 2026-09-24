@@ -1,9 +1,16 @@
 <template>
-  <!-- <div class="utbc-container utbc-block">
-    <tbc-panel emphasis rounded bordered>
-      <span>Welcome to Taberna!</span>
-    </tbc-panel>
-  </div> -->
+  <div class="tbu-container tbu-block tbu-secondary-bg">
+    <tbc-image
+      src="https://placehold.co/500"
+      alt="teste"
+      shadow
+      bordered
+      rounded
+      h-sm="200px"
+      h-md="300px"
+      h-lg="400px"
+    />
+  </div>
 </template>
 
 <!-- <Skeleton :visible="showSkeleton" />

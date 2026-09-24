@@ -40,6 +40,12 @@
   --border-size: 1px;
   --border-style: solid;
 
+  /* SHADOWS */
+  --shadow-color: color-mix(in oklab, var(--color-black) 50%, transparent);
+  --shadow:
+    0 1px 3px 0 var(--shadow-color, rgb(0 0 0) / 0.1),
+    0 1px 2px -1px var(--shadow-color, rgb(0 0 0) / 0.1);
+
   /* COMPONENTS ONLY */
   --backdrop-color: var(--color-secondary-bg);
   --backdrop-opacity: 30%;
