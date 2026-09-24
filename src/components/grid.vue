@@ -3,7 +3,7 @@
     :class="[
       'tbi-grid',
       {
-        'tbu-emphasis-background': props.emphasis,
+        'tbu-secondary-bg': props.emphasis,
         'tbu-texture': props.emphasis,
       },
     ]"

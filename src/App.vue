@@ -1,5 +1,4 @@
 <template>
-  <tbc-image />
   <!-- <div class="utbc-container utbc-block">
     <tbc-panel emphasis rounded bordered>
       <span>Welcome to Taberna!</span>

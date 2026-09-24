@@ -4,7 +4,7 @@
       {
         'tbi-panel': !props.noSpacing,
         'tbu-rounded': props.rounded,
-        'tbu-emphasis-background': props.emphasis,
+        'tbu-secondary-bg': props.emphasis,
         'tbu-texture': props.emphasis,
         'tbu-border': props.bordered,
       },

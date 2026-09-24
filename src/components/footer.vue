@@ -22,7 +22,7 @@
 @reference "@/style.css";
 
 .tbi-footer {
-  @apply tbu-container tbu-block;
+  @apply tbu-container tbu-block tbu-border-top;
   background-color: var(--footer-bg-color);
   background-image: var(--footer-texture);
   background-repeat: repeat;
