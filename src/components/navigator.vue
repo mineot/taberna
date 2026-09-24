@@ -9,9 +9,7 @@
         },
       ]"
     >
-      <div>Item 1</div>
-      <div>Item 2</div>
-      <div>Item 3</div>
+      <slot></slot>
     </div>
     <div v-if="!props.vertical" class="tbi-navigator-buttom">
       <Menu />

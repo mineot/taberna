@@ -1,6 +1,10 @@
 <template>
   <div class="tbu-container tbu-block tbu-secondary-bg">
-    <tbc-navigator />
+    <tbc-navigator vertical>
+      <div>Nav 1</div>
+      <div>Nav 2</div>
+      <div>Nav 3</div>
+    </tbc-navigator>
   </div>
 </template>
 
