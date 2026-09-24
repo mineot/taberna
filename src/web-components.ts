@@ -8,6 +8,7 @@ import Image from '@/components/image.vue';
 import Link from '@/components/link.vue';
 import Navigator from '@/components/navigator.vue';
 import Panel from '@/components/panel.vue';
+import Sidebar from '@/components/sidebar.vue';
 
 function createElement(name: string, element: any): any {
   return {
@@ -26,6 +27,7 @@ const elements = {
   ...createElement('tbc-link', Link),
   ...createElement('tbc-navigator', Navigator),
   ...createElement('tbc-panel', Panel),
+  ...createElement('tbc-sidebar', Sidebar),
 };
 
 Object.keys(elements).forEach((name: string) => {

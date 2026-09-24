@@ -1,5 +1,5 @@
 <template>
-  <div v-if="props.visible" class="tbi-backdrop"></div>
+  <div v-if="props.visible" class="tbi-backdrop" @click="emit('click')"></div>
 </template>
 
 <script setup lang="ts">
@@ -10,6 +10,8 @@ const props = defineProps({
     default: false,
   },
 });
+
+const emit = defineEmits(['click']);
 </script>
 
 <style scoped>
@@ -18,6 +20,7 @@ const props = defineProps({
 .tbi-backdrop {
   @apply absolute z-20 backdrop-blur-xs;
   @apply top-0 right-0 bottom-0 left-0;
+  @apply tbu-texture;
 
   background-color: color-mix(
     in oklab,

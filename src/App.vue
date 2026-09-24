@@ -1,8 +1,46 @@
 <template>
   <div class="tbu-container tbu-block tbu-secondary-bg">
-    <tbc-link pill />
+    <button @click="open">Open</button>
+    <tbc-sidebar :visible="visible" @close="close">
+      <div slot="header">🚀 Meu App Admin</div>
+      <div slot="footer">v4.0.0-ready</div>
+      <div>
+        <a
+          href="#"
+          class="flex items-center gap-3 rounded-lg px-4 py-3 whitespace-nowrap transition-colors hover:bg-slate-800"
+        >
+          <span>🏠</span> <span>Dashboard</span>
+        </a>
+        <a
+          href="#"
+          class="flex items-center gap-3 rounded-lg px-4 py-3 whitespace-nowrap transition-colors hover:bg-slate-800"
+        >
+          <span>📊</span> <span>Relatórios Avançados de Vendas</span>
+        </a>
+        <a
+          href="#"
+          class="flex items-center gap-3 rounded-lg px-4 py-3 whitespace-nowrap transition-colors hover:bg-slate-800"
+        >
+          <span>⚙️</span> <span>Configurações</span>
+        </a>
+      </div>
+    </tbc-sidebar>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const visible = ref(false);
+
+function open() {
+  visible.value = true;
+}
+
+function close() {
+  visible.value = false;
+}
+</script>
 
 <!-- <Skeleton :visible="showSkeleton" />
 <BootstrapError

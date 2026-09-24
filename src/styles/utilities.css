@@ -41,7 +41,7 @@
 }
 
 @utility tbu-asset-link {
-  @apply tbu-duration;
+  @apply tbu-duration cursor-pointer;
   color: var(--color-asset-text);
 
   &:hover {
@@ -54,7 +54,7 @@
 }
 
 @utility tbu-asset-pill {
-  @apply tbu-duration rounded-sm px-2 py-1;
+  @apply tbu-duration cursor-pointer rounded-sm px-2 py-1;
   color: var(--color-asset-text);
 
   &:hover {
