@@ -1,15 +1,18 @@
 import { defineCustomElement, h } from 'vue';
 import { Home, Menu } from '@lucide/vue';
 
+function createIcon(name: string, icon: any): any {
+  return {
+    [name as string]: defineCustomElement(
+      { setup: () => () => h(icon) },
+      { shadowRoot: false },
+    ),
+  };
+}
+
 const icons = {
-  ['icon-home' as string]: defineCustomElement(
-    { setup: () => () => h(Home) },
-    { shadowRoot: false },
-  ),
-  ['icon-menu' as string]: defineCustomElement(
-    { setup: () => () => h(Menu) },
-    { shadowRoot: false },
-  ),
+  ...createIcon('icon-home', Home),
+  ...createIcon('icon-menu', Menu),
 };
 
 Object.keys(icons).forEach((name: string) => {

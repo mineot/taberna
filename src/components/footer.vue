@@ -1,10 +1,10 @@
 <template>
-  <footer class="utbc-footer utbc-container utbc-block">
-    <section class="flex flex-col gap-2">
+  <footer class="utbc-footer">
+    <section>
       <slot></slot>
-      <div class="footer-ownership">
-        <div class="flex flex-nowrap gap-1">
-          <span>&copy;</span>
+      <div class="utbc-footer-ownership">
+        <div>
+          <div>&copy;</div>
           <slot name="owner"></slot>
           <slot name="year"></slot>
         </div>
@@ -19,7 +19,18 @@
 <style scoped>
 @reference "@/style.css";
 
-.footer-ownership {
+.utbc-footer {
+  @apply utbc-container utbc-block;
+  background-color: var(--footer-bg-color);
+  background-image: var(--footer-texture);
+  background-repeat: repeat;
+
+  > section {
+    @apply flex flex-col gap-2;
+  }
+}
+
+.utbc-footer-ownership {
   @apply flex flex-col gap-2 pt-1 md:flex-row;
   @apply items-center justify-between;
   @apply text-xs;
@@ -27,5 +38,10 @@
   border-top-color: var-(--footer-owner-border-color);
   border-top-style: var(--footer-owner-border-style);
   border-top-width: var(--footer-owner-border-size);
+
+  > div {
+    @apply flex flex-nowrap gap-1;
+    @apply items-center justify-start;
+  }
 }
 </style>

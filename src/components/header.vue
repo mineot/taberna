@@ -1,6 +1,6 @@
 <template>
-  <header class="utbc-header utbc-container utbc-block">
-    <section class="header-content">
+  <header class="utbc-header">
+    <section class="utbc-header-content">
       <div>
         <slot name="brand"></slot>
       </div>
@@ -14,7 +14,15 @@
 <style scoped>
 @reference "@/style.css";
 
-.header-content {
+.utbc-header {
+  @apply sticky top-0 z-10;
+  @apply utbc-container utbc-block utbc-border-bottom;
+  background-color: var(--header-bg-color);
+  background-image: var(--header-texture);
+  background-repeat: repeat;
+}
+
+.utbc-header-content {
   @apply flex flex-row flex-nowrap;
   @apply items-center justify-between;
   @apply gap-4;

@@ -15,6 +15,8 @@
   --texture: url('/images/texture.png');
   --rounded: var(--radius-lg);
 
+  --backdrop-color: var(--color-neutral-800);
+  --backdrop-opacity: 30%;
   --bg-color: var(--color-neutral-500);
   --bg-muted-color: var(--color-neutral-600);
   --border-color: var(--color-neutral-400);
@@ -29,9 +31,9 @@
   --container-lg: 48;
   --container-md: 28;
   --container-sm: 8;
-  --spacing-lg: 6;
+  --spacing-lg: 4;
   --spacing-md: 4;
-  --spacing-sm: 2;
+  --spacing-sm: 4;
 
   --header-texture: var(--texture);
   --header-bg-color: var(--bg-muted-color);

@@ -1,38 +1,25 @@
 import { defineCustomElement } from 'vue';
-import Container from '@/components/layouts/container.vue';
-import Block from '@/components/layouts/block.vue';
-import Columns from '@/components/layouts/columns.vue';
-import Rows from '@/components/layouts/rows.vue';
-import Grid from '@/components/layouts/grid.vue';
-import Panel from '@/components/layouts/panel.vue';
-import Header from '@/components/widgets/header.vue';
-import Footer from '@/components/widgets/footer.vue';
+
+import Backdrop from '@/components/backdrop.vue';
+import Footer from '@/components/footer.vue';
+import Grid from '@/components/grid.vue';
+import Header from '@/components/header.vue';
+import Panel from '@/components/panel.vue';
+
+function createElement(name: string, element: any): any {
+  return {
+    [name as string]: defineCustomElement(element, {
+      shadowRoot: false,
+    }),
+  };
+}
 
 const elements = {
-  ['tbc-container' as string]: defineCustomElement(Container, {
-    shadowRoot: false,
-  }),
-  ['tbc-block' as string]: defineCustomElement(Block, {
-    shadowRoot: false,
-  }),
-  ['tbc-columns' as string]: defineCustomElement(Columns, {
-    shadowRoot: false,
-  }),
-  ['tbc-rows' as string]: defineCustomElement(Rows, {
-    shadowRoot: false,
-  }),
-  ['tbc-grid' as string]: defineCustomElement(Grid, {
-    shadowRoot: false,
-  }),
-  ['tbc-panel' as string]: defineCustomElement(Panel, {
-    shadowRoot: false,
-  }),
-  ['tbc-header' as string]: defineCustomElement(Header, {
-    shadowRoot: false,
-  }),
-  ['tbc-footer' as string]: defineCustomElement(Footer, {
-    shadowRoot: false,
-  }),
+  ...createElement('tbc-backdrop', Backdrop),
+  ...createElement('tbc-footer', Footer),
+  ...createElement('tbc-grid', Grid),
+  ...createElement('tbc-header', Header),
+  ...createElement('tbc-panel', Panel),
 };
 
 Object.keys(elements).forEach((name: string) => {

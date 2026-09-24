@@ -2,7 +2,7 @@
   <section
     :class="[
       {
-        'inner-panel-spacing': !props.noSpacing,
+        'utbc-panel': !props.noSpacing,
         'utbc-rounded': props.rounded,
         'utbc-muted-background': props.muted,
         'utbc-texture': props.muted,
@@ -42,7 +42,7 @@ const props = defineProps({
 <style>
 @reference "@/style.css";
 
-.inner-panel-spacing {
+.utbc-panel {
   @apply utbc-duration;
 
   @media (width < 48rem) {

@@ -1,25 +1,17 @@
 <template>
-  <tbc-header>
-    <div slot="brand">Header</div>
-    <div slot="content">Navigator</div>
-  </tbc-header>
-
-  <tbc-footer>
-    <div>Footer</div>
-    <div slot="owner">Owner</div>
-    <div slot="year">2026</div>
-  </tbc-footer>
-
-  <!-- <Skeleton :visible="showSkeleton" />
-  <BootstrapError
-    v-if="bootstrapStatus === 'error'"
-    :message="bootstrapError?.message ?? 'Failed to initialize application'"
-    @retry="initialize"
-  />
-  <Container :visible="showContent" /> -->
+  <div>teste</div>
+  <tbc-backdrop visible />
 </template>
 
-<script setup lang="ts">
+<!-- <Skeleton :visible="showSkeleton" />
+<BootstrapError
+  v-if="bootstrapStatus === 'error'"
+  :message="bootstrapError?.message ?? 'Failed to initialize application'"
+  @retry="initialize"
+/>
+<Container :visible="showContent" /> -->
+
+<!-- <script setup lang="ts">
 // import { computed, ref, watch } from 'vue';
 // import { storeToRefs } from 'pinia';
 // import { useConfigStore } from '@store/config.store.ts';
@@ -78,4 +70,4 @@
 // }
 
 // void initialize();
-</script>
+</script> -->

@@ -1,7 +1,7 @@
 <template>
   <section
     :class="[
-      'grid',
+      'utbc-grid',
       {
         'utbc-muted-background': props.muted,
         'utbc-texture': props.muted,
@@ -41,7 +41,7 @@ const resolvedCols = computed(() => {
 <style scoped>
 @reference "@/style.css";
 
-.grid {
+.utbc-grid {
   @apply grid;
 
   @media (width < 48rem) {

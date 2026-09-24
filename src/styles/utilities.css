@@ -1,50 +1,57 @@
-@import './utilities/main.css';
-@import './utilities/layout.css';
-@import './utilities/widgets.css';
-
-/* @utility app-duration {
-  @apply duration-[var(--duration)] ease-in-out;
+@utility utbc-duration {
+  @apply ease-in-out;
+  transition-duration: var(--duration);
 }
 
-@utility app-focus-ring {
-  outline-color: var(--emphasis-color);
-  outline-offset: 0.25rem;
-  outline-style: solid;
-  outline-width: 2px;
-}
-
-@utility app-gap-lg {
-  gap: calc(var(--spacing) * var(--spacing-lg));
-}
-
-@utility app-gap-md {
-  gap: calc(var(--spacing) * var(--spacing-md));
-}
-
-@utility app-gap-sm {
-  gap: calc(var(--spacing) * var(--spacing-sm));
-}
-
-@utility app-padding-lg {
-  padding: calc(var(--spacing) * var(--spacing-lg));
-}
-
-@utility app-padding-md {
-  padding: calc(var(--spacing) * var(--spacing-md));
-}
-
-@utility app-padding-sm {
-  padding: calc(var(--spacing) * var(--spacing-sm));
-}
-
-@utility app-texture {
+@utility utbc-texture {
   background-image: var(--texture);
   background-repeat: repeat;
 }
 
-@utility app-container {
-  @apply app-duration;
-  padding-inline: calc(var(--spacing) * var(--container-sm));
+@utility utbc-rounded {
+  border-radius: var(--rounded);
+}
+
+@utility utbc-background {
+  background-color: var(--bg-color);
+}
+
+@utility utbc-muted-background {
+  background-color: var(--bg-muted-color);
+}
+
+@utility utbc-text {
+  color: var(--text-color);
+}
+
+@utility utbc-muted-text {
+  color: var(--text-muted-color);
+}
+
+@utility utbc-border {
+  border-color: var(--border-color);
+  border-style: var(--border-style);
+  border-width: var(--border-size);
+}
+
+@utility utbc-border-top {
+  border-top-color: var(--border-color);
+  border-top-style: var(--border-style);
+  border-top-width: var(--border-size);
+}
+
+@utility utbc-border-bottom {
+  border-bottom-color: var(--border-color);
+  border-bottom-style: var(--border-style);
+  border-bottom-width: var(--border-size);
+}
+
+@utility utbc-container {
+  @apply utbc-duration;
+
+  @media (width < 48rem) {
+    padding-inline: calc(var(--spacing) * var(--container-sm));
+  }
 
   @media (width >= 48rem) {
     padding-inline: calc(var(--spacing) * var(--container-md));
@@ -55,16 +62,51 @@
   }
 }
 
-@utility app-block {
-  @apply app-duration;
-  padding-block: calc(var(--spacing) * var(--block-sm));
+@utility utbc-block {
+  @apply utbc-duration;
+
+  @media (width < 48rem) {
+    padding-block: calc(var(--spacing) * var(--block-sm));
+  }
 
   @media (width >= 48rem) {
+    padding-block: calc(var(--spacing) * var(--block-md));
+  }
+
+  @media (width >= 64rem) {
     padding-block: calc(var(--spacing) * var(--block-lg));
   }
 }
 
-@utility app-code {
-  @apply px-1 font-mono font-thin;
-  background-color: var(--background-emphasis-color);
-} */
+@utility utbc-columns {
+  @apply utbc-duration;
+  @apply flex flex-col flex-nowrap;
+
+  @media (width < 48rem) {
+    gap: calc(var(--spacing) * var(--spacing-sm));
+  }
+
+  @media (width >= 48rem) {
+    gap: calc(var(--spacing) * var(--spacing-md));
+  }
+
+  @media (width >= 64rem) {
+    gap: calc(var(--spacing) * var(--spacing-lg));
+  }
+}
+
+@utility utbc-rows {
+  @apply flex flex-row flex-wrap;
+
+  @media (width < 48rem) {
+    gap: calc(var(--spacing) * var(--spacing-sm));
+  }
+
+  @media (width >= 48rem) {
+    gap: calc(var(--spacing) * var(--spacing-md));
+  }
+
+  @media (width >= 64rem) {
+    gap: calc(var(--spacing) * var(--spacing-lg));
+  }
+}
