@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useErrorStore } from '@/stories/error.store';
+import { useLoadingStore } from '@/stories/loading.store';
 
 interface LanguageConfiguration {
   default: string;
@@ -11,9 +12,13 @@ interface LanguageConfiguration {
 
 export const useLanguageStore = defineStore('language-store', () => {
   const { setError } = useErrorStore();
+  const { startLoading, stopLoading, createToken } = useLoadingStore();
   const language = ref('');
 
   const initLanguage = async (): Promise<void> => {
+    const token = createToken();
+    startLoading(token);
+
     try {
       const loadingJson = await fetch('/config/languages.json');
       const config: LanguageConfiguration = await loadingJson.json();
@@ -34,6 +39,8 @@ export const useLanguageStore = defineStore('language-store', () => {
         status: 500,
         message: 'Could not load language configuration.',
       });
+    } finally {
+      stopLoading(token);
     }
   };
 
