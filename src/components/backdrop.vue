@@ -1,5 +1,5 @@
 <template>
-  <div v-if="props.visible" class="utbc-backdrop"></div>
+  <div v-if="props.visible" class="tbi-backdrop"></div>
 </template>
 
 <script setup lang="ts">
@@ -15,7 +15,7 @@ const props = defineProps({
 <style scoped>
 @reference "@/style.css";
 
-.utbc-backdrop {
+.tbi-backdrop {
   @apply absolute z-20 backdrop-blur-xs;
   @apply top-0 right-0 bottom-0 left-0;
 

@@ -2,11 +2,11 @@
   <section
     :class="[
       {
-        'utbc-panel': !props.noSpacing,
-        'utbc-rounded': props.rounded,
-        'utbc-emphasis-background': props.emphasis,
-        'utbc-texture': props.emphasis,
-        'utbc-border': props.bordered,
+        'tbi-panel': !props.noSpacing,
+        'tbu-rounded': props.rounded,
+        'tbu-emphasis-background': props.emphasis,
+        'tbu-texture': props.emphasis,
+        'tbu-border': props.bordered,
       },
     ]"
   >
@@ -42,8 +42,8 @@ const props = defineProps({
 <style>
 @reference "@/style.css";
 
-.utbc-panel {
-  @apply utbc-duration;
+.tbi-panel {
+  @apply tbu-duration;
 
   @media (width < 48rem) {
     padding-inline: calc(var(--spacing) * var(--spacing-sm));

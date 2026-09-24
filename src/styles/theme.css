@@ -11,22 +11,25 @@
 }
 
 :root {
+  /* UTILS */
   --duration: 200ms;
   --texture: url('/images/texture.png');
   --rounded: var(--radius-lg);
 
-  --backdrop-color: var(--color-neutral-800);
-  --backdrop-opacity: 30%;
-  --bg-color: var(--color-neutral-500);
-  --bg-emphasis-color: var(--color-neutral-600);
+  /* BORDERS */
   --border-color: var(--color-neutral-400);
   --border-size: 1px;
   --border-style: solid;
+
+  /* COLORS */
+  --bg-color: var(--color-neutral-500);
+  --bg-emphasis-color: var(--color-neutral-600);
   --text-color: var(--color-neutral-100);
   --text-emphasis-color: var(--color-neutral-400);
 
-  --block-lg: 8;
-  --block-md: 8;
+  /* LAYOUTS */
+  --block-lg: 6;
+  --block-md: 6;
   --block-sm: 6;
   --container-lg: 48;
   --container-md: 28;
@@ -34,6 +37,10 @@
   --spacing-lg: 4;
   --spacing-md: 4;
   --spacing-sm: 4;
+
+  /* COMPONENTS ONLY */
+  --backdrop-color: var(--color-neutral-800);
+  --backdrop-opacity: 30%;
 
   --header-texture: var(--texture);
   --header-bg-color: var(--bg-emphasis-color);

@@ -1,13 +1,13 @@
 <template>
   <section
     :class="[
-      'utbc-grid',
+      'tbi-grid',
       {
-        'utbc-emphasis-background': props.emphasis,
-        'utbc-texture': props.emphasis,
+        'tbu-emphasis-background': props.emphasis,
+        'tbu-texture': props.emphasis,
       },
     ]"
-    :style="{ '--inner-grid-size': resolvedCols }"
+    :style="{ '--tbiv-grid-size': resolvedCols }"
   >
     <slot></slot>
   </section>
@@ -41,7 +41,7 @@ const resolvedCols = computed(() => {
 <style scoped>
 @reference "@/style.css";
 
-.utbc-grid {
+.tbi-grid {
   @apply grid;
 
   @media (width < 48rem) {
@@ -51,12 +51,12 @@ const resolvedCols = computed(() => {
 
   @media (width >= 48rem) {
     gap: calc(var(--spacing) * var(--spacing-md));
-    grid-template-columns: repeat(var(--inner-grid-size), minmax(0, 1fr));
+    grid-template-columns: repeat(var(--tbiv-grid-size), minmax(0, 1fr));
   }
 
   @media (width >= 64rem) {
     gap: calc(var(--spacing) * var(--spacing-lg));
-    grid-template-columns: repeat(var(--inner-grid-size), minmax(0, 1fr));
+    grid-template-columns: repeat(var(--tbiv-grid-size), minmax(0, 1fr));
   }
 }
 </style>

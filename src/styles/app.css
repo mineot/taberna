@@ -4,20 +4,12 @@
 
 html,
 body {
-  @apply overflow-x-hidden;
-  @apply font-sans;
-
-  @apply flex flex-col;
-  @apply h-full w-full;
-  @apply m-0 gap-0 p-0;
-
-  @apply utbc-background;
-  @apply utbc-text;
-  @apply utbc-texture;
+  @apply h-full w-full overflow-x-hidden;
+  @apply m-0 flex flex-col gap-0 p-0;
+  @apply tbu-background tbu-text tbu-texture font-sans;
 
   > #app {
     @apply flex-1;
-    @apply flex flex-col;
-    @apply m-0 gap-0 p-0;
+    @apply m-0 flex flex-col gap-0 p-0;
   }
 }

@@ -1,8 +1,8 @@
 <template>
-  <footer class="utbc-footer">
+  <footer class="tbi-footer">
     <section>
       <slot></slot>
-      <div class="utbc-footer-ownership">
+      <div class="tbi-footer-ownership">
         <div>
           <span>&copy;</span>
           <slot name="owner"></slot>
@@ -21,8 +21,8 @@
 <style scoped>
 @reference "@/style.css";
 
-.utbc-footer {
-  @apply utbc-container utbc-block;
+.tbi-footer {
+  @apply tbu-container tbu-block;
   background-color: var(--footer-bg-color);
   background-image: var(--footer-texture);
   background-repeat: repeat;
@@ -32,7 +32,7 @@
   }
 }
 
-.utbc-footer-ownership {
+.tbi-footer-ownership {
   @apply flex flex-col gap-2 pt-1 md:flex-row;
   @apply items-center justify-between;
   @apply text-xs text-nowrap;

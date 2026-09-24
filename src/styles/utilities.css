@@ -1,53 +1,73 @@
-@utility utbc-duration {
+/* UTILS */
+
+@utility tbu-duration {
   @apply ease-in-out;
   transition-duration: var(--duration);
 }
 
-@utility utbc-texture {
+@utility tbu-texture {
   background-image: var(--texture);
   background-repeat: repeat;
 }
 
-@utility utbc-rounded {
+@utility tbu-rounded {
   border-radius: var(--rounded);
 }
 
-@utility utbc-background {
-  background-color: var(--bg-color);
-}
+/* BORDERS */
 
-@utility utbc-emphasis-background {
-  background-color: var(--bg-emphasis-color);
-}
-
-@utility utbc-text {
-  color: var(--text-color);
-}
-
-@utility utbc-emphasis-text {
-  color: var(--text-emphasis-color);
-}
-
-@utility utbc-border {
+@utility tbu-border {
   border-color: var(--border-color);
   border-style: var(--border-style);
   border-width: var(--border-size);
 }
 
-@utility utbc-border-top {
+@utility tbu-border-top {
   border-top-color: var(--border-color);
   border-top-style: var(--border-style);
   border-top-width: var(--border-size);
 }
 
-@utility utbc-border-bottom {
+@utility tbu-border-right {
+  border-right-color: var(--border-color);
+  border-right-style: var(--border-style);
+  border-right-width: var(--border-size);
+}
+
+@utility tbu-border-bottom {
   border-bottom-color: var(--border-color);
   border-bottom-style: var(--border-style);
   border-bottom-width: var(--border-size);
 }
 
-@utility utbc-container {
-  @apply utbc-duration;
+@utility tbu-border-left {
+  border-left-color: var(--border-color);
+  border-left-style: var(--border-style);
+  border-left-width: var(--border-size);
+}
+
+/* COLORS */
+
+@utility tbu-background {
+  background-color: var(--bg-color);
+}
+
+@utility tbu-emphasis-background {
+  background-color: var(--bg-emphasis-color);
+}
+
+@utility tbu-text {
+  color: var(--text-color);
+}
+
+@utility tbu-emphasis-text {
+  color: var(--text-emphasis-color);
+}
+
+/* LAYOUTS */
+
+@utility tbu-container {
+  @apply tbu-duration;
 
   @media (width < 48rem) {
     padding-inline: calc(var(--spacing) * var(--container-sm));
@@ -62,8 +82,8 @@
   }
 }
 
-@utility utbc-block {
-  @apply utbc-duration;
+@utility tbu-block {
+  @apply tbu-duration;
 
   @media (width < 48rem) {
     padding-block: calc(var(--spacing) * var(--block-sm));
@@ -78,8 +98,8 @@
   }
 }
 
-@utility utbc-columns {
-  @apply utbc-duration;
+@utility tbu-columns {
+  @apply tbu-duration;
   @apply flex flex-col flex-nowrap;
 
   @media (width < 48rem) {
@@ -95,7 +115,7 @@
   }
 }
 
-@utility utbc-rows {
+@utility tbu-rows {
   @apply flex flex-row flex-wrap;
 
   @media (width < 48rem) {
