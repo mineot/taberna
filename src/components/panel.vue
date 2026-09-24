@@ -4,8 +4,8 @@
       {
         'utbc-panel': !props.noSpacing,
         'utbc-rounded': props.rounded,
-        'utbc-muted-background': props.muted,
-        'utbc-texture': props.muted,
+        'utbc-emphasis-background': props.emphasis,
+        'utbc-texture': props.emphasis,
         'utbc-border': props.bordered,
       },
     ]"
@@ -21,7 +21,7 @@ const props = defineProps({
     required: false,
     default: false,
   },
-  muted: {
+  emphasis: {
     type: Boolean,
     required: false,
     default: false,

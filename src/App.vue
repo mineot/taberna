@@ -1,6 +1,9 @@
 <template>
-  <div>teste</div>
-  <tbc-backdrop visible />
+  <div class="utbc-container utbc-block">
+    <tbc-panel emphasis rounded bordered>
+      <span>Welcome to Taberna!</span>
+    </tbc-panel>
+  </div>
 </template>
 
 <!-- <Skeleton :visible="showSkeleton" />

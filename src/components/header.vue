@@ -1,11 +1,11 @@
 <template>
   <header class="utbc-header">
-    <section class="utbc-header-content">
+    <section class="utbc-header-container">
       <div>
         <slot name="brand"></slot>
       </div>
       <div>
-        <slot name="content"></slot>
+        <slot name="nav"></slot>
       </div>
     </section>
   </header>
@@ -22,7 +22,7 @@
   background-repeat: repeat;
 }
 
-.utbc-header-content {
+.utbc-header-container {
   @apply flex flex-row flex-nowrap;
   @apply items-center justify-between;
   @apply gap-4;

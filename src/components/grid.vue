@@ -3,8 +3,8 @@
     :class="[
       'utbc-grid',
       {
-        'utbc-muted-background': props.muted,
-        'utbc-texture': props.muted,
+        'utbc-emphasis-background': props.emphasis,
+        'utbc-texture': props.emphasis,
       },
     ]"
     :style="{ '--inner-grid-size': resolvedCols }"
@@ -17,7 +17,7 @@
 import { computed } from 'vue';
 
 const props = defineProps({
-  muted: {
+  emphasis: {
     type: Boolean,
     required: false,
     default: false,

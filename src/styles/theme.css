@@ -18,12 +18,12 @@
   --backdrop-color: var(--color-neutral-800);
   --backdrop-opacity: 30%;
   --bg-color: var(--color-neutral-500);
-  --bg-muted-color: var(--color-neutral-600);
+  --bg-emphasis-color: var(--color-neutral-600);
   --border-color: var(--color-neutral-400);
   --border-size: 1px;
   --border-style: solid;
   --text-color: var(--color-neutral-100);
-  --text-muted-color: var(--color-neutral-400);
+  --text-emphasis-color: var(--color-neutral-400);
 
   --block-lg: 8;
   --block-md: 8;
@@ -36,12 +36,12 @@
   --spacing-sm: 4;
 
   --header-texture: var(--texture);
-  --header-bg-color: var(--bg-muted-color);
+  --header-bg-color: var(--bg-emphasis-color);
 
   --footer-texture: var(--texture);
-  --footer-bg-color: var(--bg-muted-color);
-  --footer-owner-text-color: var(--text-muted-color);
-  --footer-owner-border-color: var(--text-muted-color);
-  --footer-owner-border-style: var(--border-style);
-  --footer-owner-border-size: var(--border-size);
+  --footer-bg-color: var(--bg-emphasis-color);
+  --footer-ownership-text-color: var(--text-emphasis-color);
+  --footer-ownership-border-color: var(--text-emphasis-color);
+  --footer-ownership-border-style: var(--border-style);
+  --footer-ownership-border-size: var(--border-size);
 }

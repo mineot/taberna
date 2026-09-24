@@ -16,16 +16,16 @@
   background-color: var(--bg-color);
 }
 
-@utility utbc-muted-background {
-  background-color: var(--bg-muted-color);
+@utility utbc-emphasis-background {
+  background-color: var(--bg-emphasis-color);
 }
 
 @utility utbc-text {
   color: var(--text-color);
 }
 
-@utility utbc-muted-text {
-  color: var(--text-muted-color);
+@utility utbc-emphasis-text {
+  color: var(--text-emphasis-color);
 }
 
 @utility utbc-border {
