@@ -1,5 +1,5 @@
 import { defineCustomElement, h } from 'vue';
-import { Home, Menu } from '@lucide/vue';
+import { Home } from '@lucide/vue';
 
 function createIcon(name: string, icon: any): any {
   return {
@@ -12,7 +12,6 @@ function createIcon(name: string, icon: any): any {
 
 const icons = {
   ...createIcon('icon-home', Home),
-  ...createIcon('icon-menu', Menu),
 };
 
 Object.keys(icons).forEach((name: string) => {

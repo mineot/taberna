@@ -1,15 +1,6 @@
 <template>
   <div class="tbu-container tbu-block tbu-secondary-bg">
-    <tbc-image
-      src="https://placehold.co/500"
-      alt="teste"
-      shadow
-      bordered
-      rounded
-      h-sm="200px"
-      h-md="300px"
-      h-lg="400px"
-    />
+    <tbc-navigator />
   </div>
 </template>
 
