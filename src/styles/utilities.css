@@ -40,6 +40,38 @@
   color: var(--color-asset-text);
 }
 
+@utility tbu-asset-link {
+  @apply tbu-duration;
+  color: var(--color-asset-text);
+
+  &:hover {
+    color: color-mix(in oklch, var(--color-asset-text), #000 10%);
+  }
+
+  &:active {
+    color: color-mix(in oklch, var(--color-asset-text), #000 20%);
+  }
+}
+
+@utility tbu-asset-pill {
+  @apply tbu-duration rounded-sm px-2 py-1;
+  color: var(--color-asset-text);
+
+  &:hover {
+    background-image: var(--texture);
+    background-repeat: repeat;
+    color: var(--color-primary-text);
+    background-color: var(--color-asset-bg);
+  }
+
+  &:active {
+    background-image: var(--texture);
+    background-repeat: repeat;
+    color: color-mix(in oklch, var(--color-primary-text), #000 10%);
+    background-color: color-mix(in oklch, var(--color-asset-bg), #000 10%);
+  }
+}
+
 /* BORDERS */
 
 @utility tbu-border {

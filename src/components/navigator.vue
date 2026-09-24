@@ -12,7 +12,7 @@
       <slot></slot>
     </div>
     <div v-if="!props.vertical" class="tbi-navigator-buttom">
-      <Menu />
+      <Menu class="tbi-navigator-menu" />
     </div>
   </nav>
 </template>
@@ -52,5 +52,9 @@ const props = defineProps({
 
 .tbi-navigator-buttom {
   @apply flex md:hidden;
+}
+
+.tbi-navigator-menu {
+  @apply tbu-asset-link cursor-pointer;
 }
 </style>
