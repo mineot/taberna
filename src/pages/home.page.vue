@@ -1,4 +1,88 @@
 <template>
-  <span>Home</span>
-  <tbc-language />
+  <div slot="header-brand">Home Brand</div>
+  <div slot="header-menu">Home Menu</div>
+  <div slot="header-nav">Home Navigator</div>
+  <div slot="footer-owner">Owner</div>
+  <div slot="footer-year">2026</div>
+  <div slot="footer">Footer Content</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
+  <div>Home</div>
 </template>

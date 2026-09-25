@@ -9,6 +9,7 @@ import Language from '@/components/language.vue';
 import Link from '@/components/link.vue';
 import Navigator from '@/components/navigator.vue';
 import Panel from '@/components/panel.vue';
+import Scaffold from '@/components/scaffold.vue';
 import Sidebar from '@/components/sidebar.vue';
 
 function createElement(name: string, element: any): any {
@@ -29,6 +30,7 @@ const elements = {
   ...createElement('tbc-link', Link),
   ...createElement('tbc-navigator', Navigator),
   ...createElement('tbc-panel', Panel),
+  ...createElement('tbc-scaffold', Scaffold),
   ...createElement('tbc-sidebar', Sidebar),
 };
 

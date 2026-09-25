@@ -3,7 +3,9 @@
     <div :class="['tbi-language-flag', { mini: props.mini }]">
       {{ languageFlag }}
     </div>
-    <div v-if="!props.mini" class="tbi-language-name">{{ languageName }}</div>
+    <div v-if="!props.mini" class="tbi-language-name">
+      <span>{{ languageName }}</span>
+    </div>
   </a>
 </template>
 
@@ -35,7 +37,7 @@ const props = defineProps({
   @apply text-3xl;
 
   &.mini {
-    @apply text-lg;
+    @apply text-2xl;
   }
 }
 

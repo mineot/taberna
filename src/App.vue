@@ -1,7 +1,9 @@
 <template>
   <Loading>
     <Error>
-      <router-view />
+      <tbc-scaffold>
+        <router-view />
+      </tbc-scaffold>
     </Error>
   </Loading>
 </template>

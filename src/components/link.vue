@@ -6,7 +6,8 @@
     }"
     :href="props.href"
   >
-    <span>{{ props.label }}</span>
+    <span v-if="props.label">{{ props.label }}</span>
+    <slot v-else></slot>
   </a>
 </template>
 
@@ -15,7 +16,7 @@ const props = defineProps({
   label: {
     type: String,
     required: false,
-    default: 'Link',
+    default: undefined,
   },
   href: {
     type: String,

@@ -1,8 +1,11 @@
 <template>
   <header class="tbi-header">
     <section class="tbi-header-container">
-      <div>
+      <div class="tbi-header-brand">
         <slot name="brand"></slot>
+        <div class="tbi-header-menu">
+          <slot name="menu"></slot>
+        </div>
       </div>
       <div>
         <slot name="nav"></slot>
@@ -26,5 +29,14 @@
   @apply flex flex-row flex-nowrap;
   @apply items-center justify-between;
   @apply gap-4;
+}
+
+.tbi-header-brand {
+  @apply flex flex-nowrap gap-8;
+  @apply items-center justify-center;
+}
+
+.tbi-header-menu {
+  @apply hidden md:flex;
 }
 </style>
