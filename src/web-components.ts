@@ -5,6 +5,7 @@ import Footer from '@/components/footer.vue';
 import Grid from '@/components/grid.vue';
 import Header from '@/components/header.vue';
 import Image from '@/components/image.vue';
+import Language from '@/components/language.vue';
 import Link from '@/components/link.vue';
 import Navigator from '@/components/navigator.vue';
 import Panel from '@/components/panel.vue';
@@ -24,6 +25,7 @@ const elements = {
   ...createElement('tbc-grid', Grid),
   ...createElement('tbc-header', Header),
   ...createElement('tbc-image', Image),
+  ...createElement('tbc-language', Language),
   ...createElement('tbc-link', Link),
   ...createElement('tbc-navigator', Navigator),
   ...createElement('tbc-panel', Panel),

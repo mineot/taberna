@@ -1,9 +1,7 @@
 <template>
   <Loading>
     <Error>
-      <div class="tbu-container tbu-block">
-        <span>Welcome to Taberna!</span>
-      </div>
+      <router-view />
     </Error>
   </Loading>
 </template>
