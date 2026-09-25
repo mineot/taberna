@@ -18,7 +18,7 @@
 @reference "@/style.css";
 
 .tbi-header {
-  @apply sticky top-0 z-10;
+  @apply sticky top-0 z-10 backdrop-blur-xs;
   @apply tbu-container tbu-block tbu-border-bottom;
   background-color: var(--header-bg-color);
   background-image: var(--header-texture);

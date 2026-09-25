@@ -1,9 +1,9 @@
 <template>
   <Loading>
     <Error>
-      <tbc-scaffold>
+      <Scaffold>
         <router-view />
-      </tbc-scaffold>
+      </Scaffold>
     </Error>
   </Loading>
 </template>
@@ -13,6 +13,7 @@ import { onMounted } from 'vue';
 import { useLanguageStore } from '@/stories/language.store';
 import Error from '@/widgets/error.vue';
 import Loading from '@/widgets/loading.vue';
+import Scaffold from '@/components/scaffold.vue';
 
 const { initLanguage } = useLanguageStore();
 

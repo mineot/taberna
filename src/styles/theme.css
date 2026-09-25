@@ -17,9 +17,9 @@
   --rounded: var(--radius-lg);
 
   /* COLORS */
-  --color-primary-bg: var(--color-neutral-500);
-  --color-primary-text: var(--color-neutral-100);
-  --color-secondary-bg: var(--color-neutral-700);
+  --color-primary-bg: var(--color-neutral-600);
+  --color-primary-text: var(--color-neutral-200);
+  --color-secondary-bg: var(--color-neutral-800);
   --color-secondary-text: var(--color-neutral-400);
   --color-asset-bg: var(--color-emerald-500);
   --color-asset-text: var(--color-emerald-200);
@@ -47,11 +47,18 @@
     0 1px 2px -1px var(--shadow-color, rgb(0 0 0) / 0.1);
 
   /* COMPONENTS ONLY */
-  --backdrop-color: var(--color-secondary-bg);
-  --backdrop-opacity: 30%;
+  --backdrop-color: color-mix(
+    in oklab,
+    var(--color-secondary-bg) 30%,
+    transparent
+  );
 
   --header-texture: var(--texture);
-  --header-bg-color: var(--color-secondary-bg);
+  --header-bg-color: color-mix(
+    in oklab,
+    var(--color-secondary-bg) 30%,
+    transparent
+  );
 
   --footer-texture: var(--texture);
   --footer-bg-color: var(--color-secondary-bg);
