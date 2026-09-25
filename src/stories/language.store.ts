@@ -1,8 +1,9 @@
+import { computed } from 'vue';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { useErrorStore } from '@/stories/error.store';
 import { useLoadingStore } from '@/stories/loading.store';
-import { computed } from 'vue';
+import { usePathsStore } from '@/stories/paths.store';
 
 interface LanguageManifest {
   default: string;
@@ -12,8 +13,10 @@ interface LanguageManifest {
 }
 
 export const useLanguageStore = defineStore('language-store', () => {
+  const { getLanguagePath } = usePathsStore();
   const { setError } = useErrorStore();
   const { startLoading, stopLoading, createToken } = useLoadingStore();
+
   const language = ref<string>('');
   const languageManifest = ref<LanguageManifest | null>(null);
 
@@ -29,7 +32,7 @@ export const useLanguageStore = defineStore('language-store', () => {
     try {
       const localLang = localStorage.getItem('tblang');
       const navLang = navigator.language.toLowerCase();
-      const loadingJson = await fetch('/config/languages.json');
+      const loadingJson = await fetch(getLanguagePath());
       languageManifest.value = (await loadingJson.json()) as LanguageManifest;
 
       const existsLang = languageManifest.value.available.some(
@@ -71,11 +74,11 @@ export const useLanguageStore = defineStore('language-store', () => {
   });
 
   return {
-    language,
-    languageManifest,
-    switchLanguage,
     initLanguage,
+    language,
     languageFlag,
+    languageManifest,
     languageName,
+    switchLanguage,
   };
 });
