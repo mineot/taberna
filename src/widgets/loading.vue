@@ -8,7 +8,6 @@
 <script setup lang="ts">
 import { useLoadingStore } from '@/stories/loading.store';
 import { storeToRefs } from 'pinia';
-
 const { loading } = storeToRefs(useLoadingStore());
 </script>
 

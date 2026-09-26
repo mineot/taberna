@@ -1,9 +1,25 @@
 <template>
   <Loading>
     <Error>
-      <Scaffold v-if="scaffold?.enabled">
-        <template #footer-owner>{{ scaffold?.owner }}</template>
-        <template #footer-year>{{ scaffold?.year }}</template>
+      <Scaffold v-if="scaffoldManifest?.enabled">
+        <template #header-brand>
+          <div v-html="scaffoldBrad"></div>
+        </template>
+        <template #header-menu>
+          <div v-html="scaffoldMenu"></div>
+        </template>
+        <template #header-nav>
+          <div v-html="scaffoldNav"></div>
+        </template>
+        <template #footer>
+          <div v-html="scaffoldFooter"></div>
+        </template>
+        <template #footer-owner>
+          <span>{{ scaffoldManifest?.owner }}</span>
+        </template>
+        <template #footer-year>
+          <span>{{ scaffoldManifest?.year }}</span>
+        </template>
         <router-view />
       </Scaffold>
       <router-view v-else />
@@ -13,20 +29,22 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useConfigStore } from '@/stories/config.store';
-import { useLanguageStore } from '@/stories/language.store';
+import { useAppStore } from '@/stories/app.store';
 import Error from '@/widgets/error.vue';
 import Loading from '@/widgets/loading.vue';
 import Scaffold from '@/components/scaffold.vue';
+import { storeToRefs } from 'pinia';
 
-const { initLanguage } = useLanguageStore();
-const { initConfiguration } = useConfigStore();
-const { scaffold } = storeToRefs(useConfigStore());
+const { initApp } = useAppStore();
+const {
+  scaffoldBrad,
+  scaffoldFooter,
+  scaffoldManifest,
+  scaffoldMenu,
+  scaffoldNav,
+} = storeToRefs(useAppStore());
 
 onMounted(() => {
-  initLanguage().then(() => {
-    initConfiguration();
-  });
+  initApp();
 });
 </script>

@@ -4,6 +4,10 @@ import { computed, ref } from 'vue';
 export const useLoadingStore = defineStore('loading-store', () => {
   const $loading = ref<string[]>([]);
 
+  const loading = computed(() => {
+    return $loading.value.length > 0;
+  });
+
   const createToken = () => {
     const parteTempo = Date.now().toString(36);
     const parteAleatoria = Math.random().toString(36).substring(2, 10);
@@ -22,9 +26,10 @@ export const useLoadingStore = defineStore('loading-store', () => {
     }
   };
 
-  const loading = computed(() => {
-    return $loading.value.length > 0;
-  });
-
-  return { loading, startLoading, stopLoading, createToken };
+  return {
+    loading,
+    createToken,
+    startLoading,
+    stopLoading,
+  };
 });

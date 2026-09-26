@@ -1,10 +1,10 @@
 <template>
-  <div class="tbi-error" v-if="hasError()">
+  <div class="tbi-error" v-if="error">
     <div class="tbi-error-container">
-      <div class="font-bold">{{ error?.title }}</div>
+      <div class="font-bold">{{ error.title }}</div>
       <div class="flex flex-wrap items-center gap-2">
-        <span>{{ error?.message }}</span>
-        <span class="text-xs">({{ error?.status }})</span>
+        <span>{{ error.message }}</span>
+        <span class="text-xs">({{ error.status }})</span>
       </div>
     </div>
   </div>
@@ -14,8 +14,6 @@
 <script setup lang="ts">
 import { useErrorStore } from '@/stories/error.store';
 import { storeToRefs } from 'pinia';
-
-const { hasError } = useErrorStore();
 const { error } = storeToRefs(useErrorStore());
 </script>
 

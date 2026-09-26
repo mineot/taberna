@@ -10,10 +10,10 @@
 </template>
 
 <script setup lang="ts">
-import { useLanguageStore } from '@/stories/language.store';
+import { useAppStore } from '@/stories/app.store';
 import { storeToRefs } from 'pinia';
 
-const { languageFlag, languageName } = storeToRefs(useLanguageStore());
+const { languageFlag, languageName } = storeToRefs(useAppStore());
 
 const props = defineProps({
   mini: {
