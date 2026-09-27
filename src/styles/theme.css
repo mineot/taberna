@@ -22,7 +22,7 @@
   --color-secondary-bg: var(--color-neutral-800);
   --color-secondary-text: var(--color-neutral-400);
   --color-asset-bg: var(--color-emerald-500);
-  --color-asset-text: var(--color-emerald-200);
+  --color-asset-text: var(--color-emerald-300);
 
   /* LAYOUTS */
   --block-lg: 6;
@@ -45,6 +45,10 @@
   --shadow:
     0 1px 3px 0 var(--shadow-color, rgb(0 0 0) / 0.1),
     0 1px 2px -1px var(--shadow-color, rgb(0 0 0) / 0.1);
+
+  /* Z INDEX */
+  --z-backdrop: 50;
+  --z-sidebar: 100;
 
   /* COMPONENTS ONLY */
   --backdrop-color: color-mix(

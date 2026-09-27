@@ -1,21 +1,23 @@
 <template>
   <tbc-backdrop :visible="props.visible" @click="emit('close')" />
-  <aside :class="['tbi-sidebar', { 'tbi-sidebar-hide': !props.visible }]">
-    <div class="tbi-sidebar-header">
-      <div>
-        <slot name="header"></slot>
+  <Teleport to="body">
+    <aside :class="['tbi-sidebar', { 'tbi-sidebar-hide': !props.visible }]">
+      <div class="tbi-sidebar-header">
+        <div>
+          <slot name="header"></slot>
+        </div>
+        <button class="tbu-asset-link" @click="emit('close')">
+          <X />
+        </button>
       </div>
-      <button class="tbu-asset-link" @click="emit('close')">
-        <X />
-      </button>
-    </div>
-    <nav class="tbi-sidebar-body">
-      <slot></slot>
-    </nav>
-    <div class="tbi-sidebar-footer">
-      <slot name="footer"></slot>
-    </div>
-  </aside>
+      <nav class="tbi-sidebar-body">
+        <slot></slot>
+      </nav>
+      <div class="tbi-sidebar-footer">
+        <slot name="footer"></slot>
+      </div>
+    </aside>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -37,10 +39,11 @@ const emit = defineEmits(['close']);
 
 .tbi-sidebar {
   @apply tbu-duration transition-transform;
-  @apply top-0 left-0 z-50 h-screen w-max;
+  @apply top-0 left-0 h-screen w-max;
   @apply fixed flex transform flex-col;
   @apply tbu-secondary-bg tbu-texture;
   @apply tbu-border-right;
+  z-index: var(--z-sidebar);
 }
 
 .tbi-sidebar-hide {

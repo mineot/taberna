@@ -1,1 +1,49 @@
-<div>Footer</div>
+<div class="grid grid-cols-1 md:grid-cols-3 md:gap-10">
+  <div class="flex flex-col gap-2">
+    <div class="flex min-h-15 gap-4">
+      <tbc-image
+        src="/images/logo.png"
+        w-sm="3.5"
+        w-md="3.5"
+        w-lg="3.5"
+        alt="taberna"
+      ></tbc-image>
+      <span class="font-fancy tbu-asset-text mt-2 text-5xl">
+        <span>Taberna</span>
+      </span>
+    </div>
+
+    <div class="tbu-secondary-text flex-1 text-sm">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam sequi
+      repellendus sunt unde atque quis aut.
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <div class="tbu-asset-text flex min-h-15 flex-col justify-center text-2xl">
+      Links
+    </div>
+
+    <div class="flex-1">
+      <div class="flex flex-col gap-2">
+        <tbc-link href="#/item1" label="Item 1"></tbc-link>
+        <tbc-link href="#/item2" label="Item 2"></tbc-link>
+        <tbc-link href="#/item3" label="Item 3"></tbc-link>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <div class="tbu-asset-text flex min-h-15 flex-col justify-center text-2xl">
+      Contato
+    </div>
+
+    <div class="flex-1">
+      <tbc-image
+        src="https://placehold.co/80?text=qrcode"
+        alt="contact"
+        rounded
+      ></tbc-image>
+    </div>
+  </div>
+</div>

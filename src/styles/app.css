@@ -17,3 +17,8 @@ body {
     @apply m-0 flex flex-col gap-0 p-0;
   }
 }
+
+tbc-backdrop,
+tbc-sidebar {
+  @apply contents;
+}

@@ -3,8 +3,10 @@
     :class="{
       'tbi-link': !props.pill,
       'tbi-link-pill': props.pill,
+      underline: !props.noUnderline,
     }"
     :href="props.href"
+    :title="props.title"
   >
     <span v-if="props.label">{{ props.label }}</span>
     <slot v-else></slot>
@@ -14,6 +16,11 @@
 <script setup lang="ts">
 const props = defineProps({
   label: {
+    type: String,
+    required: false,
+    default: undefined,
+  },
+  title: {
     type: String,
     required: false,
     default: undefined,
@@ -28,6 +35,11 @@ const props = defineProps({
     required: false,
     default: false,
   },
+  noUnderline: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 });
 </script>
 
@@ -35,7 +47,7 @@ const props = defineProps({
 @reference "@/style.css";
 
 .tbi-link {
-  @apply tbu-asset-link underline;
+  @apply tbu-asset-link;
 }
 
 .tbi-link-pill {

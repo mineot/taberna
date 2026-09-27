@@ -364,10 +364,20 @@ Follow these rules:
 
 - Use semantic CSS custom properties for application colors, borders, spacing,
   textures, timing, and component-specific theme values.
+- Layering uses the `--z-*` tokens in `src/styles/theme.css`. Do not introduce raw
+  `z-*` utilities in components; add or reuse a token instead.
 - Do not place raw Tailwind palette color classes in component templates or
   localized HTML. Add or reuse an appropriate semantic token instead.
 - Put stable component styling in the component's `<style>` block. Runtime values
   and content-authored layout utilities may remain inline where appropriate.
+- Overlay components must render through `<Teleport to="body">` and position
+  themselves with `fixed`. `tbc-backdrop` and `tbc-sidebar` are the current
+  examples, and their host elements are set to `display: contents` in
+  `src/styles/app.css`. A `position: absolute` overlay resolves against the
+  nearest positioned ancestor, and `backdrop-filter`, `transform`, `filter`, and
+  `contain` on an ancestor become the containing block for `fixed` descendants, so
+  an overlay placed inside the sticky, blurred header is confined to it instead of
+  covering the page.
 - Preserve mobile-first behavior and the existing `48rem` medium breakpoint.
 - Provide visible focus states and hover behavior that does not depend on hover
   support for essential interaction.
