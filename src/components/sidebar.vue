@@ -1,5 +1,5 @@
 <template>
-  <tbc-backdrop :visible="props.visible" @click="emit('close')" />
+  <tbc-backdrop></tbc-backdrop>
   <Teleport to="body">
     <aside :class="['tbi-sidebar', { 'tbi-sidebar-hide': !props.visible }]">
       <div class="tbi-sidebar-header">

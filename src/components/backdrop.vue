@@ -1,19 +1,16 @@
 <template>
   <Teleport to="body">
-    <div v-if="props.visible" class="tbi-backdrop" @click="emit('click')"></div>
+    <div v-if="backdrop" class="tbi-backdrop" @click="hideBackdrop"></div>
+    <slot v-else></slot>
   </Teleport>
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
-  visible: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-});
+import { useBehaviorStore } from '@/stories/behavior.store';
+import { storeToRefs } from 'pinia';
 
-const emit = defineEmits(['click']);
+const { backdrop } = storeToRefs(useBehaviorStore());
+const { hideBackdrop } = useBehaviorStore();
 </script>
 
 <style scoped>

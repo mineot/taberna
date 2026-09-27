@@ -6,9 +6,9 @@
 </template>
 
 <script setup lang="ts">
-import { useLoadingStore } from '@/stories/loading.store';
+import { useBehaviorStore } from '@/stories/behavior.store';
 import { storeToRefs } from 'pinia';
-const { loading } = storeToRefs(useLoadingStore());
+const { loading } = storeToRefs(useBehaviorStore());
 </script>
 
 <style scoped>

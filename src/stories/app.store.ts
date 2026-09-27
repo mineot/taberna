@@ -1,12 +1,13 @@
+import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
+import { useErrorStore } from '@/stories/error.store';
+import { useBehaviorStore } from '@/stories/behavior.store';
+import type { LanguageManifest, ScaffoldManifest } from './helpers/manifest';
+
 import {
   fetchContentFile,
   fetchScaffoldManifest,
 } from './helpers/configuration';
-import { computed, ref } from 'vue';
-import { useErrorStore } from '@/stories/error.store';
-import { useLoadingStore } from '@/stories/loading.store';
-import type { LanguageManifest, ScaffoldManifest } from './helpers/manifest';
 
 import {
   fetchLanguageManifest,
@@ -17,16 +18,17 @@ import {
 } from './helpers/language';
 
 export const useAppStore = defineStore('app-store', () => {
-  const { createToken, startLoading, stopLoading } = useLoadingStore();
+  const { createToken, startLoading, stopLoading } = useBehaviorStore();
   const { setError } = useErrorStore();
 
-  const language = ref<string>('');
-  const languageManifest = ref<LanguageManifest>({} as LanguageManifest);
-  const scaffoldManifest = ref<ScaffoldManifest>({} as ScaffoldManifest);
-  const scaffoldBrad = ref<string>('');
-  const scaffoldMenu = ref<string>('');
-  const scaffoldNav = ref<string>('');
-  const scaffoldFooter = ref<string>('');
+  const $languageManifest = ref<LanguageManifest>({} as LanguageManifest);
+  const $scaffoldManifest = ref<ScaffoldManifest>({} as ScaffoldManifest);
+
+  const $language = ref<string>('');
+  const $scaffoldBrand = ref<string>('');
+  const $scaffoldMenu = ref<string>('');
+  const $scaffoldNav = ref<string>('');
+  const $scaffoldFooter = ref<string>('');
 
   async function initApp() {
     const token = createToken();
@@ -37,35 +39,34 @@ export const useAppStore = defineStore('app-store', () => {
       const navigatorLanguage: string = await getNavigatorLanguage();
       await storeLanguage(navigatorLanguage, storedLanguage);
 
-      languageManifest.value = await fetchLanguageManifest();
+      $languageManifest.value = await fetchLanguageManifest();
+      $scaffoldManifest.value = await fetchScaffoldManifest();
 
-      language.value = await findLanguage(
-        languageManifest.value,
+      $language.value = await findLanguage(
+        $languageManifest.value,
         storedLanguage,
         navigatorLanguage,
       );
 
-      scaffoldManifest.value = await fetchScaffoldManifest();
-
-      if (scaffoldManifest.value.enabled) {
-        scaffoldBrad.value = await fetchContentFile(
-          language.value,
-          scaffoldManifest.value.brand,
+      if ($scaffoldManifest.value.enabled) {
+        $scaffoldBrand.value = await fetchContentFile(
+          $language.value,
+          $scaffoldManifest.value.brand,
         );
 
-        scaffoldMenu.value = await fetchContentFile(
-          language.value,
-          scaffoldManifest.value.menu,
+        $scaffoldMenu.value = await fetchContentFile(
+          $language.value,
+          $scaffoldManifest.value.menu,
         );
 
-        scaffoldNav.value = await fetchContentFile(
-          language.value,
-          scaffoldManifest.value.nav,
+        $scaffoldNav.value = await fetchContentFile(
+          $language.value,
+          $scaffoldManifest.value.nav,
         );
 
-        scaffoldFooter.value = await fetchContentFile(
-          language.value,
-          scaffoldManifest.value.footer,
+        $scaffoldFooter.value = await fetchContentFile(
+          $language.value,
+          $scaffoldManifest.value.footer,
         );
       }
 
@@ -84,23 +85,46 @@ export const useAppStore = defineStore('app-store', () => {
     }
   }
 
-  const languageFlag = computed(() => {
-    return languageManifest.value.flags[language.value];
+  const language = computed<string>(() => {
+    return $language.value;
   });
 
-  const languageName = computed(() => {
-    return languageManifest.value.names[language.value];
+  const languageFlag = computed<string>(() => {
+    return $languageManifest.value.flags[$language.value];
+  });
+
+  const languageName = computed<string>(() => {
+    return $languageManifest.value.names[$language.value];
+  });
+
+  const scaffoldEnabled = computed<boolean>(() => {
+    return $scaffoldManifest.value.enabled;
+  });
+
+  const scaffoldBrand = computed<string>(() => {
+    return $scaffoldBrand.value;
+  });
+
+  const scaffoldMenu = computed<string>(() => {
+    return $scaffoldMenu.value;
+  });
+
+  const scaffoldNav = computed<string>(() => {
+    return $scaffoldNav.value;
+  });
+
+  const scaffoldFooter = computed<string>(() => {
+    return $scaffoldFooter.value;
   });
 
   return {
     initApp,
     language,
     languageFlag,
-    languageManifest,
     languageName,
-    scaffoldBrad,
+    scaffoldBrand,
+    scaffoldEnabled,
     scaffoldFooter,
-    scaffoldManifest,
     scaffoldMenu,
     scaffoldNav,
   };
