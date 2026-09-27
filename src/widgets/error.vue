@@ -8,7 +8,6 @@
       </div>
     </div>
   </div>
-  <slot v-else></slot>
 </template>
 
 <script setup lang="ts">
@@ -21,8 +20,9 @@ const { error } = storeToRefs(useErrorStore());
 @reference "@/style.css";
 
 .tbi-error {
-  @apply absolute h-full w-full;
+  @apply absolute z-200 h-full w-full;
   @apply flex flex-wrap items-center justify-center gap-2;
+  @apply tbu-primary-bg tbu-texture;
 }
 
 .tbi-error-container {

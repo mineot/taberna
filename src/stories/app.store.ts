@@ -2,12 +2,12 @@ import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useErrorStore } from '@/stories/error.store';
 import { useBehaviorStore } from '@/stories/behavior.store';
-import type { LanguageManifest, ScaffoldManifest } from './helpers/manifest';
+import type { LanguageManifest, ScaffoldManifest } from '@/helpers/manifest';
 
 import {
   fetchContentFile,
   fetchScaffoldManifest,
-} from './helpers/configuration';
+} from '@/helpers/configuration';
 
 import {
   fetchLanguageManifest,
@@ -15,10 +15,10 @@ import {
   getNavigatorLanguage,
   getStoredLanguage,
   storeLanguage,
-} from './helpers/language';
+} from '@/helpers/language';
 
 export const useAppStore = defineStore('app-store', () => {
-  const { createToken, startLoading, stopLoading } = useBehaviorStore();
+  const { startLoading, stopLoading } = useBehaviorStore();
   const { setError } = useErrorStore();
 
   const $languageManifest = ref<LanguageManifest>({} as LanguageManifest);
@@ -31,8 +31,7 @@ export const useAppStore = defineStore('app-store', () => {
   const $scaffoldFooter = ref<string>('');
 
   async function initApp() {
-    const token = createToken();
-    startLoading(token);
+    const token = startLoading();
 
     try {
       const storedLanguage: string | null = await getStoredLanguage();

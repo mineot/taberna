@@ -2,7 +2,6 @@
   <div class="tbi-loading" v-if="loading">
     <div class="loader"></div>
   </div>
-  <slot v-else></slot>
 </template>
 
 <script setup lang="ts">
@@ -15,8 +14,9 @@ const { loading } = storeToRefs(useBehaviorStore());
 @reference "@/style.css";
 
 .tbi-loading {
-  @apply absolute h-full w-full;
+  @apply absolute z-200 h-full w-full;
   @apply flex flex-wrap items-center justify-center gap-2;
+  @apply tbu-primary-bg tbu-texture;
 }
 
 .loader {

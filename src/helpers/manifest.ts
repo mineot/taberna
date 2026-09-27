@@ -1,8 +1,3 @@
-export interface ContentFileManifest {
-  name: string;
-  extension: string;
-}
-
 export interface ErrorManifest {
   title: string;
   status: number;
@@ -19,10 +14,10 @@ export interface LanguageManifest {
 
 export interface ScaffoldManifest {
   enabled: boolean;
-  brand: ContentFileManifest;
-  menu: ContentFileManifest;
-  nav: ContentFileManifest;
-  footer: ContentFileManifest;
+  brand: string;
+  menu: string;
+  nav: string;
+  footer: string;
   owner: string;
   year: string;
 }

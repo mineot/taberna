@@ -1,7 +1,6 @@
 <template>
   <Teleport to="body">
     <div v-if="backdrop" class="tbi-backdrop" @click="hideBackdrop"></div>
-    <slot v-else></slot>
   </Teleport>
 </template>
 
@@ -17,9 +16,8 @@ const { hideBackdrop } = useBehaviorStore();
 @reference "@/style.css";
 
 .tbi-backdrop {
-  @apply fixed inset-0 backdrop-blur-xs;
+  @apply fixed inset-0 z-100 backdrop-blur-xs;
   @apply tbu-texture;
-  z-index: var(--z-backdrop);
   background-color: var(--backdrop-color);
 }
 </style>

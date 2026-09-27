@@ -1,4 +1,4 @@
-import type { ContentFileManifest, ScaffoldManifest } from './manifest';
+import type { ScaffoldManifest } from './manifest';
 import { getContentFilePath, getScaffoldConfigPath } from './paths';
 
 export async function fetchScaffoldManifest(): Promise<ScaffoldManifest> {
@@ -12,7 +12,7 @@ export async function fetchScaffoldManifest(): Promise<ScaffoldManifest> {
 
 export async function fetchContentFile(
   language: string,
-  contentFile: ContentFileManifest,
+  contentFile: string,
 ): Promise<string> {
   try {
     const response = await fetch(getContentFilePath(language, contentFile));

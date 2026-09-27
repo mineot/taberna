@@ -1,5 +1,3 @@
-import type { ContentFileManifest } from './manifest';
-
 const CONFIG_PATH = '/config/';
 const CONTENT_PATH = '/content/';
 
@@ -13,7 +11,7 @@ export const getScaffoldConfigPath = (): string => {
 
 export const getContentFilePath = (
   language: string,
-  contentFile: ContentFileManifest,
+  contentFile: string,
 ): string => {
-  return `${CONTENT_PATH}${language}/${contentFile.name}.${contentFile.extension}`;
+  return `${CONTENT_PATH}${language}/${contentFile}`;
 };

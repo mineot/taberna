@@ -1,9 +1,12 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 
+type Sidebar = Record<string, boolean>;
+
 export const useBehaviorStore = defineStore('behavior-store', () => {
   const $loaders = ref<string[]>([]);
   const $backdrop = ref<boolean>(false);
+  const $sidebar = ref<Sidebar>({});
 
   const startLoading = (): string => {
     const parteTempo = Date.now().toString(36);
@@ -30,13 +33,11 @@ export const useBehaviorStore = defineStore('behavior-store', () => {
   };
 
   const showSidebar = (id: string) => {
-    const $el: any = document.querySelector(id);
-    if ($el) $el.visible = true;
+    $sidebar.value[id] = true;
   };
 
   const hideSidebar = (id: string) => {
-    const $el: any = document.querySelector(id);
-    if ($el) $el.visible = false;
+    $sidebar.value[id] = false;
   };
 
   const loading = computed(() => {
@@ -47,9 +48,14 @@ export const useBehaviorStore = defineStore('behavior-store', () => {
     return $backdrop.value;
   });
 
+  const sidebar = computed(() => {
+    return $sidebar.value;
+  });
+
   return {
     loading,
     backdrop,
+    sidebar,
     startLoading,
     stopLoading,
     showBackdrop,

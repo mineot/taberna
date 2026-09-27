@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import type { ErrorManifest } from './helpers/manifest';
+import type { ErrorManifest } from '@/helpers/manifest';
 
 export const useErrorStore = defineStore('error-store', () => {
   const $error = ref<ErrorManifest | null>(null);
