@@ -5,11 +5,11 @@
 </template>
 
 <script setup lang="ts">
-import { useBehaviorStore } from '@/stories/behavior.store';
+import { useAppStore } from '@/stories/app.store';
 import { storeToRefs } from 'pinia';
 
-const { backdrop } = storeToRefs(useBehaviorStore());
-const { hideBackdrop } = useBehaviorStore();
+const { backdrop } = storeToRefs(useAppStore());
+const { hideBackdrop } = useAppStore();
 </script>
 
 <style scoped>

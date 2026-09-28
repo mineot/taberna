@@ -1,5 +1,5 @@
 <template>
-  <header class="tbi-header">
+  <!-- <header class="tbi-header">
     <section class="tbi-header-container">
       <div class="tbi-header-brand">
         <div v-if="props.brandContent" v-html="$brandContent"></div>
@@ -11,9 +11,9 @@
         <div v-if="props.navContent" v-html="$navContent"></div>
       </div>
     </section>
-  </header>
+  </header> -->
 </template>
-
+<!-- 
 <script setup lang="ts">
 import { fetchContentFile } from '@/helpers/configuration';
 import { storeToRefs } from 'pinia';
@@ -114,4 +114,4 @@ watch(language, async (value) => {
 .tbi-header-menu {
   @apply hidden md:flex;
 }
-</style>
+</style> -->

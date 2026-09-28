@@ -1,5 +1,5 @@
 <template>
-  <footer class="tbi-footer">
+  <!-- <footer class="tbi-footer">
     <section>
       <div v-if="props.content" v-html="$content"></div>
       <slot v-else></slot>
@@ -12,9 +12,9 @@
         </a>
       </div>
     </section>
-  </footer>
+  </footer> -->
 </template>
-
+<!-- 
 <script setup lang="ts">
 import { fetchContentFile } from '@/helpers/configuration';
 import { ref, watch } from 'vue';
@@ -106,4 +106,4 @@ watch(language, async (value) => {
     @apply text-nowrap underline;
   }
 }
-</style>
+</style> -->

@@ -11,9 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import { useErrorStore } from '@/stories/error.store';
+import { useAppStore } from '@/stories/app.store';
 import { storeToRefs } from 'pinia';
-const { error } = storeToRefs(useErrorStore());
+
+const { error } = storeToRefs(useAppStore());
 </script>
 
 <style scoped>

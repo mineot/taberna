@@ -1,21 +1,47 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import type { ErrorManifest } from '@/helpers/manifest';
+
+interface ErrorManifest {
+  title: string;
+  message: string;
+  status?: number;
+}
+
+interface CaptureOptions {
+  title: string;
+  message: string;
+  status?: number;
+  rethrow?: boolean;
+}
 
 export const useErrorStore = defineStore('error-store', () => {
   const $error = ref<ErrorManifest | null>(null);
 
-  const error = computed<ErrorManifest | null>((): ErrorManifest | null => {
-    return $error.value;
-  });
+  const captureError = async (
+    fn: () => Promise<unknown>,
+    options: CaptureOptions,
+  ): Promise<boolean> => {
+    try {
+      await fn();
+      return true;
+    } catch (cause) {
+      console.log(cause);
 
-  const setError = (err: ErrorManifest): void => {
-    $error.value = err;
+      $error.value = {
+        title: options.title,
+        message: options.message,
+        status: options.status ?? 500,
+      };
+
+      if (options.rethrow) {
+        throw cause;
+      }
+
+      return false;
+    }
   };
 
-  const clearError = (): void => {
-    $error.value = null;
-  };
+  const error = computed(() => $error.value);
 
-  return { error, setError, clearError };
+  return { error, captureError };
 });

@@ -1,5 +1,5 @@
 <template>
-  <tbc-backdrop></tbc-backdrop>
+  <!-- <tbc-backdrop></tbc-backdrop>
   <Teleport to="body">
     <aside :class="['tbi-sidebar', { 'tbi-sidebar-hide': !sidebar[props.id] }]">
       <div class="tbi-sidebar-header">
@@ -17,9 +17,9 @@
         <div v-if="props.footerContent" v-html="$footerContent"></div>
       </div>
     </aside>
-  </Teleport>
+  </Teleport> -->
 </template>
-
+<!-- 
 <script setup lang="ts">
 import { fetchContentFile } from '@/helpers/configuration';
 import { ref, watch } from 'vue';
@@ -137,4 +137,4 @@ watch(language, async (value) => {
 .tbi-sidebar-body {
   @apply flex-1 space-y-1 p-2;
 }
-</style>
+</style> -->

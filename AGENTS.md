@@ -147,7 +147,8 @@ src/
   stores/                   Pinia configuration, language, and loading stores
   styles/                   Theme tokens and shared Tailwind utilities
   test/                     Shared Vitest helpers and setup
-  utils/                    Validation, fetching, sanitization, paths, metadata
+  utils/
+    content.util.ts         Fragment path validation, SPA-fallback detection, loading
   App.vue                   Bootstrap state and document metadata synchronization
   main.ts                   Vue, Pinia, router, styles, and app mounting
   router.ts                 Hash-based route definitions
@@ -317,6 +318,12 @@ All dynamic JSON and HTML requests go through `src/utils/fetch.util.ts`.
   invalid-data, and unexpected-document failures.
 - Build public asset URLs with `publicPath()` so the relative Vite base continues
   to work in subdirectory deployments.
+
+Content fragments loaded by components (for example `tbc-flux`) go through
+`content.util.ts`. `normalizeFragmentPath()` enforces the slug rules above, and
+`loadContentFragment()` builds the URL from `import.meta.env.BASE_URL`, requires
+`response.ok`, and rejects a fallback app shell returned with HTTP 200 by
+rejecting any body that starts with `<!doctype html>` or `<html`.
 
 Untrusted HTML is rendered only by `components/layouts/content.vue`, which passes
 it through `sanitizeContentHtml()` before `v-html`. DOMPurify has an explicit

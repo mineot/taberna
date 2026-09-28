@@ -1,6 +1,6 @@
 import { defineCustomElement } from 'vue';
 
-import Backdrop from '@/components/backdrop.vue';
+import Flux from '@/components/flux.vue';
 import Footer from '@/components/footer.vue';
 import Grid from '@/components/grid.vue';
 import Header from '@/components/header.vue';
@@ -21,7 +21,7 @@ function createElement(name: string, element: any): any {
 }
 
 const elements = {
-  ...createElement('tbc-backdrop', Backdrop),
+  ...createElement('tbc-flux', Flux),
   ...createElement('tbc-footer', Footer),
   ...createElement('tbc-grid', Grid),
   ...createElement('tbc-header', Header),

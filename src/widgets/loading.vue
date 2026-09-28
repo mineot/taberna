@@ -5,9 +5,10 @@
 </template>
 
 <script setup lang="ts">
-import { useBehaviorStore } from '@/stories/behavior.store';
+import { useAppStore } from '@/stories/app.store';
 import { storeToRefs } from 'pinia';
-const { loading } = storeToRefs(useBehaviorStore());
+
+const { loading } = storeToRefs(useAppStore());
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <template>
+  <Backdrop />
   <Loading />
   <Error />
-  <tbc-sidebar id="sidebar"></tbc-sidebar>
   <router-view />
 </template>
 
@@ -10,15 +10,11 @@ import { onMounted } from 'vue';
 import { useAppStore } from '@/stories/app.store';
 import Error from '@/widgets/error.vue';
 import Loading from '@/widgets/loading.vue';
-import { useBehaviorStore } from '@/stories/behavior.store';
+import Backdrop from '@/widgets/backdrop.vue';
 
 const { initApp } = useAppStore();
-const { showSidebar } = useBehaviorStore();
 
 onMounted(() => {
   initApp();
-  setTimeout(() => {
-    showSidebar('#sidebar');
-  }, 1000);
 });
 </script>
