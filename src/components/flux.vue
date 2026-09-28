@@ -1,5 +1,5 @@
 <template>
-  <div v-if="props.text">{{ props.text }}</div>
+  <span v-if="props.text">{{ props.text }}</span>
   <div v-else-if="props.file" v-html="$content"></div>
 </template>
 

@@ -21,7 +21,7 @@ const { error } = storeToRefs(useAppStore());
 @reference "@/style.css";
 
 .tbi-error {
-  @apply absolute z-200 h-full w-full;
+  @apply absolute z-300 h-full w-full;
   @apply flex flex-wrap items-center justify-center gap-2;
   @apply tbu-primary-bg tbu-texture;
 }

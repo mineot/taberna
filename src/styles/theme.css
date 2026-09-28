@@ -24,6 +24,12 @@
   --color-asset-bg: var(--color-emerald-500);
   --color-asset-text: var(--color-emerald-300);
 
+  --backdrop-color: color-mix(
+    in oklab,
+    var(--color-secondary-bg) 30%,
+    transparent
+  );
+
   /* LAYOUTS */
   --block-lg: 6;
   --block-md: 6;
@@ -51,11 +57,21 @@
   --z-sidebar: 100;
 
   /* COMPONENTS ONLY */
-  --backdrop-color: color-mix(
-    in oklab,
-    var(--color-secondary-bg) 30%,
-    transparent
+
+  --link-text: var(--color-asset-text);
+  --link-text-hover: color-mix(in oklch, var(--color-asset-text), #000 10%);
+  --link-text-active: color-mix(in oklch, var(--color-asset-text), #000 20%);
+
+  --link-pill-texture: var(--texture);
+  --link-pill-text: var(--color-asset-text);
+  --link-pill-text-hover: var(--color-primary-text);
+  --link-pill-bg-hover: var(--color-asset-bg);
+  --link-pill-text-active: color-mix(
+    in oklch,
+    var(--color-primary-text),
+    #000 10%
   );
+  --link-pill-bg-active: color-mix(in oklch, var(--color-asset-bg), #000 10%);
 
   --header-texture: var(--texture);
   --header-bg-color: color-mix(

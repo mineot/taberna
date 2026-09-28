@@ -1,9 +1,0 @@
-{
-  "enabled": true,
-  "brand": { "name": "brand", "extension": "htm" },
-  "menu": { "name": "menu", "extension": "htm" },
-  "nav": { "name": "navigator", "extension": "htm" },
-  "footer": { "name": "footer", "extension": "htm" },
-  "owner": "Fabiano Pires",
-  "year": "2026"
-}

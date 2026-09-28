@@ -1,34 +1,27 @@
 <template>
-  <!-- <footer class="tbi-footer">
+  <footer class="tbi-footer">
     <section>
-      <div v-if="props.content" v-html="$content"></div>
+      <tbc-flux v-if="props.contentFile" :file="props.contentFile"></tbc-flux>
       <slot v-else></slot>
       <div class="tbi-footer-ownership">
         <div class="text-nowrap">
-          &copy; {{ props.owner }} {{ props.year }} - {{ props.copyright }}
+          <span>&copy;</span>
+          <span>&nbsp;</span>
+          <tbc-flux :text="props.owner"></tbc-flux>
+          <span>&nbsp;</span>
+          <tbc-flux :text="props.year"></tbc-flux>
+          <span>&nbsp;-&nbsp;</span>
+          <tbc-flux :text="props.copyright"></tbc-flux>
         </div>
         <a href="https://github.com/mineot/" target="_blank">
           <span>Powered by Mineot</span>
         </a>
       </div>
     </section>
-  </footer> -->
+  </footer>
 </template>
-<!-- 
+
 <script setup lang="ts">
-import { fetchContentFile } from '@/helpers/configuration';
-import { ref, watch } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useAppStore } from '@/stories/app.store';
-import { useBehaviorStore } from '@/stories/behavior.store';
-import { useErrorStore } from '@/stories/error.store';
-
-const { language } = storeToRefs(useAppStore());
-const { setError } = useErrorStore();
-const { startLoading, stopLoading } = useBehaviorStore();
-
-const $content = ref<string>('');
-
 const props = defineProps({
   owner: {
     type: String,
@@ -45,32 +38,11 @@ const props = defineProps({
     required: false,
     default: 'All rights reserved',
   },
-  content: {
+  contentFile: {
     type: String,
     required: false,
     default: undefined,
   },
-});
-
-watch(language, async (value) => {
-  if (value && props.content) {
-    const token = startLoading();
-
-    try {
-      $content.value = await fetchContentFile(language.value, props.content);
-    } catch (error) {
-      console.log(error);
-
-      setError({
-        title: 'Loading footer error',
-        message: 'Could not load footer content file.',
-        status: 500,
-        throwcase: error,
-      });
-    } finally {
-      stopLoading(token);
-    }
-  }
 });
 </script>
 
@@ -89,7 +61,7 @@ watch(language, async (value) => {
 }
 
 .tbi-footer-ownership {
-  @apply flex flex-col gap-2 pt-1 md:flex-row;
+  @apply flex flex-col gap-2 pt-2 md:flex-row;
   @apply items-center justify-between;
   @apply text-xs text-nowrap;
   color: var(--footer-ownership-text-color);
@@ -106,4 +78,4 @@ watch(language, async (value) => {
     @apply text-nowrap underline;
   }
 }
-</style> -->
+</style>

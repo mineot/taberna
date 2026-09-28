@@ -1,40 +1,40 @@
 import { defineStore } from 'pinia';
 import { useErrorStore } from '@/stories/error.store';
 import { useLoadingStore } from '@/stories/loading.store';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
-interface ScaffoldManifest {
-  enabled: boolean;
-  brand: string;
-  menu: string;
-  nav: string;
-  footer: string;
-  owner: string;
-  year: string;
+interface ConfigurationManifest {
+  scaffold: {
+    enabled: boolean;
+    header: string;
+    footer: string;
+  };
 }
 
 export const useConfigStore = defineStore('config-store', () => {
   const { captureError } = useErrorStore();
   const { startLoading, stopLoading } = useLoadingStore();
 
-  const $scaffoldManifest = ref<ScaffoldManifest>({} as ScaffoldManifest);
+  const $manisfest = ref<ConfigurationManifest | null>(null);
 
-  const loadScaffoldConfiguration = async () => {
+  const loadConfiguration = async () => {
     const token = startLoading();
 
     captureError(
       async () => {
-        const response = await fetch('/config/scaffold.json');
-        $scaffoldManifest.value = (await response.json()) as ScaffoldManifest;
+        const response = await fetch('/config/configuration.json');
+        $manisfest.value = (await response.json()) as ConfigurationManifest;
       },
       {
-        title: 'Error to load scaffold configuration',
+        title: 'Error to load configuration',
         message:
-          'Could not load scaffold configuration. Please check console to more details.',
+          'Could not load configuration. Please check console to more details.',
         rethrow: true,
       },
     ).finally(() => stopLoading(token));
   };
 
-  return { loadScaffoldConfiguration };
+  const config = computed(() => $manisfest.value);
+
+  return { loadConfiguration, config };
 });

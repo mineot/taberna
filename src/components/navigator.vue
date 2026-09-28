@@ -9,7 +9,8 @@
         },
       ]"
     >
-      <slot></slot>
+      <tbc-flux v-if="props.contentFile" :file="props.contentFile"></tbc-flux>
+      <slot v-else></slot>
     </div>
     <div v-if="!props.vertical" class="tbi-navigator-buttom" @click="menuBar">
       <Menu class="tbi-navigator-menu" />
@@ -19,11 +20,16 @@
 
 <script setup lang="ts">
 import { Menu } from '@lucide/vue';
-import { onMounted, ref } from 'vue';
+import { useAppStore } from '@/stories/app.store';
 
-const sidebarEl = ref<any>(null);
+const { openSidebar } = useAppStore();
 
 const props = defineProps({
+  contentFile: {
+    type: String,
+    required: false,
+    default: undefined,
+  },
   vertical: {
     type: Boolean,
     required: false,
@@ -41,19 +47,10 @@ const emit = defineEmits(['click']);
 function menuBar() {
   emit('click');
 
-  if (sidebarEl.value) {
-    sidebarEl.value.visible = true;
+  if (props.sidebarId) {
+    openSidebar(props.sidebarId);
   }
 }
-
-onMounted(() => {
-  if (props.sidebarId) {
-    sidebarEl.value = document.querySelector('#sidebar');
-    sidebarEl.value?.addEventListener('close', () => {
-      sidebarEl.value.visible = false;
-    });
-  }
-});
 </script>
 
 <style scoped>

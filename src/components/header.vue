@@ -1,91 +1,49 @@
 <template>
-  <!-- <header class="tbi-header">
+  <header class="tbi-header">
     <section class="tbi-header-container">
       <div class="tbi-header-brand">
-        <div v-if="props.brandContent" v-html="$brandContent"></div>
+        <tbc-flux
+          v-if="props.brandContentFile"
+          :file="props.brandContentFile"
+        ></tbc-flux>
+        <slot v-else name="brand"></slot>
+
         <div class="tbi-header-menu">
-          <div v-if="props.menuContent" v-html="$menuContent"></div>
+          <tbc-flux
+            v-if="props.menuContentFile"
+            :file="props.menuContentFile"
+          ></tbc-flux>
+          <slot v-else name="menu"></slot>
         </div>
       </div>
       <div>
-        <div v-if="props.navContent" v-html="$navContent"></div>
+        <tbc-flux
+          v-if="props.navContentFile"
+          :file="props.navContentFile"
+        ></tbc-flux>
+        <slot v-else name="nav"></slot>
       </div>
     </section>
-  </header> -->
+  </header>
 </template>
-<!-- 
+
 <script setup lang="ts">
-import { fetchContentFile } from '@/helpers/configuration';
-import { storeToRefs } from 'pinia';
-import { useAppStore } from '@/stories/app.store';
-import { useBehaviorStore } from '@/stories/behavior.store';
-import { useErrorStore } from '@/stories/error.store';
-import { ref, watch } from 'vue';
-
-const { language } = storeToRefs(useAppStore());
-const { startLoading, stopLoading } = useBehaviorStore();
-const { setError } = useErrorStore();
-
-const $brandContent = ref<string>('');
-const $menuContent = ref<string>('');
-const $navContent = ref<string>('');
-
 const props = defineProps({
-  brandContent: {
+  brandContentFile: {
     type: String,
     required: false,
     default: undefined,
   },
-  menuContent: {
+  menuContentFile: {
     type: String,
     required: false,
     default: undefined,
   },
-  navContent: {
+  navContentFile: {
     type: String,
     required: false,
     default: undefined,
   },
-});
-
-watch(language, async (value) => {
-  if (value) {
-    const token = startLoading();
-
-    try {
-      if (props.brandContent) {
-        $brandContent.value = await fetchContentFile(
-          language.value,
-          props.brandContent,
-        );
-      }
-
-      if (props.menuContent) {
-        $menuContent.value = await fetchContentFile(
-          language.value,
-          props.menuContent,
-        );
-      }
-
-      if (props.navContent) {
-        $navContent.value = await fetchContentFile(
-          language.value,
-          props.navContent,
-        );
-      }
-    } catch (error) {
-      console.log(error);
-
-      setError({
-        title: 'Loading header error',
-        message: 'Could not load header content file.',
-        status: 500,
-        throwcase: error,
-      });
-    } finally {
-      stopLoading(token);
-    }
-  }
 });
 </script>
 
@@ -114,4 +72,4 @@ watch(language, async (value) => {
 .tbi-header-menu {
   @apply hidden md:flex;
 }
-</style> -->
+</style>

@@ -1,42 +1,46 @@
 <template>
-  <!-- <tbc-backdrop></tbc-backdrop>
   <Teleport to="body">
-    <aside :class="['tbi-sidebar', { 'tbi-sidebar-hide': !sidebar[props.id] }]">
+    <aside
+      :class="[
+        'tbi-sidebar',
+        {
+          'tbi-sidebar-hide': !openedSidebar(props.id),
+        },
+      ]"
+    >
       <div class="tbi-sidebar-header">
-        <div>
-          <div v-if="props.headerContent" v-html="$headerContent"></div>
-        </div>
-        <button class="tbu-asset-link" @click="close">
+        <tbc-flux
+          v-if="props.headerContentFile"
+          :file="props.headerContentFile"
+        ></tbc-flux>
+        <slot v-else name="brand"></slot>
+        <button class="tbu-asset-link" @click="closeSidebar(props.id)">
           <X />
         </button>
       </div>
       <nav class="tbi-sidebar-body">
-        <slot></slot>
+        <tbc-flux v-if="props.contentFile" :file="props.contentFile"></tbc-flux>
+        <slot v-else></slot>
       </nav>
       <div class="tbi-sidebar-footer">
-        <div v-if="props.footerContent" v-html="$footerContent"></div>
+        <tbc-flux
+          v-if="props.footerContentFile"
+          :file="props.footerContentFile"
+        ></tbc-flux>
+        <slot v-else name="footer"></slot>
       </div>
     </aside>
-  </Teleport> -->
+  </Teleport>
 </template>
-<!-- 
+
 <script setup lang="ts">
-import { fetchContentFile } from '@/helpers/configuration';
-import { ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useAppStore } from '@/stories/app.store';
-import { useBehaviorStore } from '@/stories/behavior.store';
-import { useErrorStore } from '@/stories/error.store';
+import { watch } from 'vue';
 import { X } from '@lucide/vue';
 
-const { language } = storeToRefs(useAppStore());
-const { backdrop, sidebar } = storeToRefs(useBehaviorStore());
-const { setError } = useErrorStore();
-const { hideBackdrop, hideSidebar, showBackdrop, startLoading, stopLoading } =
-  useBehaviorStore();
-
-const $headerContent = ref<string>('');
-const $footerContent = ref<string>('');
+const { openedSidebar, closeSidebar } = useAppStore();
+const { backdrop } = storeToRefs(useAppStore());
 
 const props = defineProps({
   id: {
@@ -44,65 +48,26 @@ const props = defineProps({
     required: false,
     default: 'sidebar',
   },
-  headerContent: {
+  headerContentFile: {
     type: String,
     required: false,
     default: undefined,
   },
-  footerContent: {
+  footerContentFile: {
+    type: String,
+    required: false,
+    default: undefined,
+  },
+  contentFile: {
     type: String,
     required: false,
     default: undefined,
   },
 });
 
-function close() {
-  hideSidebar(props.id);
-  hideBackdrop();
-}
-
-watch(sidebar, async (value) => {
-  if (value[props.id]) {
-    showBackdrop();
-  }
-});
-
-watch(backdrop, async (value) => {
+watch(backdrop, (value) => {
   if (!value) {
-    hideSidebar(props.id);
-  }
-});
-
-watch(language, async (value) => {
-  if (value) {
-    const token = startLoading();
-
-    try {
-      if (props.headerContent) {
-        $headerContent.value = await fetchContentFile(
-          language.value,
-          props.headerContent,
-        );
-      }
-
-      if (props.footerContent) {
-        $footerContent.value = await fetchContentFile(
-          language.value,
-          props.footerContent,
-        );
-      }
-    } catch (error) {
-      console.log(error);
-
-      setError({
-        title: 'Loading sidebar error',
-        message: 'Could not load sidebar content file.',
-        status: 500,
-        throwcase: error,
-      });
-    } finally {
-      stopLoading(token);
-    }
+    closeSidebar(props.id);
   }
 });
 </script>
@@ -112,11 +77,10 @@ watch(language, async (value) => {
 
 .tbi-sidebar {
   @apply tbu-duration transition-transform;
-  @apply top-0 left-0 h-screen w-max;
+  @apply top-0 left-0 z-150 h-screen w-max;
   @apply fixed flex transform flex-col;
   @apply tbu-secondary-bg tbu-texture;
   @apply tbu-border-right;
-  z-index: var(--z-sidebar);
 }
 
 .tbi-sidebar-hide {
@@ -137,4 +101,4 @@ watch(language, async (value) => {
 .tbi-sidebar-body {
   @apply flex-1 space-y-1 p-2;
 }
-</style> -->
+</style>

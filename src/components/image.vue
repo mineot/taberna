@@ -3,9 +3,6 @@
     :class="[
       'tbu-duration',
       {
-        'tbu-border': props.bordered,
-        'tbu-rounded': props.rounded,
-        'tbu-shadow': props.shadow,
         'tbi-h-sm': props.hSm != undefined,
         'tbi-h-md': props.hMd != undefined,
         'tbi-h-lg': props.hLg != undefined,
@@ -36,21 +33,6 @@ const props = defineProps({
   alt: {
     type: String,
     required: true,
-  },
-  bordered: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-  rounded: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-  shadow: {
-    type: Boolean,
-    required: false,
-    default: false,
   },
   hSm: {
     type: String,

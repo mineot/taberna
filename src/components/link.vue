@@ -3,12 +3,11 @@
     :class="{
       'tbi-link': !props.pill,
       'tbi-link-pill': props.pill,
-      underline: !props.noUnderline,
     }"
     :href="props.href"
     :title="props.title"
   >
-    <span v-if="props.label">{{ props.label }}</span>
+    <tbc-flux v-if="props.label" :text="props.label"></tbc-flux>
     <slot v-else></slot>
   </a>
 </template>
@@ -35,11 +34,6 @@ const props = defineProps({
     required: false,
     default: false,
   },
-  noUnderline: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
 });
 </script>
 
@@ -47,10 +41,34 @@ const props = defineProps({
 @reference "@/style.css";
 
 .tbi-link {
-  @apply tbu-asset-link;
+  @apply tbu-duration cursor-pointer;
+  color: var(--link-text);
+
+  &:hover {
+    color: var(--link-text-hover);
+  }
+
+  &:active {
+    color: var(--link-text-active);
+  }
 }
 
 .tbi-link-pill {
-  @apply tbu-asset-pill;
+  @apply tbu-duration cursor-pointer rounded-sm px-2 py-1;
+  color: var(--link-pill-text);
+
+  &:hover {
+    background-image: var(--link-pill-texture);
+    background-repeat: repeat;
+    color: var(--link-pill-text-hover);
+    background-color: var(--link-pill-bg-hover);
+  }
+
+  &:active {
+    background-image: var(--link-pill-texture);
+    background-repeat: repeat;
+    color: var(--link-pill-text-active);
+    background-color: var(--link-pill-bg-active);
+  }
 }
 </style>

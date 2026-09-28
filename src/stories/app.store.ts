@@ -9,13 +9,14 @@ import { useSidebarStore } from '@/stories/sidebar.store';
 
 export const useAppStore = defineStore('app-store', () => {
   const { detectLanguage } = useLanguageStore();
-  const { loadScaffoldConfiguration } = useConfigStore();
+  const { loadConfiguration } = useConfigStore();
   const { hideBackdrop, showBackdrop } = useBackdropStore();
   const { captureError } = useErrorStore();
   const { startLoading, stopLoading } = useLoadingStore();
   const { openedSidebar, openSidebar, closeSidebar } = useSidebarStore();
 
   const { backdrop } = storeToRefs(useBackdropStore());
+  const { config } = storeToRefs(useConfigStore());
   const { error } = storeToRefs(useErrorStore());
   const { loading } = storeToRefs(useLoadingStore());
   const { language, languageFlag, languageName } =
@@ -23,13 +24,14 @@ export const useAppStore = defineStore('app-store', () => {
 
   const initApp = async () => {
     await detectLanguage();
-    await loadScaffoldConfiguration();
+    await loadConfiguration();
   };
 
   return {
     backdrop,
     captureError,
     closeSidebar,
+    config,
     error,
     hideBackdrop,
     initApp,

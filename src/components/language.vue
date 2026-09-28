@@ -1,9 +1,9 @@
 <template>
   <a class="tbi-language" href="#/language">
-    <div :class="['tbi-language-flag', { mini: props.mini }]">
+    <div :class="['tbi-language-flag', { mini: props.onlyFlag }]">
       {{ languageFlag }}
     </div>
-    <div v-if="!props.mini" class="tbi-language-name">
+    <div v-if="!props.onlyFlag" class="tbi-language-name">
       <span>{{ languageName }}</span>
     </div>
   </a>
@@ -16,7 +16,7 @@ import { storeToRefs } from 'pinia';
 const { languageFlag, languageName } = storeToRefs(useAppStore());
 
 const props = defineProps({
-  mini: {
+  onlyFlag: {
     type: Boolean,
     required: false,
     default: false,

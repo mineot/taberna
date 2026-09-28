@@ -1,0 +1,7 @@
+{
+  "scaffold": {
+    "enabled": true,
+    "header": "widgets/header.htm",
+    "footer": "widgets/footer.htm"
+  }
+}
