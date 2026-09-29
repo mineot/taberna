@@ -4,6 +4,7 @@ import { useLoadingStore } from '@/stories/loading.store';
 import { computed, ref } from 'vue';
 
 interface ConfigurationManifest {
+  homePage: string;
   scaffold: {
     enabled: boolean;
     header: string;

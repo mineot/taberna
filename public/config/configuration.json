@@ -1,4 +1,5 @@
 {
+  "homePage": "home.htm",
   "scaffold": {
     "enabled": true,
     "header": "widgets/header.htm",

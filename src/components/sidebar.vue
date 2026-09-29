@@ -13,7 +13,7 @@
           v-if="props.headerContentFile"
           :file="props.headerContentFile"
         ></tbc-flux>
-        <slot v-else name="brand"></slot>
+        <slot v-else name="header"></slot>
         <button class="tbu-asset-link" @click="closeSidebar(props.id)">
           <X />
         </button>
@@ -88,7 +88,7 @@ watch(backdrop, (value) => {
 }
 
 .tbi-sidebar-header {
-  @apply flex gap-8 p-4 font-bold whitespace-nowrap;
+  @apply flex gap-8 p-4 whitespace-nowrap;
   @apply tbu-border-bottom;
   @apply items-center justify-between;
 }

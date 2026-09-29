@@ -1,13 +1,17 @@
-<tbc-navigator sidebar-id="#sidebar">
+<tbc-navigator sidebar-id="sidebar">
   <tbc-link href="#/item1" label="Item 1" pill></tbc-link>
   <tbc-link href="#/item2" label="Item 2" pill></tbc-link>
   <tbc-link href="#/item3" label="Item 3" pill></tbc-link>
 </tbc-navigator>
 
-<tbc-sidebar id="sidebar">
-  <tbc-navigator vertical>
+<tbc-sidebar id="sidebar" header-content-file="widgets/brand.htm">
+  <div slot="footer">
+    <tbc-language></tbc-language>
+  </div>
+
+  <div class="tbu-rows gap-4 py-4">
     <tbc-link href="#/item1" label="Item 1" pill></tbc-link>
     <tbc-link href="#/item2" label="Item 2" pill></tbc-link>
     <tbc-link href="#/item3" label="Item 3" pill></tbc-link>
-  </tbc-navigator>
+  </div>
 </tbc-sidebar>

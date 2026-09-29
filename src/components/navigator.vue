@@ -62,7 +62,7 @@ function menuBar() {
 }
 
 .tbi-navigator-items {
-  @apply flex-nowrap gap-3;
+  @apply flex flex-nowrap gap-3;
   @apply items-center;
 
   &.horizontal {

@@ -1,55 +1,71 @@
-<tbc-footer>
-  <!-- <div class="grid grid-cols-1 md:grid-cols-3 md:gap-10">
-    <div class="flex flex-col gap-2">
-      <div class="flex min-h-15 gap-4">
-        <tbc-image
-          src="/images/logo.png"
-          w-sm="3.5"
-          w-md="3.5"
-          w-lg="3.5"
-          alt="taberna"
-        ></tbc-image>
-        <span class="font-fancy tbu-asset-text mt-2 text-5xl">
-          <span>Taberna</span>
-        </span>
-      </div>
+<tbc-footer owner="Fabiano Pires" copyright="Todos os direitos reservados">
+  <div class="tbu-rows gap-6">
+    <div
+      class="tbu-rows md:tbu-columns tbu-border-bottom items-center justify-between pb-6"
+    >
+      <tbc-flux file="widgets/brand.htm"></tbc-flux>
 
-      <div class="tbu-secondary-text flex-1 text-sm">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam sequi
-        repellendus sunt unde atque quis aut.
+      <div class="tbu-columns items-center gap-6">
+        <tbc-link href="https://github.com/" external>
+          <tbc-image
+            src="icons/github.svg"
+            alt="github"
+            w-lg="1.5"
+            w-md="1.5"
+            w-sm="1.5"
+          ></tbc-image>
+        </tbc-link>
+
+        <tbc-link href="https://tailwindcss.com/" external>
+          <tbc-image
+            src="icons/tailwindcss.svg"
+            alt="tailwindcss"
+            w-lg="1.5"
+            w-md="1.5"
+            w-sm="1.5"
+          ></tbc-image>
+        </tbc-link>
+
+        <tbc-link href="https://vuejs.org/" external>
+          <tbc-image
+            src="icons/vue.svg"
+            alt="vue"
+            w-lg="1.5"
+            w-md="1.5"
+            w-sm="1.5"
+          ></tbc-image>
+        </tbc-link>
+
+        <tbc-link href="https://vite.dev/" external>
+          <tbc-image
+            src="icons/vite.svg"
+            alt="vue"
+            w-lg="1.5"
+            w-md="1.5"
+            w-sm="1.5"
+          ></tbc-image>
+        </tbc-link>
       </div>
     </div>
 
-    <div class="flex flex-col gap-2">
-      <div
-        class="tbu-asset-text flex min-h-15 flex-col justify-center text-2xl"
-      >
-        Links
-      </div>
-
-      <div class="flex-1">
-        <div class="flex flex-col gap-2">
+    <div class="tbu-rows md:tbu-columns md:gap-10">
+      <div class="tbu-rows gap-0">
+        <div class="flex min-h-10 items-center font-bold">Links</div>
+        <tbc-navigator vertical>
           <tbc-link href="#/item1" label="Item 1"></tbc-link>
           <tbc-link href="#/item2" label="Item 2"></tbc-link>
           <tbc-link href="#/item3" label="Item 3"></tbc-link>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex flex-col gap-2">
-      <div
-        class="tbu-asset-text flex min-h-15 flex-col justify-center text-2xl"
-      >
-        Contato
+        </tbc-navigator>
       </div>
 
-      <div class="flex-1">
+      <div class="tbu-rows gap-0">
+        <div class="flex min-h-10 items-center font-bold">Contato</div>
         <tbc-image
-          src="https://placehold.co/80?text=qrcode"
+          class="tbu-rounded"
+          src="https://placehold.co/90?text=Contact+Me"
           alt="contact"
-          rounded
         ></tbc-image>
       </div>
     </div>
-  </div> -->
+  </div>
 </tbc-footer>

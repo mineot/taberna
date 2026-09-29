@@ -4,17 +4,16 @@
       <tbc-flux v-if="props.contentFile" :file="props.contentFile"></tbc-flux>
       <slot v-else></slot>
       <div class="tbi-footer-ownership">
-        <div class="text-nowrap">
-          <span>&copy;</span>
-          <span>&nbsp;</span>
+        <div>
+          <div>&copy;</div>
           <tbc-flux :text="props.owner"></tbc-flux>
-          <span>&nbsp;</span>
+          <div>/</div>
           <tbc-flux :text="props.year"></tbc-flux>
-          <span>&nbsp;-&nbsp;</span>
+          <div>-</div>
           <tbc-flux :text="props.copyright"></tbc-flux>
         </div>
         <a href="https://github.com/mineot/" target="_blank">
-          <span>Powered by Mineot</span>
+          <div>Powered by Mineot</div>
         </a>
       </div>
     </section>
@@ -56,14 +55,15 @@ const props = defineProps({
   background-repeat: repeat;
 
   > section {
-    @apply flex flex-col gap-4;
+    @apply flex flex-col gap-6;
   }
 }
 
 .tbi-footer-ownership {
-  @apply flex flex-col gap-2 pt-2 md:flex-row;
+  @apply flex flex-col flex-wrap gap-4 pt-4 md:flex-row;
   @apply items-center justify-between;
-  @apply text-xs text-nowrap;
+  @apply text-xs;
+
   color: var(--footer-ownership-text-color);
   border-top-color: var-(--footer-ownership-border-color);
   border-top-style: var(--footer-ownership-border-style);

@@ -6,6 +6,7 @@
     }"
     :href="props.href"
     :title="props.title"
+    :target="props.external ? '_blank' : '_self'"
   >
     <tbc-flux v-if="props.label" :text="props.label"></tbc-flux>
     <slot v-else></slot>
@@ -14,6 +15,11 @@
 
 <script setup lang="ts">
 const props = defineProps({
+  external: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
   label: {
     type: String,
     required: false,
@@ -42,6 +48,7 @@ const props = defineProps({
 
 .tbi-link {
   @apply tbu-duration cursor-pointer;
+
   color: var(--link-text);
 
   &:hover {
@@ -54,7 +61,8 @@ const props = defineProps({
 }
 
 .tbi-link-pill {
-  @apply tbu-duration cursor-pointer rounded-sm px-2 py-1;
+  @apply tbu-duration flex cursor-pointer rounded-sm px-2 py-1;
+
   color: var(--link-pill-text);
 
   &:hover {
