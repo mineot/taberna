@@ -54,34 +54,9 @@
   --container-md: 28;
   --container-sm: 8;
 
-  /* --spacing-lg: 4;
-  --spacing-md: 4;
-  --spacing-sm: 4; */
-
   /* COMPONENTS ONLY */
 
   --carousel-dot: color-mix(in oklab, var(--color-primary-soft) 40%, transparent);
   --carousel-dot-active: var(--color-asset);
   --carousel-counter: var(--color-primary-soft);
-
-  /* --link-text: var(--color-asset-text);
-  --link-text-hover: color-mix(in oklch, var(--color-asset-text), #000 10%);
-  --link-text-active: color-mix(in oklch, var(--color-asset-text), #000 20%);
-
-  --link-pill-texture: var(--texture);
-  --link-pill-text: var(--color-asset-text);
-  --link-pill-text-hover: var(--color-primary-text);
-  --link-pill-bg-hover: var(--color-asset-bg);
-  --link-pill-text-active: color-mix(in oklch, var(--color-primary-text), #000 10%);
-  --link-pill-bg-active: color-mix(in oklch, var(--color-asset-bg), #000 10%);
-
-  --header-texture: var(--texture);
-  --header-bg-color: color-mix(in oklab, var(--color-secondary-bg) 30%, transparent);
-
-  --footer-texture: var(--texture);
-  --footer-bg-color: var(--color-secondary-bg);
-  --footer-ownership-text-color: var(--color-secondary-text);
-  --footer-ownership-border-color: var(--color-secondary-text);
-  --footer-ownership-border-style: var(--border-style);
-  --footer-ownership-border-size: var(--border-size); */
 }
