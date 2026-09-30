@@ -1,457 +1,541 @@
 # Taberna — AI Development Guide
 
-This file is the operational source of truth for AI assistants working in this
-repository. It documents the current architecture, the project conventions, and
-the boundaries that must be respected when helping with development.
+Operational source of truth for AI assistants working in this repository. It
+describes the **current** working tree: architecture, conventions, data
+contracts, security boundaries, and the known gaps that must not be mistaken
+for finished features.
+
+Validated against the working tree on 2026-09-30 through source inspection,
+typecheck, lint, test discovery, and a production build. Browser interactions
+were not exercised. When code and this file disagree, establish current
+behavior from the code and update this file within the approved scope.
+Development requirements below are distinct from implemented behavior; known
+gaps identify where the code does not yet meet those requirements.
 
 ## 1. Mandatory Working Agreement
 
 ### Approval before implementation
 
-- Do not implement, edit, create, delete, rename, install, format, or otherwise
-  mutate project files unless the user has explicitly approved the implementation.
-- A request to inspect, explain, review, diagnose, research, suggest, or plan is
-  read-only. Present the findings or proposed changes and wait for approval.
-- A discussion, an accepted idea, an item in `TODO.md`, or the existence of an
-  obvious fix is not implementation approval.
-- Clear instructions such as “implement”, “apply”, “change”, “fix”, “create”, or
-  “rewrite” count as approval, but only for the scope explicitly requested.
-- After approval, perform the normal supporting work required by that scope,
-  including proportionate tests and the corresponding `AGENTS.md` update.
-- If requirements are ambiguous or alternatives would materially change the
-  result, explain the options and wait for the user's decision.
-- Never broaden an approved change into unrelated cleanup or refactoring.
+- Do not implement, edit, create, delete, rename, install, or format project
+  files unless the user explicitly approved the implementation.
+- Inspecting, explaining, reviewing, diagnosing, researching, suggesting, and
+  planning are read-only operations. Present findings and wait for approval.
+- A discussion, an accepted idea, an item in `TODO.md`, or an obvious fix is
+  not approval.
+- "implement", "apply", "change", "fix", "create", "rewrite" count as approval,
+  but only for the requested scope.
+- After approval, do the supporting work that scope requires, including
+  proportionate tests and the corresponding `AGENTS.md` update.
+- If requirements are ambiguous, or alternatives would materially change the
+  result, explain the options and wait for a decision.
+- Never widen an approved change into unrelated cleanup or refactoring.
 
 ### `TODO.md` is user-owned and read-only
 
-- Never edit, reorder, delete, complete, check off, or append to `TODO.md`.
-- Items in `TODO.md` are reminders for the user. They are not instructions and do
-  not authorize implementation.
-- Reading `TODO.md` for context is allowed, but do not begin an item unless the
-  user separately and explicitly requests its implementation.
+- Never edit, reorder, delete, check off, or append to `TODO.md`.
+- Items there are reminders for the user, not instructions, and never authorize
+  implementation.
 
 ### Keep this file current
 
-- Update `AGENTS.md` as part of any approved change that makes one of its
-  statements incomplete, inaccurate, or ambiguous. This includes changes to
-  architecture, dependencies, commands, directories, data contracts, security
-  boundaries, or development conventions.
-- Keep the document descriptive of the current working tree. Remove obsolete
-  guidance instead of accumulating historical notes.
-- Do not add planned or speculative behavior as if it already existed.
-- Small editorial/content-only changes do not require an update unless they alter
-  a documented contract or workflow.
+- Update `AGENTS.md` whenever an approved change makes a statement here
+  incomplete or inaccurate: architecture, directories, dependencies, commands,
+  data contracts, custom-element registry, theme tokens, security boundaries, or
+  conventions.
+- Describe the current working tree only. Remove obsolete guidance instead of
+  accumulating historical notes, and never document planned behavior as if it
+  already existed.
+- Content-only or editorial changes do not require an update unless they alter a
+  documented contract.
 
-### Keep the READMEs synchronized
+### Keep the README minimal
 
-- Keep `README.md` and `README_PT_BR.md` accurate and synchronized with each other
-  whenever an approved change affects installation, commands, configuration,
-  content authoring, behavior, architecture, or other user-facing documentation.
-- Update both language versions as part of the same approved implementation; do
-  not leave one translation describing an older project state.
-- Documentation maintenance that is directly required by an approved code change
-  is part of that implementation and does not require separate approval.
-- Do not rewrite or expand the READMEs for unrelated reasons.
+- `README.md` is the only maintained README and is written in English.
+  Do not recreate a Portuguese version or add translation links.
+- Limit it to the project overview, technologies, installation, production
+  build, and license. Keep architecture, contracts, and agent guidance here.
+- Update it when an approved change affects those topics; do not expand it
+  into a configuration guide, component catalog, or troubleshooting manual.
 
-### Keep tests current
+### Tests
 
-- Inspect the relevant existing tests before every approved implementation and
-  keep them synchronized with the behavior and contracts of the production code.
-- Add or update focused tests whenever an approved change modifies behavior,
-  fixes a defect, introduces an edge case, or changes a public or internal
-  contract.
-- If an implementation does not require a test change, verify that the existing
-  coverage still exercises the affected behavior and state that no test files
-  needed modification in the final report.
-- Do not delete, weaken, skip, or rewrite a valid test merely to make a change
-  pass. Treat an intentional behavior change and its corresponding expectation
-  updates as one approved implementation.
-- Run the relevant tests after implementation and report both the command and its
-  result. If a test cannot be run, explain why.
+- There is currently **no test suite**: `npm test` fails with "No test files
+  found", and `src/test/setup.ts` is empty.
+- When tests are added or an approved change needs coverage, colocate focused
+  `*.test.ts` files next to the code and use the existing Vitest config
+  (jsdom + `src/test/setup.ts`).
+- Never weaken or delete a test to make a change pass.
+- If an approved change does not warrant tests, say so explicitly in the final
+  report.
 
 ## 2. Project Overview
 
-Taberna is a configurable, static personal website and landing-page foundation.
-The application shell is written in Vue, while localized site content is stored
-as JSON manifests and sanitized HTML fragments under `public/`.
+Taberna is a static, client-only website foundation for personal sites,
+portfolios, and landing pages. A Vue 3 application shell renders HTML fragments
+that live under `public/content/{locale}/`, so editorial content is changed
+without touching application code.
 
-The bundled Portuguese and English content is fictional placeholder material.
-The application supports browser-language detection, manual language switching,
-hash-based navigation, responsive layout, reusable content components, and a
-theme based on semantic CSS custom properties.
+Current state (mid-refactor, important):
 
-### Current scope and limitations
+- The site configuration was reduced to a single manifest:
+  `public/config/languages.json`. There is no per-locale site manifest
+  (`config/{locale}.json` was deleted), no config store, and no home/footer
+  path configuration.
+- Layout regions are wired **in code** by `src/AppTemplate.vue`, which hardcodes
+  the fragment file for each slot.
+- The dynamic content page (`src/pages/slug.page.vue`) is **entirely
+  commented out**; only `#/` and `#/language` currently render content.
+- Fetched editorial HTML is rendered through `v-html` **without sanitization**
+  and must be treated as trusted author content. The
+  `dompurify` dependency is installed but unused. See section 9.
 
-- The project is a client-only static application. It has no application backend,
-  database, authentication, or server-side business logic.
-- There is no `.env`-based configuration contract, container setup, or CI/CD
-  workflow in the repository.
-- Rendering is client-side. SSR, prerendering, and per-route SEO metadata are not
-  implemented.
-- The application synchronizes the document language, title, and description, but
-  it does not provide per-page Open Graph or social-sharing metadata.
-- Placeholder content and remote placeholder images are development material, not
-  final production content.
+Scope and limitations:
+
+- No backend, database, authentication, `.env` contract, CI/CD, or deployment
+  workflow.
+- Client-only rendering: no SSR, no prerendering, no per-route metadata.
+- Shell UI strings (error messages, carousel ARIA labels, "Powered by Mineot")
+  are hardcoded English in components/stores. Only editorial content and
+  language names/flags are localized. `index.html` keeps `lang="en"`, title,
+  and description static across locale changes.
+- Bundled content, images (`logo.png`, `texture.png`, `placehold.co` images) and
+  the `Iten 1..3` links are placeholders.
 
 ## 3. Technology Stack
 
-- Vue 3 with Composition API and `<script setup lang="ts">`
-- TypeScript in strict mode
-- Vite with a relative `base` for root or subdirectory deployment
-- Pinia for application state
-- Vue Router with hash history
-- Tailwind CSS v4 through `@tailwindcss/vite`
-- Lucide Vue for interface icons
-- DOMPurify for dynamic HTML sanitization
-- Vitest, Vue Test Utils, and jsdom for tests
-- ESLint flat config and Prettier with the Tailwind CSS plugin
-- Self-hosted Roboto, Roboto Serif, Roboto Mono, and Italianno fonts
+- Vue 3.5 (`<script setup lang="ts">`), vue-router 5 with hash history
+- Pinia 3 with setup-style stores
+- Vite 8 with `base: './'`, `@vitejs/plugin-vue`, `@tailwindcss/vite`
+- Tailwind CSS v4 (`@theme`, `@utility`, `@reference`, no `tailwind.config.js`)
+- `@lucide/vue` for UI icons
+- TypeScript 5.9 strict (`strict`, `noUnusedLocals`, `noUnusedParameters`,
+  `noImplicitReturns`, `isolatedModules`, `allowImportingTsExtensions`)
+- Vitest 4 + jsdom + @vue/test-utils (configured, unused)
+- ESLint 10 flat config, Prettier 3 with `prettier-plugin-tailwindcss`
+- Self-hosted Roboto, Roboto Serif, Roboto Mono, Italianno (`.ttf`, in `public/fonts/`)
 
-Treat `package.json` as the source of truth for exact dependency versions.
+`package.json` declares dependency ranges; `package-lock.json` records resolved
+versions. Installed versions can differ from the range lower bounds. Use the
+existing npm lockfile; a documentation review does not require installing or
+upgrading dependencies.
 
 ## 4. Commands
 
-```bash
-npm run dev        # Start the Vite development server
-npm run build      # Type-check, then create the production build
-npm run preview    # Preview the production build
-npm run test       # Run the Vitest suite once
-npm run typecheck  # Run vue-tsc without emitting files
-npm run lint       # Lint src/
-npm run format     # Format TypeScript, Vue, and CSS files under src/
-```
+Validation environment: Node `v24.15.0`, npm `12.0.2`, existing dependencies.
+These are observed versions, not an `engines` requirement (none is declared).
 
-Use the smallest relevant verification while developing. Before handing off a
-significant code change, normally run tests, type-checking, and linting; run the
-production build when the change can affect bundling or deployment. Report any
-check that could not be run or any failure that predates the approved change.
+| Command | Purpose | Review result (2026-09-30) |
+| --- | --- | --- |
+| `npm run dev` | Vite dev server | Defined; not started in this review |
+| `npm run build` | `vue-tsc --noEmit && vite build` | Passes |
+| `npm run preview` | Serve `dist/` | Defined; not started in this review |
+| `npm run typecheck` | `vue-tsc --noEmit` | Passes |
+| `npm run lint` | `eslint src/` | Fails: 11 Vue parsing errors (11.1) |
+| `npm run test` | `vitest --run` | Exits 1: no test files found (11.2) |
+| `npm run format` | Prettier writes `src/**/*.{ts,vue,css}` | Not run; modifies source and does not format this guide |
 
-## 5. Current Repository Map
+Lint and test failures predate this documentation review. Do not report them
+as green or infer working browser behavior from a successful build. Recheck
+these results when the relevant code or tooling changes.
+
+## 5. Repository Map
 
 ```text
+index.html                  SPA shell, font preloads, meta CSP
+vite.config.ts              base './', alias '@', vue + tailwind plugins, vitest
+eslint.config.js            flat config (vue + typescript-eslint + prettier)
 public/
-  config/
-    languages.json          Language manifest
-    en-us.json              English site manifest
-    pt-br.json              Brazilian Portuguese site manifest
-  content/{locale}/         Localized .htm fragments and nested pages
-  fonts/                    Self-hosted font files
-  images/                   Logo, texture, and other public images
+  config/languages.json     default / available / flags / names
+  content/{locale}/         brand.htm, header-nav.htm, sidebar-nav.htm,
+                            footer.htm, copyright.htm, home.htm
+  fonts/                    self-hosted .ttf files
+  icons/                    social SVG icons
+  images/                   logo.png, texture.png
   favicon.png
 src/
+  App.vue                   overlays + AppTemplate + <router-view> + initApp
+  AppTemplate.vue           binds flux fragments to the layout slots
+  main.ts                   styles, custom elements, Pinia, router, mount
+  router.ts                 hash routes: /, /language, /:slug(.*)
+  style.css                 global stylesheet entry
+  web-components.ts         tbc-carousel, tbc-flux, tbc-language
+  web-icons.ts              icon-home
   components/
-    layouts/                Application structure and sanitized content outlet
-    widgets/                Header, footer, navigation, sidebar, controls
-    *.vue                   Content-facing reusable components
-  pages/                    Home, language switcher, and dynamic slug pages
-  stores/                   Pinia configuration, language, and loading stores
-  styles/                   Theme tokens and shared Tailwind utilities
-  test/                     Shared Vitest helpers and setup
-  utils/
-    content.util.ts         Fragment path validation, SPA-fallback detection, loading
-  App.vue                   Bootstrap state and document metadata synchronization
-  main.ts                   Vue, Pinia, router, styles, and app mounting
-  router.ts                 Hash-based route definitions
-  style.css                 Global stylesheet entry point
-  web-components.ts         Registration of allowed `twc-*` custom elements
-index.html                  SPA shell, fallback metadata, preloads, and CSP
-vite.config.ts              Vite aliases, plugins, and Vitest configuration
+    carousel.vue            carousel (registered, not used by bundled content)
+    error.vue               full-screen error overlay
+    flux.vue                loads a locale fragment and renders it (v-html)
+    language.vue            flag + language name link to #/language
+    loading.vue             full-screen loading overlay
+  pages/
+    home.page.vue           <tbc-flux content-file="home.htm">
+    language-switcher.page.vue  language grid, calls switchLanguage
+    slug.page.vue           DISABLED (commented out)
+  stories/                  Pinia stores: app, error, language, loading
+  styles/                   fonts.css, theme.css, utilities.css, app.css
+  templates/default.vue     header/main/footer + backdrop + sidebar layout
+  test/setup.ts             empty vitest setup placeholder
+  utils/flux.util.ts        fragment path validation + fragment loading
+dist/                       generated build output, git-ignored, never edit
 ```
 
-Tests are colocated with the code they cover when practical and use the
-`*.test.ts` suffix. Generated `dist/` output and dependencies are not source
-files and must not be edited manually.
-
-## 6. Application Architecture
-
-### Bootstrap
-
-`src/main.ts` imports global styles and registers content custom elements before
-creating the Vue application. It installs Pinia and the router, then mounts
-`App.vue`.
-
-`App.vue` owns the bootstrap state: `loading`, `ready`, or `error`. Initialization
-loads the language manifest first and the selected locale configuration second.
-It shows a full-page skeleton while loading, an error/retry view on failure, and
-the main container only after all required configuration is ready.
-
-The application also keeps the document language, title, and meta description in
-sync with the active locale and configuration through `document.util.ts`.
-
-### State stores
-
-- `language.store.ts` loads `public/config/languages.json`, resolves the locale
-  from local storage, browser preferences, and the configured default, then
-  persists the selection under `taberna-lang` when storage is available.
-- `config.store.ts` validates a locale, loads its JSON manifest, fetches optional
-  home and footer fragments in parallel, and publishes only a fully hydrated
-  configuration.
-- `loading.store.ts` tracks concurrent operations with unique tokens. Every
-  `startLoading()` token must be passed to `stopLoading()` in a `finally` block.
-
-Use `storeToRefs()` whenever retaining reactive Pinia properties outside the store
-object. Store actions may be destructured directly.
-
-Language switching is transactional: prepare the target configuration first,
-then update the language, then publish the prepared configuration. A failed load
-must leave the current language and configuration intact.
-
-### Routing and pages
-
-The router uses `createWebHashHistory(import.meta.env.BASE_URL)` and defines:
-
-- `/` for the configured home fragment;
-- `/language-switcher` for manual locale selection;
-- `/:slug(.*)` for localized `.htm` content fragments, including nested paths.
-
-Dynamic content routes include the `.htm` file name. For example,
-`#/articles/article1.htm` loads
-`public/content/{locale}/articles/article1.htm`.
-
-Navigation inside manifests and HTML fragments must use hash URLs:
-
-- use `#/` for home;
-- use `#/language-switcher` for the language page;
-- use `#/{relative-path}.htm` for localized content pages;
-- do not use a server path such as `/articles/article1.htm`, and do not omit the
-  `.htm` suffix from a content route.
-
-`normalizeContentSlug()` is the route-to-file boundary. Slugs must be relative,
-must end in `.htm`, may use safe nested directory segments, and must never allow
-empty segments, traversal, unsupported extensions, or leading slashes.
-
-`slug.page.vue` aborts superseded requests and ignores stale responses. Preserve
-that behavior when changing route loading.
-
-## 7. Configuration and Localized Content
-
-### Language manifest
-
-`public/config/languages.json` contains:
-
-- `default`: one normalized locale from `available`;
-- `available`: unique, normalized locale identifiers;
-- `flags`: a display flag for every available locale;
-- `names`: a display name for every available locale.
-
-Every enabled locale must have a corresponding config and complete content set.
-Keep technical paths and navigation destinations aligned across translations.
-
-### Site manifest
-
-Each `public/config/{locale}.json` is validated at runtime and contains:
-
-- `title`, `image`, `description`, and `ownership` strings;
-- optional `home` and `footer` paths to safe `.htm` fragments;
-- `navigator`, an array of `{ text, href }` entries with safe links.
-
-`ConfigurationManifest` represents these file references.
-`LoadedConfiguration` replaces them with optional `homeContent` and
-`footerContent` after successful fetching.
-
-Configuration hydration is atomic: do not expose a partially loaded config when
-one referenced fragment fails.
-
-### HTML content fragments
-
-Localized content lives in `public/content/{locale}/` as HTML fragments, not full
-HTML documents. Do not include `<!doctype>`, `<html>`, `<head>`, or `<body>`.
-
-Fragments may use ordinary safe HTML, Tailwind utility classes, inline style
-attributes allowed by DOMPurify, and these registered custom elements:
-
-| Element             | Content-facing attributes                                      | Defaults                         |
-| ------------------- | -------------------------------------------------------------- | -------------------------------- |
-| `twc-brand`         | `description`                                                  | `description=false`              |
-| `twc-link`          | required `href`, required `label`, optional `external`         | `external=false`                 |
-| `twc-panel`         | `emphasis`, `rounded`, `bordered`                              | all `false`                      |
-| `twc-columns`       | `cols="1..12"`, numeric `gap`, `align="start|center|end"`      | `cols=1`, `gap=0`, `align=start` |
-| `twc-rows`          | numeric `gap`, `align="start|center|end"`                       | `gap=0`, `align=start`           |
-| `twc-quote`         | optional `title`                                               | no title                         |
-| `twc-carousel`      | numeric `limit`, millisecond `delay`, boolean `show-timer`      | `1`, `5000`, `true`              |
-| `twc-carousel-item` | none                                                           | —                                |
-
-`twc-link` renders the required `label`; it does not render child content as the
-link label. Mark external destinations with `external` and use an absolute HTTP
-or HTTPS URL. Internal links must follow the hash-route convention above.
-
-Files under `public/` are referenced without the `public/` prefix. In manifests
-and content, prefer deployment-relative asset paths such as `images/logo.png`.
-JavaScript and TypeScript code must construct public resource URLs with
-`publicPath()`.
-
-Boolean custom-element attributes follow HTML semantics: their presence is true;
-for supported string/boolean cases, `"false"` is handled explicitly by the
-component where documented in code.
-
-Carousel `limit` values are floored and clamped to a minimum of one. Non-finite
-limits fall back to one. Delays are clamped to zero or greater; a zero delay
-disables autoplay. `show-timer="false"` hides the countdown display.
-
-The carousel displays one item per page on small screens and up to `limit` items
-per page from the medium breakpoint. It supports autoplay, manual pause/play,
-pagination, hover/focus pausing, reduced-motion preferences, dynamically observed
-items, and inaccessible-state management for off-page items. Preserve its ARIA,
-keyboard, timing, and reduced-motion behavior.
-
-### Localization boundary
-
-- Editorial content, navigation labels, site metadata, ownership text, language
-  names, and language flags belong in the locale-specific public files.
-- Maintain equivalent routes and content paths for every enabled locale unless
-  the user explicitly approves a language-specific difference.
-- The Vue application currently contains hardcoded English shell text for loading,
-  empty, failure, retry, menu, carousel, and ARIA states. There is no UI message
-  dictionary for these strings.
-- Do not claim that the entire interface is localized, and do not introduce a new
-  UI translation system without explicit approval.
-
-## 8. Data Loading and Security Boundaries
-
-All dynamic JSON and HTML requests go through `src/utils/fetch.util.ts`.
-
-- `fetchJson()` requires a JSON content type, parses the response, and validates
-  unknown data with a runtime type guard.
-- `fetchHtmlFragment()` requires an HTML content type and rejects full HTML
-  documents, including SPA fallback pages.
-- `ResourceError` distinguishes aborted, network, HTTP, not-found, content-type,
-  invalid-data, and unexpected-document failures.
-- Build public asset URLs with `publicPath()` so the relative Vite base continues
-  to work in subdirectory deployments.
-
-Content fragments loaded by components (for example `tbc-flux`) go through
-`content.util.ts`. `normalizeFragmentPath()` enforces the slug rules above, and
-`loadContentFragment()` builds the URL from `import.meta.env.BASE_URL`, requires
-`response.ok`, and rejects a fallback app shell returned with HTTP 200 by
-rejecting any body that starts with `<!doctype html>` or `<html`.
-
-Untrusted HTML is rendered only by `components/layouts/content.vue`, which passes
-it through `sanitizeContentHtml()` before `v-html`. DOMPurify has an explicit
-allowlist for Taberna custom elements and their supported attributes. Do not add
-a custom element or content attribute without updating its Vue component,
-`web-components.ts`, the allowlists in `html.util.ts`, and the corresponding
-sanitization/component tests.
-
-Links are normalized through `normalizeLinkHref()`:
-
-- only HTTP and HTTPS protocols are allowed;
-- unsafe or malformed `href` values are removed or rejected;
-- external `twc-link` destinations must be absolute;
-- links opening a new tab receive `noopener noreferrer`.
-
-`index.html` defines a Content Security Policy. When adding an external asset
-origin, update the smallest relevant CSP directive and explain the security
-impact. Do not weaken sanitization, URL validation, slug validation, or CSP merely
-to make new content work.
-
-The current CSP is delivered through a `<meta http-equiv>` element and allows:
-
-- resources from the same origin by default;
-- scripts and fonts from the same origin only;
-- same-origin styles plus inline styles required by the current content/styling
-  model;
-- images from the same origin, `https://placehold.co`, and `data:` URLs.
-
-A meta-delivered CSP has fewer capabilities than an HTTP response header. A
-hosting-level CSP header may strengthen production security, but it is not
-currently configured in this repository.
-
-## 9. Styling and Responsive Design
-
-Tailwind v4 is imported by `src/style.css`. The file then imports:
-
-- `src/styles/theme.css` for fonts and semantic design tokens;
-- `src/styles/utilities.css` for shared `app-*` utilities.
-
-Component styles are unscoped because registered custom elements use
-`shadowRoot: false`. Each Vue component style block that uses Tailwind directives
-must reference the global stylesheet with `@reference '@/style.css';`.
-
-Follow these rules:
-
-- Use semantic CSS custom properties for application colors, borders, spacing,
-  textures, timing, and component-specific theme values.
-- Layering uses the `--z-*` tokens in `src/styles/theme.css`. Do not introduce raw
-  `z-*` utilities in components; add or reuse a token instead.
-- Do not place raw Tailwind palette color classes in component templates or
-  localized HTML. Add or reuse an appropriate semantic token instead.
-- Put stable component styling in the component's `<style>` block. Runtime values
-  and content-authored layout utilities may remain inline where appropriate.
-- Overlay components must render through `<Teleport to="body">` and position
-  themselves with `fixed`. `tbc-backdrop` and `tbc-sidebar` are the current
-  examples, and their host elements are set to `display: contents` in
-  `src/styles/app.css`. A `position: absolute` overlay resolves against the
-  nearest positioned ancestor, and `backdrop-filter`, `transform`, `filter`, and
-  `contain` on an ancestor become the containing block for `fixed` descendants, so
-  an overlay placed inside the sticky, blurred header is confined to it instead of
-  covering the page.
-- Preserve mobile-first behavior and the existing `48rem` medium breakpoint.
-- Provide visible focus states and hover behavior that does not depend on hover
-  support for essential interaction.
-- Reuse the `app-*` utilities for shared duration, focus ring, gaps, padding,
-  container layout, block spacing, texture, and inline code presentation.
-- Keep fonts self-hosted unless the user explicitly approves a different asset
-  strategy and its CSP/privacy implications.
-
-## 10. Code Conventions
-
-- Use Vue Composition API and `<script setup lang="ts">`.
-- Maintain TypeScript strictness; do not silence errors with broad casts or
-  `any` when a precise type or validation boundary is possible.
-- Use the configured aliases: `@`, `@component`, `@layout`, `@page`, `@store`,
-  `@style`, `@util`, and `@widget`.
-- Follow the existing lowercase, hyphenated file naming convention for Vue
-  components and pages.
-- Keep business/data logic out of templates and isolate reusable validation in
-  utilities.
-- Validate external or file-backed data at runtime even when TypeScript types
-  exist; TypeScript does not validate network responses.
-- Do not add code comments unless the user asks for them or the behavior cannot be
-  made clear through names and structure.
-- Preserve accessibility: semantic elements, labels, focus management, keyboard
-  navigation, `aria-*` state, reduced motion, and modal inertness are functional
-  requirements.
-- Add or update focused tests for bug fixes, edge cases, store transactions,
-  sanitization, routing, and interactive behavior.
-- Preserve existing user changes. Inspect the working tree before editing and do
-  not overwrite unrelated modifications.
-- Do not edit generated files, dependency lockfiles, or dependencies unless they
-  are part of the approved scope.
-
-## 11. Testing Guidance
-
-- Vitest runs in jsdom with shared setup in `src/test/setup.ts`.
-- Reuse helpers under `src/test/` for async control, browser APIs, HTTP mocks, and
-  router setup.
-- Store tests must create and activate an isolated Pinia instance.
-- Test success and failure paths at network boundaries, including malformed data,
-  incorrect content types, missing fragments, unsafe URLs/slugs, and stale or
-  aborted requests.
-- For interactive components, cover keyboard and pointer behavior, responsive
-  media queries, timers, focus restoration, and reduced-motion preferences when
-  relevant.
-- Do not change production behavior solely to make a weak test pass. Fix the
-  contract or improve the test setup.
-
-## 12. Change Workflow
-
-Before implementation approval:
-
-1. Read this file and inspect the relevant source and tests.
-2. Check the working tree and identify unrelated user changes.
-3. Explain the observed behavior, proposed scope, risks, and meaningful choices.
-4. Wait for explicit user approval.
-
-After implementation approval:
-
-1. Make the smallest coherent change within the approved scope.
-2. Preserve the data-loading, sanitization, navigation, accessibility, and theme
-   boundaries described above.
-3. Inspect the affected tests and add or update coverage proportional to the
-   behavior changed.
-4. Run the relevant verification commands.
-5. Update this `AGENTS.md` when the change affects anything it documents.
-6. Update both READMEs when the change affects their user-facing documentation.
-7. Report changed files, verification results, and any remaining risk or follow-up.
-
-Never modify `TODO.md` during this workflow.
+Naming conventions:
+
+- Custom elements and content prefixes are `tbc-*` (`icon-*` for inline icons).
+- CSS classes are `tbi-*` (Taberna internal), utilities `tbu-*`, tokens `--*`.
+- Pages: `*.page.vue`. Stores: `*.store.ts`. Utils: `*.util.ts`.
+- Files under `components/` and pages are lowercase and hyphenated; the root
+  shell files are `App.vue` and `AppTemplate.vue`.
+
+## 6. Bootstrap and Application Shell
+
+`src/main.ts` imports `@/style.css`, registers `web-components` and
+`web-icons`, then installs Pinia and the router and mounts `App.vue`.
+
+`App.vue` renders, in order: `<Loading />`, `<Error />`, `<AppTemplate>` with
+`<router-view />`. `onMounted` calls `initApp()` and swallows rejections
+(`.catch(() => undefined)`) because the error store already captured them.
+`initApp()` only awaits language detection. The shell mounts immediately; flux
+instances wait for a nonempty locale. Only language detection uses the loading
+tokens today; fragment fetches do not keep the loading overlay open.
+
+`AppTemplate.vue` is the content-to-layout bridge. It maps slots to fragments:
+
+| Slot                | Source                                                      |
+| ------------------- | ----------------------------------------------------------- |
+| `header-brand`      | `brand.htm`                                                  |
+| `header-nav`        | `header-nav.htm`                                             |
+| `footer-brand`      | `brand.htm`                                                  |
+| `footer-complement` | inline social icon links (`/icons/*.svg`)                   |
+| `footer-body`       | `footer.htm`                                                 |
+| `footer-copyright`  | `copyright.htm`                                              |
+| `sidebar-brand`     | `brand.htm` (click closes the sidebar)                       |
+| `sidebar-body`      | `sidebar-nav.htm` (click closes the sidebar)                 |
+| `sidebar-footer`    | `<tbc-language>` (click closes the sidebar)                  |
+
+Adding a region means: add the slot to `templates/default.vue`, then fill it in
+`AppTemplate.vue` with a `<tbc-flux content-file="...">`, then create the
+matching `public/content/{locale}/{file}.htm` in **every** enabled locale.
+
+`templates/default.vue` owns all layout structure and styling: sticky blurred
+header, `hidden md:flex` nav, mobile menu toggle (`hideToggleMenu` prop),
+`<main>` slot, footer with brand/complement/body, copyright row with the
+"Powered by Mineot" link, a fixed backdrop, and a fixed off-canvas sidebar.
+Sidebar slots receive a `close` callback.
+
+## 7. State (`src/stories/`)
+
+Stores are setup-style Pinia stores. `app.store.ts` is a facade that composes
+the three domain stores and re-exports their refs/actions — components import
+`useAppStore()` only, never the domain stores directly.
+
+- `loading.store.ts` — `$loading` is a stack of tokens. `startLoading()` returns
+  a token, `stopLoading(token)` removes it, and `loading` is `true` while the
+  stack is non-empty. **Every token must be stopped in a `finally` block.**
+- `error.store.ts` — `captureError(fn, { title, message, status?, rethrow? })`
+  runs an async function, logs the cause to the console, sets a single
+  `$error` manifest, and resolves to `true`/`false`. With `rethrow: true` it
+  rethrows instead of resolving `false`. Status defaults to `500`; flux does
+  not propagate the original HTTP status into the overlay. Later failures
+  overwrite earlier ones. There is no reset/dismiss action, and successful
+  calls do not clear an existing error.
+- `language.store.ts` — see section 8.
+
+Conventions: use `storeToRefs()` for anything reactive taken out of a store in a
+component; actions and plain functions may be destructured directly.
+
+## 8. Language Resolution
+
+`public/config/languages.json` is the only configuration file:
+
+```json
+{
+  "default": "en-us",
+  "available": ["pt-br", "en-us"],
+  "flags": { "pt-br": "🇧🇷", "en-us": "🇺🇸" },
+  "names": { "pt-br": "Português (Brasil)", "en-us": "English (United States)" }
+}
+```
+
+Rules:
+
+- Author locale keys in lowercase (`pt-br`). Every locale in `available` needs
+  a `flags` and a `names` entry and a complete `public/content/{locale}/` set.
+- `default` must be present in `available` as an authoring requirement.
+  The resolver falls back to the first locale if the default is unsupported.
+- Matching trims and lowercases candidates, but returns the original entry
+  from `available`; manifest keys and directory names are not rewritten.
+- Runtime schema validation only checks that `available` is a nonempty array.
+  Entry types, `default`, `flags`, and `names` are not fully validated. Missing
+  entries in existing maps yield empty strings; missing maps or non-string
+  locales can still cause runtime errors.
+
+`detectLanguage()`:
+
+1. fetches `${BASE_URL}config/languages.json` and rejects a non-`ok` response
+   or an empty `available` array (wrapped by `captureError` with
+   `rethrow: true`, so a broken manifest leaves a full-screen error);
+2. resolves the locale in this order: value stored in `localStorage` key
+   **`tblang`** (not `taberna-lang`), then `navigator.languages`, then
+   `navigator.language`, then `default`, then `available[0]` — exact normalized
+   match only, no region fallback like `pt` → `pt-br`;
+3. persists the resolved locale.
+
+The manifest is kept in memory only (`$manifest`); it is refetched on every page
+load. `language`, `languages`, `languageFlag`, and `languageName` are computed
+from it and return empty values before detection completes.
+
+`switchLanguage(locale)` requires an exact `available.includes(locale)` match
+(without normalization), persists to `tblang`, and
+calls `window.location.reload()`. **Language switching is a full reload, not an
+in-place swap** — do not assume reactive re-fetch behavior in the UI. Storage
+read/write failures are swallowed; a failed write can prevent the requested
+switch from surviving the reload. The hash route is retained.
+
+## 9. Content Fragments and the Flux Pipeline
+
+`src/components/flux.vue` is the content renderer:
+
+```html
+<tbc-flux content-file="home.htm"></tbc-flux>
+```
+
+- `watch([language, () => props.contentFile], ..., { immediate: true })` clears
+  the current content, then loads the fragment for the active locale.
+- `src/utils/flux.util.ts` provides the boundary:
+  - `normalizeFragmentPath(file)` rejects paths starting with `/`, containing
+    `\`, containing `..`, containing empty `/`-separated segments, or not ending
+    in `.htm`;
+  - `isFullHtmlDocument(text)` rejects bodies starting with `<!doctype html` or
+    `<html` (SPA fallback detection);
+  - `loadContentFragment({ base, locale, file })` builds
+    `${base}content/${locale}/${file}`, requires `response.ok`, and applies the
+    document check.
+- The fragment string is injected with **`v-html`** — the component has no style
+  block, and DOMPurify is not used anywhere in `src/`.
+- Missing/empty `content-file` or an unresolved locale leaves flux empty
+  without fetching. Nested file paths are supported.
+- There is no cancellation, stale-response guard, application cache, or request
+  deduplication. Each instance fetches independently, including the three
+  `brand.htm` instances. Rapid prop changes can display stale content.
+- It emits `click`; `AppTemplate.vue` uses it to close the sidebar.
+- Failures go through `captureError` with `Flux content error` /
+  `Failed to load file content: {file}`, so a broken fragment triggers the
+  full-screen error overlay.
+
+Fragments are HTML fragments only. Never include `<!doctype>`, `<html>`,
+`<head>`, or `<body>`. This is an authoring rule, not complete validation:
+`isFullHtmlDocument` only recognizes leading whitespace followed by
+`<!doctype html` or `<html` (case-insensitive). It does not reject isolated
+`<head>`/`<body>` tags or a document preceded by a comment. The loader does not
+check Content-Type, decode path escapes, or validate the locale as a path
+segment. These checks are basic fallback detection, not a sanitizer or a
+complete boundary for arbitrary user-supplied paths.
+
+Consequences of using `v-html` today: fragment files are effectively trusted
+author content. They may use Tailwind utilities, `tbu-*` utilities, semantic CSS
+variables, and registered `tbc-*` elements. Vue directives/interpolations
+in fetched HTML are not compiled as Vue templates. Introducing sanitization (the
+unused `dompurify` dependency is installed and ready) is an architectural
+change — get explicit approval, and update `flux.vue`, the element registry, and
+the documentation together.
+
+Asset paths in fragments are written absolute (`/images/logo.png`), which works
+for root deployments but not for subdirectory hosting. Vite copies `public/` fragments without transforming embedded
+URLs. See 11.4.
+
+`index.html` declares this meta Content Security Policy:
+`default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';
+img-src 'self' https://placehold.co data:; font-src 'self';`.
+There is no application-level link sanitization, protocol allowlist, or
+`rel` rewriting. CSP does not replace sanitization. Approved external asset
+origin changes must account for the relevant CSP directive.
+
+## 10. Routing
+
+`src/router.ts` uses `createWebHashHistory(import.meta.env.BASE_URL)`:
+
+| Route        | Name               | Component                  |
+| ------------ | ------------------ | -------------------------- |
+| `/`          | `home`             | `home.page.vue`            |
+| `/language`  | `Language Switcher`| `language-switcher.page.vue` |
+| `/:slug(.*)` | `page`             | `slug.page.vue` (disabled) |
+
+- `scrollBehavior` restores the saved position, smooth-scrolls to `_to.hash`, or
+  returns to the top.
+- Internal links use hash URLs. Only `#/` and `#/language` have working page
+  bodies. Neither `#/{path}.htm` nor the bundled `#/iten1`–`#/iten3` links
+  load fragments today; adding a file alone does not enable a route.
+- The catch-all leaves the page body empty while the shell remains visible:
+  the implementation in `slug.page.vue` is commented out,
+  including its `pageStatus` state machine, `AbortController` cleanup, and
+  `@util/...` / `@store/...` / `@layout/...` imports from a **previous alias
+  scheme that no longer exists**. Only `@` is configured (in both `tsconfig.json`
+  and `vite.config.ts`).
+- When re-enabling dynamic pages, re-derive the loader from
+  `loadContentFragment()` and the current `tbc-flux` error handling; do not
+  revive the commented code as-is.
+
+## 11. Known Gaps and Dead Code
+
+Documented deliberately so agents do not "fix" them silently or claim they work.
+
+1. **`npm run lint` is broken.** All 11 Vue files have parsing errors: ten
+   report `'>' expected`, and `slug.page.vue` reports `Type expected`. The
+   TypeScript recommended config applies to both `*.ts` and `*.vue` after the
+   Vue config, replacing `vue-eslint-parser`. The later `parserOptions.parser`
+   does not restore the outer Vue parser. Fixing parser order/scoping is a
+   prerequisite before lint can check Vue templates. An override also targets
+   the deleted `src/components/layouts/content.vue`.
+2. **No tests exist.** `npm test` exits 1. `src/test/setup.ts` is empty, and
+   `@vue/test-utils` and `jsdom` are installed but unused.
+3. **`v-html` is unsanitized** and `dompurify` is an unused dependency
+   (section 9).
+4. **Fragment asset paths break subdirectory hosting:** `/images/logo.png`
+   remains absolute in copied `public/content/` fragments. The verified build
+   rewrites font/texture URLs from CSS, asset URLs in `index.html`, and social
+   icons in `AppTemplate.vue` to relative references. Do not treat every
+   absolute source URL as a production failure; inspect emitted files.
+   Fragment URLs need deployment-relative authoring or approved base-aware
+   handling.
+5. **Dead CSS:** `src/styles/app.css` still sets `display: contents` for
+   `tbc-backdrop` and `tbc-sidebar`, elements that no longer exist (the sidebar
+   is now `.tbi-app-layout-sidebar`).
+6. **Registered but unused:** `tbc-carousel` (`components/carousel.vue`) and
+   `icon-home` (`web-icons.ts`) are not referenced by the app or by any
+   fragment.
+7. **Token drift:** `error.vue` and `loading.vue` use raw `z-300` / `z-200`,
+   while `theme.css` defines `--z-loader: 999`, `--z-sidebar: 150`,
+   `--z-backdrop: 100`. Prefer adding or reusing a `--z-*` token over new raw
+   z-index utilities.
+8. **Accessibility gaps:** the language chooser uses clickable `div` elements;
+   the menu opener is a clickable SVG; the close button has no accessible name.
+   The off-screen sidebar has no `inert`/`aria-hidden`, focus trap, focus
+   restoration, or Escape handler. Loading/error overlays lack status/alert
+   semantics; the loader and sidebar do not handle reduced motion. Section 14
+   states requirements, not completed accessibility coverage.
+9. **Undefined backdrop token:** `--backdrop-color` references the undefined
+    `--color-secondary-bg`. `tbu-secondary-bg` is a utility, not a CSS variable.
+10. **Partial data/request validation:** language schema checks are incomplete;
+    flux has no cancellation/stale-response protection (sections 8–9).
+
+## 12. Styling and Theme
+
+`src/style.css` imports, in order: `tailwindcss`, `styles/fonts.css`,
+`styles/theme.css`, `styles/utilities.css`, `styles/app.css`.
+
+- `theme.css` holds `@theme` font families (`--font-sans`, `--font-serif`,
+  `--font-mono`, `--font-fancy`) and `:root` semantic tokens: z-index,
+  `--duration`, `--texture`, `--rounded`, the primary/secondary/asset color
+  families (each with `-soft` and `-opaque` variants), borders, block/container
+  spacing multipliers, and component-only tokens (`--carousel-*`). Several
+  legacy link/header/footer tokens are commented out.
+- `utilities.css` defines `tbu-*` utilities via `@utility`: duration, texture,
+  rounded, color helpers, `tbu-asset-link`, `tbu-asset-pill`, `tbu-shadow`,
+  `tbu-backdrop`, border helpers, and the responsive `tbu-container` /
+  `tbu-block`.
+- Every `<style>` block that uses Tailwind directives must start with
+  `@reference "@/style.css";`.
+- Custom elements use `shadowRoot: false` (light DOM). Vue `scoped` styles
+  still use generated scope attributes; they do not automatically reach
+  arbitrary HTML injected by `v-html`. Use global utilities for fragments.
+  Carousel styles are unscoped for slotted children; flux has no style block,
+  and language has a scoped block.
+- Breakpoints: `48rem` (medium) and `64rem` (large). `tbu-container` /
+  `tbu-block` switch at those widths; the carousel activates multi-column at
+  `48rem`.
+- Rules: semantic tokens over raw palette classes, `--z-*` tokens over raw
+  `z-*`, mobile-first, visible focus states, respect
+  `prefers-reduced-motion` for non-essential motion.
+- Keep fonts self-hosted.
+
+## 13. Custom Elements and Icons
+
+`src/web-components.ts` registers Vue components as custom elements with
+`shadowRoot: false`, guarded by `customElements.get(name)`. To add one:
+
+1. create the component in `src/components/`;
+2. add it to the `elements` map with its `tbc-*` tag;
+3. make sure fragment attributes match the component's props
+   (kebab-case attribute → camelCase prop). Add styles when needed, with
+   `@reference "@/style.css"` for Tailwind directives; choose scoping based on
+   whether selectors need to reach authored/slotted content;
+4. document the element and its attributes here; keep the README minimal.
+
+Currently registered:
+
+| Element         | Attribute(s)     | Default | Behavior                                                        |
+| --------------- | ---------------- | ------- | --------------------------------------------------------------- |
+| `tbc-flux`      | `content-file`   | —       | Loads `content/{locale}/{file}` and injects it with `v-html`     |
+| `tbc-language`  | `flag-only`      | `false` | Links to `#/language`; hides the language name when set          |
+| `tbc-carousel`  | `total-per-page` | `3`     | Direct slotted elements are items grouped into pages; 1 item/page below `48rem`         |
+| `tbc-carousel`  | `interval`       | `3000`  | Autoplay ms; `0` disables it. Countdown + pause/play button      |
+| `icon-home`     | none             | —       | Lucide `Home` icon (registered, currently unused)               |
+
+Carousel behavior to preserve:
+
+- `total-per-page` is floored and clamped to at least 1; non-finite values
+  become 1. `interval` is clamped to zero; non-finite values disable autoplay.
+- Previous/next navigation wraps. Desktop uses dots, mobile a page counter;
+  controls disappear with at most one page.
+- Automatic mode pauses on hover/focus and disables playback for reduced
+  motion. Explicit Play overrides those automatic pauses; CSS slide animation
+  remains disabled under reduced motion.
+- A `MutationObserver` tracks direct children. Off-page items receive `inert`
+  and `aria-hidden`. Observers, media listeners, and timers are cleaned up on
+  unmount. There is no separate carousel-item custom element.
+
+The registries do not install Pinia into each custom element via `configureApp`;
+store-using elements rely on the shell having activated Pinia. Registration
+alone is not a standalone widget bootstrap. Vite has no
+`compilerOptions.isCustomElement` predicate configured; tags in Vue templates
+and tags in fetched HTML follow different compilation paths.
+
+`web-icons.ts` follows the same pattern for inline Lucide icons (`icon-*`).
+Adding an icon means importing it from `@lucide/vue` and adding it to the map.
+
+## 14. Code Conventions
+
+- Vue Composition API with `<script setup lang="ts">`.
+- Only alias: `@` → `src/`. Do not reintroduce `@store`, `@util`, `@layout`,
+  `@widget`, or `@style` aliases.
+- Keep TypeScript strictness; avoid broad casts and `any` when a precise type is
+  possible (`any` is tolerated in the custom-element registries because
+  `defineCustomElement` needs it).
+- Validate file-backed and runtime data explicitly; TypeScript types do not
+  validate fetched JSON or HTML.
+- No code comments unless the user asks for them or the behavior is not
+  expressible through names and structure.
+- Accessibility is a requirement: semantic elements, `aria-*` state, keyboard
+  operability, visible focus, reduced-motion handling, `inert`/`aria-hidden` for
+  off-screen carousel items.
+- Inspect `git status` before editing and preserve unrelated user changes.
+- Do not edit `dist/`, `package-lock.json`, or dependency versions unless that
+  is the approved scope.
+- Preserve the boundaries in sections 8–12 (locale resolution, fragment
+  validation, hash routes, theme tokens) when refactoring.
+
+## 15. Change Workflow
+
+Before implementing:
+
+1. Read this file and inspect the relevant source.
+2. Check `git status` and identify unrelated user changes.
+3. State the observed behavior, the proposed scope, and any meaningful choice
+   that needs a decision.
+4. Wait for explicit approval.
+
+After implementing:
+
+1. Make the smallest coherent change inside the approved scope.
+2. Preserve the loading, error, locale, fragment, routing, theme, and
+   accessibility boundaries described above.
+3. Run the relevant verification: `npm run typecheck` always; `npm run build`
+   when bundling or deployment can be affected; `npm run lint` and `npm run
+   test` with their known failures (11.1, 11.2) reported honestly.
+4. Update `AGENTS.md` if anything it documents changed, and `README.md` only
+   if the change affects its overview, technologies, installation, build, or
+   license.
+5. Report changed files, verification commands with their real results, and any
+   remaining risk or follow-up.
+
+Never modify `TODO.md`.
