@@ -1,10 +1,10 @@
 <template>
-  <div class="tbi-error" v-if="error">
+  <div :class="['tbi-error', { flex: error, hidden: !error }]">
     <div class="tbi-error-container">
-      <div class="font-bold">{{ error.title }}</div>
+      <div class="font-bold">{{ error?.title }}</div>
       <div class="flex flex-wrap items-center gap-2">
-        <span>{{ error.message }}</span>
-        <span class="text-xs">({{ error.status }})</span>
+        <span>{{ error?.message }}</span>
+        <span class="text-xs">({{ error?.status }})</span>
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@ const { error } = storeToRefs(useAppStore());
 
 .tbi-error {
   @apply absolute z-300 h-full w-full;
-  @apply flex flex-wrap items-center justify-center gap-2;
+  @apply flex-wrap items-center justify-center gap-2;
   @apply tbu-primary-bg tbu-texture;
 }
 

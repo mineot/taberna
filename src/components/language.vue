@@ -1,9 +1,9 @@
 <template>
-  <a class="tbi-language" href="#/language">
-    <div :class="['tbi-language-flag', { mini: props.onlyFlag }]">
+  <a class="tbi-language" href="#/language" @click="emit('click')">
+    <div :class="['tbi-language-flag', { 'flag-only': props.flagOnly }]">
       {{ languageFlag }}
     </div>
-    <div v-if="!props.onlyFlag" class="tbi-language-name">
+    <div v-if="!props.flagOnly" class="tbi-language-name">
       <span>{{ languageName }}</span>
     </div>
   </a>
@@ -15,8 +15,10 @@ import { storeToRefs } from 'pinia';
 
 const { languageFlag, languageName } = storeToRefs(useAppStore());
 
+const emit = defineEmits(['click']);
+
 const props = defineProps({
-  onlyFlag: {
+  flagOnly: {
     type: Boolean,
     required: false,
     default: false,
@@ -36,7 +38,7 @@ const props = defineProps({
 .tbi-language-flag {
   @apply text-3xl;
 
-  &.mini {
+  &.flag-only {
     @apply text-2xl;
   }
 }

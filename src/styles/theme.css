@@ -1,64 +1,70 @@
 @theme {
   --font-sans:
-    'Roboto', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-serif:
-    'Roboto Serif', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+    'Roboto', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  --font-serif: 'Roboto Serif', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
   --font-mono:
-    'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
+    'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --font-fancy: 'Italianno', cursive;
 }
 
 :root {
   /* UTILS */
+
+  --z-backdrop: 100;
+  --z-sidebar: 150;
+  --z-loader: 999;
+
   --duration: 200ms;
   --texture: url('/images/texture.png');
   --rounded: var(--radius-lg);
 
   /* COLORS */
-  --color-primary-bg: var(--color-neutral-600);
-  --color-primary-text: var(--color-neutral-200);
-  --color-secondary-bg: var(--color-neutral-800);
-  --color-secondary-text: var(--color-neutral-400);
-  --color-asset-bg: var(--color-emerald-500);
-  --color-asset-text: var(--color-emerald-300);
 
-  --backdrop-color: color-mix(
-    in oklab,
-    var(--color-secondary-bg) 30%,
-    transparent
-  );
+  --color-primary: var(--color-neutral-600);
+  --color-primary-soft: var(--color-neutral-200);
+  --color-primary-opaque: color-mix(in oklab, var(--color-primary) 30%, transparent);
 
-  /* LAYOUTS */
-  --block-lg: 6;
-  --block-md: 6;
-  --block-sm: 6;
-  --container-lg: 48;
-  --container-md: 28;
-  --container-sm: 8;
-  --spacing-lg: 4;
-  --spacing-md: 4;
-  --spacing-sm: 4;
+  --color-secondary: var(--color-neutral-800);
+  --color-secondary-soft: var(--color-neutral-400);
+  --color-secondary-opaque: color-mix(in oklab, var(--color-secondary) 30%, transparent);
+
+  --color-asset: var(--color-emerald-500);
+  --color-asset-soft: var(--color-emerald-300);
+  --color-asset-opaque: color-mix(in oklab, var(--color-asset) 30%, transparent);
+
+  /* SHADOW & BACKDROP */
+
+  --shadow-color: color-mix(in oklab, var(--color-black) 50%, transparent);
+  --backdrop-color: color-mix(in oklab, var(--color-secondary-bg) 30%, transparent);
 
   /* BORDERS */
-  --border-color: var(--color-secondary-text);
+
+  --border-color: var(--color-secondary-soft);
   --border-size: 1px;
   --border-style: solid;
 
-  /* SHADOWS */
-  --shadow-color: color-mix(in oklab, var(--color-black) 50%, transparent);
-  --shadow:
-    0 1px 3px 0 var(--shadow-color, rgb(0 0 0) / 0.1),
-    0 1px 2px -1px var(--shadow-color, rgb(0 0 0) / 0.1);
+  /* LAYOUTS */
 
-  /* Z INDEX */
-  --z-backdrop: 50;
-  --z-sidebar: 100;
+  --block-lg: 6;
+  --block-md: 6;
+  --block-sm: 6;
+
+  --container-lg: 48;
+  --container-md: 28;
+  --container-sm: 8;
+
+  /* --spacing-lg: 4;
+  --spacing-md: 4;
+  --spacing-sm: 4; */
 
   /* COMPONENTS ONLY */
 
-  --link-text: var(--color-asset-text);
+  --carousel-dot: color-mix(in oklab, var(--color-primary-soft) 40%, transparent);
+  --carousel-dot-active: var(--color-asset);
+  --carousel-counter: var(--color-primary-soft);
+
+  /* --link-text: var(--color-asset-text);
   --link-text-hover: color-mix(in oklch, var(--color-asset-text), #000 10%);
   --link-text-active: color-mix(in oklch, var(--color-asset-text), #000 20%);
 
@@ -66,24 +72,16 @@
   --link-pill-text: var(--color-asset-text);
   --link-pill-text-hover: var(--color-primary-text);
   --link-pill-bg-hover: var(--color-asset-bg);
-  --link-pill-text-active: color-mix(
-    in oklch,
-    var(--color-primary-text),
-    #000 10%
-  );
+  --link-pill-text-active: color-mix(in oklch, var(--color-primary-text), #000 10%);
   --link-pill-bg-active: color-mix(in oklch, var(--color-asset-bg), #000 10%);
 
   --header-texture: var(--texture);
-  --header-bg-color: color-mix(
-    in oklab,
-    var(--color-secondary-bg) 30%,
-    transparent
-  );
+  --header-bg-color: color-mix(in oklab, var(--color-secondary-bg) 30%, transparent);
 
   --footer-texture: var(--texture);
   --footer-bg-color: var(--color-secondary-bg);
   --footer-ownership-text-color: var(--color-secondary-text);
   --footer-ownership-border-color: var(--color-secondary-text);
   --footer-ownership-border-style: var(--border-style);
-  --footer-ownership-border-size: var(--border-size);
+  --footer-ownership-border-size: var(--border-size); */
 }

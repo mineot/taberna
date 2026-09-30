@@ -1,26 +1,21 @@
 <template>
-  <span v-if="props.text">{{ props.text }}</span>
-  <div v-else-if="props.file" v-html="$content"></div>
+  <div @click="emit('click')" v-html="$content"></div>
 </template>
 
 <script setup lang="ts">
-import { loadContentFragment } from '@/utils/content.util';
+import { loadContentFragment } from '@/utils/flux.util';
 import { ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useAppStore } from '@/stories/app.store';
 
 const { captureError } = useAppStore();
 const { language } = storeToRefs(useAppStore());
-
 const $content = ref<string>('');
 
+const emit = defineEmits(['click']);
+
 const props = defineProps({
-  text: {
-    type: String,
-    required: false,
-    default: undefined,
-  },
-  file: {
+  contentFile: {
     type: String,
     required: false,
     default: undefined,
@@ -28,7 +23,7 @@ const props = defineProps({
 });
 
 watch(
-  [language, () => props.file],
+  [language, () => props.contentFile],
   ([locale, file]) => {
     $content.value = '';
 

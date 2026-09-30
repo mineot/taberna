@@ -1,5 +1,5 @@
 <template>
-  <div class="tbi-loading" v-if="loading">
+  <div :class="['tbi-loading', { flex: loading, hidden: !loading }]">
     <div class="loader"></div>
   </div>
 </template>
@@ -16,7 +16,7 @@ const { loading } = storeToRefs(useAppStore());
 
 .tbi-loading {
   @apply absolute z-200 h-full w-full;
-  @apply flex flex-wrap items-center justify-center gap-2;
+  @apply flex-wrap items-center justify-center gap-2;
   @apply tbu-primary-bg tbu-texture;
 }
 
@@ -30,8 +30,7 @@ const { loading } = storeToRefs(useAppStore());
 .loader::after {
   content: '';
   grid-area: 1/1;
-  --c: no-repeat
-    radial-gradient(farthest-side, var(--color-asset-bg) 92%, #0000);
+  --c: no-repeat radial-gradient(farthest-side, var(--color-asset) 92%, #0000);
   background:
     var(--c) 50% 0,
     var(--c) 50% 100%,
