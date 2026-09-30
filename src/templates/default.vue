@@ -124,7 +124,7 @@ function onHideSidebar() {
   > footer {
     @apply flex flex-col gap-6;
     @apply tbu-container tbu-block tbu-border-top;
-    @apply tbu-secondary-bg-opaque;
+    @apply tbu-secondary-bg-opaque tbu-texture;
 
     > .content {
       @apply flex flex-col gap-4;
