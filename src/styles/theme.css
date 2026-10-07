@@ -1,10 +1,11 @@
 @theme {
   --font-sans:
-    'Roboto', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-    'Noto Color Emoji';
+    'Roboto', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
   --font-serif: 'Roboto Serif', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
   --font-mono:
-    'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
   --font-fancy: 'Italianno', cursive;
 }
 
@@ -50,9 +51,9 @@
   --block-md: 6;
   --block-sm: 6;
 
-  --container-lg: 48;
-  --container-md: 28;
-  --container-sm: 8;
+  --container-lg: 24;
+  --container-md: 14;
+  --container-sm: 4;
 
   /* COMPONENTS ONLY */
 

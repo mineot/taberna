@@ -1,0 +1,38 @@
+.page-custom {
+  @apply flex flex-col gap-4;
+
+  h1 {
+    @apply py-2 text-4xl font-bold;
+    @apply tbu-asset-text;
+  }
+
+  h2 {
+    @apply py-2 text-3xl;
+    @apply tbu-asset-text;
+  }
+
+  p {
+    @apply text-lg;
+  }
+
+  a {
+    @apply text-lg underline;
+    @apply tbu-asset-link;
+  }
+
+  ol {
+    @apply flex flex-col flex-nowrap gap-1;
+
+    li {
+      > span.enum {
+        &::after {
+          @apply mr-2;
+          content: '. ';
+          user-select: none;
+        }
+
+        @apply tbu-asset-text font-bold;
+      }
+    }
+  }
+}

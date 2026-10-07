@@ -1,1 +1,240 @@
-<div>Página Principal</div>
+<div class="page-custom">
+  <h1>Taberna</h1>
+
+  <p>
+    Uma base para criar seu site pessoal, portfólio ou página de apresentação, com liberdade para
+    adaptar o conteúdo e o visual ao seu jeito.
+  </p>
+
+  <p>
+    O Taberna combina uma aplicação Vue com conteúdo organizado em arquivos HTML por idioma. O site
+    funciona no navegador e pode ser distribuído como arquivos estáticos, sem precisar de um
+    backend.
+  </p>
+
+  <a href="https://github.com/mineot/taberna" target="_blank">Conheça o projeto no GitHub</a>
+
+  <h2>Como funciona</h2>
+
+  <p>
+    A aplicação cuida da estrutura do site, da navegação e do carregamento do conteúdo. Os textos
+    ficam em fragmentos HTML separados, permitindo editar o conteúdo sem alterar os componentes Vue.
+  </p>
+
+  <p>
+    Os arquivos estão organizados em <span class="tbu-asset-code-text">public/content/</span>, com
+    uma pasta para cada idioma. Esta página, por exemplo, tem seu conteúdo em
+    <span class="tbu-asset-code-text">public/content/pt-br/home.htm</span>. Outros fragmentos
+    fornecem o conteúdo da marca, dos menus e do rodapé.
+  </p>
+
+  <p>
+    Cada fragmento contém apenas o trecho de HTML que será exibido naquela região, sem precisar
+    repetir a estrutura de um documento completo. A ligação entre os fragmentos e as regiões do
+    layout fica em <span class="tbu-asset-code-text">src/AppTemplate.vue</span>.
+  </p>
+
+  <p>
+    Os idiomas disponíveis, seus nomes, bandeiras e o idioma padrão são definidos em
+    <span class="tbu-asset-code-text">public/config/languages.json</span>. Cada idioma habilitado
+    precisa ter sua própria pasta com os fragmentos correspondentes. A troca de idioma recarrega a
+    página com o conteúdo escolhido.
+  </p>
+
+  <p>
+    Atualmente, a navegação oferece a página inicial e o seletor de idiomas. Criar outro arquivo de
+    conteúdo, por si só, ainda não cria uma nova página navegável.
+  </p>
+
+  <h2>Instalação e primeiros passos</h2>
+
+  <p>
+    Para trabalhar no projeto localmente, tenha <span class="tbu-asset-code-text">Git</span>,
+    <span class="tbu-asset-code-text">Node.js 24</span> e
+    <span class="tbu-asset-code-text">npm</span> instalados.
+  </p>
+
+  <p>Clone o repositório e instale as dependências:</p>
+
+  <div class="tbu-asset-code-panel">
+    <span class="terminal">git clone https://github.com/mineot/taberna.git</span>
+    <span class="terminal">cd taberna</span>
+    <span class="terminal">npm install</span>
+  </div>
+
+  <p>Inicie o servidor de desenvolvimento:</p>
+
+  <div class="tbu-asset-code-panel">
+    <span class="terminal">npm run dev</span>
+  </div>
+
+  <p>
+    Abra no navegador o endereço exibido no terminal. Para começar a personalizar o conteúdo em
+    português, edite os arquivos de <span class="tbu-asset-code-text">public/content/pt-br/</span>,
+    começando por <span class="tbu-asset-code-text">home.htm</span>.
+  </p>
+
+  <p>
+    Se outro idioma estiver sendo exibido, use o seletor de idiomas do site para escolher Português
+    (Brasil).
+  </p>
+
+  <h2>Personalize o tema</h2>
+
+  <p>
+    O tema é configurado em <span class="tbu-asset-code-text">src/styles/theme.css</span>. Esse
+    arquivo reúne as variáveis que definem cores, fontes, espaçamentos, bordas, arredondamento e
+    outros detalhes visuais.
+  </p>
+
+  <p>
+    As cores são organizadas em três famílias: <span class="tbu-asset-code-text">primary</span>,
+    <span class="tbu-asset-code-text">secondary</span> e
+    <span class="tbu-asset-code-text">asset</span>. Elas representam a base visual, os elementos
+    secundários e os destaques do site. Cada família também possui variações para diferentes usos.
+  </p>
+
+  <p>
+    Para mudar os destaques de verde para azul, por exemplo, altere estas variáveis dentro do bloco
+    <span class="tbu-asset-code-text">:root</span> existente:
+  </p>
+
+  <div class="tbu-asset-code-panel">
+    <span class="css">--color-asset: var(--color-blue-500);</span>
+    <span class="css">--color-asset-soft: var(--color-blue-300);</span>
+  </div>
+
+  <p>
+    A variável <span class="tbu-asset-code-text">--color-asset-opaque</span> já deriva da cor
+    principal de destaque e acompanha essa alteração.
+  </p>
+
+  <p>
+    As famílias de fontes ficam no bloco <span class="tbu-asset-code-text">@theme</span>, e os
+    arquivos de fontes são hospedados junto com o projeto, em
+    <span class="tbu-asset-code-text">public/fonts/</span>. Os espaçamentos das regiões e dos
+    contêineres são controlados pelas variáveis <span class="tbu-asset-code-text">--block-*</span> e
+    <span class="tbu-asset-code-text">--container-*</span>.
+  </p>
+
+  <p>
+    As utilities definidas em
+    <span class="tbu-asset-code-text">src/styles/utilities.css</span> utilizam essas variáveis para
+    aplicar o tema ao conteúdo e aos componentes.
+  </p>
+
+  <h2>Templates</h2>
+
+  <p>
+    Os templates definem a estrutura do site, organizando regiões como cabeçalho, conteúdo
+    principal, rodapé e menu lateral. Eles ficam em
+    <span class="tbu-asset-code-text">src/templates/</span> e recebem o conteúdo dessas regiões por
+    meio de espaços chamados slots.
+  </p>
+
+  <p>
+    Atualmente, o Taberna conta com o template <span class="tbu-asset-code-text">default.vue</span>,
+    utilizado por <span class="tbu-asset-code-text">src/AppTemplate.vue</span> para montar o layout
+    com os fragmentos de conteúdo. Novos templates estão nos planos para oferecer outras formas de
+    organizar o site.
+  </p>
+
+  <h2>Componentes e utilities</h2>
+
+  <p>O Taberna inclui componentes que podem ser usados nos fragmentos HTML:</p>
+
+  <ol>
+    <li>
+      <span class="enum">1</span> <span class="tbu-asset-code-text">tbc-flux</span>: carrega um
+      fragmento de conteúdo no idioma ativo.
+    </li>
+    <li>
+      <span class="enum">2</span> <span class="tbu-asset-code-text">tbc-language</span>: exibe o
+      idioma atual e oferece acesso ao seletor de idiomas.
+    </li>
+    <li>
+      <span class="enum">3</span> <span class="tbu-asset-code-text">tbc-carousel</span>: organiza
+      elementos em um carrossel com navegação e reprodução automática configurável.
+    </li>
+  </ol>
+
+  <p>
+    Para a apresentação visual, o projeto utiliza Tailwind CSS e utilities próprias com o prefixo
+    <span class="tbu-asset-code-text">tbu-*</span>. Entre elas estão recursos para cores,
+    espaçamento, bordas, links e fundos, como
+    <span class="tbu-asset-code-text">tbu-container</span>,
+    <span class="tbu-asset-code-text">tbu-block</span> e
+    <span class="tbu-asset-code-text">tbu-asset-link</span>.
+  </p>
+
+  <h2>Faça o projeto ser seu</h2>
+
+  <p>
+    Uma forma de começar é criar um fork do Taberna na sua conta do GitHub. Assim, você mantém sua
+    própria cópia, registra suas alterações e adapta o projeto ao site que deseja publicar.
+  </p>
+
+  <p>
+    Ao seguir esse caminho, use o endereço do seu fork no comando
+    <span class="tbu-asset-code-text">git clone</span>. Depois, personalize os textos, a marca, as
+    imagens, os links e o tema.
+  </p>
+
+  <p>
+    Manter sua versão em um repositório também facilita acompanhar o histórico das mudanças e
+    compartilhar melhorias com o projeto original.
+  </p>
+
+  <h2>Gere e publique seu site</h2>
+
+  <p>Quando o conteúdo estiver pronto, gere a versão de produção:</p>
+
+  <div class="tbu-asset-code-panel">
+    <span class="terminal">npm run build</span>
+  </div>
+
+  <p>
+    Esse comando verifica o TypeScript e gera o site na pasta
+    <span class="tbu-asset-code-text">dist/</span>. Para conferir o resultado localmente, execute:
+  </p>
+
+  <div class="tbu-asset-code-panel">
+    <span class="terminal">npm run preview</span>
+  </div>
+
+  <p>
+    Para publicar, envie o conteúdo de <span class="tbu-asset-code-text">dist/</span> para uma
+    hospedagem de arquivos estáticos. O servidor de preview serve para conferir o build localmente;
+    a publicação é feita na hospedagem escolhida.
+  </p>
+
+  <p>
+    Se o site ficar em um subdiretório, revise os caminhos das imagens e de outros recursos nos
+    fragmentos. Caminhos que começam com <span class="tbu-asset-code-text">/</span>, como
+    <span class="tbu-asset-code-text">/images/logo.png</span>, apontam para a raiz do domínio e
+    podem precisar de ajuste.
+  </p>
+
+  <p>
+    Depois de alterar o projeto, gere um novo build para atualizar os arquivos que serão publicados.
+  </p>
+
+  <h2>Contribua com o Taberna</h2>
+
+  <p>
+    Sua ajuda é bem-vinda. Você pode contribuir relatando problemas, sugerindo melhorias, revisando
+    textos, ajudando com traduções ou enviando alterações no código.
+  </p>
+
+  <p>
+    Use o <a href="https://github.com/mineot/taberna">repositório no GitHub</a> para compartilhar uma ideia,
+    abrir uma issue ou enviar um pull request. Ao relatar um problema, explique o que aconteceu e,
+    se possível, como reproduzi-lo.
+  </p>
+
+  <p>
+    Se o Taberna for útil para você e quiser apoiar financeiramente seu desenvolvimento, essa
+    contribuição também será muito bem-vinda. O apoio é opcional, e toda forma de participação tem
+    valor.
+  </p>
+</div>

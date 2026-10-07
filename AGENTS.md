@@ -98,8 +98,11 @@ Scope and limitations:
   are hardcoded English in components/stores. Only editorial content and
   language names/flags are localized. `index.html` keeps `lang="en"`, title,
   and description static across locale changes.
-- Bundled content, images (`logo.png`, `texture.png`, `placehold.co` images) and
-  the `Iten 1..3` links are placeholders.
+- The Portuguese `public/content/pt-br/home.htm` contains a Markdown draft of
+  the project introduction and getting-started guide, awaiting author conversion
+  to HTML and styling. Flux does not parse Markdown. Other bundled content,
+  images (`logo.png`, `texture.png`, `placehold.co` images) and the `Iten 1..3`
+  links remain placeholders.
 
 ## 3. Technology Stack
 

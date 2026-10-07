@@ -1,15 +1,15 @@
 <template>
   <Default>
     <template #header-brand>
-      <tbc-flux content-file="brand.htm"></tbc-flux>
+      <tbc-flux content-file="complements/brand.htm"></tbc-flux>
     </template>
 
     <template #header-nav>
-      <tbc-flux content-file="header-nav.htm"></tbc-flux>
+      <tbc-flux content-file="complements/header-nav.htm"></tbc-flux>
     </template>
 
     <template #footer-brand>
-      <tbc-flux content-file="brand.htm"></tbc-flux>
+      <tbc-flux content-file="complements/brand.htm"></tbc-flux>
     </template>
 
     <template #footer-complement>
@@ -33,19 +33,19 @@
     </template>
 
     <template #footer-body>
-      <tbc-flux content-file="footer.htm"></tbc-flux>
+      <tbc-flux content-file="complements/footer.htm"></tbc-flux>
     </template>
 
     <template #footer-copyright>
-      <tbc-flux content-file="copyright.htm"></tbc-flux>
+      <tbc-flux content-file="complements/copyright.htm"></tbc-flux>
     </template>
 
     <template #sidebar-brand="{ close }">
-      <tbc-flux content-file="brand.htm" @click="close"></tbc-flux>
+      <tbc-flux content-file="complements/brand.htm" @click="close"></tbc-flux>
     </template>
 
     <template #sidebar-body="{ close }">
-      <tbc-flux content-file="sidebar-nav.htm" @click="close"></tbc-flux>
+      <tbc-flux content-file="complements/sidebar-nav.htm" @click="close"></tbc-flux>
     </template>
 
     <template #sidebar-footer="{ close }">

@@ -67,8 +67,8 @@
 
 @utility tbu-asset-pill {
   @apply flex;
-  @apply tbu-duration cursor-pointer;
   @apply rounded-sm px-2 py-1;
+  @apply tbu-duration cursor-pointer;
 
   color: var(--color-asset-soft);
 
@@ -80,6 +80,30 @@
   &:active {
     color: var(--color-primary);
     background-color: color-mix(in oklch, var(--color-asset), #000 10%);
+  }
+}
+
+@utility tbu-asset-code-text {
+  @apply tbu-asset-text font-mono font-light;
+}
+
+@utility tbu-asset-code-panel {
+  @apply tbu-secondary-bg p-4 text-lg;
+  @apply flex flex-col gap-1;
+
+  > span.terminal {
+    &::before {
+      @apply mr-2;
+      content: '\276F ';
+      user-select: none;
+    }
+
+    @apply tbu-asset-code-text;
+  }
+
+  > span.css {
+    @apply font-serif text-base font-semibold;
+    @apply tbu-asset-text;
   }
 }
 
