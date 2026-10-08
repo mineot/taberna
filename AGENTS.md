@@ -115,7 +115,9 @@ Scope and limitations:
 | `pt-br/pages/support.htm` | Financial-support page with Bitcoin, dollar/euro, and Pix subsections; temporary `placehold.co` images and pending payment details. |
 | `pt-br/pages/contribute.htm` | Contribution page highlighting the project's early stage, development, ideas/bug reports, documentation/translations, and numbered GitHub contribution steps. |
 | `pt-br/complements/` | Header and sidebar navigation link to the guides. The footer groups home and guide links under “Conheça” and “Personalize”, participation links under “Participe”, and a closing phrase. |
-| `en-us/` | Older placeholder content: six files at the locale root, with no `pages/` or `complements/` directories. |
+| `en-us/home.htm` | English translation of the Portuguese overview. |
+| `en-us/pages/` | English counterparts of the seven Portuguese guides: howwork, themes, templates, components, utilities, support, and contribute. |
+| `en-us/complements/` | English shell fragments: brand, header-nav, sidebar-nav, footer, and copyright. The menus and footer mirror the Portuguese grouping and links. |
 
 Paths above are relative to `public/content/`. Bundled `logo.png`, `texture.png`,
 and `placehold.co` images remain sample assets. Do not treat authored Portuguese
@@ -133,8 +135,9 @@ escaped text inside `pre > code`; sample markup, scripts, and styles are shown
 as text, not live nodes. No Markdown drafts remain in these five pages.
 Browser interactions have not been verified for these converted guides.
 
-English is still enabled and is the default locale, but lacks the complement
-paths required by the shell and all five guide paths (see section 11.11).
+English is enabled and is the default locale. Its `public/content/en-us/` tree
+now mirrors `pt-br/`, with `complements/` and the seven `pages/` guides, so the
+shell fragments and guide links resolve for both locales.
 
 The Portuguese footer links “Apoie” and “Contribua” to `#/pages/support.htm`
 and `#/pages/contribute.htm`. The support fragment uses `.page-custom`, with
@@ -197,9 +200,8 @@ public/
                             support page; contribute.htm contribution guide
   content/pt-br/complements/ brand.htm, header-nav.htm, sidebar-nav.htm,
                             footer.htm, copyright.htm
-  content/en-us/            legacy root-level home.htm, brand.htm, header-nav.htm,
-                            sidebar-nav.htm, footer.htm, copyright.htm;
-                            no pages/ or complements/ directories
+  content/en-us/            English translation mirroring pt-br: home.htm,
+                            pages/ guides, complements/ shell fragments
   fonts/                    self-hosted .ttf files
   icons/                    social SVG icons
   images/                   logo.png, texture.png
@@ -244,7 +246,7 @@ Naming conventions:
 | Change | Primary location |
 | --- | --- |
 | Home copy or detailed guide content | Relevant file under `public/content/pt-br/`; preserve the format documented in section 2. |
-| Menu links, brand, or footer copy | `public/content/{locale}/complements/`; account for the incomplete English structure. |
+| Menu links, brand, or footer copy | `public/content/{locale}/complements/` in every enabled locale. |
 | Which content fills a layout region | `src/AppTemplate.vue`. |
 | Layout structure or sidebar behavior | `src/templates/default.vue`. |
 | Shared visual values | `src/styles/theme.css`. |
@@ -336,7 +338,7 @@ Authoring requirements and current resolver behavior:
 
 - Author locale keys in lowercase (`pt-br`). Every locale in `available` needs
   a `flags` and a `names` entry and a complete `public/content/{locale}/` set.
-  This completeness requirement is not currently met by `en-us` (11.11).
+  Both enabled locales currently provide a complete set.
 - `default` must be present in `available` as an authoring requirement.
   The resolver falls back to the first locale if the default is unsupported.
 - Matching trims and lowercases candidates, but returns the original entry
@@ -495,14 +497,6 @@ Documented deliberately so agents do not "fix" them silently or claim they work.
     `--color-secondary-bg`. `tbu-secondary-bg` is a utility, not a CSS variable.
 10. **Partial data/request validation:** language schema checks are incomplete;
     flux has no cancellation/stale-response protection (sections 8–9).
-11. **English content paths are incomplete:** `en-us` remains enabled and is
-    the default, but its five complements are at the locale root rather than
-    under `complements/`, and it has no counterparts for the five Portuguese
-    guides under `pages/`. The ten expected paths are therefore absent. Shell
-    fragment requests for English cannot load those files from this tree and
-    follow Flux's error handling; there is no fallback to root-level files or
-    another locale. Do not infer working multilingual navigation from a
-    successful build or silently translate, move, or disable that content.
 
 ## 12. Styling and Theme
 

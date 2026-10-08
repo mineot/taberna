@@ -1,0 +1,510 @@
+<div class="page-custom">
+  <h1>How Taberna works</h1>
+
+  <p>
+    Taberna is a foundation for personal sites, portfolios, and landing pages. It brings together an
+    application that organizes the site, content files you can edit, and resources to customize the
+    presentation.
+  </p>
+
+  <p>
+    To work with the project, it helps to understand how these parts connect: where the texts live,
+    how a page is loaded, how languages are chosen, and what needs to be generated to publish the
+    site.
+  </p>
+
+  <hr />
+
+  <h2>The project's logic</h2>
+
+  <p>
+    Taberna runs entirely in the browser. The Vue application builds the interface structure and
+    loads the HTML files that make up the content. Navigation between pages is handled by Vue
+    Router.
+  </p>
+
+  <p>
+    Content is kept separate from the application components. You can review a text or change a
+    menu's links by editing its HTML fragments. Changes to the layout structure and interactive
+    behaviors live in the Vue files.
+  </p>
+
+  <p>
+    The result can be hosted as static files. The project does not require a backend to display its
+    pages and does not include a database or admin panel: editing happens in your repository's
+    files.
+  </p>
+
+  <hr />
+
+  <h2>File organization</h2>
+
+  <p>This is a simplified view of the folders and files used day to day:</p>
+
+  <pre><code>public/
+  config/
+    languages.json
+  content/
+    pt-br/
+      home.htm
+      pages/
+        howwork.htm
+        themes.htm
+        templates.htm
+        components.htm
+        utilities.htm
+      complements/
+        brand.htm
+        header-nav.htm
+        sidebar-nav.htm
+        footer.htm
+        copyright.htm
+    en-us/
+  images/
+  icons/
+  fonts/
+src/
+  App.vue
+  AppTemplate.vue
+  router.ts
+  templates/
+    default.vue
+  components/
+  styles/
+  style-customs.css</code></pre>
+
+  <ol>
+    <li class="dot">
+      <span class="tbu-asset-code">public/content/</span>: holds the content, separated into folders
+      by language.
+    </li>
+    <li class="dot">
+      <span class="tbu-asset-code">home.htm</span>: contains the body of that language's home page.
+    </li>
+    <li class="dot">
+      <span class="tbu-asset-code">pages/</span>: organizes the fragments for the inner pages.
+    </li>
+    <li class="dot">
+      <span class="tbu-asset-code">complements/</span>: holds the shared pieces, such as the brand,
+      menus, and footer.
+    </li>
+    <li class="dot">
+      <span class="tbu-asset-code">public/config/languages.json</span>: defines the available
+      languages and their information.
+    </li>
+    <li class="dot">
+      <span class="tbu-asset-code">public/images/</span>,
+      <span class="tbu-asset-code">public/icons/</span>, and
+      <span class="tbu-asset-code">public/fonts/</span>: store resources used by the site.
+    </li>
+    <li class="dot">
+      <span class="tbu-asset-code">src/templates/</span>: contains the layouts that organize the
+      interface regions.
+    </li>
+    <li class="dot">
+      <span class="tbu-asset-code">src/components/</span>: contains the application components.
+    </li>
+    <li class="dot">
+      <span class="tbu-asset-code">src/styles/</span>: holds the theme, font, utility, and global
+      style definitions.
+    </li>
+    <li class="dot">
+      <span class="tbu-asset-code">src/style-customs.css</span>: gathers custom content styles, such
+      as those used in this documentation.
+    </li>
+  </ol>
+
+  <p>
+    The <span class="tbu-asset-code">pages/</span> and
+    <span class="tbu-asset-code">complements/</span> folders help organize the content. Files are
+    loaded through the paths given in the links and in the application; placing them in these
+    folders does not automatically create menu entries.
+  </p>
+
+  <hr />
+
+  <h2>How a page is assembled</h2>
+
+  <p>
+    When the site opens, the application starts detecting the language and builds the shared page
+    structure. The content components wait for the language to be defined before fetching their
+    files.
+  </p>
+
+  <p>Each part has a responsibility:</p>
+
+  <ol>
+    <li class="enum">
+      <div>1</div>
+      <span class="tbu-asset-code">App.vue</span> brings together the application structure, the
+      current route page, and the loading and error screens.
+    </li>
+    <li class="enum">
+      <div>2</div>
+      The template defines where the header, main area, footer, and sidebar are located.
+    </li>
+    <li class="enum">
+      <div>3</div>
+      <span class="tbu-asset-code">AppTemplate.vue</span> fills the template regions with the
+      corresponding complements and components.
+    </li>
+    <li class="enum">
+      <div>4</div>
+      The router determines which content should appear in the main area.
+    </li>
+    <li class="enum">
+      <div>5</div>
+      The <span class="tbu-asset-code">tbc-flux</span> component fetches the fragment in the active
+      language and inserts its HTML into the page.
+    </li>
+  </ol>
+
+  <p>
+    For example, the brand shown in the header, footer, and sidebar comes from the same file,
+    <span class="tbu-asset-code">complements/brand.htm</span>. Changing that fragment updates the
+    content used in those three regions on the next load.
+  </p>
+
+  <p>
+    When you navigate through an internal link, the main area receives the content of the new route,
+    keeping the site's shared structure.
+  </p>
+
+  <hr />
+
+  <h2>How to write the content</h2>
+
+  <p>
+    The <span class="tbu-asset-code">.htm</span> files must contain HTML fragments: only the
+    elements that will be shown in that part of the site. There is no need to repeat the structure
+    of a complete HTML5 document.
+  </p>
+
+  <p>
+    Use headings to organize the topics, paragraphs to develop the ideas, and lists when there is a
+    sequence or a set of items. Links and images can also be part of the fragments.
+  </p>
+
+  <p>
+    Published content is interpreted as HTML. Taberna does not convert Markdown automatically; if
+    you use Markdown to prepare a draft, you need to convert it to HTML before the final version.
+  </p>
+
+  <p>
+    Fragments can use style classes and custom components registered by the project. Vue expressions
+    and directives, such as interpolations and
+    <span class="tbu-asset-code">v-if</span>, are not compiled in these files. Behaviors that depend
+    on Vue must be implemented in the application components.
+  </p>
+
+  <p>
+    These files are author content owned by the site owner. The loader does not sanitize the HTML,
+    so only publish content you know and have reviewed.
+  </p>
+
+  <hr />
+
+  <h2>Pages and navigation</h2>
+
+  <p>
+    Internal links use the <span class="tbu-asset-code">#</span> format. The home page is at
+    <span class="tbu-asset-code">#/</span>, and the language switcher is at
+    <span class="tbu-asset-code">#/language</span>.
+  </p>
+
+  <p>
+    For content pages, the part after <span class="tbu-asset-code">#/</span> indicates the
+    fragment's path inside the active language folder. For example:
+  </p>
+
+  <pre><code><span>Address: #/pages/howwork.htm</span>
+<span>Active language: pt-br</span>
+<span>File: public/content/pt-br/pages/howwork.htm</span></code></pre>
+
+  <p>
+    The same address, with English active, looks for
+    <span class="tbu-asset-code">public/content/en-us/pages/howwork.htm</span>. The language does
+    not need to appear in the link.
+  </p>
+
+  <h3>Adding a page</h3>
+
+  <p>To create a page called <strong>About</strong>, follow this sequence:</p>
+
+  <ol>
+    <li class="enum">
+      <div>1</div>
+      Create <span class="tbu-asset-code">pages/about.htm</span> inside the folder of every enabled
+      language.
+    </li>
+    <li class="enum">
+      <div>2</div>
+      Write the corresponding content in each language, keeping the same file name and path.
+    </li>
+    <li class="enum">
+      <div>3</div>
+      Add the link in the navigation complements where you want to make the page available.
+    </li>
+    <li class="enum">
+      <div>4</div>
+      Check access to the page and language switching in the local environment.
+    </li>
+  </ol>
+
+  <p>The link can be written like this:</p>
+
+  <pre><code> &lt;a href="#/pages/about.htm"&gt;About&lt;/a&gt; </code></pre>
+
+  <p>
+    The header menu and the sidebar menu have separate files:
+    <span class="tbu-asset-code">complements/header-nav.htm</span> and
+    <span class="tbu-asset-code">complements/sidebar-nav.htm</span>. Edit both when you want the
+    page to appear in both navigations.
+  </p>
+
+  <p>
+    For this kind of page, the generic route already forwards the path to the loader; there is no
+    need to register a Vue route for each fragment.
+  </p>
+
+  <h3>Paths and loading failures</h3>
+
+  <p>
+    Fragment paths must end in <span class="tbu-asset-code">.htm</span>. In the value forwarded to
+    the loader, do not use a leading slash, backslashes, empty segments, or
+    <span class="tbu-asset-code">..</span>. Subfolders are allowed, as in
+    <span class="tbu-asset-code">pages/about.htm</span>.
+  </p>
+
+  <p>
+    If a file does not exist, cannot be loaded, or the hosting returns a complete HTML document
+    instead of the fragment, the application shows its error screen. Currently, there is no specific
+    content page for <strong>not found</strong> and no automatic fallback to the translation in
+    another language.
+  </p>
+
+  <hr />
+
+  <h2>How languages work</h2>
+
+  <p>
+    The file <span class="tbu-asset-code">public/config/languages.json</span> brings together four
+    pieces of information:
+  </p>
+
+  <ol>
+    <li class="dot"><span class="tbu-asset-code">default:</span> the default language.</li>
+    <li class="dot">
+      <span class="tbu-asset-code">available:</span> the list of enabled languages.
+    </li>
+    <li class="dot">
+      <span class="tbu-asset-code">flags:</span> the flags associated with each language.
+    </li>
+    <li class="dot">
+      <span class="tbu-asset-code">names:</span> the names shown in the switcher.
+    </li>
+  </ol>
+
+  <p>The current configuration is:</p>
+
+  <pre><code>{
+  "default": "en-us",
+  "available": ["pt-br", "en-us"],
+  "flags": { "pt-br": "🇧🇷", "en-us": "🇺🇸" },
+  "names": {
+    "pt-br": "Português (Brasil)",
+    "en-us": "English (United States)"
+  }
+}</code></pre>
+
+  <p>On startup, Taberna looks for an available language in this order:</p>
+
+  <ol>
+    <li class="enum">
+      <div>1</div>
+      The preference saved in the browser from a previous visit.
+    </li>
+    <li class="enum">
+      <div>2</div>
+      The language preferences reported by the browser.
+    </li>
+    <li class="enum">
+      <div>3</div>
+      The default language from the configuration.
+    </li>
+    <li class="enum">
+      <div>4</div>
+      The first available language, if the default is not in the list.
+    </li>
+  </ol>
+
+  <p>
+    Use lowercase identifiers, such as <span class="tbu-asset-code">pt-br</span> and
+    <span class="tbu-asset-code">en-us</span>, and keep those names in the content folders. Matching
+    considers the complete identifier: a <span class="tbu-asset-code">pt</span> preference is not
+    automatically converted to <span class="tbu-asset-code">pt-br</span>.
+  </p>
+
+  <p>
+    When you choose another language, the preference is saved in the browser's local storage and the
+    page reloads, keeping the current page address. If the browser blocks writing that preference,
+    the choice may not persist.
+  </p>
+
+  <p>
+    To enable another language, add its information to the configuration and prepare all the
+    corresponding fragments, including pages and complements. Translations are written by you; there
+    is no automatic translation. This organization by language applies to the content, while some
+    interface messages are still hardcoded in English.
+  </p>
+
+  <hr />
+
+  <h2>Customization: the role of each resource</h2>
+
+  <h3>Themes</h3>
+
+  <p>
+    The theme defines the shared visual identity: colors, fonts, spacing, borders, and other details.
+    Its variables live in <span class="tbu-asset-code">src/styles/theme.css</span> and are used by
+    the project's styles and utilities.
+  </p>
+
+  <p>
+    Changing these definitions lets you adjust the appearance of several regions consistently. To
+    learn about the visual configuration, see the
+    <a href="#/pages/themes.htm">Themes</a> page.
+  </p>
+
+  <h3>Templates</h3>
+
+  <p>
+    Templates define the layout structure. They organize regions such as the header, main content,
+    footer, and sidebar and offer spaces, called slots, to receive content.
+  </p>
+
+  <p>
+    Currently, there is the <span class="tbu-asset-code">src/templates/default.vue</span> template.
+    The <span class="tbu-asset-code">src/AppTemplate.vue</span> file imports that template and
+    connects its slots to the application's complements and components.
+  </p>
+
+  <p>
+    Over time, various types of templates will be created for different site purposes. Feel free to
+    create your own, adapting the structure to your project's needs.
+  </p>
+
+  <p>
+    Creating a template involves working on the Vue layout and integrating it into
+    <span class="tbu-asset-code">AppTemplate.vue</span>; the application does not offer an automatic
+    template selector. The <a href="#/pages/templates.htm">templates</a> page is the place to go
+    deeper into this customization.
+  </p>
+
+  <h3>Components</h3>
+
+  <p>
+    Components bring together reusable features and behaviors. Among the elements available for
+    content are <span class="tbu-asset-code">tbc-flux</span>, which loads fragments,
+    <span class="tbu-asset-code">tbc-language</span>, which leads to the language switcher, and
+    <span class="tbu-asset-code">tbc-carousel</span>, which arranges items in a carousel.
+  </p>
+
+  <p>
+    Each component has its own purpose and may offer configuration attributes. The
+    <a href="#/pages/components.htm">components</a> page covers the topic separately.
+  </p>
+
+  <h3>Utilities</h3>
+
+  <p>
+    Utilities are classes that apply visual rules directly to HTML elements. Taberna uses Tailwind CSS
+    and its own classes with the <span class="tbu-asset-code">tbu-*</span> prefix, defined in
+    <span class="tbu-asset-code">src/styles/utilities.css</span>.
+  </p>
+
+  <p>
+    They help apply the theme colors, spacing, borders, and other resources without repeating the
+    same CSS rules in every content snippet. The details are on the
+    <a href="#/pages/utilities.htm">utilities</a> page.
+  </p>
+
+  <hr />
+
+  <h2>From development to publishing</h2>
+
+  <h3>Prepare your copy</h3>
+
+  <p>
+    Have Git, Node.js 24, and npm installed. You can fork Taberna on your GitHub account to keep your
+    customizations in your own repository.
+  </p>
+
+  <p>To start from the original repository:</p>
+
+  <pre><code><span>git clone https://github.com/mineot/taberna.git</span>
+<span>cd taberna</span>
+<span>npm install</span></code></pre>
+
+  <p>If you created a fork, replace the command address with your repository's address.</p>
+
+  <h3>Work locally</h3>
+
+  <p>Start the development server:</p>
+
+  <pre><code><span>npm run dev</span></code></pre>
+
+  <p>
+    Open the address shown in the terminal. Edit the content fragments and check the result in the
+    browser. If needed, reload the page to fetch the changed files again.
+  </p>
+
+  <p>
+    A practical sequence is to customize the brand and the home page, prepare the inner pages,
+    adjust the menus, and check the content in each language. After that, work on the theme and the
+    other visual adjustments.
+  </p>
+
+  <h3>Generate and check the production version</h3>
+
+  <p>When you want to prepare the site for publishing, run:</p>
+
+  <pre><code><span>npm run build</span></code></pre>
+
+  <p>
+    This command checks TypeScript and generates the production files in
+    <span class="tbu-asset-code">dist/</span>. The public files, including the content fragments, are
+    copied to that output.
+  </p>
+
+  <p>To check the result locally:</p>
+
+  <pre><code><span>npm run preview</span></code></pre>
+
+  <p>
+    The preview is used to review the build before publishing it. Check the links, the images, the
+    pages, and language switching; a successful build does not validate that all translations and all
+    link destinations exist.
+  </p>
+
+  <h3>Publish the site</h3>
+
+  <p>
+    Send the contents of <span class="tbu-asset-code">dist/</span> to the static hosting you chose.
+    The upload process depends on the service used; the project does not include an automatic
+    publishing workflow.
+  </p>
+
+  <p>
+    If you publish in a subdirectory, check the resource paths in the fragments. For example,
+    <span class="tbu-asset-code">/images/logo.png</span> points to the domain root, while
+    <span class="tbu-asset-code">images/logo.png</span> is relative to the base address of the
+    displayed page. Paths are not resolved from the fragment's folder and are not rewritten
+    automatically by the build.
+  </p>
+
+  <p>
+    Keep your changes in the source files, generate a new build, and publish the updated output. That
+    way, your repository remains the reference for the site's content and customizations.
+  </p>
+</div>

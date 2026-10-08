@@ -1,0 +1,693 @@
+<div class="page-custom">
+  <h1>Utilities</h1>
+
+  <p>
+    Utilities are classes that apply visual rules to HTML elements. In Taberna, the project's own
+    classes use the <span class="tbu-asset-code">tbu-*</span> prefix and live in
+    <span class="tbu-asset-code">src/styles/utilities.css</span>.
+  </p>
+
+  <p>
+    You can combine them to present the content with the project's colors, borders, textures, and
+    spacing. This page explains what each class does and how to use it in the HTML fragments.
+  </p>
+
+  <hr />
+
+  <h2>The relationship between utilities and the theme</h2>
+
+  <p>
+    The theme defines shared values, and the utilities apply those values to elements. For example,
+    <span class="tbu-asset-code">--color-secondary</span> holds a color in the theme, while
+    <span class="tbu-asset-code">tbu-secondary-bg</span> uses that color as the background.
+  </p>
+
+  <pre><code><span>&lt;div class="tbu-secondary-bg tbu-primary-text p-4"&gt;</span>
+<span>  &lt;p&gt;Content with a secondary background and main text.&lt;/p&gt;</span>
+<span>&lt;/div&gt;</span></code></pre>
+
+  <p>
+    In this example, the two <span class="tbu-asset-code">tbu-*</span> classes apply Taberna's
+    colors. The Tailwind class <span class="tbu-asset-code">p-4</span> adds inner padding.
+  </p>
+
+  <p>
+    Changing the variable in the theme updates the elements that use it. Adding the class to the HTML
+    defines where that setting will be applied. To learn about the values and their customization
+    options, see the <a href="#/pages/themes.htm">themes</a> page.
+  </p>
+
+  <hr />
+
+  <h2>How to combine classes</h2>
+
+  <p>
+    Use Taberna's utilities together with Tailwind classes according to each one's responsibility:
+  </p>
+
+  <pre><code><span>&lt;section class="tbu-secondary-bg tbu-border tbu-rounded flex flex-col gap-4 p-6"&gt;</span>
+<span>  &lt;h2 class="tbu-asset-text text-2xl font-bold"&gt;My project&lt;/h2&gt;</span>
+<span>  &lt;p class="tbu-primary-text"&gt;A brief presentation of the work.&lt;/p&gt;</span>
+<span>&lt;/section&gt;</span></code></pre>
+
+  <p>
+    Here, the project's own classes provide colors, border, and rounding. The others arrange the
+    elements in a column, create space between them, and adjust the typography.
+  </p>
+
+  <p>
+    Avoid combining classes that compete for the same property without a clear intention. The order
+    in which the names appear in the <span class="tbu-asset-code">class</span> attribute does not by
+    itself determine which rule wins; the result depends on the cascade of the generated CSS.
+  </p>
+
+  <p>
+    The examples in this guide are HTML snippets to use after converting this draft. Taberna does not
+    interpret Markdown automatically.
+  </p>
+
+  <hr />
+
+  <h2>Background and text colors</h2>
+
+  <p>
+    Each color family offers a background utility, a background utility with transparency, and a text
+    utility:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Class</th>
+        <th>Value used</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tbu-asset-code">tbu-primary-bg</td>
+        <td class="tbu-asset-code">--color-primary</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">tbu-primary-bg-opaque</td>
+        <td class="tbu-asset-code">--color-primary-opaque</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">tbu-primary-text</td>
+        <td class="tbu-asset-code">--color-primary-soft</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">tbu-secondary-bg</td>
+        <td class="tbu-asset-code">--color-secondary</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">tbu-secondary-bg-opaque</td>
+        <td class="tbu-asset-code">--color-secondary-opaque</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">tbu-secondary-text</td>
+        <td class="tbu-asset-code">--color-secondary-soft</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">tbu-asset-bg</td>
+        <td class="tbu-asset-code">--color-asset</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">tbu-asset-bg-opaque</td>
+        <td class="tbu-asset-code">--color-asset-opaque</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">tbu-asset-text</td>
+        <td class="tbu-asset-code">--color-asset-soft</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    The text classes use the <span class="tbu-asset-code">soft</span> variations, not the family's
+    base color. The classes ending in <span class="tbu-asset-code">bg-opaque</span>, despite the
+    name, use colors that are currently mixed with transparency in the theme.
+  </p>
+
+  <p>
+    Backgrounds and texts are configured separately. Applying a background class does not
+    automatically choose a text color with adequate contrast.
+  </p>
+
+  <pre><code><span>&lt;div class="tbu-asset-bg-opaque tbu-primary-text p-4"&gt;</span>
+<span>  &lt;p&gt;A highlighted piece of information with a translucent background.&lt;/p&gt;</span>
+<span>&lt;/div&gt;</span></code></pre>
+
+  <p>
+    Because the background is translucent, the appearance also depends on what is behind it. Check
+    how the text reads in the site's final combination.
+  </p>
+
+  <hr />
+
+  <h2>Links and highlight elements</h2>
+
+  <h3>tbu-asset-link</h3>
+
+  <p>
+    <span class="tbu-asset-code">tbu-asset-link</span> applies the
+    <span class="tbu-asset-code">--color-asset-soft</span> color, a pointer cursor, and the shared
+    transition duration. On hover, the color is mixed with 10% black; during activation, with 20%
+    black.
+  </p>
+
+  <pre><code><span>&lt;a class="tbu-asset-link underline" href="#/pages/howwork.htm"&gt;</span>
+<span>  Learn how Taberna works</span>
+<span>&lt;/a&gt;</span></code></pre>
+
+  <p>
+    The utility does not add an underline, a font size, or a specific focus style. In the example,
+    the underline comes from the <span class="tbu-asset-code">underline</span> class. Also make sure
+    there is a visible focus indication in the final presentation of the links.
+  </p>
+
+  <h3>tbu-asset-pill</h3>
+
+  <p>
+    <span class="tbu-asset-code">tbu-asset-pill</span> combines highlight text, flex display,
+    <span class="tbu-asset-code">rounded-sm</span> rounding, horizontal
+    <span class="tbu-asset-code">px-2</span> and vertical <span class="tbu-asset-code">py-1</span>
+    padding, a pointer cursor, and the transition duration.
+  </p>
+
+  <p>
+    In the normal state, it does not define a background color. On hover, it applies
+    <span class="tbu-asset-code">--color-asset</span> to the background and
+    <span class="tbu-asset-code">--color-primary</span> to the text. During activation, it darkens
+    the background with a 10% black mix.
+  </p>
+
+  <pre><code><span>&lt;a class="tbu-asset-pill w-fit" href="#/pages/templates.htm"&gt;</span>
+<span>  Explore templates</span>
+<span>&lt;/a&gt;</span></code></pre>
+
+  <p>
+    This utility's rounding uses <span class="tbu-asset-code">rounded-sm</span>; it is not controlled
+    by the <span class="tbu-asset-code">--rounded</span> variable. The
+    <span class="tbu-asset-code">w-fit</span> class in the example limits the link's width to its
+    content.
+  </p>
+
+  <p>
+    These utilities provide presentation. To navigate, use a link with
+    <span class="tbu-asset-code">href</span>; to perform an action, use a button with the
+    corresponding behavior. Applying the class to a <span class="tbu-asset-code">div</span> does not
+    create navigation, action, or keyboard interaction.
+  </p>
+
+  <hr />
+
+  <h2>Text and code panels</h2>
+
+  <h3>tbu-asset-code-text</h3>
+
+  <p>
+    <span class="tbu-asset-code">tbu-asset-code-text</span> combines the highlight color used by
+    <span class="tbu-asset-code">tbu-asset-text</span>, a monospace font, and a light weight. It is
+    useful for file names, commands, and other technical terms inside a paragraph.
+  </p>
+
+  <pre><code><span>&lt;p&gt;</span>
+<span>  Edit the &lt;code class="tbu-asset-code-text"&gt;theme.css&lt;/code&gt; file</span>
+<span>  to customize the theme variables.</span>
+<span>&lt;/p&gt;</span></code></pre>
+
+  <h3>tbu-asset-code-panel</h3>
+
+  <p>
+    <span class="tbu-asset-code">tbu-asset-code-panel</span> creates a panel with a secondary
+    background, <span class="tbu-asset-code">p-4</span> padding,
+    <span class="tbu-asset-code">text-lg</span> font size, and a flex column layout with
+    <span class="tbu-asset-code">gap-1</span>.
+  </p>
+
+  <p>It also recognizes two types of direct children:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Direct child</th>
+        <th>Presentation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tbu-asset-code">span.terminal</td>
+        <td>
+          Uses <span class="tbu-asset-code">tbu-asset-code-text</span> and receives a visual marker
+          before the text.
+        </td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">span.css</td>
+        <td>
+          Uses the highlight color, serif font, <span class="tbu-asset-code">text-base</span> size,
+          and semibold weight.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>To present commands:</p>
+
+  <pre><code><span>&lt;div class="tbu-asset-code-panel"&gt;</span>
+<span>  &lt;span class="terminal"&gt;npm install&lt;/span&gt;</span>
+<span>  &lt;span class="terminal"&gt;npm run dev&lt;/span&gt;</span>
+<span>&lt;/div&gt;</span></code></pre>
+
+  <p>
+    The terminal marker is inserted by a CSS pseudo-element and is not part of the written command. It
+    is configured not to be selectable.
+  </p>
+
+  <p>To present CSS declarations:</p>
+
+  <pre><code><span>&lt;div class="tbu-asset-code-panel"&gt;</span>
+<span>  &lt;span class="css"&gt;--color-asset: var(--color-blue-500);&lt;/span&gt;</span>
+<span>  &lt;span class="css"&gt;--color-asset-soft: var(--color-blue-300);&lt;/span&gt;</span>
+<span>&lt;/div&gt;</span></code></pre>
+
+  <p>
+    The selectors require these <span class="tbu-asset-code">span</span> elements as direct children
+    of the panel. Inserting another element between the panel and the
+    <span class="tbu-asset-code">span</span> elements prevents those specific rules from being
+    applied.
+  </p>
+
+  <p>
+    The panel does not run commands, does not copy text to the clipboard, and does not do automatic
+    syntax highlighting. It also does not preserve spaces and line breaks like a
+    <span class="tbu-asset-code">pre</span> element. For other code formats, choose the appropriate
+    HTML structure and styles. When showing HTML tags as text, escape characters such as
+    <span class="tbu-asset-code">&lt;</span> using <span class="tbu-asset-code">&amp;lt;</span>.
+  </p>
+
+  <hr />
+
+  <h2>Borders and rounding</h2>
+
+  <p>
+    The border utilities apply the color, thickness, and style defined by
+    <span class="tbu-asset-code">--border-color</span>,
+    <span class="tbu-asset-code">--border-size</span>, and
+    <span class="tbu-asset-code">--border-style</span>.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Class</th>
+        <th>Where the border is applied</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tbu-asset-code">tbu-border</td>
+        <td>All sides.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">tbu-border-top</td>
+        <td>Top side.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">tbu-border-right</td>
+        <td>Right side.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">tbu-border-bottom</td>
+        <td>Bottom side.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">tbu-border-left</td>
+        <td>Left side.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>To create a separation above a piece of content:</p>
+
+  <pre><code><span>&lt;div class="tbu-border-top pt-4"&gt;</span>
+<span>  &lt;p&gt;Complementary information.&lt;/p&gt;</span>
+<span>&lt;/div&gt;</span></code></pre>
+
+  <p>
+    The padding in the example comes from <span class="tbu-asset-code">pt-4</span>; the border utility
+    does not create inner space.
+  </p>
+
+  <p>
+    <span class="tbu-asset-code">tbu-rounded</span> applies the radius defined in
+    <span class="tbu-asset-code">--rounded</span>. You can combine it with a border and a
+    background:
+  </p>
+
+  <pre><code><span>&lt;div class="tbu-border tbu-rounded tbu-secondary-bg tbu-primary-text p-4"&gt;</span>
+<span>  &lt;p&gt;A panel with the theme's shared appearance.&lt;/p&gt;</span>
+<span>&lt;/div&gt;</span></code></pre>
+
+  <p>
+    The rounding does not add <span class="tbu-asset-code">overflow: hidden</span>. If you need to
+    clip the inner content at the corners, handle that behavior separately.
+  </p>
+
+  <hr />
+
+  <h2>Texture, shadow, and overlay</h2>
+
+  <h3>tbu-texture</h3>
+
+  <p>
+    <span class="tbu-asset-code">tbu-texture</span> uses the image defined in
+    <span class="tbu-asset-code">--texture</span> and repeats it on the background. The background
+    color remains the responsibility of another rule.
+  </p>
+
+  <pre><code><span>&lt;div class="tbu-secondary-bg tbu-texture tbu-primary-text p-6"&gt;</span>
+<span>  &lt;p&gt;Content with a background color and texture.&lt;/p&gt;</span>
+<span>&lt;/div&gt;</span></code></pre>
+
+  <p>
+    Setting <span class="tbu-asset-code">--texture: none</span> in the theme disables the image on
+    elements that use this utility.
+  </p>
+
+  <h3>tbu-shadow</h3>
+
+  <p>
+    <span class="tbu-asset-code">tbu-shadow</span> applies two shadow layers with the color from
+    <span class="tbu-asset-code">--shadow-color</span>. If that variable is missing, it uses black
+    with transparency as a fallback.
+  </p>
+
+  <pre><code><span>&lt;div class="tbu-secondary-bg tbu-primary-text tbu-rounded tbu-shadow p-4"&gt;</span>
+<span>  &lt;p&gt;A panel highlighted by a shadow.&lt;/p&gt;</span>
+<span>&lt;/div&gt;</span></code></pre>
+
+  <p>
+    The color is configurable through the theme; offsets and blurs are defined in the utility itself.
+    The class does not add border, background, or rounding automatically.
+  </p>
+
+  <h3>tbu-backdrop</h3>
+
+  <p>
+    <span class="tbu-asset-code">tbu-backdrop</span> was created for overlays, such as the one behind
+    the sidebar. It combines fixed positioning, <span class="tbu-asset-code">inset-0</span>, texture,
+    <span class="tbu-asset-code">backdrop-blur-xs</span> background blur, the
+    <span class="tbu-asset-code">--z-backdrop</span> layer, and the
+    <span class="tbu-asset-code">--backdrop-color</span> color.
+  </p>
+
+  <p>
+    It is meant to cover the screen area and can block interactions with what is below. Opening,
+    closing, click handling, and focus management belong to the component that uses this overlay;
+    they are not implemented by the utility.
+  </p>
+
+  <p>
+    In the theme's current configuration, <span class="tbu-asset-code">--backdrop-color</span>
+    references <span class="tbu-asset-code">--color-secondary-bg</span>, which is not defined.
+    Therefore, its color declaration does not provide a valid value. The
+    <a href="#/pages/themes.htm">themes</a> page explains this limitation and presents an adjustment
+    option; texture, blur, and positioning are rules independent of that color.
+  </p>
+
+  <hr />
+
+  <h2>Responsive spacing</h2>
+
+  <p>
+    <span class="tbu-asset-code">tbu-container</span> applies horizontal padding using
+    <span class="tbu-asset-code">padding-inline</span>.
+    <span class="tbu-asset-code">tbu-block</span> applies vertical padding using
+    <span class="tbu-asset-code">padding-block</span>.
+  </p>
+
+  <p>Both utilities select variables according to the screen width:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Width</th>
+        <th>tbu-container</th>
+        <th>tbu-block</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Below <span class="tbu-asset-code">48rem</span></td>
+        <td class="tbu-asset-code">--container-sm</td>
+        <td class="tbu-asset-code">--block-sm</td>
+      </tr>
+      <tr>
+        <td>
+          From <span class="tbu-asset-code">48rem</span> up to before
+          <span class="tbu-asset-code">64rem</span>
+        </td>
+        <td class="tbu-asset-code">--container-md</td>
+        <td class="tbu-asset-code">--block-md</td>
+      </tr>
+      <tr>
+        <td>From <span class="tbu-asset-code">64rem</span> up</td>
+        <td class="tbu-asset-code">--container-lg</td>
+        <td class="tbu-asset-code">--block-lg</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    The final value is calculated by multiplying the chosen variable by
+    <span class="tbu-asset-code">--spacing</span>. The current container values are
+    <span class="tbu-asset-code">4</span>, <span class="tbu-asset-code">14</span>, and
+    <span class="tbu-asset-code">24</span>; the block values are
+    <span class="tbu-asset-code">6</span> in all three ranges.
+  </p>
+
+  <pre><code><span>&lt;section class="tbu-container tbu-block"&gt;</span>
+<span>  &lt;h2&gt;A region with responsive spacing&lt;/h2&gt;</span>
+<span>  &lt;p&gt;The padding follows the values defined in the theme.&lt;/p&gt;</span>
+<span>&lt;/section&gt;</span></code></pre>
+
+  <p>
+    <span class="tbu-asset-code">tbu-container</span> does not define a maximum width or center the
+    element. <span class="tbu-asset-code">tbu-block</span> does not change its display type to
+    <span class="tbu-asset-code">display: block</span>; its role is to apply vertical padding. Both
+    also include <span class="tbu-asset-code">tbu-duration</span>.
+  </p>
+
+  <p>
+    In the default template, the main area already uses
+    <span class="tbu-asset-code">tbu-container</span>. Reapplying the utility inside it adds another
+    level of padding. Use that composition when you want the extra space, or apply only
+    <span class="tbu-asset-code">tbu-block</span> and other local classes when the outer horizontal
+    space is already enough.
+  </p>
+
+  <hr />
+
+  <h2>Transition duration</h2>
+
+  <p>
+    <span class="tbu-asset-code">tbu-duration</span> defines the duration from
+    <span class="tbu-asset-code">--duration</span> and the
+    <span class="tbu-asset-code">ease-in-out</span> transition curve. The theme's current value is
+    <span class="tbu-asset-code">200ms</span>.
+  </p>
+
+  <p>
+    It does not create a new visual state or explicitly choose which properties should change.
+    Combine it with the transition property and the desired states:
+  </p>
+
+  <pre><code><span>&lt;a</span>
+<span>  class="tbu-primary-text tbu-duration transition-colors hover:tbu-asset-text"</span>
+<span>  href="#/pages/themes.htm"</span>
+<span>&gt;</span>
+<span>  Explore the theme</span>
+<span>&lt;/a&gt;</span></code></pre>
+
+  <p>
+    In this example, <span class="tbu-asset-code">transition-colors</span> defines the group of
+    properties, <span class="tbu-asset-code">hover:tbu-asset-text</span> changes the color on hover,
+    and <span class="tbu-asset-code">tbu-duration</span> provides the time and curve.
+  </p>
+
+  <p>
+    The utility does not control all the site's animations and does not automatically disable motion
+    according to the visitor's preference. When creating transitions, consider using reduced-motion
+    variants and preserve the interaction's focus states.
+  </p>
+
+  <hr />
+
+  <h2>Creating your own utilities</h2>
+
+  <p>
+    You can add reusable classes to
+    <span class="tbu-asset-code">src/styles/utilities.css</span> with
+    <span class="tbu-asset-code">@utility</span>, following the
+    <span class="tbu-asset-code">tbu-*</span> prefix and reusing theme values.
+  </p>
+
+  <p>For example, this definition would create a utility for small panels:</p>
+
+  <pre><code><span>@utility tbu-panel {</span>
+<span>  @apply tbu-secondary-bg tbu-primary-text tbu-border tbu-rounded p-4;</span>
+<span>}</span></code></pre>
+
+  <p>After adding it to the project, the usage would be:</p>
+
+  <pre><code><span>&lt;div class="tbu-panel"&gt;</span>
+<span>  &lt;p&gt;Panel content.&lt;/p&gt;</span>
+<span>&lt;/div&gt;</span></code></pre>
+
+  <p>
+    <span class="tbu-asset-code">tbu-panel</span> is only an example; it is not currently defined.
+    The name must be unique, and the rule should gather behavior that makes sense to reuse.
+  </p>
+
+  <p>
+    A utility serves shared uses. For styles specific to a page or structure, prefer a dedicated
+    selector in <span class="tbu-asset-code">src/style-customs.css</span>, as the project already
+    does with <span class="tbu-asset-code">.page-custom</span>.
+  </p>
+
+  <p>
+    When using Tailwind directives in a Vue component style block, include
+    <span class="tbu-asset-code">@reference "@/style.css";</span> at the beginning. That reference
+    lets the block use the project's shared definitions.
+  </p>
+
+  <p>
+    Keep the full class names in the source files and generate a new build when adding classes to the
+    content or new utilities. Fragments are loaded at runtime, but the CSS is generated during the
+    build; a new class written only in already published content may not exist in the distributed
+    CSS.
+  </p>
+
+  <hr />
+
+  <h2>Complete example</h2>
+
+  <p>
+    The example below combines utilities in a presentation section. It assumes the horizontal spacing
+    has already been applied by the template's main area:
+  </p>
+
+  <pre><code><span>&lt;section class="tbu-block"&gt;</span>
+<span>  &lt;div class="tbu-secondary-bg tbu-primary-text tbu-border tbu-rounded tbu-shadow flex flex-col gap-4 p-6"&gt;</span>
+<span>    &lt;h2 class="tbu-asset-text text-2xl font-bold"&gt;Customize your Taberna&lt;/h2&gt;</span>
+<span>    &lt;p&gt;</span>
+<span>      Organize the content, choose the colors, and adapt the presentation to your project.</span>
+<span>    &lt;/p&gt;</span>
+<span>    &lt;p&gt;</span>
+<span>      The shared settings live in</span>
+<span>      &lt;code class="tbu-asset-code-text"&gt;theme.css&lt;/code&gt;.</span>
+<span>    &lt;/p&gt;</span>
+<span>    &lt;a</span>
+<span>      class="tbu-asset-link w-fit underline focus-visible:outline-2 focus-visible:outline-offset-2"</span>
+<span>      href="#/pages/themes.htm"</span>
+<span>    &gt;</span>
+<span>      Learn about the theme settings</span>
+<span>    &lt;/a&gt;</span>
+<span>  &lt;/div&gt;</span>
+<span>&lt;/section&gt;</span></code></pre>
+
+  <p>
+    Check the result with your theme's colors, at different widths, and using the keyboard. The
+    utilities help maintain consistency, but the final combination should preserve contrast, visible
+    focus, and enough space for the content.
+  </p>
+
+  <hr />
+
+  <h2>Quick reference</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Group</th>
+        <th>Classes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Transitions</td>
+        <td class="tbu-asset-code">tbu-duration</td>
+      </tr>
+      <tr>
+        <td>Texture and rounding</td>
+        <td>
+          <span class="tbu-asset-code">tbu-texture</span>,
+          <span class="tbu-asset-code">tbu-rounded</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Main colors</td>
+        <td>
+          <span class="tbu-asset-code">tbu-primary-bg</span>,
+          <span class="tbu-asset-code">tbu-primary-bg-opaque</span>,
+          <span class="tbu-asset-code">tbu-primary-text</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Secondary colors</td>
+        <td>
+          <span class="tbu-asset-code">tbu-secondary-bg</span>,
+          <span class="tbu-asset-code">tbu-secondary-bg-opaque</span>,
+          <span class="tbu-asset-code">tbu-secondary-text</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Highlight colors</td>
+        <td>
+          <span class="tbu-asset-code">tbu-asset-bg</span>,
+          <span class="tbu-asset-code">tbu-asset-bg-opaque</span>,
+          <span class="tbu-asset-code">tbu-asset-text</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Links and interactive highlight</td>
+        <td>
+          <span class="tbu-asset-code">tbu-asset-link</span>,
+          <span class="tbu-asset-code">tbu-asset-pill</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Code</td>
+        <td>
+          <span class="tbu-asset-code">tbu-asset-code-text</span>,
+          <span class="tbu-asset-code">tbu-asset-code-panel</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Shadow and overlay</td>
+        <td>
+          <span class="tbu-asset-code">tbu-shadow</span>,
+          <span class="tbu-asset-code">tbu-backdrop</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Borders</td>
+        <td>
+          <span class="tbu-asset-code">tbu-border</span>,
+          <span class="tbu-asset-code">tbu-border-top</span>,
+          <span class="tbu-asset-code">tbu-border-right</span>,
+          <span class="tbu-asset-code">tbu-border-bottom</span>,
+          <span class="tbu-asset-code">tbu-border-left</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Spacing</td>
+        <td>
+          <span class="tbu-asset-code">tbu-container</span>,
+          <span class="tbu-asset-code">tbu-block</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

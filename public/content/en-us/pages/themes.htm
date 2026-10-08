@@ -1,0 +1,721 @@
+<div class="page-custom">
+  <h1>Theme</h1>
+
+  <p>
+    The theme gathers Taberna's shared visual settings. Colors, fonts, spacing, borders, and other
+    details are defined in variables that the styles and components use to build the site's
+    appearance.
+  </p>
+
+  <p>
+    The starting point for customizing these definitions is the file
+    <span class="tbu-asset-code">src/styles/theme.css</span>. This page presents the current settings
+    and examples of how to adjust them for your project.
+  </p>
+
+  <hr />
+
+  <h2>How the theme works</h2>
+
+  <p>
+    A variable holds a value that can be reused across several CSS rules. In Taberna, for example,
+    <span class="tbu-asset-code">--color-primary</span> defines the color used by the utility
+    <span class="tbu-asset-code">tbu-primary-bg</span>. Because that utility is applied to the page
+    background, changing the variable changes that background.
+  </p>
+
+  <p>The path from the setting to the visual result is:</p>
+
+  <pre><code>Variable in the theme → style rule or utility → element on the page</code></pre>
+
+  <p>
+    The change affects only the elements that use that variable, directly or through another rule. An
+    element with a color or spacing defined independently keeps following its own setting.
+  </p>
+
+  <p>
+    The theme also does not select another layout: that responsibility belongs to the
+    <a href="#/pages/templates.htm">templates</a>. You can customize the appearance while keeping the
+    site's current structure.
+  </p>
+
+  <hr />
+
+  <h2>Where to configure</h2>
+
+  <p>The file <span class="tbu-asset-code">theme.css</span> has two main blocks:</p>
+
+  <ol>
+    <li class="dot">
+      <span class="tbu-asset-code">@theme</span>: defines the font families integrated with
+      Tailwind's utilities.
+    </li>
+    <li class="dot">
+      <span class="tbu-asset-code">:root</span>: defines the shared variables for colors, spacing,
+      borders, layers, and other Taberna resources.
+    </li>
+  </ol>
+
+  <p>
+    The examples on this page indicate which block to change. Replace the existing values of the
+    corresponding variables, preserving the other settings.
+  </p>
+
+  <p>Other files take part in the presentation:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>File</th>
+        <th>Responsibility</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tbu-asset-code">src/styles/fonts.css</td>
+        <td>Registers the local fonts with <span class="tbu-asset-code">@font-face</span>.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">src/styles/utilities.css</td>
+        <td>
+          Defines the <span class="tbu-asset-code">tbu-*</span> classes that apply theme values.
+        </td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">src/styles/app.css</td>
+        <td>Applies global styles, including the page background and typography.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">src/style-customs.css</td>
+        <td>Contains the custom content styles.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    The variables in <span class="tbu-asset-code">:root</span> can be consumed with
+    <span class="tbu-asset-code">var(...)</span> in CSS. They do not automatically create a Tailwind
+    utility with the same name; Taberna's own classes are defined in
+    <span class="tbu-asset-code">utilities.css</span>.
+  </p>
+
+  <hr />
+
+  <h2>Site colors</h2>
+
+  <p>The colors are organized into three families:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <td>Family</td>
+        <td>Current use</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tbu-asset-code">primary</td>
+        <td>Main page background and main text.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">secondary</td>
+        <td>Supporting regions, such as the footer, sidebar, and panels, plus secondary text.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">asset</td>
+        <td>Highlights, links, and other elements that draw attention.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Each family has a base color, a <span class="tbu-asset-code">soft</span> variation, and an
+    <span class="tbu-asset-code">opaque</span> variation.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Variable</th>
+        <th>Current value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tbu-asset-code">--color-primary</td>
+        <td class="tbu-asset-code">var(--color-neutral-600)</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--color-primary-soft</td>
+        <td class="tbu-asset-code">var(--color-neutral-200)</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--color-secondary</td>
+        <td class="tbu-asset-code">var(--color-neutral-800)</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--color-secondary-soft</td>
+        <td class="tbu-asset-code">var(--color-neutral-400)</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--color-asset</td>
+        <td class="tbu-asset-code">var(--color-emerald-500)</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--color-asset-soft</td>
+        <td class="tbu-asset-code">var(--color-emerald-300)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    The background utilities use the base color, while the text ones use the
+    <span class="tbu-asset-code">soft</span> variation. For example,
+    <span class="tbu-asset-code">tbu-secondary-bg</span> applies
+    <span class="tbu-asset-code">--color-secondary</span>, and
+    <span class="tbu-asset-code">tbu-secondary-text</span> applies
+    <span class="tbu-asset-code">--color-secondary-soft</span>.
+  </p>
+
+  <p>
+    The <span class="tbu-asset-code">soft</span> colors are configured separately: changing the base
+    color does not automatically change its <span class="tbu-asset-code">soft</span> version.
+  </p>
+
+  <h3>Variations with transparency</h3>
+
+  <p>
+    Despite the name <span class="tbu-asset-code">opaque</span>, these variables represent versions
+    with transparency. The current setting mixes 30% of the base color with transparent:
+  </p>
+
+  <pre><code><span>--color-primary-opaque: color-mix(in oklab, var(--color-primary) 30%, transparent);</span>
+<span>--color-secondary-opaque: color-mix(in oklab, var(--color-secondary) 30%, transparent);</span>
+<span>--color-asset-opaque: color-mix(in oklab, var(--color-asset) 30%, transparent);</span></code></pre>
+
+  <p>
+    In these expressions, <span class="tbu-asset-code">oklab</span> is the color space used for the
+    mix. Increasing the color percentage makes the result less transparent; decreasing the
+    percentage makes what is behind more visible.
+  </p>
+
+  <p>
+    Because these variations reference the base color, they follow its changes as long as that
+    relationship is kept.
+  </p>
+
+  <h3>Changing the highlight color</h3>
+
+  <p>
+    To change the green highlight to blue, change these two variables inside
+    <span class="tbu-asset-code">:root</span>:
+  </p>
+
+  <pre><code><span>--color-asset: var(--color-blue-500);</span>
+<span>--color-asset-soft: var(--color-blue-300);</span></code></pre>
+
+  <p>
+    The <span class="tbu-asset-code">--color-asset-opaque</span> version starts using the new base
+    color. Links that use <span class="tbu-asset-code">tbu-asset-link</span> start from the
+    <span class="tbu-asset-code">soft</span> color and receive darker variations on hover or press.
+  </p>
+
+  <p>
+    You can also use CSS values directly, such as <span class="tbu-asset-code">#2563eb</span>, instead
+    of references to the Tailwind palette. When combining backgrounds and texts, check the
+    readability of each color pair.
+  </p>
+
+  <hr />
+
+  <h2>Fonts</h2>
+
+  <p>The font families live in the <span class="tbu-asset-code">@theme</span> block:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Variable</th>
+        <th>Current main font</th>
+        <th>Corresponding utility</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tbu-asset-code">--font-sans</td>
+        <td>Roboto</td>
+        <td class="tbu-asset-code">font-sans</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--font-serif</td>
+        <td>Roboto Serif</td>
+        <td class="tbu-asset-code">font-serif</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--font-mono</td>
+        <td>Roboto Mono</td>
+        <td class="tbu-asset-code">font-mono</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--font-fancy</td>
+        <td>Italianno</td>
+        <td class="tbu-asset-code">font-fancy</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Each definition can also list alternative fonts. The browser looks for the first available one
+    and falls back to the next when needed. The page uses
+    <span class="tbu-asset-code">font-sans</span> as its base; specific sections can choose another
+    family.
+  </p>
+
+  <p>
+    To use the serif font already included in the project as the main family, for example, change
+    <span class="tbu-asset-code">--font-sans</span> inside
+    <span class="tbu-asset-code">@theme</span>:
+  </p>
+
+  <pre><code><span>--font-sans: 'Roboto Serif', ui-serif, Georgia, serif;</span></code></pre>
+
+  <h3>Adding your own font</h3>
+
+  <p>Taberna's fonts are hosted with the site. To include another family:</p>
+
+  <ol>
+    <li class="enum">
+      <div>1</div>
+      Place the font files in <span class="tbu-asset-code">public/fonts/</span>.
+    </li>
+    <li class="enum">
+      <div>2</div>
+      Register the family in <span class="tbu-asset-code">src/styles/fonts.css</span>, providing the
+      correct path, format, weight, and style.
+    </li>
+    <li class="enum">
+      <div>3</div>
+      Use the registered name in the desired font variable in
+      <span class="tbu-asset-code">theme.css</span>.
+    </li>
+    <li class="enum">
+      <div>4</div>
+      Check the weights and styles used by the content, including bold and italic when available.
+    </li>
+  </ol>
+
+  <p>
+    This example assumes you added a regular-weight WOFF2 file at
+    <span class="tbu-asset-code">public/fonts/MyFont/regular.woff2</span>. In
+    <span class="tbu-asset-code">fonts.css</span>, the registration would be:
+  </p>
+
+  <pre><code><span>@font-face {</span>
+<span>  font-family: 'My Font';</span>
+<span>  font-style: normal;</span>
+<span>  font-weight: 400;</span>
+<span>  font-display: swap;</span>
+<span>  src: url('/fonts/MyFont/regular.woff2') format('woff2');</span>
+<span>}</span></code></pre>
+
+  <p>
+    Then, in the <span class="tbu-asset-code">@theme</span> block of
+    <span class="tbu-asset-code">theme.css</span>:
+  </p>
+
+  <pre><code><span>--font-sans: 'My Font', ui-sans-serif, system-ui, sans-serif;</span></code></pre>
+
+  <p>
+    The name and file are illustrative. Only changing the variable does not install or load a font
+    that is not yet available.
+  </p>
+
+  <hr />
+
+  <h2>Spacing and adaptation to screens</h2>
+
+  <p>The theme has two spacing families:</p>
+
+  <ol>
+    <li class="dot">
+      <span class="tbu-asset-code">--container-*</span>: controls the horizontal padding applied by
+      <span class="tbu-asset-code">tbu-container</span>.
+    </li>
+    <li class="dot">
+      <span class="tbu-asset-code">--block-*</span>: controls the vertical padding applied by
+      <span class="tbu-asset-code">tbu-block</span>.
+    </li>
+  </ol>
+
+  <p>
+    These variables hold multipliers of the <span class="tbu-asset-code">--spacing</span> unit, not
+    pixel values or maximum content widths. The calculation used by the utilities is:
+  </p>
+
+  <pre><code><span>padding-inline: calc(var(--spacing) * var(--container-sm));</span>
+<span>padding-block: calc(var(--spacing) * var(--block-sm));</span></code></pre>
+
+  <p>The suffixes select values according to the screen width:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Width range</th>
+        <th>Suffix</th>
+        <th>Value of <span class="tbu-asset-code">--container-*</span></th>
+        <th>Value of <span class="tbu-asset-code">--block-*</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Below <span class="tbu-asset-code">48rem</span></td>
+        <td class="tbu-asset-code">sm</td>
+        <td class="tbu-asset-code">4</td>
+        <td class="tbu-asset-code">6</td>
+      </tr>
+      <tr>
+        <td>
+          From <span class="tbu-asset-code">48rem</span> up to before
+          <span class="tbu-asset-code">64rem</span>
+        </td>
+        <td class="tbu-asset-code">md</td>
+        <td class="tbu-asset-code">14</td>
+        <td class="tbu-asset-code">6</td>
+      </tr>
+      <tr>
+        <td>From <span class="tbu-asset-code">64rem</span> up</td>
+        <td class="tbu-asset-code">lg</td>
+        <td class="tbu-asset-code">24</td>
+        <td class="tbu-asset-code">6</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    These ranges are defined in Taberna's utilities. In the larger range, the
+    <span class="tbu-asset-code">lg</span> rule replaces the value applied by the
+    <span class="tbu-asset-code">md</span> rule.
+  </p>
+
+  <p>
+    To increase the horizontal space on larger screens, you can change in
+    <span class="tbu-asset-code">:root</span>:
+  </p>
+
+  <pre><code><span>--container-sm: 4;</span>
+<span>--container-md: 16;</span>
+<span>--container-lg: 32;</span></code></pre>
+
+  <p>
+    The space is applied on each side of the element that uses the utility. Larger values leave less
+    width available for your content.
+  </p>
+
+  <p>
+    These settings do not replace all the site's spacing. Elements that use their own classes, such
+    as <span class="tbu-asset-code">p-4</span> or
+    <span class="tbu-asset-code">gap-2</span>, keep their values. The same applies to a region that
+    uses <span class="tbu-asset-code">tbu-container</span> but defines vertical padding another way.
+  </p>
+
+  <hr />
+
+  <h2>Borders and rounding</h2>
+
+  <p>
+    The borders that use the <span class="tbu-asset-code">tbu-border</span> utilities share these
+    definitions:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Variable</th>
+        <th>Current value</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tbu-asset-code">--border-color</td>
+        <td class="tbu-asset-code">var(--color-secondary-soft)</td>
+        <td>Border color.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--border-size</td>
+        <td class="tbu-asset-code">1px</td>
+        <td>Border thickness.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--border-style</td>
+        <td class="tbu-asset-code">solid</td>
+        <td>Line style.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--rounded</td>
+        <td class="tbu-asset-code">var(--radius-lg)</td>
+        <td>Radius applied by <span class="tbu-asset-code">tbu-rounded</span>.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    The per-side border versions, such as <span class="tbu-asset-code">tbu-border-top</span>, use the
+    same values. To customize them, change in <span class="tbu-asset-code">:root</span>, for example:
+  </p>
+
+  <pre><code><span>--border-color: var(--color-neutral-500);</span>
+<span>--border-size: 2px;</span>
+<span>--border-style: solid;</span>
+<span>--rounded: 0.75rem;</span></code></pre>
+
+  <p>
+    Changing <span class="tbu-asset-code">--rounded</span> affects elements with
+    <span class="tbu-asset-code">tbu-rounded</span>. Classes such as
+    <span class="tbu-asset-code">rounded-sm</span> have another definition and do not follow that
+    variable.
+  </p>
+
+  <hr />
+
+  <h2>Background texture</h2>
+
+  <p>
+    The <span class="tbu-asset-code">--texture</span> variable indicates the image applied by
+    <span class="tbu-asset-code">tbu-texture</span>. The utility repeats that image over the
+    element's background:
+  </p>
+
+  <pre><code><span>--texture: url('/images/texture.png');</span></code></pre>
+
+  <p>
+    To replace the texture, add the new image in
+    <span class="tbu-asset-code">public/images/</span> and adjust the path. For example, if the file
+    is named <span class="tbu-asset-code">my-texture.png</span>:
+  </p>
+
+  <pre><code><span>--texture: url('/images/my-texture.png');</span></code></pre>
+
+  <p>To disable the image on elements that use this setting:</p>
+
+  <pre><code><span>--texture: none;</span></code></pre>
+
+  <p>
+    The background color remains defined by the color rules. In the current theme, the texture
+    appears on the general background and in other regions that use
+    <span class="tbu-asset-code">tbu-texture</span>.
+  </p>
+
+  <hr />
+
+  <h2>Shadows and backdrop</h2>
+
+  <h3>Shadows</h3>
+
+  <p>
+    <span class="tbu-asset-code">--shadow-color</span> controls the color used by
+    <span class="tbu-asset-code">tbu-shadow</span>. Currently, it mixes black with transparency:
+  </p>
+
+  <pre><code><span>--shadow-color: color-mix(in oklab, var(--color-black) 50%, transparent);</span></code></pre>
+
+  <p>You can reduce the color intensity, for example:</p>
+
+  <pre><code><span>--shadow-color: color-mix(in oklab, var(--color-black) 25%, transparent);</span></code></pre>
+
+  <p>
+    This variable changes the shadow color. Its offsets and blur radii are defined in the utility and
+    remain the same.
+  </p>
+
+  <h3>Background behind the sidebar</h3>
+
+  <p>
+    <span class="tbu-asset-code">--backdrop-color</span> is consumed by
+    <span class="tbu-asset-code">tbu-backdrop</span>, used in the backdrop behind the sidebar. The
+    utility also applies texture and blur to what is behind.
+  </p>
+
+  <p>
+    In the current setting, this variable references
+    <span class="tbu-asset-code">--color-secondary-bg</span>, which is not defined. The
+    <span class="tbu-asset-code">tbu-secondary-bg</span> class exists, but a CSS class does not
+    replace a variable. Therefore, this expression does not provide a valid background color.
+  </p>
+
+  <p>When customizing this value, one option is to reference the existing secondary color:</p>
+
+  <pre><code><span>--backdrop-color: color-mix(in oklab, var(--color-secondary) 30%, transparent);</span></code></pre>
+
+  <p>
+    This snippet is a suggested adjustment for your theme; the invalid reference is still present in
+    the project's current file.
+  </p>
+
+  <hr />
+
+  <h2>Layers and transitions</h2>
+
+  <h3>Stacking order</h3>
+
+  <p>
+    The <span class="tbu-asset-code">--z-*</span> variables organize the stacking of the elements
+    that use them:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Variable</th>
+        <th>Current value</th>
+        <th>Current use</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tbu-asset-code">--z-backdrop</td>
+        <td class="tbu-asset-code">100</td>
+        <td>
+          Backdrop, through <span class="tbu-asset-code">tbu-backdrop</span>.
+        </td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--z-sidebar</td>
+        <td class="tbu-asset-code">150</td>
+        <td>Sidebar of the default template.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--z-loader</td>
+        <td class="tbu-asset-code">999</td>
+        <td>Declared in the theme, but not yet used by the loader.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    In the current template, the sidebar sits above its backdrop. When you change these values, keep
+    that relationship. The result of <span class="tbu-asset-code">z-index</span> also depends on the
+    stacking contexts created by CSS.
+  </p>
+
+  <p>
+    The loading screen still uses <span class="tbu-asset-code">z-200</span>, and the error screen
+    uses <span class="tbu-asset-code">z-300</span> directly. Changing only
+    <span class="tbu-asset-code">--z-loader</span> does not change the position of those screens.
+  </p>
+
+  <h3>Transition duration</h3>
+
+  <p>
+    <span class="tbu-asset-code">--duration</span> defines the duration used by
+    <span class="tbu-asset-code">tbu-duration</span>, which also applies the
+    <span class="tbu-asset-code">ease-in-out</span> transition curve. The current value is
+    <span class="tbu-asset-code">200ms</span>.
+  </p>
+
+  <p>To reduce this duration, change in <span class="tbu-asset-code">:root</span>:</p>
+
+  <pre><code><span>--duration: 150ms;</span></code></pre>
+
+  <p>
+    The variable affects the transitions connected to that utility. It does not control all
+    animations, the carousel playback interval, or the loader animation timing. When creating new
+    effects, also consider the visitor's reduced-motion preference.
+  </p>
+
+  <hr />
+
+  <h2>Component visual settings</h2>
+
+  <p>The theme includes three variables specific to the carousel:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Variable</th>
+        <th>Current value</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tbu-asset-code">--carousel-dot</td>
+        <td>
+          Mix of <span class="tbu-asset-code">--color-primary-soft</span> at 40% with transparent
+        </td>
+        <td>Color of the page indicators.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--carousel-dot-active</td>
+        <td class="tbu-asset-code">var(--color-asset)</td>
+        <td>Color of the active indicator.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">--carousel-counter</td>
+        <td class="tbu-asset-code">var(--color-primary-soft)</td>
+        <td>Color of the page counter.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    These values follow the referenced colors as long as the expressions are kept. You can also assign
+    your own colors to the controls without changing the rest of the palette.
+  </p>
+
+  <p>
+    The behavior settings, such as the number of items and the playback interval, belong to the
+    component. That topic is on the
+    <a href="#/pages/components.htm">components</a> page.
+  </p>
+
+  <hr />
+
+  <h2>Customization example</h2>
+
+  <p>
+    The example below combines a blue highlight, subtle borders, and more horizontal space on larger
+    screens. Replace the corresponding variables inside the existing
+    <span class="tbu-asset-code">:root</span> block in
+    <span class="tbu-asset-code">theme.css</span>:
+  </p>
+
+  <pre><code><span>--color-asset: var(--color-blue-500);</span>
+<span>--color-asset-soft: var(--color-blue-300);</span>
+
+<span>--border-color: var(--color-neutral-500);</span>
+<span>--border-size: 1px;</span>
+<span>--border-style: solid;</span>
+<span>--rounded: 0.75rem;</span>
+
+<span>--container-sm: 4;</span>
+<span>--container-md: 16;</span>
+<span>--container-lg: 32;</span>
+
+<span>--block-sm: 6;</span>
+<span>--block-md: 8;</span>
+<span>--block-lg: 10;</span></code></pre>
+
+  <p>
+    The other variables can keep their current values. The transparency expressions and the carousel's
+    active indicator that reference the highlight color start following the blue.
+  </p>
+
+  <p>
+    After the change, check the site on small and large screens. Observe the text contrast, how the
+    links read in their normal and interactive states, the space available for the content, and the
+    controls of the components your site uses.
+  </p>
+
+  <p>
+    To review the production result, generate a new build with
+    <span class="tbu-asset-code">npm run build</span> and check it with
+    <span class="tbu-asset-code">npm run preview</span>. The build checks and generates the files;
+    visual evaluation is still necessary to check the combination you chose.
+  </p>
+
+  <p>
+    To learn about the classes that apply these settings to the content, continue to the
+    <a href="#/pages/utilities.htm">utilities</a> page.
+  </p>
+</div>
