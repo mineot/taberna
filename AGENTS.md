@@ -112,7 +112,9 @@ Scope and limitations:
 | `pt-br/pages/templates.htm` | HTML guide: layout, slots, and template integration; Vue examples are escaped text. |
 | `pt-br/pages/components.htm` | HTML guide: component attributes, examples, and icon registration; HTML/Vue samples are escaped text. |
 | `pt-br/pages/utilities.htm` | HTML guide: utility classes and usage examples; code samples are escaped text. |
-| `pt-br/complements/` | Header and sidebar navigation link to the guides; the footer still includes placeholder links and images. |
+| `pt-br/pages/support.htm` | Financial-support page with Bitcoin, dollar/euro, and Pix subsections; temporary `placehold.co` images and pending payment details. |
+| `pt-br/pages/contribute.htm` | Contribution page highlighting the project's early stage, development, ideas/bug reports, documentation/translations, and numbered GitHub contribution steps. |
+| `pt-br/complements/` | Header and sidebar navigation link to the guides. The footer groups home and guide links under “Conheça” and “Personalize”, participation links under “Participe”, and a closing phrase. |
 | `en-us/` | Older placeholder content: six files at the locale root, with no `pages/` or `complements/` directories. |
 
 Paths above are relative to `public/content/`. Bundled `logo.png`, `texture.png`,
@@ -133,6 +135,15 @@ Browser interactions have not been verified for these converted guides.
 
 English is still enabled and is the default locale, but lacks the complement
 paths required by the shell and all five guide paths (see section 11.11).
+
+The Portuguese footer links “Apoie” and “Contribua” to `#/pages/support.htm`
+and `#/pages/contribute.htm`. The support fragment uses `.page-custom`, with
+three vertically stacked payment subsections separated by horizontal rules and
+220 × 220 temporary images. Bitcoin and Pix details and the dollar/euro payment
+service/link are pending; no functional payment links or QR codes are provided.
+The contribution fragment uses `.page-custom`, with text subsections, an
+`ol` using `li.enum > div`, and a direct GitHub repository link. The footer also links to
+the project repository at `https://github.com/mineot/taberna`.
 
 ## 3. Technology Stack
 
@@ -182,7 +193,8 @@ public/
   content/{locale}/         locale-specific fragments
   content/pt-br/home.htm    Portuguese project overview
   content/pt-br/pages/      HTML guides: howwork.htm, themes.htm, templates.htm,
-                            components.htm, utilities.htm
+                            components.htm, utilities.htm; support.htm financial
+                            support page; contribute.htm contribution guide
   content/pt-br/complements/ brand.htm, header-nav.htm, sidebar-nav.htm,
                             footer.htm, copyright.htm
   content/en-us/            legacy root-level home.htm, brand.htm, header-nav.htm,

@@ -76,3 +76,34 @@
     }
   }
 }
+
+.footer-custom {
+  @apply gap-6 pt-6;
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4;
+  @apply items-start justify-between;
+  @apply tbu-border-top;
+
+  > nav {
+    @apply flex flex-col gap-2;
+
+    > h2 {
+      @apply flex min-h-10 items-center font-bold;
+    }
+
+    > ul {
+      @apply flex flex-col gap-2;
+
+      > li > a {
+        @apply tbu-asset-link focus-visible:outline-2 focus-visible:outline-offset-4;
+      }
+    }
+  }
+
+  > div {
+    @apply flex max-w-xs flex-col gap-2;
+
+    > .title {
+      @apply tbu-asset-text flex min-h-10 items-center font-bold;
+    }
+  }
+}
