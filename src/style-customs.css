@@ -1,37 +1,77 @@
 .page-custom {
   @apply flex flex-col gap-4;
 
-  h1 {
-    @apply py-2 text-4xl font-bold;
+  > h1 {
+    @apply my-2 text-4xl font-bold;
     @apply tbu-asset-text;
   }
 
-  h2 {
-    @apply py-2 text-3xl;
+  > h2 {
+    @apply mb-2 text-3xl;
     @apply tbu-asset-text;
   }
 
-  p {
+  > h3 {
+    @apply mb-2 text-2xl;
+    @apply tbu-asset-text;
+  }
+
+  > hr {
+    @apply tbu-asset-text;
+    @apply my-4;
+  }
+
+  > p {
     @apply text-lg;
   }
 
-  a {
+  > a {
     @apply text-lg underline;
     @apply tbu-asset-link;
   }
 
-  ol {
+  > ol {
     @apply flex flex-col flex-nowrap gap-1;
 
-    li {
-      > span.enum {
+    > li.enum {
+      > div {
+        @apply tbu-asset-text inline font-bold;
+
         &::after {
           @apply mr-2;
           content: '. ';
           user-select: none;
         }
+      }
+    }
 
-        @apply tbu-asset-text font-bold;
+    > li.dot {
+      &::before {
+        @apply tbu-asset-text mr-2 font-bold;
+        content: '\2022 ';
+        user-select: none;
+      }
+    }
+  }
+
+  > pre {
+    @apply tbu-secondary-bg tbu-texture p-4;
+
+    > code {
+      @apply tbu-asset-code font-mono text-sm;
+    }
+  }
+
+  > table {
+    > thead,
+    tbody {
+      @apply tbu-secondary-bg tbu-texture;
+
+      > tr {
+        > th,
+        td {
+          @apply p-3 text-left;
+        }
       }
     }
   }

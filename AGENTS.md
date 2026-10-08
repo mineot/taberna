@@ -5,10 +5,11 @@ describes the **current** working tree: architecture, conventions, data
 contracts, security boundaries, and the known gaps that must not be mistaken
 for finished features.
 
-Validated against the working tree on 2026-09-30 through source inspection,
-typecheck, lint, test discovery, and a production build. Browser interactions
-were not exercised. When code and this file disagree, establish current
-behavior from the code and update this file within the approved scope.
+Reviewed against the working tree on 2026-10-07 through source inspection and
+HTML fragment parsing with jsdom. Typecheck, lint, test discovery, and a
+production build were run during the same session (results in section 4).
+Browser interactions were not exercised. When code and this file disagree,
+establish current behavior from the code and update this file within the approved scope.
 Development requirements below are distinct from implemented behavior; known
 gaps identify where the code does not yet meet those requirements.
 
@@ -50,17 +51,20 @@ gaps identify where the code does not yet meet those requirements.
 
 ### Keep the README minimal
 
-- `README.md` is the only maintained README and is written in English.
+- `README.md` is the only maintained README and is written in US English (en-US).
   Do not recreate a Portuguese version or add translation links.
-- Limit it to the project overview, technologies, installation, production
-  build, and license. Keep architecture, contracts, and agent guidance here.
+- Keep it concise: project overview, key features, technologies, getting started,
+  build and publishing, contributions, optional financial support, and license.
+  Keep architecture, contracts, and agent guidance here; detailed usage belongs
+  on the site. Website and financial-support URLs have not yet been supplied;
+  add them when the user provides them, without inventing placeholder links.
 - Update it when an approved change affects those topics; do not expand it
   into a configuration guide, component catalog, or troubleshooting manual.
 
 ### Tests
 
-- There is currently **no test suite**: `npm test` fails with "No test files
-  found", and `src/test/setup.ts` is empty.
+- There is currently **no test suite**; results and the empty setup file are
+  documented in sections 4 and 11.2.
 - When tests are added or an approved change needs coverage, colocate focused
   `*.test.ts` files next to the code and use the existing Vitest config
   (jsdom + `src/test/setup.ts`).
@@ -75,16 +79,15 @@ portfolios, and landing pages. A Vue 3 application shell renders HTML fragments
 that live under `public/content/{locale}/`, so editorial content is changed
 without touching application code.
 
-Current state (mid-refactor, important):
+Implemented architecture:
 
-- The site configuration was reduced to a single manifest:
-  `public/config/languages.json`. There is no per-locale site manifest
-  (`config/{locale}.json` was deleted), no config store, and no home/footer
-  path configuration.
-- Layout regions are wired **in code** by `src/AppTemplate.vue`, which hardcodes
-  the fragment file for each slot.
-- The dynamic content page (`src/pages/slug.page.vue`) is **entirely
-  commented out**; only `#/` and `#/language` currently render content.
+- Site language configuration lives in one manifest:
+  `public/config/languages.json`. There is no per-locale site manifest,
+  config store, or home/footer path configuration.
+- Layout regions are wired **in code** by `src/AppTemplate.vue`, which assigns
+  fragments, inline markup, or components to the template slots.
+- The dynamic content page (`src/pages/slug.page.vue`) passes the current route
+  slug to `tbc-flux`, loading `.htm` fragments from the active locale directory.
 - Fetched editorial HTML is rendered through `v-html` **without sanitization**
   and must be treated as trusted author content. The
   `dompurify` dependency is installed but unused. See section 9.
@@ -98,11 +101,38 @@ Scope and limitations:
   are hardcoded English in components/stores. Only editorial content and
   language names/flags are localized. `index.html` keeps `lang="en"`, title,
   and description static across locale changes.
-- The Portuguese `public/content/pt-br/home.htm` contains a Markdown draft of
-  the project introduction and getting-started guide, awaiting author conversion
-  to HTML and styling. Flux does not parse Markdown. Other bundled content,
-  images (`logo.png`, `texture.png`, `placehold.co` images) and the `Iten 1..3`
-  links remain placeholders.
+
+### Editorial purpose and current content
+
+| Content | Current state and purpose |
+| --- | --- |
+| `pt-br/home.htm` | HTML project overview; keep detailed instructions and code examples in the internal guides. |
+| `pt-br/pages/howwork.htm` | HTML guide: project organization, content, routes, languages, development, and publishing. |
+| `pt-br/pages/themes.htm` | HTML guide: theme variables and customization; remaining Markdown converted using the author's existing markup patterns. |
+| `pt-br/pages/templates.htm` | HTML guide: layout, slots, and template integration; Vue examples are escaped text. |
+| `pt-br/pages/components.htm` | HTML guide: component attributes, examples, and icon registration; HTML/Vue samples are escaped text. |
+| `pt-br/pages/utilities.htm` | HTML guide: utility classes and usage examples; code samples are escaped text. |
+| `pt-br/complements/` | Header and sidebar navigation link to the guides; the footer still includes placeholder links and images. |
+| `en-us/` | Older placeholder content: six files at the locale root, with no `pages/` or `complements/` directories. |
+
+Paths above are relative to `public/content/`. Bundled `logo.png`, `texture.png`,
+and `placehold.co` images remain sample assets. Do not treat authored Portuguese
+copy or the guides as disposable placeholders.
+
+All five Portuguese guides (howwork, themes, templates, components, and utilities)
+use HTML within `.page-custom`, with `tbu-asset-code` for technical terms,
+`pre > code` examples, tables, and `ol` lists using `li.dot` or `li.enum > div`.
+When converting more content, follow the author's existing structures; if a new
+tag needs styles that are not defined, leave that converted block commented for
+the author's review instead of adding styles without approval.
+The Portuguese menus link to these HTML guides. Flux does not parse Markdown;
+code fences alone do not protect examples from HTML parsing. Code samples use
+escaped text inside `pre > code`; sample markup, scripts, and styles are shown
+as text, not live nodes. No Markdown drafts remain in these five pages.
+Browser interactions have not been verified for these converted guides.
+
+English is still enabled and is the default locale, but lacks the complement
+paths required by the shell and all five guide paths (see section 11.11).
 
 ## 3. Technology Stack
 
@@ -113,7 +143,7 @@ Scope and limitations:
 - `@lucide/vue` for UI icons
 - TypeScript 5.9 strict (`strict`, `noUnusedLocals`, `noUnusedParameters`,
   `noImplicitReturns`, `isolatedModules`, `allowImportingTsExtensions`)
-- Vitest 4 + jsdom + @vue/test-utils (configured, unused)
+- Vitest 4 + jsdom + @vue/test-utils (configured, no test suite)
 - ESLint 10 flat config, Prettier 3 with `prettier-plugin-tailwindcss`
 - Self-hosted Roboto, Roboto Serif, Roboto Mono, Italianno (`.ttf`, in `public/fonts/`)
 
@@ -127,7 +157,7 @@ upgrading dependencies.
 Validation environment: Node `v24.15.0`, npm `12.0.2`, existing dependencies.
 These are observed versions, not an `engines` requirement (none is declared).
 
-| Command | Purpose | Review result (2026-09-30) |
+| Command | Purpose | Session verification (2026-10-07) |
 | --- | --- | --- |
 | `npm run dev` | Vite dev server | Defined; not started in this review |
 | `npm run build` | `vue-tsc --noEmit && vite build` | Passes |
@@ -137,7 +167,7 @@ These are observed versions, not an `engines` requirement (none is declared).
 | `npm run test` | `vitest --run` | Exits 1: no test files found (11.2) |
 | `npm run format` | Prettier writes `src/**/*.{ts,vue,css}` | Not run; modifies source and does not format this guide |
 
-Lint and test failures predate this documentation review. Do not report them
+Lint and test failures predate these documentation changes. Do not report them
 as green or infer working browser behavior from a successful build. Recheck
 these results when the relevant code or tooling changes.
 
@@ -149,8 +179,15 @@ vite.config.ts              base './', alias '@', vue + tailwind plugins, vitest
 eslint.config.js            flat config (vue + typescript-eslint + prettier)
 public/
   config/languages.json     default / available / flags / names
-  content/{locale}/         brand.htm, header-nav.htm, sidebar-nav.htm,
-                            footer.htm, copyright.htm, home.htm
+  content/{locale}/         locale-specific fragments
+  content/pt-br/home.htm    Portuguese project overview
+  content/pt-br/pages/      HTML guides: howwork.htm, themes.htm, templates.htm,
+                            components.htm, utilities.htm
+  content/pt-br/complements/ brand.htm, header-nav.htm, sidebar-nav.htm,
+                            footer.htm, copyright.htm
+  content/en-us/            legacy root-level home.htm, brand.htm, header-nav.htm,
+                            sidebar-nav.htm, footer.htm, copyright.htm;
+                            no pages/ or complements/ directories
   fonts/                    self-hosted .ttf files
   icons/                    social SVG icons
   images/                   logo.png, texture.png
@@ -161,10 +198,11 @@ src/
   main.ts                   styles, custom elements, Pinia, router, mount
   router.ts                 hash routes: /, /language, /:slug(.*)
   style.css                 global stylesheet entry
+  style-customs.css          editorial styles under .page-custom
   web-components.ts         tbc-carousel, tbc-flux, tbc-language
   web-icons.ts              icon-home
   components/
-    carousel.vue            carousel (registered, not used by bundled content)
+    carousel.vue            carousel (documented with escaped HTML examples)
     error.vue               full-screen error overlay
     flux.vue                loads a locale fragment and renders it (v-html)
     language.vue            flag + language name link to #/language
@@ -172,7 +210,7 @@ src/
   pages/
     home.page.vue           <tbc-flux content-file="home.htm">
     language-switcher.page.vue  language grid, calls switchLanguage
-    slug.page.vue           DISABLED (commented out)
+    slug.page.vue           passes the route slug to tbc-flux
   stories/                  Pinia stores: app, error, language, loading
   styles/                   fonts.css, theme.css, utilities.css, app.css
   templates/default.vue     header/main/footer + backdrop + sidebar layout
@@ -189,6 +227,22 @@ Naming conventions:
 - Files under `components/` and pages are lowercase and hyphenated; the root
   shell files are `App.vue` and `AppTemplate.vue`.
 
+### Where to make an approved change
+
+| Change | Primary location |
+| --- | --- |
+| Home copy or detailed guide content | Relevant file under `public/content/pt-br/`; preserve the format documented in section 2. |
+| Menu links, brand, or footer copy | `public/content/{locale}/complements/`; account for the incomplete English structure. |
+| Which content fills a layout region | `src/AppTemplate.vue`. |
+| Layout structure or sidebar behavior | `src/templates/default.vue`. |
+| Shared visual values | `src/styles/theme.css`. |
+| Reusable utility classes | `src/styles/utilities.css`. |
+| Editorial presentation | `src/style-customs.css`. |
+| Component behavior or registration | `src/components/` and `src/web-components.ts`. |
+| Available icons | `src/web-icons.ts`. |
+| Language data or resolution | `public/config/languages.json` and `src/stories/language.store.ts`. |
+| Routing or fragment loading | `src/router.ts`, `src/pages/`, `src/components/flux.vue`, and `src/utils/flux.util.ts`. |
+
 ## 6. Bootstrap and Application Shell
 
 `src/main.ts` imports `@/style.css`, registers `web-components` and
@@ -201,29 +255,36 @@ Naming conventions:
 instances wait for a nonempty locale. Only language detection uses the loading
 tokens today; fragment fetches do not keep the loading overlay open.
 
-`AppTemplate.vue` is the content-to-layout bridge. It maps slots to fragments:
+`AppTemplate.vue` is the content-to-layout bridge. Fragment paths below are
+relative to `public/content/{locale}/`:
 
 | Slot                | Source                                                      |
 | ------------------- | ----------------------------------------------------------- |
-| `header-brand`      | `brand.htm`                                                  |
-| `header-nav`        | `header-nav.htm`                                             |
-| `footer-brand`      | `brand.htm`                                                  |
+| default (unnamed)   | current route page forwarded from `App.vue` through `<slot />` |
+| `header-brand`      | `complements/brand.htm`                                      |
+| `header-nav`        | `complements/header-nav.htm`                                 |
+| `footer-brand`      | `complements/brand.htm`                                      |
 | `footer-complement` | inline social icon links (`/icons/*.svg`)                   |
-| `footer-body`       | `footer.htm`                                                 |
-| `footer-copyright`  | `copyright.htm`                                              |
-| `sidebar-brand`     | `brand.htm` (click closes the sidebar)                       |
-| `sidebar-body`      | `sidebar-nav.htm` (click closes the sidebar)                 |
+| `footer-body`       | `complements/footer.htm`                                     |
+| `footer-copyright`  | `complements/copyright.htm`                                  |
+| `sidebar-brand`     | `complements/brand.htm` (click closes the sidebar)           |
+| `sidebar-body`      | `complements/sidebar-nav.htm` (click closes the sidebar)     |
 | `sidebar-footer`    | `<tbc-language>` (click closes the sidebar)                  |
 
-Adding a region means: add the slot to `templates/default.vue`, then fill it in
-`AppTemplate.vue` with a `<tbc-flux content-file="...">`, then create the
-matching `public/content/{locale}/{file}.htm` in **every** enabled locale.
+Adding a region means adding a slot to the chosen template and filling it in
+`AppTemplate.vue`. When the region uses `<tbc-flux content-file="...">`, create
+the matching fragment under `public/content/{locale}/` in **every** enabled
+locale. Slots can also receive inline content or components.
 
-`templates/default.vue` owns all layout structure and styling: sticky blurred
-header, `hidden md:flex` nav, mobile menu toggle (`hideToggleMenu` prop),
+`templates/default.vue` owns the default layout structure and its styles:
+sticky blurred header, `hidden md:flex` nav, mobile menu toggle (`hideToggleMenu` prop),
 `<main>` slot, footer with brand/complement/body, copyright row with the
 "Powered by Mineot" link, a fixed backdrop, and a fixed off-canvas sidebar.
-Sidebar slots receive a `close` callback.
+Sidebar slots receive a `close` callback. Editorial styles, shared utilities,
+and overlay component styles live separately. This is the only template
+currently available; selection is the import in `AppTemplate.vue`, not a
+configuration value. `hideToggleMenu` defaults to `false`; it hides the opener,
+not the sidebar itself or the desktop navigation breakpoint.
 
 ## 7. State (`src/stories/`)
 
@@ -248,7 +309,7 @@ component; actions and plain functions may be destructured directly.
 
 ## 8. Language Resolution
 
-`public/config/languages.json` is the only configuration file:
+`public/config/languages.json` is the only runtime site configuration manifest:
 
 ```json
 {
@@ -259,10 +320,11 @@ component; actions and plain functions may be destructured directly.
 }
 ```
 
-Rules:
+Authoring requirements and current resolver behavior:
 
 - Author locale keys in lowercase (`pt-br`). Every locale in `available` needs
   a `flags` and a `names` entry and a complete `public/content/{locale}/` set.
+  This completeness requirement is not currently met by `en-us` (11.11).
 - `default` must be present in `available` as an authoring requirement.
   The resolver falls back to the first locale if the default is unsupported.
 - Matching trims and lowercases candidates, but returns the original entry
@@ -325,8 +387,10 @@ switch from surviving the reload. The hash route is retained.
   `Failed to load file content: {file}`, so a broken fragment triggers the
   full-screen error overlay.
 
-Fragments are HTML fragments only. Never include `<!doctype>`, `<html>`,
-`<head>`, or `<body>`. This is an authoring rule, not complete validation:
+Runtime content must be HTML fragments. Never include `<!doctype>`, `<html>`,
+`<head>`, or `<body>` as document structure. Escape code examples intended for
+display, including Vue template, script, and style tags. This is an authoring
+rule, not complete validation:
 `isFullHtmlDocument` only recognizes leading whitespace followed by
 `<!doctype html` or `<html` (case-insensitive). It does not reject isolated
 `<head>`/`<body>` tags or a document preceded by a comment. The loader does not
@@ -361,36 +425,35 @@ origin changes must account for the relevant CSP directive.
 | ------------ | ------------------ | -------------------------- |
 | `/`          | `home`             | `home.page.vue`            |
 | `/language`  | `Language Switcher`| `language-switcher.page.vue` |
-| `/:slug(.*)` | `page`             | `slug.page.vue` (disabled) |
+| `/:slug(.*)` | `page`             | `slug.page.vue` |
 
 - `scrollBehavior` restores the saved position, smooth-scrolls to `_to.hash`, or
   returns to the top.
-- Internal links use hash URLs. Only `#/` and `#/language` have working page
-  bodies. Neither `#/{path}.htm` nor the bundled `#/iten1`–`#/iten3` links
-  load fragments today; adding a file alone does not enable a route.
-- The catch-all leaves the page body empty while the shell remains visible:
-  the implementation in `slug.page.vue` is commented out,
-  including its `pageStatus` state machine, `AbortController` cleanup, and
-  `@util/...` / `@store/...` / `@layout/...` imports from a **previous alias
-  scheme that no longer exists**. Only `@` is configured (in both `tsconfig.json`
-  and `vite.config.ts`).
-- When re-enabling dynamic pages, re-derive the loader from
-  `loadContentFragment()` and the current `tbc-flux` error handling; do not
-  revive the commented code as-is.
+- Internal links use hash URLs. `#/` loads the home and `#/language` displays
+  the language chooser. `#/pages/howwork.htm` resolves to
+  `content/{locale}/pages/howwork.htm` beneath the application base URL.
+- The catch-all computes `route.params.slug` and passes it to the `content-file`
+  prop of `tbc-flux`. Paths must satisfy the fragment loader's validation,
+  including the `.htm` suffix. Adding a valid fragment enables access through
+  its matching hash URL; menu links are authored separately.
+- Missing or invalid fragments use the shared full-screen error overlay.
+  There is no dedicated not-found page, translation fallback, or additional
+  cancellation logic in the route component.
 
 ## 11. Known Gaps and Dead Code
 
 Documented deliberately so agents do not "fix" them silently or claim they work.
 
-1. **`npm run lint` is broken.** All 11 Vue files have parsing errors: ten
-   report `'>' expected`, and `slug.page.vue` reports `Type expected`. The
-   TypeScript recommended config applies to both `*.ts` and `*.vue` after the
+1. **`npm run lint` is broken.** All 11 Vue files currently report the parsing
+   error `'>' expected`. The TypeScript recommended config applies to both
+   `*.ts` and `*.vue` after the
    Vue config, replacing `vue-eslint-parser`. The later `parserOptions.parser`
    does not restore the outer Vue parser. Fixing parser order/scoping is a
    prerequisite before lint can check Vue templates. An override also targets
    the deleted `src/components/layouts/content.vue`.
 2. **No tests exist.** `npm test` exits 1. `src/test/setup.ts` is empty, and
-   `@vue/test-utils` and `jsdom` are installed but unused.
+   `@vue/test-utils` and `jsdom` are installed, but no automated suite uses them.
+   Ad hoc parsing during documentation review is not a test suite.
 3. **`v-html` is unsanitized** and `dompurify` is an unused dependency
    (section 9).
 4. **Fragment asset paths break subdirectory hosting:** `/images/logo.png`
@@ -403,9 +466,9 @@ Documented deliberately so agents do not "fix" them silently or claim they work.
 5. **Dead CSS:** `src/styles/app.css` still sets `display: contents` for
    `tbc-backdrop` and `tbc-sidebar`, elements that no longer exist (the sidebar
    is now `.tbi-app-layout-sidebar`).
-6. **Registered but unused:** `tbc-carousel` (`components/carousel.vue`) and
-   `icon-home` (`web-icons.ts`) are not referenced by the app or by any
-   fragment.
+6. **Guide browser validation is pending:** the five Portuguese guides are
+   HTML, with escaped code examples. Conversion checks verify content and DOM
+   structure, but do not establish visual or interactive browser behavior.
 7. **Token drift:** `error.vue` and `loading.vue` use raw `z-300` / `z-200`,
    while `theme.css` defines `--z-loader: 999`, `--z-sidebar: 150`,
    `--z-backdrop: 100`. Prefer adding or reusing a `--z-*` token over new raw
@@ -420,22 +483,37 @@ Documented deliberately so agents do not "fix" them silently or claim they work.
     `--color-secondary-bg`. `tbu-secondary-bg` is a utility, not a CSS variable.
 10. **Partial data/request validation:** language schema checks are incomplete;
     flux has no cancellation/stale-response protection (sections 8–9).
+11. **English content paths are incomplete:** `en-us` remains enabled and is
+    the default, but its five complements are at the locale root rather than
+    under `complements/`, and it has no counterparts for the five Portuguese
+    guides under `pages/`. The ten expected paths are therefore absent. Shell
+    fragment requests for English cannot load those files from this tree and
+    follow Flux's error handling; there is no fallback to root-level files or
+    another locale. Do not infer working multilingual navigation from a
+    successful build or silently translate, move, or disable that content.
 
 ## 12. Styling and Theme
 
 `src/style.css` imports, in order: `tailwindcss`, `styles/fonts.css`,
-`styles/theme.css`, `styles/utilities.css`, `styles/app.css`.
+`styles/theme.css`, `styles/utilities.css`, `styles/app.css`, then
+`style-customs.css`.
 
 - `theme.css` holds `@theme` font families (`--font-sans`, `--font-serif`,
   `--font-mono`, `--font-fancy`) and `:root` semantic tokens: z-index,
   `--duration`, `--texture`, `--rounded`, the primary/secondary/asset color
   families (each with `-soft` and `-opaque` variants), borders, block/container
-  spacing multipliers, and component-only tokens (`--carousel-*`). Several
-  legacy link/header/footer tokens are commented out.
+  spacing multipliers, and component-only tokens (`--carousel-*`). Container
+  multipliers are 4/14/24 and block multipliers are 6/6/6 for sm/md/lg.
 - `utilities.css` defines `tbu-*` utilities via `@utility`: duration, texture,
-  rounded, color helpers, `tbu-asset-link`, `tbu-asset-pill`, `tbu-shadow`,
+  rounded, color helpers, `tbu-asset-link`, `tbu-asset-pill`,
+  `tbu-asset-code-text`, `tbu-asset-code-panel` (direct `span.terminal` and
+  `span.css` children receive specific styles), `tbu-shadow`,
   `tbu-backdrop`, border helpers, and the responsive `tbu-container` /
   `tbu-block`.
+- `style-customs.css` defines the global `.page-custom` wrapper and its nested
+  heading, paragraph, link, separator, and numbered-list styles. It is the
+  current home content's presentation layer; keep editorial rules separate from
+  template structure and reusable theme/utility definitions.
 - Every `<style>` block that uses Tailwind directives must start with
   `@reference "@/style.css";`.
 - Custom elements use `shadowRoot: false` (light DOM). Vue `scoped` styles
@@ -472,12 +550,13 @@ Currently registered:
 | `tbc-language`  | `flag-only`      | `false` | Links to `#/language`; hides the language name when set          |
 | `tbc-carousel`  | `total-per-page` | `3`     | Direct slotted elements are items grouped into pages; 1 item/page below `48rem`         |
 | `tbc-carousel`  | `interval`       | `3000`  | Autoplay ms; `0` disables it. Countdown + pause/play button      |
-| `icon-home`     | none             | —       | Lucide `Home` icon (registered, currently unused)               |
+| `icon-home`     | none             | —       | Lucide `Home` icon; included in the component guide examples    |
 
 Carousel behavior to preserve:
 
 - `total-per-page` is floored and clamped to at least 1; non-finite values
-  become 1. `interval` is clamped to zero; non-finite values disable autoplay.
+  become 1. `interval` is clamped to a minimum of zero; non-finite values
+  disable autoplay.
 - Previous/next navigation wraps. Desktop uses dots, mobile a page counter;
   controls disappear with at most one page.
 - Automatic mode pauses on hover/focus and disables playback for reduced
@@ -519,13 +598,15 @@ Adding an icon means importing it from `@lucide/vue` and adding it to the map.
 
 ## 15. Change Workflow
 
+Apply the approval and preservation rules in section 1 throughout this workflow.
 Before implementing:
 
 1. Read this file and inspect the relevant source.
 2. Check `git status` and identify unrelated user changes.
 3. State the observed behavior, the proposed scope, and any meaningful choice
    that needs a decision.
-4. Wait for explicit approval.
+4. Proceed only within explicitly approved scope; if approval is already given,
+   do not request it again for the same work.
 
 After implementing:
 
@@ -535,10 +616,7 @@ After implementing:
 3. Run the relevant verification: `npm run typecheck` always; `npm run build`
    when bundling or deployment can be affected; `npm run lint` and `npm run
    test` with their known failures (11.1, 11.2) reported honestly.
-4. Update `AGENTS.md` if anything it documents changed, and `README.md` only
-   if the change affects its overview, technologies, installation, build, or
-   license.
+4. Apply the documentation maintenance rules in section 1 to `AGENTS.md` and
+   `README.md`.
 5. Report changed files, verification commands with their real results, and any
    remaining risk or follow-up.
-
-Never modify `TODO.md`.

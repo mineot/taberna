@@ -1,1 +1,576 @@
-<div>Templates</div>
+<div class="page-custom">
+  <h1>Templates</h1>
+
+  <p>
+    Os templates definem a estrutura visual das páginas do Taberna. Eles organizam as regiões do
+    site, como cabeçalho, navegação, conteúdo principal, rodapé e menu lateral, e oferecem espaços
+    para receber o conteúdo de cada uma.
+  </p>
+
+  <p>
+    Atualmente, o projeto conta com o template
+    <span class="tbu-asset-code">src/templates/default.vue</span>. Você pode personalizá-lo ou criar
+    outro layout para atender às necessidades do seu site.
+  </p>
+
+  <hr />
+
+  <h2>Template, tema e conteúdo</h2>
+
+  <p>Essas três partes trabalham juntas, mas têm responsabilidades diferentes:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Parte</th>
+        <th>Responsabilidade</th>
+        <th>Exemplo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Template</td>
+        <td>Define a estrutura e o comportamento do layout.</td>
+        <td>Posicionar a navegação no cabeçalho e oferecer um menu lateral.</td>
+      </tr>
+      <tr>
+        <td>Tema</td>
+        <td>Define valores visuais compartilhados.</td>
+        <td>Configurar cores, fontes, bordas e espaçamentos.</td>
+      </tr>
+      <tr>
+        <td>Conteúdo</td>
+        <td>Preenche as regiões com informações.</td>
+        <td>Apresentar a marca, os links do menu e o texto de uma página.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Para mudar um texto do rodapé, edite o fragmento correspondente. Para mudar uma cor
+    compartilhada, consulte o tema. Para reorganizar as regiões ou criar outra disposição de
+    elementos, trabalhe no template.
+  </p>
+
+  <p>
+    Os templates são componentes Vue e ficam em <span class="tbu-asset-code">src/templates/</span>.
+    Eles fazem parte do código da aplicação; não são fragmentos
+    <span class="tbu-asset-code">.htm</span> carregados como conteúdo.
+  </p>
+
+  <hr />
+
+  <h2>Como o template se conecta à aplicação</h2>
+
+  <p>A estrutura passa por três arquivos:</p>
+
+  <pre><code><span>App.vue</span>
+<span>  → AppTemplate.vue</span>
+<span>    → templates/default.vue</span></code></pre>
+
+  <p>
+    <span class="tbu-asset-code">App.vue</span> reúne a aplicação e coloca a página da rota atual
+    dentro de <span class="tbu-asset-code">AppTemplate.vue</span>. As telas de carregamento e erro
+    também são montadas por <span class="tbu-asset-code">App.vue</span>, fora do template de layout.
+  </p>
+
+  <p>
+    <span class="tbu-asset-code">AppTemplate.vue</span> importa o template escolhido e conecta suas
+    regiões aos fragmentos e componentes que devem aparecer nelas. A marca e os menus, por exemplo,
+    são carregados por <span class="tbu-asset-code">tbc-flux</span> a partir da pasta
+    <span class="tbu-asset-code">complements/</span> do idioma ativo.
+  </p>
+
+  <p>
+    O template organiza esses elementos e recebe a página atual em sua área principal. Assim, a
+    navegação pode trocar o conteúdo da página mantendo a estrutura compartilhada.
+  </p>
+
+  <p>
+    No projeto atual, essa escolha é feita no código. Não existe um seletor automático de templates,
+    uma configuração de template por idioma ou uma seleção independente por página.
+  </p>
+
+  <hr />
+
+  <h2>Conheça o template padrão</h2>
+
+  <p>O <span class="tbu-asset-code">default.vue</span> oferece:</p>
+
+  <ol>
+    <li class="dot">Cabeçalho que permanece no topo durante a rolagem, com marca e navegação.</li>
+    <li class="dot">Área principal para receber o conteúdo da rota atual.</li>
+    <li class="dot">Rodapé com espaços para marca, conteúdo complementar, corpo e copyright.</li>
+    <li class="dot">Link “Powered by Mineot”, definido diretamente no template.</li>
+    <li class="dot">Menu lateral com marca, corpo e rodapé próprios.</li>
+    <li class="dot">Fundo de sobreposição atrás do menu lateral quando ele está aberto.</li>
+  </ol>
+
+  <p>
+    Abaixo de <span class="tbu-asset-code">48rem</span>, a navegação do cabeçalho fica oculta e o
+    controle de abertura do menu lateral é exibido, desde que não tenha sido desativado. A partir
+    dessa largura, a navegação do cabeçalho aparece e o controle fica oculto.
+  </p>
+
+  <p>
+    O template também aplica estilos às suas regiões, utilizando variáveis do tema e utilities do
+    projeto. A estrutura e parte da apresentação estão, portanto, no mesmo arquivo Vue.
+  </p>
+
+  <hr />
+
+  <h2>Slots: os espaços que recebem conteúdo</h2>
+
+  <p>
+    Um slot é um espaço do componente Vue que pode ser preenchido por quem utiliza esse componente.
+    O template define onde o espaço aparece;
+    <span class="tbu-asset-code">AppTemplate.vue</span> informa o que será colocado nele.
+  </p>
+
+  <p>Este exemplo simplificado define um espaço para a marca e outro para o conteúdo principal:</p>
+
+  <pre><code><span>&lt;template&gt;</span>
+<span>  &lt;header&gt;</span>
+<span>    &lt;slot name="header-brand"&gt;&lt;/slot&gt;</span>
+<span>  &lt;/header&gt;</span>
+<span>  &lt;main&gt;</span>
+<span>    &lt;slot&gt;&lt;/slot&gt;</span>
+<span>  &lt;/main&gt;</span>
+<span>&lt;/template&gt;</span></code></pre>
+
+  <p>
+    O slot <span class="tbu-asset-code">header-brand</span> tem um nome. O slot sem nome recebe o
+    conteúdo padrão, que no Taberna é usado para encaminhar a página atual.
+  </p>
+
+  <h3>Regiões disponíveis no template padrão</h3>
+
+  <p>
+    Os caminhos da tabela são relativos a
+    <span class="tbu-asset-code">public/content/{idioma}/</span>.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Slot</th>
+        <th>Região</th>
+        <th>Conteúdo fornecido atualmente</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Sem nome</td>
+        <td>Área principal</td>
+        <td>
+          Página da rota atual, encaminhada por <span class="tbu-asset-code">AppTemplate.vue</span>.
+        </td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">header-brand</td>
+        <td>Marca no cabeçalho</td>
+        <td class="tbu-asset-code">complements/brand.htm</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">header-nav</td>
+        <td>Navegação do cabeçalho</td>
+        <td class="tbu-asset-code">complements/header-nav.htm</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">footer-brand</td>
+        <td>Marca no rodapé</td>
+        <td class="tbu-asset-code">complements/brand.htm</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">footer-complement</td>
+        <td>Complemento do rodapé</td>
+        <td>Links com ícones definidos em <span class="tbu-asset-code">AppTemplate.vue</span>.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">footer-body</td>
+        <td>Corpo do rodapé</td>
+        <td class="tbu-asset-code">complements/footer.htm</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">footer-copyright</td>
+        <td>Copyright</td>
+        <td class="tbu-asset-code">complements/copyright.htm</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">sidebar-brand</td>
+        <td>Marca no menu lateral</td>
+        <td class="tbu-asset-code">complements/brand.htm</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">sidebar-body</td>
+        <td>Corpo do menu lateral</td>
+        <td class="tbu-asset-code">complements/sidebar-nav.htm</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">sidebar-footer</td>
+        <td>Rodapé do menu lateral</td>
+        <td>Componente <span class="tbu-asset-code">tbc-language</span>.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    O nome do slot não determina automaticamente o nome de um arquivo. Essa ligação é explícita em
+    <span class="tbu-asset-code">AppTemplate.vue</span>, e um slot pode receber HTML, componentes ou
+    um fragmento carregado por <span class="tbu-asset-code">tbc-flux</span>.
+  </p>
+
+  <p>
+    Por exemplo, o preenchimento da marca do cabeçalho é feito assim, dentro do componente de
+    template utilizado por <span class="tbu-asset-code">AppTemplate.vue</span>:
+  </p>
+
+  <pre><code><span>&lt;template #header-brand&gt;</span>
+<span>  &lt;tbc-flux content-file="complements/brand.htm"&gt;&lt;/tbc-flux&gt;</span>
+<span>&lt;/template&gt;</span></code></pre>
+
+  <p>
+    A sintaxe <span class="tbu-asset-code">#header-brand</span> indica qual slot será preenchido. O
+    atributo <span class="tbu-asset-code">content-file</span> indica qual fragmento será buscado no
+    idioma ativo.
+  </p>
+
+  <hr />
+
+  <h2>Menu lateral e configurações</h2>
+
+  <h3>Ocultando o controle de abertura</h3>
+
+  <p>
+    O template padrão possui a propriedade booleana
+    <span class="tbu-asset-code">hideToggleMenu</span>, cujo valor inicial é
+    <span class="tbu-asset-code">false</span>. Em um template Vue, ela pode ser informada em
+    kebab-case:
+  </p>
+
+  <pre><code><span>&lt;Default :hide-toggle-menu="true"&gt;</span>
+<span>  &lt;slot&gt;&lt;/slot&gt;</span>
+<span>&lt;/Default&gt;</span></code></pre>
+
+  <p>
+    O exemplo mostra apenas a propriedade; mantenha também os preenchimentos dos slots que seu
+    layout utiliza.
+  </p>
+
+  <p>
+    Essa configuração oculta o controle de abertura. Ela não remove o menu lateral, não altera o
+    estado de um menu já aberto e não força a navegação do cabeçalho a aparecer no celular. Antes de
+    ocultar o controle, garanta outra forma de acessar os links nas telas pequenas.
+  </p>
+
+  <h3>Abertura e fechamento</h3>
+
+  <p>
+    O menu começa fechado. O template controla seu estado e oferece ações para abrir e fechar a
+    região. Atualmente, ele fecha ao acionar o botão interno de fechamento ou clicar no fundo de
+    sobreposição.
+  </p>
+
+  <p>
+    Os três slots do menu lateral também recebem uma função chamada
+    <span class="tbu-asset-code">close</span>.
+    <span class="tbu-asset-code">AppTemplate.vue</span> utiliza essa função para fechar o menu
+    quando seus conteúdos recebem um clique.
+  </p>
+
+  <p>O slot do corpo lateral, por exemplo, é preenchido assim:</p>
+
+  <pre><code><span>&lt;template #sidebar-body="{ close }"&gt;</span>
+<span>  &lt;tbc-flux content-file="complements/sidebar-nav.htm" @click="close"&gt;&lt;/tbc-flux&gt;</span>
+<span>&lt;/template&gt;</span></code></pre>
+
+  <p>
+    Essa é uma forma de slot com propriedades: o template fornece uma função, e quem preenche o slot
+    pode utilizá-la. A função não é uma diretiva escrita dentro do fragmento HTML; a ligação do
+    evento acontece no componente Vue.
+  </p>
+
+  <hr />
+
+  <h2>Personalizando o layout atual</h2>
+
+  <p>Escolha o arquivo de acordo com a mudança desejada:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Mudança</th>
+        <th>Onde trabalhar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Alterar os textos ou links de um complemento</td>
+        <td>
+          Fragmento em <span class="tbu-asset-code">public/content/{idioma}/complements/</span>.
+        </td>
+      </tr>
+      <tr>
+        <td>Trocar o fragmento que preenche uma região</td>
+        <td><span class="tbu-asset-code">src/AppTemplate.vue</span>.</td>
+      </tr>
+      <tr>
+        <td>Reorganizar as regiões ou alterar o comportamento do menu</td>
+        <td><span class="tbu-asset-code">src/templates/default.vue</span>.</td>
+      </tr>
+      <tr>
+        <td>Ajustar valores visuais compartilhados</td>
+        <td><span class="tbu-asset-code">src/styles/theme.css</span>.</td>
+      </tr>
+      <tr>
+        <td>Estilizar o HTML das páginas</td>
+        <td>Estilos globais e utilities apropriadas ao conteúdo.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Adicionando uma região</h3>
+
+  <p>
+    Imagine uma faixa de avisos entre o cabeçalho e o conteúdo principal. Para incluí-la no template
+    padrão:
+  </p>
+
+  <ol>
+    <li class="enum">
+      <div>1</div>
+      Adicione um slot chamado <span class="tbu-asset-code">announcement</span> na posição desejada
+      em <span class="tbu-asset-code">default.vue</span>.
+    </li>
+    <li class="enum">
+      <div>2</div>
+      Preencha esse slot dentro de <span class="tbu-asset-code">&lt;Default&gt;</span> em
+      <span class="tbu-asset-code">AppTemplate.vue</span>.
+    </li>
+    <li class="enum">
+      <div>3</div>
+      Crie o fragmento correspondente em cada idioma habilitado.
+    </li>
+    <li class="enum">
+      <div>4</div>
+      Confira o layout e o conteúdo em telas pequenas e grandes.
+    </li>
+  </ol>
+
+  <p>No template, o novo espaço pode ser declarado assim:</p>
+
+  <pre><code><span>&lt;div&gt;</span>
+<span>  &lt;slot name="announcement"&gt;&lt;/slot&gt;</span>
+<span>&lt;/div&gt;</span></code></pre>
+
+  <p>Em <span class="tbu-asset-code">AppTemplate.vue</span>, o preenchimento seria:</p>
+
+  <pre><code><span>&lt;template #announcement&gt;</span>
+<span>  &lt;tbc-flux content-file="complements/announcement.htm"&gt;&lt;/tbc-flux&gt;</span>
+<span>&lt;/template&gt;</span></code></pre>
+
+  <p>
+    Nesse exemplo, prepare
+    <span class="tbu-asset-code">public/content/pt-br/complements/announcement.htm</span> e o
+    arquivo equivalente nos demais idiomas disponíveis. O nome é ilustrativo; essa região não existe
+    no template atual.
+  </p>
+
+  <hr />
+
+  <h2>Criando seu próprio template</h2>
+
+  <p>
+    Você pode partir de uma cópia do template padrão para preservar suas regiões ou criar um layout
+    menor, com apenas os espaços necessários ao seu projeto.
+  </p>
+
+  <h3>1. Crie o arquivo Vue</h3>
+
+  <p>
+    Por exemplo, crie <span class="tbu-asset-code">src/templates/minimal.vue</span> com esta
+    estrutura:
+  </p>
+
+  <pre><code><span>&lt;template&gt;</span>
+<span>  &lt;header&gt;</span>
+<span>    &lt;slot name="header-brand"&gt;&lt;/slot&gt;</span>
+<span>    &lt;nav aria-label="Navegação principal"&gt;</span>
+<span>      &lt;slot name="header-nav"&gt;&lt;/slot&gt;</span>
+<span>    &lt;/nav&gt;</span>
+<span>  &lt;/header&gt;</span>
+
+<span>  &lt;main&gt;</span>
+<span>    &lt;slot&gt;&lt;/slot&gt;</span>
+<span>  &lt;/main&gt;</span>
+
+<span>  &lt;footer&gt;</span>
+<span>    &lt;slot name="footer-body"&gt;&lt;/slot&gt;</span>
+<span>    &lt;slot name="footer-copyright"&gt;&lt;/slot&gt;</span>
+<span>  &lt;/footer&gt;</span>
+<span>&lt;/template&gt;</span></code></pre>
+
+  <p>
+    Esse exemplo define apenas a estrutura. Ele não implementa estilos próprios, menu lateral ou
+    controle de abertura. A navegação fica disponível no cabeçalho; sua apresentação em diferentes
+    telas precisa ser trabalhada no layout.
+  </p>
+
+  <h3>2. Conecte o template à aplicação</h3>
+
+  <p>
+    Para usar esse exemplo, adapte <span class="tbu-asset-code">AppTemplate.vue</span> para importar
+    o novo componente e preencher os slots que ele oferece:
+  </p>
+
+  <pre><code><span>&lt;template&gt;</span>
+<span>  &lt;Minimal&gt;</span>
+<span>    &lt;template #header-brand&gt;</span>
+<span>      &lt;tbc-flux content-file="complements/brand.htm"&gt;&lt;/tbc-flux&gt;</span>
+<span>    &lt;/template&gt;</span>
+
+<span>    &lt;template #header-nav&gt;</span>
+<span>      &lt;tbc-flux content-file="complements/header-nav.htm"&gt;&lt;/tbc-flux&gt;</span>
+<span>    &lt;/template&gt;</span>
+
+<span>    &lt;template #footer-body&gt;</span>
+<span>      &lt;tbc-flux content-file="complements/footer.htm"&gt;&lt;/tbc-flux&gt;</span>
+<span>    &lt;/template&gt;</span>
+
+<span>    &lt;template #footer-copyright&gt;</span>
+<span>      &lt;tbc-flux content-file="complements/copyright.htm"&gt;&lt;/tbc-flux&gt;</span>
+<span>    &lt;/template&gt;</span>
+
+<span>    &lt;slot&gt;&lt;/slot&gt;</span>
+<span>  &lt;/Minimal&gt;</span>
+<span>&lt;/template&gt;</span>
+
+<span>&lt;script setup lang="ts"&gt;</span>
+<span>import Minimal from '@/templates/minimal.vue';</span>
+<span>&lt;/script&gt;</span></code></pre>
+
+  <p>
+    O <span class="tbu-asset-code">&lt;slot&gt;&lt;/slot&gt;</span> dentro de
+    <span class="tbu-asset-code">&lt;Minimal&gt;</span> encaminha a página recebida de
+    <span class="tbu-asset-code">App.vue</span> para o slot principal do novo template. Essa
+    passagem precisa ser preservada para que o conteúdo da rota continue aparecendo.
+  </p>
+
+  <p>
+    O exemplo usa apenas quatro slots nomeados. Regiões como marca do rodapé, links sociais e menu
+    lateral deixam de fazer parte desse layout. Ao trocar o template do seu site, decida quais
+    regiões deseja manter e adapte seus preenchimentos.
+  </p>
+
+  <h3>3. Confira a compatibilidade dos slots</h3>
+
+  <p>
+    Quando o novo template mantém os nomes e as propriedades dos slots existentes, você pode
+    reaproveitar seus preenchimentos. Se mudar os nomes ou remover regiões, ajuste
+    <span class="tbu-asset-code">AppTemplate.vue</span> para corresponder à nova estrutura.
+  </p>
+
+  <p>
+    O mesmo vale para funções como <span class="tbu-asset-code">close</span>: se um preenchimento
+    espera recebê-la, o novo template precisa fornecê-la ou o preenchimento deve ser adaptado. A
+    propriedade <span class="tbu-asset-code">hideToggleMenu</span> também pertence ao template
+    padrão; outros templates só a terão se a implementarem.
+  </p>
+
+  <h3>4. Verifique a integração</h3>
+
+  <p>
+    Confira a home, uma página interna, os links de navegação e a troca de idioma. Se houver menu
+    lateral, teste sua abertura e seu fechamento nas diferentes formas de interação.
+  </p>
+
+  <p>
+    Execute <span class="tbu-asset-code">npm run typecheck</span> e
+    <span class="tbu-asset-code">npm run build</span> para verificar os tipos e a geração dos
+    arquivos. A revisão no navegador continua necessária para avaliar o layout e a interação.
+  </p>
+
+  <hr />
+
+  <h2>Estilos e cuidados ao criar templates</h2>
+
+  <h3>Reutilize o tema e as utilities</h3>
+
+  <p>
+    Use as variáveis do tema e as classes <span class="tbu-asset-code">tbu-*</span> quando quiser
+    que o layout acompanhe as configurações visuais compartilhadas. Se o bloco de estilos do
+    componente utilizar diretivas do Tailwind, inclua
+    <span class="tbu-asset-code">@reference</span> no início:
+  </p>
+
+  <pre><code><span>&lt;style scoped&gt;</span>
+<span>@reference "@/style.css";</span>
+
+<span>header,</span>
+<span>footer {</span>
+<span>  @apply tbu-container tbu-block tbu-secondary-bg;</span>
+<span>}</span>
+
+<span>main {</span>
+<span>  @apply tbu-container tbu-block;</span>
+<span>}</span>
+<span>&lt;/style&gt;</span></code></pre>
+
+  <p>
+    Esse trecho pode ser adicionado ao exemplo de template mínimo. As utilities reutilizam as cores
+    e os espaçamentos do tema.
+  </p>
+
+  <p>
+    Estilos <span class="tbu-asset-code">scoped</span> ajudam a limitar regras ao componente, mas
+    não alcançam automaticamente todo o HTML carregado por
+    <span class="tbu-asset-code">tbc-flux</span>. Para estilizar o conteúdo dos fragmentos, utilize
+    utilities ou estilos globais adequados. Os detalhes estão nas páginas de
+    <a href="#/pages/themes.htm">temas</a> e <a href="#/pages/utilities.htm">utilities</a>.
+  </p>
+
+  <h3>Pense na navegação em diferentes telas</h3>
+
+  <p>
+    Ao reorganizar as regiões, mantenha o acesso à navegação em telas pequenas, evite cortes de
+    conteúdo e confira textos e links mais longos em outros idiomas. A estrutura deve continuar
+    utilizável mesmo quando o conteúdo crescer.
+  </p>
+
+  <h3>Inclua acessibilidade nas interações</h3>
+
+  <p>
+    Use elementos semânticos, botões para ações, nomes acessíveis e estados visíveis de foco. Se
+    criar um menu sobreposto, considere fechamento com Escape, gerenciamento e restauração do foco,
+    estado de expansão do botão e indisponibilidade dos controles enquanto o menu estiver oculto.
+    Respeite a preferência por movimento reduzido nas animações.
+  </p>
+
+  <p>
+    O menu lateral atual ainda não implementa todas essas medidas: o controle de abertura é um SVG
+    clicável, o botão de fechamento não tem nome acessível, e não há tratamento de Escape, foco ou
+    <span class="tbu-asset-code">inert</span>/<span class="tbu-asset-code">aria-hidden</span> para a
+    região fechada. Essas recomendações são requisitos para orientar novos layouts, não uma
+    descrição de recursos já concluídos no template padrão.
+  </p>
+
+  <hr />
+
+  <h2>Crie e compartilhe seus templates</h2>
+
+  <p>
+    Com o tempo, serão criados diversos tipos de templates para diferentes propostas de site.
+    Sinta-se à vontade para criar os seus, adaptando a estrutura às necessidades do seu projeto.
+  </p>
+
+  <p>
+    Ao compartilhar um template, explique quais regiões ele oferece, quais propriedades aceita e
+    como conectá-lo à aplicação. Isso facilita seu uso por outras pessoas e permite reaproveitar
+    conteúdo existente com menos adaptações.
+  </p>
+
+  <p>
+    Se quiser contribuir com o Taberna, apresente sua proposta no
+    <a href="https://github.com/mineot/taberna">repositório do projeto</a>.
+  </p>
+</div>

@@ -9,7 +9,10 @@
         <slot name="header-nav"></slot>
       </nav>
 
-      <Menu :class="{ 'toogle-menu': !props.hideToggleMenu, hidden: props.hideToggleMenu }" @click="onShowSidebar" />
+      <Menu
+        :class="{ 'toogle-menu': !props.hideToggleMenu, hidden: props.hideToggleMenu }"
+        @click="onShowSidebar"
+      />
     </header>
 
     <main>
@@ -45,7 +48,10 @@
     </footer>
   </section>
 
-  <div :class="['tbi-app-layout-backdrop', 'tbu-backdrop', { hide: hideSidebar }]" @click="onHideSidebar"></div>
+  <div
+    :class="['tbi-app-layout-backdrop', 'tbu-backdrop', { hide: hideSidebar }]"
+    @click="onHideSidebar"
+  ></div>
 
   <aside :class="['tbi-app-layout-sidebar', { hide: hideSidebar }]">
     <header>
@@ -118,7 +124,7 @@ function onHideSidebar() {
 
   > main {
     @apply flex-1;
-    @apply tbu-container py-1;
+    @apply tbu-container py-2;
   }
 
   > footer {

@@ -1,1 +1,594 @@
-<div>Componentes</div>
+<div class="page-custom">
+  <h1>Componentes</h1>
+
+  <p>
+    Os componentes do Taberna oferecem recursos reutilizáveis para os conteúdos do site. Com eles,
+    você pode carregar um fragmento, oferecer acesso aos idiomas ou organizar uma sequência de
+    elementos em um carrossel.
+  </p>
+
+  <p>
+    Esta página apresenta os componentes disponíveis, seus atributos e exemplos de uso nos arquivos
+    HTML. A aparência pode ser complementada com as configurações de
+    <a href="#/pages/themes.htm">temas</a> e as classes descritas em
+    <a href="#/pages/utilities.htm">utilities</a>.
+  </p>
+
+  <hr />
+
+  <h2>Como os componentes funcionam</h2>
+
+  <p>
+    Os componentes disponíveis para os fragmentos são registrados como elementos personalizados do
+    navegador. Seus nomes usam o prefixo <span class="tbu-asset-code">tbc-*</span>, e o registro
+    acontece em <span class="tbu-asset-code">src/web-components.ts</span> durante a inicialização da
+    aplicação.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Elemento</th>
+        <th>Finalidade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tbu-asset-code">tbc-flux</td>
+        <td>Carregar um fragmento HTML no idioma ativo.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">tbc-language</td>
+        <td>Apresentar o idioma atual e levar ao seletor de idiomas.</td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">tbc-carousel</td>
+        <td>Organizar elementos em páginas com navegação e reprodução automática opcional.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Nem todo componente Vue do projeto está disponível como uma tag personalizada. As telas de
+    carregamento e erro, por exemplo, são componentes internos montados pela aplicação. Para
+    disponibilizar um novo componente nos fragmentos, é necessário registrá-lo.
+  </p>
+
+  <p>
+    Os elementos atuais foram preparados para funcionar dentro do Taberna, com seus estilos e sua
+    inicialização. Os componentes que consultam o idioma dependem do estado compartilhado da
+    aplicação; copiar suas tags para uma página HTML isolada não reproduz esse ambiente.
+  </p>
+
+  <hr />
+
+  <h2>Como escrever as tags e os atributos</h2>
+
+  <p>
+    Nos fragmentos HTML, use nomes de atributos em kebab-case e feche explicitamente as tags
+    personalizadas:
+  </p>
+
+  <pre><code><span>&lt;tbc-language&gt;&lt;/tbc-language&gt;</span></code></pre>
+
+  <p>
+    Um nome de propriedade como <span class="tbu-asset-code">totalPerPage</span> no componente Vue
+    corresponde ao atributo <span class="tbu-asset-code">total-per-page</span> no HTML. Valores
+    numéricos são escritos como atributos, por exemplo
+    <span class="tbu-asset-code">interval="5000"</span>.
+  </p>
+
+  <p>
+    Para ativar uma propriedade booleana, use o atributo sem valor. Para manter seu valor padrão
+    falso, omita o atributo:
+  </p>
+
+  <pre><code><span>&lt;tbc-language flag-only&gt;&lt;/tbc-language&gt;</span></code></pre>
+
+  <p>
+    Evite escrever <span class="tbu-asset-code">flag-only="false"</span> para desativar a opção:
+    esse valor é texto e não representa o booleano falso nesse uso. Basta remover
+    <span class="tbu-asset-code">flag-only</span>.
+  </p>
+
+  <p>
+    Os fragmentos são inseridos como HTML, sem compilação de expressões ou diretivas Vue. Sintaxes
+    como <span class="tbu-asset-code">:interval</span>, <span class="tbu-asset-code">v-if</span>,
+    <span class="tbu-asset-code">v-for</span> e <span class="tbu-asset-code">@click</span> pertencem
+    aos arquivos Vue da aplicação, não aos fragmentos de conteúdo.
+  </p>
+
+  <hr />
+
+  <h2>tbc-flux: carregar fragmentos</h2>
+
+  <p>
+    O <span class="tbu-asset-code">tbc-flux</span> busca um arquivo de conteúdo e insere seu HTML no
+    local em que o componente foi colocado. A aplicação utiliza esse recurso para montar páginas e
+    complementos, como marca, menus e rodapé.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Atributo</th>
+        <th>Tipo</th>
+        <th>Padrão</th>
+        <th>Finalidade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tbu-asset-code">content-file</td>
+        <td>Texto</td>
+        <td>Não definido</td>
+        <td>Caminho do fragmento dentro da pasta do idioma ativo.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Para reutilizar a marca do site:</p>
+
+  <pre><code><span>&lt;tbc-flux content-file="complements/brand.htm"&gt;&lt;/tbc-flux&gt;</span></code></pre>
+
+  <p>
+    Com português ativo, o componente procura
+    <span class="tbu-asset-code">content/pt-br/complements/brand.htm</span> a partir do
+    endereço-base da aplicação. Nos arquivos do projeto, isso corresponde a
+    <span class="tbu-asset-code">public/content/pt-br/complements/brand.htm</span>.
+  </p>
+
+  <p>
+    O nome do idioma não deve fazer parte do atributo. Assim, o mesmo componente utiliza o fragmento
+    equivalente quando outro idioma é escolhido.
+  </p>
+
+  <h3>Regras dos caminhos</h3>
+
+  <p>
+    O caminho deve terminar em <span class="tbu-asset-code">.htm</span>, pode conter subpastas e não
+    pode começar com <span class="tbu-asset-code">/</span>. O carregador também rejeita barras
+    invertidas, segmentos vazios e caminhos que contenham <span class="tbu-asset-code">..</span>.
+  </p>
+
+  <p>
+    O arquivo deve conter um fragmento HTML, sem a estrutura completa de um documento. O carregador
+    possui uma verificação básica para respostas que começam com
+    <span class="tbu-asset-code">&lt;!doctype html</span> ou
+    <span class="tbu-asset-code">&lt;html</span>, como pode acontecer quando a hospedagem devolve a
+    página principal no lugar de um arquivo ausente.
+  </p>
+
+  <h3>Comportamento do carregamento</h3>
+
+  <ol>
+    <li class="dot">
+      Sem <span class="tbu-asset-code">content-file</span>, com atributo vazio ou antes da definição
+      do idioma, o componente permanece vazio e não faz a busca.
+    </li>
+    <li class="dot">
+      Ao mudar o arquivo ou o idioma observado, ele limpa o conteúdo anterior e inicia um novo
+      carregamento.
+    </li>
+    <li class="dot">
+      Falhas de busca ou de validação são encaminhadas à tela de erro da aplicação.
+    </li>
+    <li class="dot">
+      Não há busca automática do mesmo arquivo em outro idioma quando uma tradução está ausente.
+    </li>
+    <li class="dot">
+      Cada instância faz sua própria solicitação; não existe cache ou deduplicação no código do
+      componente.
+    </li>
+  </ol>
+
+  <p>
+    Também não há cancelamento nem proteção contra respostas antigas em mudanças rápidas de
+    atributo. Essa observação é relevante se você controlar o componente dinamicamente por código.
+  </p>
+
+  <p>
+    Evite inclusões circulares: um fragmento não deve carregar a si próprio, nem carregar outro
+    arquivo que volte a incluir o primeiro. Isso pode criar uma sequência contínua de componentes e
+    solicitações.
+  </p>
+
+  <p>
+    O HTML é inserido sem sanitização. Utilize fragmentos revisados e mantidos pelo responsável pelo
+    site. Na integração Vue, o componente também emite <span class="tbu-asset-code">click</span>,
+    usado pelo menu lateral para fechar após uma interação; a ligação desse evento fica no arquivo
+    Vue.
+  </p>
+
+  <hr />
+
+  <h2>tbc-language: acesso aos idiomas</h2>
+
+  <p>
+    O <span class="tbu-asset-code">tbc-language</span> apresenta a bandeira e o nome do idioma ativo
+    como um link para <span class="tbu-asset-code">#/language</span>.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Atributo</th>
+        <th>Tipo</th>
+        <th>Padrão</th>
+        <th>Finalidade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tbu-asset-code">flag-only</td>
+        <td>Booleano</td>
+        <td class="tbu-asset-code">false</td>
+        <td>Ocultar o nome e exibir apenas a bandeira.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Para mostrar bandeira e nome:</p>
+
+  <pre><code><span>&lt;tbc-language&gt;&lt;/tbc-language&gt;</span></code></pre>
+
+  <p>Para mostrar apenas a bandeira:</p>
+
+  <pre><code><span>&lt;tbc-language flag-only&gt;&lt;/tbc-language&gt;</span></code></pre>
+
+  <p>
+    O componente consulta os nomes e as bandeiras definidos em
+    <span class="tbu-asset-code">public/config/languages.json</span>. Essas informações só ficam
+    disponíveis depois da identificação do idioma.
+  </p>
+
+  <p>
+    Ele oferece acesso à página de escolha; não troca o idioma diretamente. A troca ocorre no
+    seletor, salva a preferência no navegador e recarrega a página.
+  </p>
+
+  <p>
+    Na integração Vue, o componente emite <span class="tbu-asset-code">click</span>. O template
+    padrão utiliza esse evento para fechar o menu lateral quando o visitante acessa o seletor.
+  </p>
+
+  <p>
+    Para uma identificação mais clara, prefira a versão com o nome visível quando houver espaço. A
+    versão apenas com bandeira não acrescenta um rótulo textual específico ao link interno.
+  </p>
+
+  <hr />
+
+  <h2>tbc-carousel: conteúdo em páginas</h2>
+
+  <p>
+    O <span class="tbu-asset-code">tbc-carousel</span> organiza seus elementos filhos em páginas.
+    Cada elemento direto dentro da tag é considerado um item; não existe uma tag adicional de item
+    do carrossel.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Atributo</th>
+        <th>Tipo</th>
+        <th>Padrão</th>
+        <th>Finalidade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tbu-asset-code">total-per-page</td>
+        <td>Número</td>
+        <td class="tbu-asset-code">3</td>
+        <td>
+          Quantidade de itens por página a partir de <span class="tbu-asset-code">48rem</span>.
+        </td>
+      </tr>
+      <tr>
+        <td class="tbu-asset-code">interval</td>
+        <td>Número</td>
+        <td class="tbu-asset-code">3000</td>
+        <td>
+          Intervalo de reprodução automática, em milissegundos.
+          <span class="tbu-asset-code">0</span> desativa a reprodução automática.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Organizando os itens</h3>
+
+  <p>
+    Cada item pode reunir título, texto, imagem e links. Para que esses elementos façam parte do
+    mesmo item, coloque-os dentro de um único elemento, como
+    <span class="tbu-asset-code">article</span>.
+  </p>
+
+  <p>
+    Este exemplo mostra dois itens por página nas telas maiores e troca de página a cada cinco
+    segundos:
+  </p>
+
+  <pre><code><span>&lt;tbc-carousel total-per-page="2" interval="5000"&gt;</span>
+<span>  &lt;article&gt;</span>
+<span>    &lt;h2&gt;Primeiro projeto&lt;/h2&gt;</span>
+<span>    &lt;p&gt;Uma apresentação do primeiro trabalho.&lt;/p&gt;</span>
+<span>  &lt;/article&gt;</span>
+<span>  &lt;article&gt;</span>
+<span>    &lt;h2&gt;Segundo projeto&lt;/h2&gt;</span>
+<span>    &lt;p&gt;Uma apresentação do segundo trabalho.&lt;/p&gt;</span>
+<span>  &lt;/article&gt;</span>
+<span>  &lt;article&gt;</span>
+<span>    &lt;h2&gt;Terceiro projeto&lt;/h2&gt;</span>
+<span>    &lt;p&gt;Uma apresentação do terceiro trabalho.&lt;/p&gt;</span>
+<span>  &lt;/article&gt;</span>
+<span>&lt;/tbc-carousel&gt;</span></code></pre>
+
+  <p>
+    Colocar todos os artigos dentro de uma única <span class="tbu-asset-code">div</span> diretamente
+    sob o carrossel faria essa <span class="tbu-asset-code">div</span> contar como um único item.
+    Textos soltos também não substituem os elementos que representam os itens.
+  </p>
+
+  <h3>Adaptação à largura da tela</h3>
+
+  <p>
+    Abaixo de <span class="tbu-asset-code">48rem</span>, o componente mostra um item por página. A
+    partir dessa largura, utiliza <span class="tbu-asset-code">total-per-page</span>. A última
+    página pode conter menos itens que as anteriores.
+  </p>
+
+  <p>
+    Nas telas maiores, a paginação utiliza indicadores clicáveis. Nas menores, aparece um contador
+    da página atual e do total de páginas. Os botões anterior e próximo permitem percorrer as
+    páginas, retornando ao início depois da última e ao final antes da primeira.
+  </p>
+
+  <p>
+    Se houver no máximo uma página, os controles de navegação e o rodapé do carrossel ficam ocultos.
+  </p>
+
+  <h3>Reprodução automática e manual</h3>
+
+  <p>
+    Para manter apenas a navegação manual, utilize <span class="tbu-asset-code">interval="0"</span>:
+  </p>
+
+  <pre><code><span>&lt;tbc-carousel total-per-page="1" interval="0"&gt;</span>
+<span>  &lt;article&gt;</span>
+<span>    &lt;h2&gt;Primeira apresentação&lt;/h2&gt;</span>
+<span>    &lt;p&gt;Conteúdo que o visitante pode ler no próprio ritmo.&lt;/p&gt;</span>
+<span>  &lt;/article&gt;</span>
+<span>  &lt;article&gt;</span>
+<span>    &lt;h2&gt;Segunda apresentação&lt;/h2&gt;</span>
+<span>    &lt;p&gt;Outro conteúdo acessível pelos controles de navegação.&lt;/p&gt;</span>
+<span>  &lt;/article&gt;</span>
+<span>&lt;/tbc-carousel&gt;</span></code></pre>
+
+  <p>
+    Com intervalo positivo e mais de uma página, o carrossel oferece um botão de pausa e reprodução
+    e uma contagem regressiva até a próxima troca. A navegação para outra página reinicia esse
+    intervalo.
+  </p>
+
+  <p>
+    No modo automático inicial, a reprodução pausa enquanto o ponteiro está sobre o carrossel ou o
+    foco permanece dentro dele. Ao sair dessas condições, a contagem pode continuar do tempo
+    restante. Uma pausa feita pelo botão permanece até o visitante acionar a reprodução.
+  </p>
+
+  <p>
+    Quando o navegador informa preferência por movimento reduzido, a reprodução automática não
+    começa. Se o visitante acionar Play explicitamente, a reprodução passa a ser permitida e deixa
+    de pausar automaticamente por ponteiro ou foco. A transição visual de deslizamento continua
+    desativada sob movimento reduzido.
+  </p>
+
+  <h3>Valores e alterações dos itens</h3>
+
+  <p>
+    <span class="tbu-asset-code">total-per-page</span> é arredondado para baixo e limitado a pelo
+    menos <span class="tbu-asset-code">1</span>; valores não finitos resultam em
+    <span class="tbu-asset-code">1</span>. O intervalo não fica abaixo de zero, e valores não
+    finitos desativam a reprodução automática. Para a autoria dos atributos, use números válidos,
+    com quantidade de itens inteira e positiva.
+  </p>
+
+  <p>
+    O componente observa a inclusão e a remoção de elementos diretos para atualizar a quantidade de
+    itens. Alterações na largura da tela também recalculam o agrupamento. Ao sair da página, seus
+    observadores, escutas e temporizadores são removidos.
+  </p>
+
+  <hr />
+
+  <h2>Ícones</h2>
+
+  <p>
+    Os ícones possuem um registro separado em <span class="tbu-asset-code">src/web-icons.ts</span> e
+    usam o prefixo <span class="tbu-asset-code">icon-*</span>. O elemento disponível inicialmente é
+    <span class="tbu-asset-code">icon-home</span>, baseado no ícone
+    <span class="tbu-asset-code">Home</span> de <span class="tbu-asset-code">@lucide/vue</span>.
+  </p>
+
+  <p>Você pode combiná-lo com um texto que identifique o destino do link:</p>
+
+  <pre><code><span>&lt;a href="#/"&gt;</span>
+<span>  &lt;icon-home aria-hidden="true"&gt;&lt;/icon-home&gt;</span>
+<span>  &lt;span&gt;Página inicial&lt;/span&gt;</span>
+<span>&lt;/a&gt;</span></code></pre>
+
+  <p>
+    Nesse exemplo, o texto comunica a ação e o ícone funciona como complemento visual. O registro
+    atual não declara atributos específicos para configurar
+    <span class="tbu-asset-code">icon-home</span>.
+  </p>
+
+  <h3>Adicionando ícones conforme a necessidade</h3>
+
+  <p>
+    Você pode adicionar outros ícones conforme a necessidade do projeto. Para disponibilizá-los nos
+    fragmentos:
+  </p>
+
+  <ol>
+    <li class="enum">
+      <div>1</div>
+      Importe o ícone desejado de <span class="tbu-asset-code">@lucide/vue</span> em
+      <span class="tbu-asset-code">src/web-icons.ts</span>.
+    </li>
+    <li class="enum">
+      <div>2</div>
+      Acrescente uma entrada ao objeto <span class="tbu-asset-code">icons</span>, utilizando a
+      função <span class="tbu-asset-code">createIcon</span> existente.
+    </li>
+    <li class="enum">
+      <div>3</div>
+      Escolha um nome com o prefixo <span class="tbu-asset-code">icon-*</span>.
+    </li>
+    <li class="enum">
+      <div>4</div>
+      Utilize a nova tag nos fragmentos depois de atualizar a aplicação.
+    </li>
+  </ol>
+
+  <p>A entrada já existente serve de referência para o padrão de registro:</p>
+
+  <pre><code><span>const icons = {</span>
+<span>  ...createIcon('icon-home', Home),</span>
+<span>};</span></code></pre>
+
+  <p>
+    Adicionar um ícone ao registro permite usá-lo nos conteúdos; escrever uma tag com um nome novo,
+    sem registrar seu componente, não carrega o ícone automaticamente.
+  </p>
+
+  <hr />
+
+  <h2>Aparência e acessibilidade</h2>
+
+  <p>
+    Os elementos personalizados utilizam o DOM da página, sem Shadow DOM. Isso permite compartilhar
+    os estilos globais do Taberna, mas o alcance de uma regra ainda depende de seus seletores e do
+    uso de estilos <span class="tbu-asset-code">scoped</span> nos componentes.
+  </p>
+
+  <p>
+    Você pode aplicar utilities ao conteúdo dos itens, utilizar as cores do tema e criar estilos
+    globais quando necessário. Não presuma que uma classe aplicada na tag externa controla todos os
+    elementos internos do componente.
+  </p>
+
+  <p>
+    O carrossel utiliza <span class="tbu-asset-code">--carousel-dot</span> para os indicadores,
+    <span class="tbu-asset-code">--carousel-dot-active</span> para o indicador ativo e
+    <span class="tbu-asset-code">--carousel-counter</span> para a contagem regressiva. O intervalo
+    de reprodução continua sendo configurado pelo atributo
+    <span class="tbu-asset-code">interval</span>, não por uma variável de tema.
+  </p>
+
+  <p>
+    Os controles do carrossel são botões com nomes acessíveis e indicação visual de foco. Itens fora
+    da página atual recebem <span class="tbu-asset-code">inert</span> e
+    <span class="tbu-asset-code">aria-hidden</span>, ficando indisponíveis para interação e ocultos
+    da árvore de acessibilidade enquanto não estão visíveis.
+  </p>
+
+  <p>
+    Os rótulos de interface do carrossel ainda estão fixos em inglês. Traduzir o conteúdo dos itens
+    não traduz automaticamente esses rótulos.
+  </p>
+
+  <p>
+    Ao preparar o conteúdo, utilize títulos em uma hierarquia adequada, textos claros nos links e
+    descrições alternativas nas imagens. Esses cuidados dependem da autoria dos itens, além dos
+    recursos oferecidos pelo componente.
+  </p>
+
+  <hr />
+
+  <h2>Criando novos componentes</h2>
+
+  <p>
+    Se o site precisar de outro recurso reutilizável, crie um componente Vue em
+    <span class="tbu-asset-code">src/components/</span> e registre-o em
+    <span class="tbu-asset-code">src/web-components.ts</span>.
+  </p>
+
+  <h3>Defina o componente e suas propriedades</h3>
+
+  <p>
+    Como exemplo de estrutura, um componente <span class="tbu-asset-code">notice.vue</span> poderia
+    receber uma mensagem:
+  </p>
+
+  <pre><code><span>&lt;template&gt;</span>
+<span>  &lt;p&gt;{{ props.message }}&lt;/p&gt;</span>
+<span>&lt;/template&gt;</span>
+
+<span>&lt;script setup lang="ts"&gt;</span>
+<span>const props = defineProps({</span>
+<span>  message: {</span>
+<span>    type: String,</span>
+<span>    default: '',</span>
+<span>  },</span>
+<span>});</span>
+<span>&lt;/script&gt;</span></code></pre>
+
+  <p>
+    Esse arquivo seria compilado como parte da aplicação. As expressões Vue funcionam nele porque
+    ele é um componente, diferentemente do HTML carregado nos fragmentos.
+  </p>
+
+  <h3>Registre o elemento</h3>
+
+  <p>Em <span class="tbu-asset-code">src/web-components.ts</span>, importe o novo arquivo:</p>
+
+  <pre><code><span>import Notice from '@/components/notice.vue';</span></code></pre>
+
+  <p>
+    Depois, acrescente esta entrada ao objeto <span class="tbu-asset-code">elements</span>,
+    preservando os registros existentes:
+  </p>
+
+  <pre><code><span>...createElement('tbc-notice', Notice),</span></code></pre>
+
+  <p>Com o registro implementado, o uso no conteúdo seria:</p>
+
+  <pre><code><span>&lt;tbc-notice message="Conheça as novidades do projeto."&gt;&lt;/tbc-notice&gt;</span></code></pre>
+
+  <p>
+    Esse componente é apenas um exemplo de criação;
+    <span class="tbu-asset-code">tbc-notice</span> não faz parte dos elementos atualmente
+    registrados no Taberna.
+  </p>
+
+  <h3>Cuide da integração</h3>
+
+  <p>
+    Defina atributos com nomes claros, valores padrão e validação apropriada. Para componentes que
+    recebem conteúdo por slots, considere também como seus estilos alcançarão os elementos
+    fornecidos pelo autor.
+  </p>
+
+  <p>
+    Quando um bloco de estilos utilizar diretivas Tailwind, coloque
+    <span class="tbu-asset-code">@reference "@/style.css";</span> no início. Reutilize as variáveis
+    do tema e as utilities para manter a consistência visual.
+  </p>
+
+  <p>
+    Os registros atuais não instalam Pinia individualmente em cada elemento personalizado.
+    Componentes que usam as stores dependem da inicialização da aplicação Taberna; se quiser
+    distribuí-los como widgets independentes, essa integração precisará ser preparada separadamente.
+  </p>
+
+  <p>
+    Confira o novo elemento em um fragmento real, com seus atributos, conteúdo e interações.
+    Verifique o uso por teclado, a apresentação em diferentes telas e a limpeza de temporizadores ou
+    observadores quando houver. Execute <span class="tbu-asset-code">npm run typecheck</span> e
+    <span class="tbu-asset-code">npm run build</span> e documente o nome da tag e seus atributos
+    para quem for utilizá-la.
+  </p>
+</div>
