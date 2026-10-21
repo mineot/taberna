@@ -9,6 +9,8 @@ keeps content separate from application components. You can edit your copy,
 customize the visual theme, and adapt the layout to fit your project, then
 publish the generated files to a static hosting service.
 
+For documentation, please visit the [Taberna website](https://taberna.mineot.com/#/).
+
 ## Features
 
 - **HTML content:** keep page content and shared elements in separate fragments.

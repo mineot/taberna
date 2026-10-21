@@ -31,7 +31,7 @@
           </div>
         </div>
 
-        <div>
+        <div @click="onFooterClick">
           <slot name="footer-body"></slot>
         </div>
       </div>
@@ -79,6 +79,11 @@ import { Menu, X } from '@lucide/vue';
 import { ref } from 'vue';
 
 const props = defineProps({
+  scrollToTopOnFooterClick: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
   hideToggleMenu: {
     type: Boolean,
     required: false,
@@ -94,6 +99,26 @@ function onShowSidebar() {
 
 function onHideSidebar() {
   hideSidebar.value = true;
+}
+
+function onFooterClick(event: MouseEvent) {
+  if (
+    !props.scrollToTopOnFooterClick ||
+    event.defaultPrevented ||
+    event.button !== 0 ||
+    event.ctrlKey ||
+    event.metaKey ||
+    event.shiftKey ||
+    event.altKey
+  )
+    return;
+  if (!(event.target instanceof Element)) return;
+
+  const link = event.target.closest('a');
+  if (!link?.getAttribute('href')?.startsWith('#/')) return;
+  if (link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
+
+  window.scrollTo({ top: 0, behavior: 'instant' });
 }
 </script>
 

@@ -56,8 +56,9 @@ gaps identify where the code does not yet meet those requirements.
 - Keep it concise: project overview, key features, technologies, getting started,
   build and publishing, contributions, optional financial support, and license.
   Keep architecture, contracts, and agent guidance here; detailed usage belongs
-  on the site. Website and financial-support URLs have not yet been supplied;
-  add them when the user provides them, without inventing placeholder links.
+  on the site at `https://taberna.mineot.com/#/`, linked in the README for
+  documentation. Financial-support URLs have not yet been supplied; add them
+  when the user provides them, without inventing placeholder links.
 - Update it when an approved change affects those topics; do not expand it
   into a configuration guide, component catalog, or troubleshooting manual.
 
@@ -289,6 +290,15 @@ Adding a region means adding a slot to the chosen template and filling it in
 `AppTemplate.vue`. When the region uses `<tbc-flux content-file="...">`, create
 the matching fragment under `public/content/{locale}/` in **every** enabled
 locale. Slots can also receive inline content or components.
+
+`templates/default.vue` has an opt-in `scrollToTopOnFooterClick` Boolean prop
+(default `false`), explicitly enabled in `AppTemplate.vue` using
+`:scroll-to-top-on-footer-click="true"`. When enabled, it delegates footer-body
+link clicks to scroll immediately to the top for internal `#/` links, including
+the current route, in every locale. Disable the prop to customize footer clicks
+without this additional scrolling; the router's normal scroll behavior still applies.
+Modified clicks, downloads, and links targeting another browsing context are
+excluded. Normal hash navigation remains handled by the router.
 
 `templates/default.vue` owns the default layout structure and its styles:
 sticky blurred header, `hidden md:flex` nav, mobile menu toggle (`hideToggleMenu` prop),

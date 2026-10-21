@@ -1,5 +1,5 @@
 <template>
-  <Default>
+  <Default :scroll-to-top-on-footer-click="true">
     <template #header-brand>
       <tbc-flux content-file="complements/brand.htm"></tbc-flux>
     </template>
