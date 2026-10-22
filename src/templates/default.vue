@@ -1,5 +1,5 @@
 <template>
-  <section class="tbi-app-layout">
+  <section class="tbi-default-layout">
     <header>
       <div>
         <slot name="header-brand"></slot>
@@ -49,11 +49,11 @@
   </section>
 
   <div
-    :class="['tbi-app-layout-backdrop', 'tbu-backdrop', { hide: hideSidebar }]"
+    :class="['tbi-default-layout-backdrop', 'tbu-backdrop', { hide: hideSidebar }]"
     @click="onHideSidebar"
   ></div>
 
-  <aside :class="['tbi-app-layout-sidebar', { hide: hideSidebar }]">
+  <aside :class="['tbi-default-layout-sidebar', { hide: hideSidebar }]">
     <header>
       <div>
         <slot name="sidebar-brand" :close="onHideSidebar"></slot>
@@ -125,7 +125,7 @@ function onFooterClick(event: MouseEvent) {
 <style scoped>
 @reference "@/style.css";
 
-.tbi-app-layout {
+.tbi-default-layout {
   @apply flex-1;
   @apply flex flex-col gap-2;
   @apply tbu-duration;
@@ -180,13 +180,13 @@ function onFooterClick(event: MouseEvent) {
   }
 }
 
-.tbi-app-layout-backdrop {
+.tbi-default-layout-backdrop {
   &.hide {
     @apply hidden;
   }
 }
 
-.tbi-app-layout-sidebar {
+.tbi-default-layout-sidebar {
   @apply fixed flex flex-col;
   @apply top-0 left-0 h-screen w-max;
   @apply tbu-duration transform transition-transform;

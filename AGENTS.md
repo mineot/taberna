@@ -489,7 +489,7 @@ Documented deliberately so agents do not "fix" them silently or claim they work.
    handling.
 5. **Dead CSS:** `src/styles/app.css` still sets `display: contents` for
    `tbc-backdrop` and `tbc-sidebar`, elements that no longer exist (the sidebar
-   is now `.tbi-app-layout-sidebar`).
+   is now `.tbi-default-layout-sidebar`).
 6. **Guide browser validation is pending:** the five Portuguese guides are
    HTML, with escaped code examples. Conversion checks verify content and DOM
    structure, but do not establish visual or interactive browser behavior.
