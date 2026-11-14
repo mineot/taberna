@@ -1,0 +1,26 @@
+@utility tbu-duration {
+  @apply ease-in-out;
+  transition-duration: var(--duration);
+}
+
+@utility tbu-texture {
+  background-image: var(--texture);
+  background-repeat: repeat;
+}
+
+@utility tbu-rounded {
+  border-radius: var(--rounded);
+}
+
+@utility tbu-shadow {
+  box-shadow:
+    0 1px 3px 0 var(--shadow-color, rgb(0 0 0) / 0.1),
+    0 1px 2px -1px var(--shadow-color, rgb(0 0 0) / 0.1);
+}
+
+@utility tbu-backdrop {
+  @apply fixed inset-0;
+  @apply tbu-texture backdrop-blur-xs;
+  z-index: var(--z-backdrop);
+  background-color: var(--backdrop-color);
+}

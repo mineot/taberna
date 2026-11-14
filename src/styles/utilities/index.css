@@ -1,56 +1,8 @@
-/* UTILS */
-
-@utility tbu-duration {
-  @apply ease-in-out;
-  transition-duration: var(--duration);
-}
-
-@utility tbu-texture {
-  background-image: var(--texture);
-  background-repeat: repeat;
-}
-
-@utility tbu-rounded {
-  border-radius: var(--rounded);
-}
+@import './borders.css';
+@import './colors.css';
+@import './utils.css';
 
 /* COLORS */
-
-@utility tbu-primary-bg {
-  background-color: var(--color-primary);
-}
-
-@utility tbu-primary-bg-opaque {
-  background-color: var(--color-primary-opaque);
-}
-
-@utility tbu-primary-text {
-  color: var(--color-primary-soft);
-}
-
-@utility tbu-secondary-bg {
-  background-color: var(--color-secondary);
-}
-
-@utility tbu-secondary-bg-opaque {
-  background-color: var(--color-secondary-opaque);
-}
-
-@utility tbu-secondary-text {
-  color: var(--color-secondary-soft);
-}
-
-@utility tbu-asset-bg {
-  background-color: var(--color-asset);
-}
-
-@utility tbu-asset-bg-opaque {
-  background-color: var(--color-asset-opaque);
-}
-
-@utility tbu-asset-text {
-  color: var(--color-asset-soft);
-}
 
 @utility tbu-asset-link {
   @apply tbu-duration cursor-pointer;
@@ -85,21 +37,6 @@
 
 @utility tbu-asset-code {
   @apply tbu-asset-text font-mono text-base font-light;
-}
-
-/* SHADOW & BACKDROP */
-
-@utility tbu-shadow {
-  box-shadow:
-    0 1px 3px 0 var(--shadow-color, rgb(0 0 0) / 0.1),
-    0 1px 2px -1px var(--shadow-color, rgb(0 0 0) / 0.1);
-}
-
-@utility tbu-backdrop {
-  @apply fixed inset-0;
-  @apply tbu-texture backdrop-blur-xs;
-  z-index: var(--z-backdrop);
-  background-color: var(--backdrop-color);
 }
 
 /* BORDERS */

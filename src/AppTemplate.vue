@@ -1,5 +1,6 @@
 <template>
-  <Default :scroll-to-top-on-footer-click="true">
+  <tbc-flux content-file="home.htm"></tbc-flux>
+  <!-- <Default :scroll-to-top-on-footer-click="true">
     <template #header-brand>
       <tbc-flux content-file="complements/brand.htm"></tbc-flux>
     </template>
@@ -53,9 +54,9 @@
     </template>
 
     <slot></slot>
-  </Default>
+  </Default> -->
 </template>
-
+<!-- 
 <script setup lang="ts">
 import Default from '@/templates/default.vue';
 </script>
@@ -72,4 +73,4 @@ import Default from '@/templates/default.vue';
     }
   }
 }
-</style>
+</style> -->

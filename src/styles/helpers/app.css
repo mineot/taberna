@@ -8,7 +8,7 @@ body {
   @apply overflow-x-hidden overflow-y-auto;
   @apply m-0 flex flex-col gap-0 p-0;
 
-  @apply tbu-primary-bg tbu-primary-text;
+  @apply tbu-primary-bg tbu-primary-text-soft;
   @apply tbu-texture font-sans;
 
   > #app {

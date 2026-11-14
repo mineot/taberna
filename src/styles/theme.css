@@ -19,29 +19,29 @@
   --duration: 200ms;
   --texture: url('/images/texture.png');
   --rounded: var(--radius-lg);
+  --backdrop-color: color-mix(in oklab, var(--color-secondary-bg) 30%, transparent);
+  --shadow-color: color-mix(in oklab, var(--color-black) 50%, transparent);
 
   /* COLORS */
 
   --color-primary: var(--color-neutral-600);
   --color-primary-soft: var(--color-neutral-200);
   --color-primary-opaque: color-mix(in oklab, var(--color-primary) 30%, transparent);
+  --color-primary-opaque-soft: color-mix(in oklab, var(--color-primary-soft) 30%, transparent);
 
   --color-secondary: var(--color-neutral-800);
   --color-secondary-soft: var(--color-neutral-400);
   --color-secondary-opaque: color-mix(in oklab, var(--color-secondary) 30%, transparent);
+  --color-secondary-opaque-soft: color-mix(in oklab, var(--color-secondary-soft) 30%, transparent);
 
   --color-asset: var(--color-emerald-500);
   --color-asset-soft: var(--color-emerald-300);
   --color-asset-opaque: color-mix(in oklab, var(--color-asset) 30%, transparent);
-
-  /* SHADOW & BACKDROP */
-
-  --shadow-color: color-mix(in oklab, var(--color-black) 50%, transparent);
-  --backdrop-color: color-mix(in oklab, var(--color-secondary-bg) 30%, transparent);
+  --color-asset-opaque-soft: color-mix(in oklab, var(--color-asset-soft) 30%, transparent);
 
   /* BORDERS */
 
-  --border-color: var(--color-secondary-soft);
+  --border-color: var(--color-neutral-500);
   --border-size: 1px;
   --border-style: solid;
 
