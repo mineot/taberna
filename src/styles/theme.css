@@ -47,12 +47,16 @@
 
   /* LAYOUTS */
 
+  --block-2xl: 6;
+  --block-xl: 6;
   --block-lg: 6;
   --block-md: 6;
   --block-sm: 6;
 
+  --container-2xl: 96;
+  --container-xl: 46;
   --container-lg: 24;
-  --container-md: 14;
+  --container-md: 12;
   --container-sm: 4;
 
   /* COMPONENTS ONLY */

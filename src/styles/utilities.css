@@ -150,10 +150,18 @@
   @media (width >= 64rem) {
     padding-inline: calc(var(--spacing) * var(--container-lg));
   }
+
+  @media (width >= 80rem) {
+    padding-inline: calc(var(--spacing) * var(--container-xl));
+  }
+
+  @media (width >= 96rem) {
+    padding-inline: calc(var(--spacing) * var(--container-2xl));
+  }
 }
 
 @utility tbu-block {
-  @apply tbu-duration;
+  @apply tbu-duration 2xl:p-1;
 
   @media (width < 48rem) {
     padding-block: calc(var(--spacing) * var(--block-sm));
@@ -165,5 +173,13 @@
 
   @media (width >= 64rem) {
     padding-block: calc(var(--spacing) * var(--block-lg));
+  }
+
+  @media (width >= 80rem) {
+    padding-block: calc(var(--spacing) * var(--block-xl));
+  }
+
+  @media (width >= 96rem) {
+    padding-block: calc(var(--spacing) * var(--block-2xl));
   }
 }
