@@ -20,7 +20,7 @@ const { language, languages } = storeToRefs(useAppStore());
 </script>
 
 <style scoped>
-@reference "@/style.css";
+/* @reference "@/style.css";
 
 .tbi-language-switcher {
   @apply grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-2 lg:grid-cols-3 lg:gap-1;
@@ -42,5 +42,5 @@ const { language, languages } = storeToRefs(useAppStore());
   &.selected {
     @apply grayscale-0;
   }
-}
+} */
 </style>

@@ -6,15 +6,18 @@ html,
 body {
   @apply h-full w-full;
   @apply overflow-x-hidden overflow-y-auto;
-  @apply m-0 flex flex-col gap-0 p-0;
+  @apply flex flex-col gap-0;
+  @apply m-0 p-0;
 
-  @apply tbu-primary-bg tbu-primary-text-soft;
+  @apply tbu-primary-realm-nox;
+  @apply tbu-primary-rune-lumen;
   @apply tbu-texture font-sans;
 
   > #app {
     @apply flex-1;
     @apply overflow-x-hidden overflow-y-auto;
-    @apply m-0 flex flex-col gap-0 p-0;
+    @apply flex flex-col gap-0;
+    @apply m-0 p-0;
   }
 }
 

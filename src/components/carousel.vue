@@ -145,7 +145,9 @@ const playbackEnabled = computed(
 );
 
 const paused = computed(
-  () => !playbackEnabled.value || ((hoverPaused.value || focusPaused.value) && playbackMode.value !== 'playing'),
+  () =>
+    !playbackEnabled.value ||
+    ((hoverPaused.value || focusPaused.value) && playbackMode.value !== 'playing'),
 );
 
 const trackStyle = computed(
@@ -306,7 +308,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<style>
+<!-- <style>
 @reference "@/style.css";
 
 .tbi-carousel {
@@ -384,4 +386,4 @@ onBeforeUnmount(() => {
     }
   }
 }
-</style>
+</style> -->

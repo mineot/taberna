@@ -17,7 +17,7 @@ import { storeToRefs } from 'pinia';
 const { error } = storeToRefs(useAppStore());
 </script>
 
-<style scoped>
+<!-- <style scoped>
 @reference "@/style.css";
 
 .tbi-error {
@@ -30,4 +30,4 @@ const { error } = storeToRefs(useAppStore());
   @apply flex flex-col flex-wrap gap-2 p-4 text-sm;
   @apply tbu-border tbu-rounded tbu-secondary-bg tbu-primary-text;
 }
-</style>
+</style> -->

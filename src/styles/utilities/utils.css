@@ -1,6 +1,6 @@
 @utility tbu-duration {
+  @apply duration-[--value(--duration)];
   @apply ease-in-out;
-  transition-duration: var(--duration);
 }
 
 @utility tbu-texture {

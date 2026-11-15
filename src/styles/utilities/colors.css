@@ -1,75 +1,51 @@
-@utility tbu-primary-bg {
-  background-color: var(--color-primary);
+@utility tbu-primary-realm-* {
+  background-color: --value(--color-primary-*);
 }
 
-@utility tbu-primary-bg-opaque {
-  background-color: var(--color-primary-opaque);
+@utility tbu-primary-lucid-realm-* {
+  background-color: color-mix(
+    in oklab,
+    --value(--color-primary-*) --value(--color-primary-lucid),
+    transparent
+  );
 }
 
-@utility tbu-primary-text {
-  color: var(--color-primary);
-}
-
-@utility tbu-primary-bg-soft {
-  background-color: var(--color-primary-soft);
-}
-
-@utility tbu-primary-bg-opaque-soft {
-  background-color: var(--color-primary-opaque-soft);
-}
-
-@utility tbu-primary-text-soft {
-  color: var(--color-primary-soft);
+@utility tbu-primary-rune-* {
+  color: --value(--color-primary-*);
 }
 
 /* --- */
 
-@utility tbu-secondary-bg {
-  background-color: var(--color-secondary);
+@utility tbu-secondary-realm-* {
+  background-color: --value(--color-secondary-*);
 }
 
-@utility tbu-secondary-bg-opaque {
-  background-color: var(--color-secondary-opaque);
+@utility tbu-secondary-lucid-realm-* {
+  background-color: color-mix(
+    in oklab,
+    --value(--color-secondary-*) --value(--color-secondary-lucid),
+    transparent
+  );
 }
 
-@utility tbu-secondary-text {
-  color: var(--color-secondary);
-}
-
-@utility tbu-secondary-bg-soft {
-  background-color: var(--color-secondary-soft);
-}
-
-@utility tbu-secondary-bg-opaque-soft {
-  background-color: var(--color-secondary-opaque-soft);
-}
-
-@utility tbu-secondary-text-soft {
-  color: var(--color-secondary-soft);
+@utility tbu-secondary-rune-* {
+  color: --value(--color-secondary-*);
 }
 
 /* --- */
 
-@utility tbu-asset-bg {
-  background-color: var(--color-asset);
+@utility tbu-asset-realm-* {
+  background-color: --value(--color-asset-*);
 }
 
-@utility tbu-asset-bg-opaque {
-  background-color: var(--color-asset-opaque);
+@utility tbu-asset-lucid-realm-* {
+  background-color: color-mix(
+    in oklab,
+    --value(--color-asset-*) --value(--color-asset-lucid),
+    transparent
+  );
 }
 
-@utility tbu-asset-text {
-  color: var(--color-asset);
-}
-
-@utility tbu-asset-bg-soft {
-  background-color: var(--color-asset-soft);
-}
-
-@utility tbu-asset-bg-opaque-soft {
-  background-color: var(--color-asset-opaque-soft);
-}
-
-@utility tbu-asset-text-soft {
-  color: var(--color-asset-soft);
+@utility tbu-asset-rune-* {
+  color: --value(--color-asset-*);
 }

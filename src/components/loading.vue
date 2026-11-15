@@ -11,7 +11,7 @@ import { storeToRefs } from 'pinia';
 const { loading } = storeToRefs(useAppStore());
 </script>
 
-<style scoped>
+<!-- <style scoped>
 @reference "@/style.css";
 
 .tbi-loading {
@@ -52,4 +52,4 @@ const { loading } = storeToRefs(useAppStore());
     transform: rotate(0.5turn);
   }
 }
-</style>
+</style> -->

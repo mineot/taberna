@@ -1,4 +1,4 @@
-.page-custom {
+/* .page-custom {
   @apply flex flex-col gap-4;
 
   > h1 {
@@ -106,4 +106,4 @@
       @apply tbu-asset-text flex min-h-10 items-center font-bold;
     }
   }
-}
+} */

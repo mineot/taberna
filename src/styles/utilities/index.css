@@ -1,75 +1,11 @@
+@import './actions.css';
 @import './borders.css';
 @import './colors.css';
 @import './utils.css';
 
-/* COLORS */
-
-@utility tbu-asset-link {
-  @apply tbu-duration cursor-pointer;
-  color: var(--color-asset-soft);
-
-  &:hover {
-    color: color-mix(in oklch, var(--color-asset-soft), #000 10%);
-  }
-
-  &:active {
-    color: color-mix(in oklch, var(--color-asset-soft), #000 20%);
-  }
-}
-
-@utility tbu-asset-pill {
-  @apply flex;
-  @apply rounded-sm px-2 py-1;
-  @apply tbu-duration cursor-pointer;
-
-  color: var(--color-asset-soft);
-
-  &:hover {
-    color: var(--color-primary);
-    background-color: var(--color-asset);
-  }
-
-  &:active {
-    color: var(--color-primary);
-    background-color: color-mix(in oklch, var(--color-asset), #000 10%);
-  }
-}
-
-@utility tbu-asset-code {
+/* @utility tbu-asset-code {
   @apply tbu-asset-text font-mono text-base font-light;
-}
-
-/* BORDERS */
-
-@utility tbu-border {
-  border-color: var(--border-color);
-  border-style: var(--border-style);
-  border-width: var(--border-size);
-}
-
-@utility tbu-border-top {
-  border-top-color: var(--border-color);
-  border-top-style: var(--border-style);
-  border-top-width: var(--border-size);
-}
-
-@utility tbu-border-right {
-  border-right-color: var(--border-color);
-  border-right-style: var(--border-style);
-  border-right-width: var(--border-size);
-}
-
-@utility tbu-border-bottom {
-  border-bottom-color: var(--border-color);
-  border-bottom-style: var(--border-style);
-  border-bottom-width: var(--border-size);
-}
-
-@utility tbu-border-left {
-  border-left-color: var(--border-color);
-  border-left-style: var(--border-style);
-  border-left-width: var(--border-size);
-}
+} */
 
 /* LAYOUTS */
 

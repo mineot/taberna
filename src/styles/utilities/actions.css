@@ -1,0 +1,31 @@
+/* @utility tbu-asset-link {
+  @apply tbu-duration cursor-pointer;
+  color: var(--color-asset-soft);
+
+  &:hover {
+    color: color-mix(in oklch, var(--color-asset-soft), #000 10%);
+  }
+
+  &:active {
+    color: color-mix(in oklch, var(--color-asset-soft), #000 20%);
+  }
+} */
+
+/* @utility tbu-asset-pill {
+  @apply flex;
+  @apply rounded-sm px-2 py-1;
+  @apply tbu-duration cursor-pointer;
+
+  color: var(--color-asset-soft);
+
+  &:hover {
+    color: var(--color-primary);
+    background-color: var(--color-asset);
+  }
+
+  &:active {
+    color: var(--color-primary);
+    background-color: color-mix(in oklch, var(--color-asset), #000 10%);
+  }
+}
+ */
