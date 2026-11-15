@@ -308,7 +308,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<!-- <style>
+<style>
 @reference "@/style.css";
 
 .tbi-carousel {
@@ -319,7 +319,7 @@ onBeforeUnmount(() => {
 
     > .btn {
       @apply shrink-0 cursor-pointer border-none bg-transparent p-0;
-      @apply tbu-asset-link;
+      @apply tbu-link;
       @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current;
     }
 
@@ -334,7 +334,9 @@ onBeforeUnmount(() => {
         @apply tbu-duration;
         gap: var(--tbi-gap);
         transition-property: none;
-        transform: translateX(calc(-1 * var(--tbi-page, 0) * 100% - var(--tbi-page, 0) * var(--tbi-gap)));
+        transform: translateX(
+          calc(-1 * var(--tbi-page, 0) * 100% - var(--tbi-page, 0) * var(--tbi-gap))
+        );
 
         @media (prefers-reduced-motion: no-preference) {
           transition-property: transform;
@@ -358,7 +360,7 @@ onBeforeUnmount(() => {
 
     > .pause {
       @apply shrink-0 cursor-pointer border-none bg-transparent p-0;
-      @apply tbu-asset-link;
+      @apply tbu-link;
       @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current;
     }
 
@@ -386,4 +388,4 @@ onBeforeUnmount(() => {
     }
   }
 }
-</style> -->
+</style>

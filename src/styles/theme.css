@@ -79,7 +79,7 @@
   --error-border: var(--border-width) var(--border-style) var(--color-tb-secondary-soft);
   --error-text: var(--color-tb-primary-soft);
 
-  --carousel-dot: color-mix(in oklab, var(--color-primary-soft) 40%, transparent);
-  --carousel-dot-active: var(--color-asset);
-  --carousel-counter: var(--color-primary-soft);
+  --carousel-dot: color-mix(in oklab, var(--color-tb-asset-soft) 40%, transparent);
+  --carousel-dot-active: var(--color-tb-asset-hard);
+  --carousel-counter: var(--color-tb-primary-soft);
 }
