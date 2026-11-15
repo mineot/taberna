@@ -1,8 +1,5 @@
 import { defineCustomElement } from 'vue';
-
-import Carousel from '@/components/carousel.vue';
-import Flux from '@/components/flux.vue';
-import Language from '@/components/language.vue';
+import { Carousel, Flux, Language } from '@/components';
 
 function createElement(name: string, element: any): any {
   return {
