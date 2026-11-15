@@ -1,11 +1,17 @@
 <template>
-  <a class="tbi-language" href="#/language" @click="emit('click')">
-    <div :class="['tbi-language-flag', { 'flag-only': props.flagOnly }]">
-      {{ languageFlag }}
-    </div>
-    <div v-if="!props.flagOnly" class="tbi-language-name">
-      <span>{{ languageName }}</span>
-    </div>
+  <a
+    href="#/language"
+    @click="emit('click')"
+    :class="[
+      'tbi-language',
+      {
+        lg: props.lg,
+        sm: props.sm,
+      },
+    ]"
+  >
+    <span>{{ languageFlag }}</span>
+    <span v-if="!props.flagOnly">{{ languageName }}</span>
   </a>
 </template>
 
@@ -23,27 +29,33 @@ const props = defineProps({
     required: false,
     default: false,
   },
+  lg: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  sm: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 });
 </script>
 
-<!-- <style scoped>
+<style scoped>
 @reference "@/style.css";
 
 .tbi-language {
-  @apply tbu-duration;
-  @apply flex flex-nowrap items-center gap-2;
-  @apply cursor-pointer grayscale-75 hover:grayscale-0;
-}
+  @apply tbu-duration cursor-pointer;
+  @apply inline-flex flex-nowrap items-center gap-2;
+  @apply grayscale-75 hover:grayscale-0;
 
-.tbi-language-flag {
-  @apply text-3xl;
+  &.lg {
+    @apply text-xl;
+  }
 
-  &.flag-only {
-    @apply text-2xl;
+  &.sm {
+    @apply text-sm;
   }
 }
-
-.tbi-language-name {
-  @apply text-lg text-nowrap;
-}
-</style> -->
+</style>
