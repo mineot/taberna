@@ -1,0 +1,11 @@
+@utility tbu-bg-* {
+  background-color: --value(--color-tb-*);
+}
+
+@utility tbu-bg-glass-* {
+  background-color: color-mix(in oklab, --value(--color-tb-*) var(--opacity), transparent);
+}
+
+@utility tbu-text-* {
+  color: --value(--color-tb-*);
+}

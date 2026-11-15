@@ -1,0 +1,6 @@
+@utility tbu-link {
+  @apply tbu-duration cursor-pointer;
+  @apply text-(--link);
+  @apply hover:text-(--link-hover);
+  @apply active:text-(--link-active);
+}

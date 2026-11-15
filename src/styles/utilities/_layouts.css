@@ -1,0 +1,41 @@
+@utility tbu-block {
+  @apply tbu-duration;
+  @apply py-[--spacing(var(--block-sm))];
+  @apply md:py-[--spacing(var(--block-md))];
+  @apply lg:py-[--spacing(var(--block-lg))];
+  @apply xl:py-[--spacing(var(--block-xl))];
+  @apply 2xl:py-[--spacing(var(--block-2xl))];
+}
+
+@utility tbu-container {
+  @apply tbu-duration;
+  @apply px-[--spacing(var(--container-sm))];
+  @apply md:px-[--spacing(var(--container-md))];
+  @apply lg:px-[--spacing(var(--container-lg))];
+  @apply xl:px-[--spacing(var(--container-xl))];
+  @apply 2xl:px-[--spacing(var(--container-2xl))];
+}
+
+@utility tbu-flex-cols {
+  @apply tbu-duration;
+  @apply flex flex-col flex-wrap;
+  @apply gap-[--spacing(var(--gap-sm))];
+  @apply md:gap-[--spacing(var(--gap-md))];
+  @apply lg:gap-[--spacing(var(--gap-lg))];
+}
+
+@utility tbu-flex-rows {
+  @apply tbu-duration;
+  @apply flex flex-row flex-wrap;
+  @apply gap-[--spacing(var(--gap-sm))];
+  @apply md:gap-[--spacing(var(--gap-md))];
+  @apply lg:gap-[--spacing(var(--gap-lg))];
+}
+
+@utility tbu-grid-* {
+  @apply gap-[--spacing(var(--gap-sm))];
+  @apply md:gap-[--spacing(var(--gap-md))];
+  @apply lg:gap-[--spacing(var(--gap-lg))];
+  display: grid;
+  grid-template-columns: repeat(--value(integer), minmax(0, 1fr));
+}

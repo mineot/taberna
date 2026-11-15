@@ -8,20 +8,44 @@
     'Courier New', monospace;
   --font-fancy: 'Italianno', cursive;
 
-  --color-primary-hard: var(--color-neutral-600);
-  --color-primary-soft: var(--color-neutral-200);
+  --color-tb-primary-hard: var(--color-neutral-600);
+  --color-tb-primary-soft: var(--color-neutral-200);
 
-  --color-secondary-hard: var(--color-stone-800);
-  --color-secondary-soft: var(--color-stone-400);
+  --color-tb-secondary-hard: var(--color-stone-800);
+  --color-tb-secondary-soft: var(--color-stone-400);
 
-  --color-asset-hard: var(--color-emerald-600);
-  --color-asset-soft: var(--color-emerald-100);
+  --color-tb-asset-hard: var(--color-emerald-600);
+  --color-tb-asset-soft: var(--color-emerald-100);
+}
 
-  --border-color-primary: var(--color-neutral-400);
-  --border-color-secondary: var(--color-stone-400);
-  --border-color-asset: var(--color-emerald-400);
-  --border-size: 1px;
+:root {
+  --z-backdrop: 100;
+  --z-sidebar: 150;
+  --z-loader: 999;
+
+  /* --- */
+
+  --duration: 200ms;
+  --opacity: 30%;
+  --rounded: var(--radius-lg);
+
+  --shadow-color: color-mix(in oklab, var(--color-tb-secondary-hard) 100%, transparent);
+  --texture: url('/images/texture.png');
+  --backdrop-color: color-mix(in oklab, var(--color-tb-secondary-hard) 30%, transparent);
+
+  /* --- */
+
   --border-style: solid;
+  --border-width: 1px;
+
+  --panel-bg: var(--color-tb-secondary-hard);
+  --panel-border-spacing: 5;
+  --panel-border: 5px solid var(--color-tb-asset-hard);
+  --panel-spacing: 2;
+
+  --link: var(--color-emerald-500);
+  --link-hover: var(--color-emerald-400);
+  --link-active: var(--color-emerald-300);
 
   /* --- */
 
@@ -37,27 +61,9 @@
   --container-md: 12;
   --container-sm: 4;
 
-  /* --- */
-
-  --panel-bg: var(--color-stone-800);
-  --panel-border-spacing: 5;
-  --panel-border: 5px solid var(--color-emerald-600);
-  --panel-spacing: 2;
-}
-
-:root {
-  --z-backdrop: 100;
-  --z-sidebar: 150;
-  --z-loader: 999;
-
-  /* --- */
-
-  --duration: 200ms;
-  --texture: url('/images/texture.png');
-  --rounded: var(--radius-lg);
-  --backdrop-color: color-mix(in oklab, var(--color-gray-800) 30%, transparent);
-  --shadow-color: color-mix(in oklab, var(--color-gray-800) 100%, transparent);
-  --opacity: 30%;
+  --gap-sm: 4;
+  --gap-md: 3;
+  --gap-lg: 2;
 
   /* --- */
 
