@@ -1,0 +1,7 @@
+@utility tbu-header {
+  @apply sticky top-0 z-10 backdrop-blur-xs;
+  @apply tbu-container tbu-block tbu-texture;
+  @apply tbu-flex-rows justify-between;
+  background-color: var(--header-bg);
+  border-bottom: var(--header-border);
+}

@@ -11,7 +11,7 @@
   --color-tb-primary-hard: var(--color-neutral-600);
   --color-tb-primary-soft: var(--color-neutral-200);
 
-  --color-tb-secondary-hard: var(--color-stone-800);
+  --color-tb-secondary-hard: var(--color-stone-900);
   --color-tb-secondary-soft: var(--color-stone-400);
 
   --color-tb-asset-hard: var(--color-emerald-600);
@@ -82,4 +82,7 @@
   --carousel-dot: color-mix(in oklab, var(--color-tb-asset-soft) 40%, transparent);
   --carousel-dot-active: var(--color-tb-asset-hard);
   --carousel-counter: var(--color-tb-primary-soft);
+
+  --header-bg: color-mix(in oklab, var(--color-tb-secondary-hard) 80%, transparent);
+  --header-border: var(--border-width) var(--border-style) var(--color-tb-secondary-soft);
 }
