@@ -5,3 +5,10 @@
   background-color: var(--header-bg);
   border-bottom: var(--header-border);
 }
+
+@utility tbu-footer {
+  @apply backdrop-blur-xs;
+  @apply tbu-container tbu-block tbu-texture;
+  background-color: var(--footer-bg);
+  border-top: var(--footer-border);
+}
