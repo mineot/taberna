@@ -1,23 +1,24 @@
 <template>
-  <div :class="['tbi-loading', { flex: loading, hidden: !loading }]">
+  <div v-if="loading" class="tbi-loading">
     <div class="loader"></div>
   </div>
+  <slot v-else></slot>
 </template>
 
 <script setup lang="ts">
 import { useAppStore } from '@/stories/app.store';
 import { storeToRefs } from 'pinia';
-
 const { loading } = storeToRefs(useAppStore());
 </script>
 
-<!-- <style scoped>
+<style scoped>
 @reference "@/style.css";
 
 .tbi-loading {
-  @apply absolute z-200 h-full w-full;
-  @apply flex-wrap items-center justify-center gap-2;
-  @apply tbu-primary-bg tbu-texture;
+  @apply absolute h-full w-full;
+  @apply flex flex-col items-center justify-center;
+  @apply tbu-texture;
+  background-color: var(--loading-backdrop);
 }
 
 .loader {
@@ -30,7 +31,7 @@ const { loading } = storeToRefs(useAppStore());
 .loader::after {
   content: '';
   grid-area: 1/1;
-  --c: no-repeat radial-gradient(farthest-side, var(--color-asset) 92%, #0000);
+  --c: no-repeat radial-gradient(farthest-side, var(--loading-color) 92%, #0000);
   background:
     var(--c) 50% 0,
     var(--c) 50% 100%,
@@ -52,4 +53,4 @@ const { loading } = storeToRefs(useAppStore());
     transform: rotate(0.5turn);
   }
 }
-</style> -->
+</style>

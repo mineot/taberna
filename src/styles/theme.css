@@ -67,6 +67,13 @@
 
   /* --- */
 
+  --loading-color: var(--color-tb-asset-hard);
+  --loading-backdrop: color-mix(
+    in oklab,
+    var(--color-tb-secondary-hard) var(--opacity),
+    transparent
+  );
+
   --error-backdrop: color-mix(in oklab, var(--color-tb-secondary-hard) var(--opacity), transparent);
   --error-bg: var(--color-tb-secondary-hard);
   --error-border: var(--border-width) var(--border-style) var(--color-tb-secondary-soft);
