@@ -9,8 +9,8 @@ body {
   @apply flex flex-col gap-0;
   @apply m-0 p-0;
 
-  @apply tbu-primary-realm-nox;
-  @apply tbu-primary-rune-lumen;
+  @apply tbu-bg-primary-hard;
+  @apply tbu-text-primary-soft;
   @apply tbu-texture font-sans;
 
   > #app {

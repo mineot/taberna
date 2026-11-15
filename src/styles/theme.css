@@ -8,33 +8,14 @@
     'Courier New', monospace;
   --font-fancy: 'Italianno', cursive;
 
-  /* --- */
+  --color-primary-hard: var(--color-neutral-600);
+  --color-primary-soft: var(--color-neutral-200);
 
-  --z-backdrop: 100;
-  --z-sidebar: 150;
-  --z-loader: 999;
+  --color-secondary-hard: var(--color-stone-800);
+  --color-secondary-soft: var(--color-stone-400);
 
-  /* --- */
-
-  --duration: 200ms;
-  --texture: url('/images/texture.png');
-  --rounded: var(--radius-lg);
-  --backdrop-color: color-mix(in oklab, var(--color-gray-800) 30%, transparent);
-  --shadow-color: color-mix(in oklab, var(--color-gray-800) 100%, transparent);
-
-  /* --- */
-
-  --color-primary-nox: var(--color-neutral-600);
-  --color-primary-lumen: var(--color-neutral-200);
-  --color-primary-lucid: 30%;
-
-  --color-secondary-nox: var(--color-stone-800);
-  --color-secondary-lumen: var(--color-stone-400);
-  --color-secondary-lucid: 30%;
-
-  --color-asset-nox: var(--color-emerald-600);
-  --color-asset-lumen: var(--color-emerald-100);
-  --color-asset-lucid: 30%;
+  --color-asset-hard: var(--color-emerald-600);
+  --color-asset-soft: var(--color-emerald-100);
 
   --border-color-primary: var(--color-neutral-400);
   --border-color-secondary: var(--color-stone-400);
@@ -65,7 +46,20 @@
 }
 
 :root {
-  /* COMPONENTS ONLY */
+  --z-backdrop: 100;
+  --z-sidebar: 150;
+  --z-loader: 999;
+
+  /* --- */
+
+  --duration: 200ms;
+  --texture: url('/images/texture.png');
+  --rounded: var(--radius-lg);
+  --backdrop-color: color-mix(in oklab, var(--color-gray-800) 30%, transparent);
+  --shadow-color: color-mix(in oklab, var(--color-gray-800) 100%, transparent);
+  --opacity: 30%;
+
+  /* --- */
 
   --carousel-dot: color-mix(in oklab, var(--color-primary-soft) 40%, transparent);
   --carousel-dot-active: var(--color-asset);

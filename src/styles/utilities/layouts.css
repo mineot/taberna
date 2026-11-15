@@ -1,4 +1,4 @@
-@utility tbu-block {
+/* @utility tbu-block {
   @apply tbu-duration;
 
   @media (width < 48rem) {
@@ -44,4 +44,4 @@
   @media (width >= 96rem) {
     padding-inline: calc(var(--spacing) * var(--container-2xl));
   }
-}
+} */

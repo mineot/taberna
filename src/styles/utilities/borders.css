@@ -1,4 +1,4 @@
-@utility tbu-border-* {
+/* @utility tbu-border-* {
   border-color: --value(--border-color-*);
   border-style: var(--border-style);
   border-width: var(--border-size);
@@ -26,4 +26,4 @@
   border-left-color: --value(--border-color-*);
   border-left-style: var(--border-style);
   border-left-width: var(--border-size);
-}
+} */

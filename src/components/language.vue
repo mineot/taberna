@@ -26,7 +26,7 @@ const props = defineProps({
 });
 </script>
 
-<style scoped>
+<!-- <style scoped>
 @reference "@/style.css";
 
 .tbi-language {
@@ -46,4 +46,4 @@ const props = defineProps({
 .tbi-language-name {
   @apply text-lg text-nowrap;
 }
-</style>
+</style> -->

@@ -1,6 +1,17 @@
 @import './actions.css';
 @import './borders.css';
-@import './colors.css';
 @import './layouts.css';
 @import './panels.css';
 @import './utils.css';
+
+@utility tbu-bg-* {
+  background-color: --value(--color-*);
+}
+
+@utility tbu-bg-glass-* {
+  background-color: color-mix(in oklab, --value(--color-*) var(--opacity), transparent);
+}
+
+@utility tbu-text-* {
+  color: --value(--color-*);
+}
