@@ -1,0 +1,12 @@
+/* @utility tbu-asset-code {
+  @apply tbu-asset-text font-mono text-base font-light;
+} */
+
+@utility tbu-panel {
+  @apply tbu-texture;
+  background-color: var(--panel-bg);
+  border-left: var(--panel-border);
+  padding-block: calc(var(--spacing) * var(--panel-spacing));
+  padding-left: calc(var(--spacing) * var(--panel-border-spacing));
+  padding-right: calc(var(--spacing) * var(--panel-spacing));
+}

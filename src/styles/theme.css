@@ -41,16 +41,14 @@
   --border-color-asset: var(--color-emerald-400);
   --border-size: 1px;
   --border-style: solid;
-}
 
-:root {
-  /* LAYOUTS */
+  /* --- */
 
-  --block-2xl: 6;
-  --block-xl: 6;
+  --block-2xl: 8;
+  --block-xl: 7;
   --block-lg: 6;
-  --block-md: 6;
-  --block-sm: 6;
+  --block-md: 5;
+  --block-sm: 4;
 
   --container-2xl: 96;
   --container-xl: 46;
@@ -58,6 +56,15 @@
   --container-md: 12;
   --container-sm: 4;
 
+  /* --- */
+
+  --panel-bg: var(--color-stone-800);
+  --panel-border-spacing: 5;
+  --panel-border: 5px solid var(--color-emerald-600);
+  --panel-spacing: 2;
+}
+
+:root {
   /* COMPONENTS ONLY */
 
   --carousel-dot: color-mix(in oklab, var(--color-primary-soft) 40%, transparent);

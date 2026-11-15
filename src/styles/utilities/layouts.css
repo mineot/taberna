@@ -1,0 +1,47 @@
+@utility tbu-block {
+  @apply tbu-duration;
+
+  @media (width < 48rem) {
+    padding-block: calc(var(--spacing) * var(--block-sm));
+  }
+
+  @media (width >= 48rem) {
+    padding-block: calc(var(--spacing) * var(--block-md));
+  }
+
+  @media (width >= 64rem) {
+    padding-block: calc(var(--spacing) * var(--block-lg));
+  }
+
+  @media (width >= 80rem) {
+    padding-block: calc(var(--spacing) * var(--block-xl));
+  }
+
+  @media (width >= 96rem) {
+    padding-block: calc(var(--spacing) * var(--block-2xl));
+  }
+}
+
+@utility tbu-container {
+  @apply tbu-duration;
+
+  @media (width < 48rem) {
+    padding-inline: calc(var(--spacing) * var(--container-sm));
+  }
+
+  @media (width >= 48rem) {
+    padding-inline: calc(var(--spacing) * var(--container-md));
+  }
+
+  @media (width >= 64rem) {
+    padding-inline: calc(var(--spacing) * var(--container-lg));
+  }
+
+  @media (width >= 80rem) {
+    padding-inline: calc(var(--spacing) * var(--container-xl));
+  }
+
+  @media (width >= 96rem) {
+    padding-inline: calc(var(--spacing) * var(--container-2xl));
+  }
+}

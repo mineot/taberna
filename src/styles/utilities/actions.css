@@ -1,3 +1,8 @@
+@utility tbu-link-* {
+  @apply tbu-duration cursor-pointer;
+  color: --value(--color-asset-soft);
+}
+
 /* @utility tbu-asset-link {
   @apply tbu-duration cursor-pointer;
   color: var(--color-asset-soft);
