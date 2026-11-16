@@ -43,10 +43,6 @@
   --panel-border: 5px solid var(--color-tb-asset-hard);
   --panel-spacing: 2;
 
-  --link: var(--color-emerald-500);
-  --link-hover: var(--color-emerald-400);
-  --link-active: var(--color-emerald-300);
-
   /* --- */
 
   --block-2xl: 8;
@@ -89,6 +85,10 @@
   --footer-bg: color-mix(in oklab, var(--color-tb-secondary-hard) 80%, transparent);
   --footer-border: var(--border-width) var(--border-style) var(--color-tb-secondary-soft);
   --footer-emphasis: var(--color-tb-secondary-soft);
+
+  --link: var(--color-emerald-500);
+  --link-hover: var(--color-emerald-400);
+  --link-active: var(--color-emerald-300);
 
   --layout-linear-gap: 2;
 }
