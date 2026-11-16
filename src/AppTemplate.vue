@@ -36,9 +36,7 @@
       <tbc-language lg @click="closeSidebar"></tbc-language>
     </div>
 
-    <div slot="sidebar-body">
-      <tbc-flux content-file="complements/sidebar-nav.htm" @click="closeSidebar"></tbc-flux>
-    </div>
+    <tbc-flux content-file="complements/sidebar-nav.htm" @click="closeSidebar"></tbc-flux>
   </tbc-sidebar>
 </template>
 

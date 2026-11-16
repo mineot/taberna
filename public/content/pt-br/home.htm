@@ -1,5 +1,5 @@
-<div class="page-custom">
-  <h1>Taberna</h1>
+<article class="tbu-flex-cols tbu-block min-w-0 leading-relaxed [overflow-wrap:anywhere]">
+  <h1 class="tbu-text-asset-hard text-3xl font-bold md:text-4xl">Taberna</h1>
 
   <p>
     Uma base para criar seu site pessoal, portfólio ou página de apresentação, com liberdade para
@@ -11,11 +11,16 @@
     personalizar o projeto e publicar seu site como arquivos estáticos, sem precisar de um backend.
   </p>
 
-  <a href="https://github.com/mineot/taberna" target="_blank">Conheça o projeto no GitHub</a>
+  <tbc-link
+    href="https://github.com/mineot/taberna"
+    target="_blank"
+    class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+    >Conheça o projeto no GitHub</tbc-link
+  >
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>Como funciona</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">Como funciona</h2>
 
   <p>
     A aplicação cuida da estrutura e da navegação, enquanto o conteúdo fica em fragmentos HTML
@@ -23,15 +28,18 @@
     alterar os componentes Vue, além de manter versões do conteúdo para diferentes públicos.
   </p>
 
-  <a href="#/pages/howwork.htm" class="focus-visible:outline-2 focus-visible:outline-offset-4">
+  <tbc-link
+    href="#/pages/howwork.htm"
+    class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+  >
     Saiba mais sobre como funciona
-  </a>
+  </tbc-link>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>Personalize seu site</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">Personalize seu site</h2>
 
-  <h3>Temas</h3>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Temas</h3>
 
   <p>
     Cores, fontes, espaçamentos e outros detalhes visuais podem ser ajustados para refletir a
@@ -39,42 +47,50 @@
     entre as diferentes regiões do site.
   </p>
 
-  <a href="#/pages/themes.htm" class="focus-visible:outline-2 focus-visible:outline-offset-4">
+  <tbc-link
+    href="#/pages/themes.htm"
+    class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+  >
     Saiba mais sobre temas
-  </a>
+  </tbc-link>
 
-  <h3>Templates</h3>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Layout e composição</h3>
+  <p>
+    Monte o site com componentes de layout, cabeçalho, navegação, rodapé e menu lateral. O
+    <code class="tbu-text-asset-soft font-mono text-sm">tbc-layout-linear</code> organiza a página,
+    e você preenche suas regiões com os fragmentos e recursos adequados ao seu projeto.
+  </p>
+  <tbc-link
+    href="#/pages/templates.htm"
+    text="Conheça o layout e a composição"
+    class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+  ></tbc-link>
+
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Componentes e utilitários</h3>
 
   <p>
-    Os templates organizam o layout, definindo regiões como cabeçalho, conteúdo principal, rodapé e
-    menu lateral. Hoje, o Taberna conta com o
-    <span class="tbu-asset-code-text">default.vue</span> como único template disponível. Novos
-    templates estão nos planos para oferecer outras formas de organizar o site.
+    Componentes de navegação, links, carrossel e acesso aos idiomas oferecem recursos reutilizáveis.
+    Para cuidar da apresentação, o projeto combina Tailwind CSS com utilitários próprios que ajudam
+    a aplicar cores, espaçamentos, bordas e outros elementos visuais.
   </p>
 
-  <a href="#/pages/templates.htm" class="focus-visible:outline-2 focus-visible:outline-offset-4">
-    Saiba mais sobre templates
-  </a>
-
-  <h3>Componentes e utilities</h3>
-
-  <p>
-    Componentes como o carrossel e o seletor de idiomas oferecem recursos reutilizáveis. Para cuidar
-    da apresentação, o projeto combina Tailwind CSS com utilities próprias que ajudam a aplicar
-    cores, espaçamentos, bordas e outros elementos visuais.
-  </p>
-
-  <a href="#/pages/components.htm" class="focus-visible:outline-2 focus-visible:outline-offset-4">
+  <tbc-link
+    href="#/pages/components.htm"
+    class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+  >
     Saiba mais sobre componentes
-  </a>
+  </tbc-link>
 
-  <a href="#/pages/utilities.htm" class="focus-visible:outline-2 focus-visible:outline-offset-4">
+  <tbc-link
+    href="#/pages/utilities.htm"
+    class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+  >
     Saiba mais sobre utilitários
-  </a>
+  </tbc-link>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>Comece seu projeto</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">Comece seu projeto</h2>
 
   <p>
     Crie um fork do Taberna na sua conta do GitHub para manter sua própria cópia. A partir dela,
@@ -88,33 +104,46 @@
     hospedar seu site.
   </p>
 
-  <a href="#/pages/howwork.htm" class="focus-visible:outline-2 focus-visible:outline-offset-4">
+  <tbc-link
+    href="#/pages/howwork.htm"
+    class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+  >
     Saiba como começar e publicar seu site
-  </a>
+  </tbc-link>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>Contribua com o Taberna</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">Contribua com o Taberna</h2>
 
   <p>
     Sua ajuda é bem-vinda: sugestões, relatos de problemas, melhorias no código, revisão de textos e
     traduções são formas de participar. Visite o
-    <a href="https://github.com/mineot/taberna">repositório no GitHub</a> para compartilhar ideias e
-    contribuir com o projeto.
+    <tbc-link
+      href="https://github.com/mineot/taberna"
+      class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+      >repositório no GitHub</tbc-link
+    >
+    para compartilhar ideias e contribuir com o projeto.
   </p>
 
-  <a href="#/pages/contribute.htm" class="focus-visible:outline-2 focus-visible:outline-offset-4">
+  <tbc-link
+    href="#/pages/contribute.htm"
+    class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+  >
     Saiba como contribuir
-  </a>
+  </tbc-link>
 
-  <h3>Apoie o projeto</h3>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Apoie o projeto</h3>
 
   <p>
     Se o Taberna for útil para você e quiser apoiar financeiramente seu desenvolvimento, esse apoio
     também será muito bem-vindo. A contribuição é opcional, e toda forma de participação tem valor.
   </p>
 
-  <a href="#/pages/support.htm" class="focus-visible:outline-2 focus-visible:outline-offset-4">
+  <tbc-link
+    href="#/pages/support.htm"
+    class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+  >
     Saiba como apoiar
-  </a>
-</div>
+  </tbc-link>
+</article>

@@ -1,16 +1,43 @@
-<tbc-nav responsive>
-  <div slot="nav-wide">
-    <a class="tbu-link text-nowrap" href="#/pages/howwork.htm">Como Funciona</a>
-    <a class="tbu-link text-nowrap" href="#/pages/themes.htm">Tema</a>
-    <a class="tbu-link text-nowrap" href="#/pages/components.htm">Componentes</a>
-    <a class="tbu-link text-nowrap" href="#/pages/utilities.htm">Utilitários</a>
-    <a class="tbu-link text-nowrap" href="#/pages/templates.htm">Templates</a>
-    <tbc-language flag-only></tbc-language>
+<tbc-nav responsive aria-label="Navegação principal">
+  <div slot="nav-wide" class="items-center">
+    <tbc-link
+      href="#/pages/howwork.htm"
+      text="Como funciona"
+      class="focus-visible:outline-2 focus-visible:outline-offset-4"
+    ></tbc-link>
+    <tbc-link
+      href="#/pages/themes.htm"
+      text="Tema"
+      class="focus-visible:outline-2 focus-visible:outline-offset-4"
+    ></tbc-link>
+    <tbc-link
+      href="#/pages/templates.htm"
+      text="Layout"
+      class="focus-visible:outline-2 focus-visible:outline-offset-4"
+    ></tbc-link>
+    <tbc-link
+      href="#/pages/components.htm"
+      text="Componentes"
+      class="focus-visible:outline-2 focus-visible:outline-offset-4"
+    ></tbc-link>
+    <tbc-link
+      href="#/pages/utilities.htm"
+      text="Utilitários"
+      class="focus-visible:outline-2 focus-visible:outline-offset-4"
+    ></tbc-link>
+    <tbc-language flag-only aria-label="Escolher idioma"></tbc-language>
   </div>
-
   <div slot="nav-narrow">
-    <tbc-link trigger="#sidebar" trigger-prop="show" trigger-value="true">
-      <icon-menu></icon-menu>
+    <tbc-link
+      trigger="#sidebar"
+      trigger-prop="show"
+      trigger-value="true"
+      aria-label="Abrir menu"
+      class="focus-visible:outline-2 focus-visible:outline-offset-4"
+    >
+      <span class="tbu-flex-rows items-center">
+        <icon-menu aria-hidden="true"></icon-menu>
+      </span>
     </tbc-link>
   </div>
 </tbc-nav>

@@ -5,10 +5,8 @@ describes the **current** working tree: architecture, conventions, data
 contracts, security boundaries, and the known gaps that must not be mistaken
 for finished features.
 
-Reviewed against the working tree on 2026-10-07 through source inspection and
-HTML fragment parsing with jsdom. Typecheck, lint, test discovery, and a
-production build were run during the same session (results in section 4).
-Browser interactions were not exercised. When code and this file disagree,
+Portuguese documentation and its source contracts were reviewed on 2026-11-16.
+Validation results and their limits are recorded in section 4. When code and this file disagree,
 establish current behavior from the code and update this file within the approved scope.
 Development requirements below are distinct from implemented behavior; known
 gaps identify where the code does not yet meet those requirements.
@@ -64,7 +62,7 @@ gaps identify where the code does not yet meet those requirements.
 
 ### Tests
 
-- Focused link/sidebar integration tests live in `src/components/_link.test.ts`; the shared
+- No test files are present in the current working tree; the shared
   setup file remains empty. See sections 4 and 11.2.
 - When tests are added or an approved change needs coverage, colocate focused
   `*.test.ts` files next to the code and use the existing Vitest config
@@ -86,7 +84,7 @@ Implemented architecture:
   `public/config/languages.json`. There is no per-locale site manifest,
   config store, or home/footer path configuration.
 - Layout regions are wired **in code** by `src/AppTemplate.vue`, which assigns
-  fragments, inline markup, or components to the template slots.
+  fragments and components to `tbc-layout-linear` and a separate `tbc-sidebar`.
 - The dynamic content page (`src/pages/slug.page.vue`) passes the current route
   slug to `tbc-flux`, loading `.htm` fragments from the active locale directory.
 - Fetched editorial HTML is rendered through `v-html` **without sanitization**
@@ -105,49 +103,42 @@ Scope and limitations:
 
 ### Editorial purpose and current content
 
+Paths below are relative to `public/content/pt-br/`:
+
 | Content | Current state and purpose |
 | --- | --- |
-| `pt-br/home.htm` | HTML project overview; keep detailed instructions and code examples in the internal guides. |
-| `pt-br/pages/howwork.htm` | HTML guide: project organization, content, routes, languages, development, and publishing. |
-| `pt-br/pages/themes.htm` | HTML guide: theme variables and customization; remaining Markdown converted using the author's existing markup patterns. |
-| `pt-br/pages/templates.htm` | HTML guide: layout, slots, and template integration; Vue examples are escaped text. |
-| `pt-br/pages/components.htm` | HTML guide: component attributes, examples, and icon registration; HTML/Vue samples are escaped text. |
-| `pt-br/pages/utilities.htm` | HTML guide: utility classes and usage examples; code samples are escaped text. |
-| `pt-br/pages/support.htm` | Financial-support page with Bitcoin, dollar/euro, and Pix subsections; temporary `placehold.co` images and pending payment details. |
-| `pt-br/pages/contribute.htm` | Contribution page highlighting the project's early stage, development, ideas/bug reports, documentation/translations, and numbered GitHub contribution steps. |
-| `pt-br/complements/` | Header and sidebar navigation link to the guides. The footer groups home and guide links under “Conheça” and “Personalize”, participation links under “Participe”, and a closing phrase. |
-| `en-us/home.htm` | English translation of the Portuguese overview. |
-| `en-us/pages/` | English counterparts of the seven Portuguese guides: howwork, themes, templates, components, utilities, support, and contribute. |
-| `en-us/complements/` | English shell fragments: brand, header-nav, sidebar-nav, footer, and copyright. The menus and footer mirror the Portuguese grouping and links. |
+| `home.htm` | Project overview with links to the detailed guides. |
+| `pages/howwork.htm` | Project organization, fragments, routes, languages, development, and publishing. |
+| `pages/themes.htm` | Current `--color-tb-*` palette, fonts, five spacing ranges, panel and component tokens. |
+| `pages/templates.htm` | “Layout e composição”: component composition and current slots. The URL is retained for existing links; there is no `src/templates/` directory. |
+| `pages/components.htm` | All nine registered `tbc-*` elements, attributes, slots, icons, and extension examples. |
+| `pages/utilities.htm` | Current functional color/border utilities, flex/grid, panels, spacing, and component utilities. |
+| `pages/support.htm` | Bitcoin and USD/EUR remain unavailable; Pix retains the supplied key and `/images/pix.png`. No invented payment links. |
+| `pages/contribute.htm` | Development, issues, documentation, translations, and GitHub contribution steps. |
+| `complements/` | Brand, header/sidebar navigation, footer, copyright, and socials. Navigation uses `tbc-nav` and `tbc-link`; the footer retains “Conheça”, “Personalize”, and “Participe”. |
 
-Paths above are relative to `public/content/`. Bundled `logo.png`, `texture.png`,
-and `placehold.co` images remain sample assets. Do not treat authored Portuguese
-copy or the guides as disposable placeholders.
+Portuguese pages use semantic `article` wrappers with `tbu-flex-cols` and
+`tbu-block`, existing theme utilities, and Tailwind typography. They do not rely
+on the removed `.page-custom`, `.dot`/`.enum`, or `tbu-asset-code*` styles.
+Code examples are escaped text inside `pre > code`, styled with `tbu-panel`;
+tables have named, keyboard-focusable horizontal scroll containers. Use
+`tbc-link`/`tbc-nav` for authored links/navigation where appropriate. Prefer
+existing utilities and components over adding editorial CSS.
 
-All five Portuguese guides (howwork, themes, templates, components, and utilities)
-use HTML within `.page-custom`, with `tbu-asset-code` for technical terms,
-`pre > code` examples, tables, and `ol` lists using `li.dot` or `li.enum > div`.
-When converting more content, follow the author's existing structures; if a new
-tag needs styles that are not defined, leave that converted block commented for
-the author's review instead of adding styles without approval.
-The Portuguese menus link to these HTML guides. Flux does not parse Markdown;
-code fences alone do not protect examples from HTML parsing. Code samples use
-escaped text inside `pre > code`; sample markup, scripts, and styles are shown
-as text, not live nodes. No Markdown drafts remain in these five pages.
-Browser interactions have not been verified for these converted guides.
+The component and utility guides include small live navigation/panel examples;
+layout, sidebar, and source-code examples remain escaped text. Flux does not
+parse Markdown or compile Vue directives in fragments.
 
-English is enabled and is the default locale. Its `public/content/en-us/` tree
-now mirrors `pt-br/`, with `complements/` and the seven `pages/` guides, so the
-shell fragments and guide links resolve for both locales.
+English remains enabled and is the default locale. Its content was deliberately
+excluded from the Portuguese documentation revision; its older template,
+utility, and style instructions are not a current architecture reference.
+Keep existing Portuguese guide paths when editing navigation. Translations
+normally need matching paths, but this task explicitly limited edits to pt-br.
 
-The Portuguese footer links “Apoie” and “Contribua” to `#/pages/support.htm`
-and `#/pages/contribute.htm`. The support fragment uses `.page-custom`, with
-three vertically stacked payment subsections separated by horizontal rules and
-220 × 220 temporary images. Bitcoin and Pix details and the dollar/euro payment
-service/link are pending; no functional payment links or QR codes are provided.
-The contribution fragment uses `.page-custom`, with text subsections, an
-`ol` using `li.enum > div`, and a direct GitHub repository link. The footer also links to
-the project repository at `https://github.com/mineot/taberna`.
+The Portuguese support page keeps the author's supplied Pix image and key.
+Bitcoin and USD/EUR sections explain that payment details are pending, without
+placeholder QR images. Copyright retains the author's text. The footer and
+GitHub social link point to `https://github.com/mineot/taberna`.
 
 ## 3. Technology Stack
 
@@ -158,7 +149,7 @@ the project repository at `https://github.com/mineot/taberna`.
 - `@lucide/vue` for UI icons
 - TypeScript 5.9 strict (`strict`, `noUnusedLocals`, `noUnusedParameters`,
   `noImplicitReturns`, `isolatedModules`, `allowImportingTsExtensions`)
-- Vitest 4 + jsdom + @vue/test-utils (focused link/sidebar coverage)
+- Vitest 4 + jsdom + @vue/test-utils (no current test files)
 - ESLint 10 flat config, Prettier 3 with `prettier-plugin-tailwindcss`
 - Self-hosted Roboto, Roboto Serif, Roboto Mono, Italianno (`.ttf`, in `public/fonts/`)
 
@@ -169,151 +160,133 @@ upgrading dependencies.
 
 ## 4. Commands
 
-Validation environment: Node `v24.15.0`, npm `12.0.2`, existing dependencies.
-These are observed versions, not an `engines` requirement (none is declared).
+Validation uses the existing dependencies and Node `v24.15.0`; no engines
+requirement is declared. Results below were rechecked on 2026-11-16.
 
-| Command | Purpose | Session verification (2026-10-07) |
+| Command | Purpose | Result |
 | --- | --- | --- |
-| `npm run dev` | Vite dev server | Defined; not started in this review |
-| `npm run build` | `vue-tsc --noEmit && vite build` | Passes |
-| `npm run preview` | Serve `dist/` | Defined; not started in this review |
-| `npm run typecheck` | `vue-tsc --noEmit` | Passes |
-| `npm run lint` | `eslint src/` | Rechecked 2026-11-16: fails with 17 Vue parsing errors (11.1) |
-| `npm run test` | `vitest --run` | Rechecked 2026-11-16: 13 link/sidebar tests pass (11.2) |
-| `npm run format` | Prettier writes `src/**/*.{ts,vue,css}` | Not run; modifies source and does not format this guide |
+| `npm run dev` | Vite development server | Defined; preview used for browser validation. |
+| `npm run build` | `vue-tsc --noEmit && vite build` | Passes. |
+| `npm run preview` | Serve `dist/` | Used for Portuguese documentation checks. |
+| `npm run typecheck` | `vue-tsc --noEmit` | Passes. |
+| `npm run lint` | `eslint src/` | Fails with 16 existing Vue parsing errors (11.1). |
+| `npm run test` | `vitest --run` | Exits 1: no test files found (11.2). |
+| `npm run format` | Prettier writes `src/**/*.{ts,vue,css}` | Not run; source is outside this documentation scope. |
 
-The lint parser failure predates the navigation integration. Typecheck and build
-were also rechecked successfully on 2026-11-16. Chrome navigation checks covered
-375, 767, 768, and 1280 px widths in both orientations, including named HTML
-slot wrappers, visibility, and inherited spacing. These checks do not establish
-browser behavior for the rest of the site. Recheck results when relevant code changes.
+Portuguese HTML is formatted separately with the existing Prettier installation.
+Validation of this revision covers fragment structure, local link/asset targets,
+registered live elements, and current utility names. This editorial change adds
+no unit tests; it does not change application behavior.
+
+Chrome checks covered all eight Portuguese pages at 375, 768, 1280, and 1920 px
+on the production preview: no main-content horizontal overflow or JavaScript
+exceptions were observed. Keyboard activation and content-link navigation worked;
+the menu opener, backdrop close, and reopen worked. The sidebar body remained
+empty because of the pre-existing slot mismatch (11.6). Static checks passed for
+14 fragments, 43 internal links, 6 local asset references, 38 escaped examples,
+and all utilities used by live fragment markup. These checks do not establish
+complete accessibility or every component's behavior.
 
 ## 5. Repository Map
 
 ```text
-index.html                  SPA shell, font preloads, meta CSP
-vite.config.ts              base './', alias '@', vue + tailwind plugins, vitest
-eslint.config.js            flat config (vue + typescript-eslint + prettier)
+index.html                  SPA document, font preloads, meta CSP
+vite.config.ts              base './', alias '@', Vue + Tailwind plugins, Vitest
+eslint.config.js            flat config with current Vue parser failure
 public/
   config/languages.json     default / available / flags / names
-  content/{locale}/         locale-specific fragments
-  content/pt-br/home.htm    Portuguese project overview
-  content/pt-br/pages/      HTML guides: howwork.htm, themes.htm, templates.htm,
-                            components.htm, utilities.htm; support.htm financial
-                            support page; contribute.htm contribution guide
-  content/pt-br/complements/ brand.htm, header-nav.htm, sidebar-nav.htm,
-                            footer.htm, copyright.htm
-  content/en-us/            English translation mirroring pt-br: home.htm,
-                            pages/ guides, complements/ shell fragments
+  content/{locale}/         home.htm, pages/, complements/
+  content/pt-br/pages/      howwork, themes, templates (layout guide), components,
+                            utilities, support, contribute (.htm)
+  content/pt-br/complements/ brand, header-nav, sidebar-nav, footer, copyright,
+                            socials (.htm)
   fonts/                    self-hosted .ttf files
   icons/                    social SVG icons
-  images/                   logo.png, texture.png
+  images/                   logo.png, texture.png, pix.png
   favicon.png
 src/
-  App.vue                   overlays + AppTemplate + <router-view> + initApp
-  AppTemplate.vue           binds flux fragments to the layout slots
-  main.ts                   styles, custom elements, Pinia, router, mount
+  App.vue                   nested Loading → Error → AppTemplate + router-view
+  AppTemplate.vue           tbc-layout-linear + separate tbc-sidebar composition
+  main.ts                   styles, registries, Pinia, router, mount
   router.ts                 hash routes: /, /language, /:slug(.*)
   style.css                 global stylesheet entry
-  style-customs.css          editorial styles under .page-custom
-  web-components.ts         tbc-carousel, tbc-flux, tbc-language
-  web-icons.ts              icon-home
-  components/
-    _nav.vue                navigation with default and responsive named slots
-    _sidebar.vue            sidebar with show prop and local close state
-    _link.test.ts            link property assignment and sidebar reopen tests
-    carousel.vue            carousel (documented with escaped HTML examples)
-    error.vue               full-screen error overlay
-    flux.vue                loads a locale fragment and renders it (v-html)
-    language.vue            flag + language name link to #/language
-    loading.vue             full-screen loading overlay
-  pages/
-    home.page.vue           <tbc-flux content-file="home.htm">
-    language-switcher.page.vue  language grid, calls switchLanguage
-    slug.page.vue           passes the route slug to tbc-flux
-  stories/                  Pinia stores: app, error, language, loading
-  styles/                   fonts.css, theme.css, utilities.css, app.css
-  templates/default.vue     header/main/footer + backdrop + sidebar layout
-  test/setup.ts             empty vitest setup placeholder
-  utils/flux.util.ts        fragment path validation + fragment loading
-dist/                       generated build output, git-ignored, never edit
+  web-components.ts         nine tbc-* elements (section 13)
+  web-icons.ts              icon-home, icon-menu, icon-x
+  components/               _carousel.vue, _flux.vue, _footer.vue, _header.vue,
+                            _language.vue, _layout.linear.vue, _link.vue,
+                            _nav.vue, _sidebar.vue; index.ts exports
+  widgets/                  _error.vue, _loading.vue; index.ts exports
+  pages/                    home, language-switcher, slug (*.page.vue)
+  stories/                  app, error, language, loading (*.store.ts)
+  styles/
+    theme.css               fonts, palette, semantic/component tokens
+    customs.css             .footer-custom styles (English content still uses it)
+    utilities/              index + _borders, _colors, _layouts, _panels, _utils
+    components/             index + _header-footer, _layout.linear, _link,
+                            _nav, _sidebar
+    helpers/                app.css, fonts.css
+  test/setup.ts             empty Vitest setup placeholder
+  utils/flux.util.ts        fragment validation + loading
+dist/                       generated build output; never edit manually
 ```
 
-Naming conventions:
-
-- Custom elements and content prefixes are `tbc-*` (`icon-*` for inline icons).
-- CSS classes are `tbi-*` (Taberna internal), utilities `tbu-*`, tokens `--*`.
-- Pages: `*.page.vue`. Stores: `*.store.ts`. Utils: `*.util.ts`.
-- Files under `components/` and pages are lowercase and hyphenated; the root
-  shell files are `App.vue` and `AppTemplate.vue`.
-
-### Where to make an approved change
+Naming: custom elements use `tbc-*`, icons `icon-*`, internal classes `tbi-*`,
+utilities `tbu-*`, and CSS variables `--*`. Components/widgets currently use an
+underscore prefix; pages, stores, and utilities use their respective suffixes.
 
 | Change | Primary location |
 | --- | --- |
-| Home copy or detailed guide content | Relevant file under `public/content/pt-br/`; preserve the format documented in section 2. |
-| Menu links, brand, or footer copy | `public/content/{locale}/complements/` in every enabled locale. |
-| Which content fills a layout region | `src/AppTemplate.vue`. |
-| Layout structure or sidebar behavior | `src/templates/default.vue`. |
-| Shared visual values | `src/styles/theme.css`. |
-| Reusable utility classes | `src/styles/utilities.css`. |
-| Editorial presentation | `src/style-customs.css`. |
-| Component behavior or registration | `src/components/` and `src/web-components.ts`. |
-| Available icons | `src/web-icons.ts`. |
-| Language data or resolution | `public/config/languages.json` and `src/stories/language.store.ts`. |
-| Routing or fragment loading | `src/router.ts`, `src/pages/`, `src/components/flux.vue`, and `src/utils/flux.util.ts`. |
+| Portuguese content or navigation | `public/content/pt-br/` |
+| Which content fills a region | `src/AppTemplate.vue` |
+| Layout/sidebar structure and behavior | `src/components/_layout.linear.vue`, `_sidebar.vue` |
+| Theme values | `src/styles/theme.css` |
+| Utilities | `src/styles/utilities/`, `src/styles/components/` |
+| Additional editorial styles | `src/styles/customs.css` |
+| Components and registration | `src/components/`, `src/web-components.ts` |
+| Icons | `src/web-icons.ts` |
+| Locale configuration/resolution | `public/config/languages.json`, `src/stories/language.store.ts` |
+| Routing and fragments | `src/router.ts`, `src/pages/`, `src/components/_flux.vue`, `src/utils/flux.util.ts` |
 
 ## 6. Bootstrap and Application Shell
 
-`src/main.ts` imports `@/style.css`, registers `web-components` and
-`web-icons`, then installs Pinia and the router and mounts `App.vue`.
+`main.ts` imports styles and both registries, installs Pinia and the router, and
+mounts `App.vue`. `App.vue` nests `Loading`, `Error`, and `AppTemplate` around the
+route page. The widgets render their slots only while their respective state is
+inactive; loading/error can unmount the nested shell. `onMounted` calls
+`initApp()` and swallows its rejection because the error store captures it.
+Initialization awaits language detection; only language detection currently uses
+loading tokens, and flux waits for a nonempty locale.
 
-`App.vue` renders, in order: `<Loading />`, `<Error />`, `<AppTemplate>` with
-`<router-view />`. `onMounted` calls `initApp()` and swallows rejections
-(`.catch(() => undefined)`) because the error store already captured them.
-`initApp()` only awaits language detection. The shell mounts immediately; flux
-instances wait for a nonempty locale. Only language detection uses the loading
-tokens today; fragment fetches do not keep the loading overlay open.
+`AppTemplate.vue` composes `tbc-layout-linear` and a separate `tbc-sidebar`.
+The layout uses Header/Footer Vue components internally. HTML slot wrappers
+supply these layout regions:
 
-`AppTemplate.vue` is the content-to-layout bridge. Fragment paths below are
-relative to `public/content/{locale}/`:
+| Slot | Content relative to `content/{locale}/` |
+| --- | --- |
+| default (unnamed) | Current route, forwarded through `<slot>` |
+| `header-brand` | `complements/brand.htm` |
+| `header-nav` | `complements/header-nav.htm` |
+| `footer-brand` | `complements/brand.htm` |
+| `footer-nav` | `complements/socials.htm` |
+| `footer-body` | `complements/footer.htm` |
+| `footer-copyright` | `complements/copyright.htm` |
 
-| Slot                | Source                                                      |
-| ------------------- | ----------------------------------------------------------- |
-| default (unnamed)   | current route page forwarded from `App.vue` through `<slot />` |
-| `header-brand`      | `complements/brand.htm`                                      |
-| `header-nav`        | `complements/header-nav.htm`                                 |
-| `footer-brand`      | `complements/brand.htm`                                      |
-| `footer-complement` | inline social icon links (`/icons/*.svg`)                   |
-| `footer-body`       | `complements/footer.htm`                                     |
-| `footer-copyright`  | `complements/copyright.htm`                                  |
-| `sidebar-brand`     | `complements/brand.htm` (click closes the sidebar)           |
-| `sidebar-body`      | `complements/sidebar-nav.htm` (click closes the sidebar)     |
-| `sidebar-footer`    | `<tbc-language>` (click closes the sidebar)                  |
+The layout's declared `owner`, `year`, and `copyright` string props are forwarded
+to Footer, which does not declare or consume them as text. Author copyright
+through the slot. Footer always includes “Powered by Mineot”. No former
+`hideToggleMenu` or `scrollToTopOnFooterClick` props remain.
 
-Adding a region means adding a slot to the chosen template and filling it in
-`AppTemplate.vue`. When the region uses `<tbc-flux content-file="...">`, create
-the matching fragment under `public/content/{locale}/` in **every** enabled
-locale. Slots can also receive inline content or components.
+Sidebar supports `sidebar-header`, the default slot, and `sidebar-footer`.
+The shell supplies the brand in `sidebar-header` and language link in
+`sidebar-footer`, with click handlers assigning `sidebar.show = false` via a
+Vue ref. **Current mismatch:** the sidebar navigation flux is wrapped in
+`slot="sidebar-body"`, but Sidebar has no such slot, so this body is not
+rendered. Correcting it requires an approved application change; editing the
+Portuguese fragment alone cannot resolve it.
 
-`templates/default.vue` has an opt-in `scrollToTopOnFooterClick` Boolean prop
-(default `false`), explicitly enabled in `AppTemplate.vue` using
-`:scroll-to-top-on-footer-click="true"`. When enabled, it delegates footer-body
-link clicks to scroll immediately to the top for internal `#/` links, including
-the current route, in every locale. Disable the prop to customize footer clicks
-without this additional scrolling; the router's normal scroll behavior still applies.
-Modified clicks, downloads, and links targeting another browsing context are
-excluded. Normal hash navigation remains handled by the router.
-
-`templates/default.vue` owns the default layout structure and its styles:
-sticky blurred header, `hidden md:flex` nav, mobile menu toggle (`hideToggleMenu` prop),
-`<main>` slot, footer with brand/complement/body, copyright row with the
-"Powered by Mineot" link, a fixed backdrop, and a fixed off-canvas sidebar.
-Sidebar slots receive a `close` callback. Editorial styles, shared utilities,
-and overlay component styles live separately. This is the only template
-currently available; selection is the import in `AppTemplate.vue`, not a
-configuration value. `hideToggleMenu` defaults to `false`; it hides the opener,
-not the sidebar itself or the desktop navigation breakpoint.
+The Portuguese header uses `tbc-nav responsive` with HTML `nav-wide` and
+`nav-narrow` wrappers. The narrow group's `tbc-link` button assigns `show=true`
+on `#sidebar`. Breakpoint and slot behavior are detailed in section 13.
 
 ## 7. State (`src/stories/`)
 
@@ -387,7 +360,7 @@ switch from surviving the reload. The hash route is retained.
 
 ## 9. Content Fragments and the Flux Pipeline
 
-`src/components/flux.vue` is the content renderer:
+`src/components/_flux.vue` is the content renderer:
 
 ```html
 <tbc-flux content-file="home.htm"></tbc-flux>
@@ -432,7 +405,7 @@ author content. They may use Tailwind utilities, `tbu-*` utilities, semantic CSS
 variables, and registered `tbc-*` elements. Vue directives/interpolations
 in fetched HTML are not compiled as Vue templates. Introducing sanitization (the
 unused `dompurify` dependency is installed and ready) is an architectural
-change — get explicit approval, and update `flux.vue`, the element registry, and
+change — get explicit approval, and update `_flux.vue`, the element registry, and
 the documentation together.
 
 Asset paths in fragments are written absolute (`/images/logo.png`), which works
@@ -471,94 +444,72 @@ origin changes must account for the relevant CSP directive.
 
 ## 11. Known Gaps and Dead Code
 
-Documented deliberately so agents do not "fix" them silently or claim they work.
-
-1. **`npm run lint` is broken.** All 17 Vue files currently report the parsing
-   error `'>' expected`. The TypeScript recommended config applies to both
-   `*.ts` and `*.vue` after the
-   Vue config, replacing `vue-eslint-parser`. The later `parserOptions.parser`
-   does not restore the outer Vue parser. Fixing parser order/scoping is a
-   prerequisite before lint can check Vue templates. An override also targets
-   the deleted `src/components/layouts/content.vue`.
-2. **Test coverage is limited to link/sidebar integration.**
-   `src/components/_link.test.ts` covers property assignment, Boolean HTML
-   values, typed Vue values, invalid destinations, ordinary anchors, and
-   reopening after closing via the icon or backdrop. `src/test/setup.ts` remains
-   empty. Sidebar browser interaction is not verified.
-3. **`v-html` is unsanitized** and `dompurify` is an unused dependency
-   (section 9).
-4. **Fragment asset paths break subdirectory hosting:** `/images/logo.png`
-   remains absolute in copied `public/content/` fragments. The verified build
-   rewrites font/texture URLs from CSS, asset URLs in `index.html`, and social
-   icons in `AppTemplate.vue` to relative references. Do not treat every
-   absolute source URL as a production failure; inspect emitted files.
-   Fragment URLs need deployment-relative authoring or approved base-aware
-   handling.
-5. **Dead CSS:** `src/styles/app.css` still sets `display: contents` for
-   `tbc-backdrop` and `tbc-sidebar`, elements that no longer exist (the sidebar
-   is now `.tbi-default-layout-sidebar`).
-6. **Guide browser validation is pending:** the five Portuguese guides are
-   HTML, with escaped code examples. Conversion checks verify content and DOM
-   structure, but do not establish visual or interactive browser behavior.
-7. **Token drift:** `error.vue` and `loading.vue` use raw `z-300` / `z-200`,
-   while `theme.css` defines `--z-loader: 999`, `--z-sidebar: 150`,
-   `--z-backdrop: 100`. Prefer adding or reusing a `--z-*` token over new raw
-   z-index utilities.
-8. **Accessibility gaps:** the language chooser uses clickable `div` elements;
-   the menu opener is a clickable SVG; the close button has no accessible name.
-   The off-screen sidebar has no `inert`/`aria-hidden`, focus trap, focus
-   restoration, or Escape handler. Loading/error overlays lack status/alert
-   semantics; the loader and sidebar do not handle reduced motion. Section 14
-   states requirements, not completed accessibility coverage.
-9. **Undefined backdrop token:** `--backdrop-color` references the undefined
-    `--color-secondary-bg`. `tbu-secondary-bg` is a utility, not a CSS variable.
-10. **Partial data/request validation:** language schema checks are incomplete;
-    flux has no cancellation/stale-response protection (sections 8–9).
+1. **Lint is broken:** all 16 Vue files report `'>' expected`. TypeScript's
+   recommended config replaces the outer Vue parser; a later parserOptions
+   setting does not restore it. A stale override also targets a deleted file.
+2. **No test files are present:** Vitest exits 1 with “No test files found”.
+   `src/test/setup.ts` remains empty. Older link/sidebar test results do not
+   describe this working tree.
+3. **Trusted HTML:** flux uses unsanitized `v-html`; DOMPurify remains unused.
+4. **Subdirectory assets:** absolute URLs in public fragments (including logo,
+   Pix, and social icons) are copied without rewriting. CSS/entry asset
+   processing differs; inspect emitted files before drawing conclusions.
+5. **Stale helper selector:** `helpers/app.css` sets `display: contents` for
+   `tbc-backdrop`, which is not registered; `tbc-sidebar` is registered.
+6. **Sidebar integration:** `AppTemplate.vue` supplies `sidebar-body`, but the
+   component only renders its default body slot (section 6).
+7. **Unused layout props/token:** `owner`/`year`/`copyright` do not populate the
+   footer text, and `--z-loader` is declared but unused by Loading.
+8. **Accessibility gaps:** the language chooser uses clickable divs; sidebar
+   close is a clickable icon without an accessible name. Sidebar lacks Escape,
+   focus management and inert/aria-hidden for its hidden contents. Loading/error
+   lack status/alert semantics; loader/sidebar lack reduced-motion handling.
+   The Portuguese menu opener is a named button through `tbc-link`.
+9. **English documentation is stale:** Portuguese guides now describe current
+   components and styles; English retains earlier template and utility content.
+10. **Partial validation/request handling:** locale schema validation remains
+    incomplete; flux lacks cancellation/stale-response protection (sections 8–9).
 
 ## 12. Styling and Theme
 
-`src/styles/components/_layout.linear.css` defines `tbu-layout-linear`, used by
-`src/components/_layout.linear.vue`. Its column layout has a minimum height of
-`100dvh`: short content fills the visible viewport, while longer `main` content
-expands the layout and scrolls in the existing ancestor scroll container. The
-`main` uses `flex-1` to fill remaining space, and the header retains `tbu-header`'s
-`sticky top-0` behavior. The layout does not impose a fixed height or its own
-overflow container.
+`src/style.css` imports Tailwind, `styles/helpers/fonts.css`, `styles/theme.css`,
+`styles/utilities/index.css`, `styles/helpers/app.css`, `styles/customs.css`, and
+`styles/components/index.css`, in that order.
 
-`src/style.css` imports, in order: `tailwindcss`, `styles/fonts.css`,
-`styles/theme.css`, `styles/utilities.css`, `styles/app.css`, then
-`style-customs.css`.
-
-- `theme.css` holds `@theme` font families (`--font-sans`, `--font-serif`,
-  `--font-mono`, `--font-fancy`) and `:root` semantic tokens: z-index,
-  `--duration`, `--texture`, `--rounded`, the primary/secondary/asset color
-  families (each with `-soft` and `-opaque` variants), borders, block/container
-  spacing multipliers, and component-only tokens (`--carousel-*`). Container
-  multipliers are 4/14/24 and block multipliers are 6/6/6 for sm/md/lg.
-- `utilities.css` defines `tbu-*` utilities via `@utility`: duration, texture,
-  rounded, color helpers, `tbu-asset-link`, `tbu-asset-pill`,
-  `tbu-asset-code-text`, `tbu-asset-code-panel` (direct `span.terminal` and
-  `span.css` children receive specific styles), `tbu-shadow`,
-  `tbu-backdrop`, border helpers, and the responsive `tbu-container` /
-  `tbu-block`.
-- `style-customs.css` defines the global `.page-custom` wrapper and its nested
-  heading, paragraph, link, separator, and numbered-list styles. It is the
-  current home content's presentation layer; keep editorial rules separate from
-  template structure and reusable theme/utility definitions.
-- Every `<style>` block that uses Tailwind directives must start with
-  `@reference "@/style.css";`.
-- Custom elements use `shadowRoot: false` (light DOM). Vue `scoped` styles
-  still use generated scope attributes; they do not automatically reach
-  arbitrary HTML injected by `v-html`. Use global utilities for fragments.
-  Carousel styles are unscoped for slotted children; flux has no style block,
-  and language has a scoped block.
-- Breakpoints: `48rem` (medium) and `64rem` (large). `tbu-container` /
-  `tbu-block` switch at those widths; the carousel activates multi-column at
-  `48rem`.
-- Rules: semantic tokens over raw palette classes, `--z-*` tokens over raw
-  `z-*`, mobile-first, visible focus states, respect
-  `prefers-reduced-motion` for non-essential motion.
-- Keep fonts self-hosted.
+- `@theme` defines the four font families and six `--color-tb-*` colors:
+  primary-hard/soft, secondary-hard/soft, asset-hard/soft.
+- Functional utilities use these suffixes: `tbu-text-*`, `tbu-bg-*`,
+  `tbu-bg-glass-*`, `tbu-border-*`, and directional `tbu-border-{side}-*`.
+  Glass backgrounds use `--opacity` (30%). Border width/style use
+  `--border-width` (1px) and `--border-style` (solid).
+- `tbu-container` and `tbu-block` use base/md/lg/xl/2xl ranges: 0, 48rem,
+  64rem, 80rem, 96rem. Container multipliers are 4/12/24/46/96; block
+  multipliers are 4/5/6/7/8. The `sm` token is the base value.
+- `tbu-flex-cols`, `tbu-flex-rows`, and integer `tbu-grid-*` use gap multipliers
+  4/3/2 at base/md/lg. Flex utilities wrap by default.
+- `tbu-panel` provides texture, `--panel-bg`, left `--panel-border`, left
+  padding from `--panel-border-spacing`, and remaining padding from
+  `--panel-spacing`. Other utilities include duration, texture, rounded,
+  shadow, and backdrop.
+- Component utilities include `tbu-header`, `tbu-footer`, `tbu-layout-linear`,
+  `tbu-link`, `tbu-nav`, and `tbu-sidebar`. They style expected structures;
+  CSS alone does not reproduce custom-element behavior.
+- `tbu-layout-linear` uses a column with `min-height: 100dvh`, a sticky header,
+  and a `flex-1` main with `tbu-container`; it does not introduce an overflow
+  container. `--layout-linear-gap` separates regions.
+- Component appearance has dedicated `--header-*`, `--footer-*`, `--sidebar-*`,
+  `--link*`, `--carousel-*`, `--loading-*`, and `--error-*` tokens. The backdrop
+  uses the existing secondary-hard color at 80%, as do header/footer backgrounds.
+- `styles/customs.css` currently defines `.footer-custom` only. Portuguese
+  documentation uses direct utilities; `.page-custom` and the former
+  `tbu-asset-code*`, `tbu-asset-pill`, and old color utility names do not exist.
+- Tailwind directives in component style blocks require `@reference "@/style.css";`.
+  Custom elements use light DOM (`shadowRoot: false`); scoped selectors still
+  do not automatically style arbitrary injected content. Carousel styles are
+  unscoped, language/footer styles scoped, and flux has no style block.
+- Keep fonts self-hosted. Prefer semantic tokens and mobile-first styling,
+  visible focus and reduced-motion handling. New classes in public fragments
+  require rebuilding the generated CSS for production.
 
 ## 13. Custom Elements and Icons
 
@@ -578,15 +529,18 @@ Currently registered:
 | Element         | Attribute(s)     | Default | Behavior                                                        |
 | --------------- | ---------------- | ------- | --------------------------------------------------------------- |
 | `tbc-flux`      | `content-file`   | —       | Loads `content/{locale}/{file}` and injects it with `v-html`     |
-| `tbc-language`  | `flag-only`      | `false` | Links to `#/language`; hides the language name when set          |
+| `tbc-language` | `flag-only`, `lg`, `sm` | `false` | Language link; optional flag-only or large/small text |
 | `tbc-carousel`  | `total-per-page` | `3`     | Direct slotted elements are items grouped into pages; 1 item/page below `48rem`         |
 | `tbc-carousel`  | `interval`       | `3000`  | Autoplay ms; `0` disables it. Countdown + pause/play button      |
 | `tbc-nav`      | `responsive`    | `false` | Switches `nav-wide` / `nav-narrow` slots at `48rem`; otherwise renders the default slot |
 | `tbc-nav`      | `vertical`      | `false` | Arranges navigation items in columns, including both responsive groups |
-| `tbc-link`     | `text`, `href`, `target` | `Link`, `/#`, `_self` | Renders an anchor when no trigger is supplied |
+| `tbc-link`     | `text`, `href`, `target` | `null`, `/#`, `_self` | Renders an anchor when no trigger is supplied |
 | `tbc-link`     | `trigger`, `trigger-prop`, `trigger-value` | `null` | Renders a button that assigns a property on the first element matching the trigger selector |
 | `tbc-sidebar`  | `show`          | `false` | Shows the panel and backdrop; clicking `icon-x` or the backdrop closes both and emits `update:show` with `false` |
-| `icon-home`     | none             | —       | Lucide `Home` icon; included in the component guide examples    |
+| `tbc-header` | none | — | `header-brand` and default slots |
+| `tbc-footer` | none | — | `footer-brand`, `footer-nav`, `footer-copyright`, default body slot |
+| `tbc-layout-linear` | `owner`, `year`, `copyright` | undefined | Layout slots in section 6; these props do not generate footer text |
+| `icon-home`, `icon-menu`, `icon-x` | none | — | Lucide Home, Menu, X |
 
 Link triggers (`src/components/_link.vue`):
 

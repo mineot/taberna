@@ -1,5 +1,5 @@
-<div class="page-custom">
-  <h1>Como funciona o Taberna</h1>
+<article class="tbu-flex-cols tbu-block min-w-0 leading-relaxed [overflow-wrap:anywhere]">
+  <h1 class="tbu-text-asset-hard text-3xl font-bold md:text-4xl">Como funciona o Taberna</h1>
 
   <p>
     O Taberna é uma base para sites pessoais, portfólios e páginas de apresentação. Ele reúne uma
@@ -13,9 +13,9 @@
     publicar o site.
   </p>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>A lógica do projeto</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">A lógica do projeto</h2>
 
   <p>
     O Taberna funciona inteiramente no navegador. A aplicação Vue monta a estrutura da interface e
@@ -35,13 +35,15 @@
     arquivos do seu repositório.
   </p>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>Organização dos arquivos</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">Organização dos arquivos</h2>
 
   <p>Esta é uma visão simplificada das pastas e dos arquivos usados no dia a dia:</p>
 
-  <pre><code>public/
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>public/
   config/
     languages.json
   content/
@@ -53,11 +55,14 @@
         templates.htm
         components.htm
         utilities.htm
+        support.htm
+        contribute.htm
       complements/
         brand.htm
         header-nav.htm
         sidebar-nav.htm
         footer.htm
+        socials.htm
         copyright.htm
     en-us/
   images/
@@ -67,63 +72,75 @@ src/
   App.vue
   AppTemplate.vue
   router.ts
-  templates/
-    default.vue
   components/
+    _layout.linear.vue
+    _header.vue
+    _footer.vue
+    _sidebar.vue
+  widgets/
   styles/
-  style-customs.css</code></pre>
+    theme.css
+    utilities/
+    components/
+    helpers/
+    customs.css
+  style.css</code></pre>
 
-  <ol>
-    <li class="dot">
-      <span class="tbu-asset-code">public/content/</span>: reúne o conteúdo, separado em pastas por
-      idioma.
+  <ul class="list-disc space-y-2 pl-6">
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">public/content/</code>: reúne o conteúdo,
+      separado em pastas por idioma.
     </li>
-    <li class="dot">
-      <span class="tbu-asset-code">home.htm</span>: contém o corpo da página inicial daquele idioma.
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">home.htm</code>: contém o corpo da página
+      inicial daquele idioma.
     </li>
-    <li class="dot">
-      <span class="tbu-asset-code">pages/</span>: organiza os fragmentos das páginas internas.
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">pages/</code>: organiza os fragmentos das
+      páginas internas.
     </li>
-    <li class="dot">
-      <span class="tbu-asset-code">complements/</span>: reúne os trechos compartilhados, como marca,
-      menus e rodapé.
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">complements/</code>: reúne os trechos
+      compartilhados, como marca, menus e rodapé.
     </li>
-    <li class="dot">
-      <span class="tbu-asset-code">public/config/languages.json</span>: define os idiomas
-      disponíveis e suas informações.
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">public/config/languages.json</code>:
+      define os idiomas disponíveis e suas informações.
     </li>
-    <li class="dot">
-      <span class="tbu-asset-code">public/images/</span>,
-      <span class="tbu-asset-code">public/icons/</span> e
-      <span class="tbu-asset-code">public/fonts/</span>: guardam recursos usados pelo site.
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">public/images/</code>,
+      <code class="tbu-text-asset-soft font-mono text-sm">public/icons/</code> e
+      <code class="tbu-text-asset-soft font-mono text-sm">public/fonts/</code>: guardam recursos
+      usados pelo site.
     </li>
-    <li class="dot">
-      <span class="tbu-asset-code">src/templates/</span>: contém os layouts que organizam as regiões
-      da interface.
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">src/widgets/</code>: contém os widgets de
+      carregamento e erro que envolvem a aplicação.
     </li>
-    <li class="dot">
-      <span class="tbu-asset-code">src/components/</span>: contém os componentes da aplicação.
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">src/components/</code>: contém os
+      componentes da aplicação.
     </li>
-    <li class="dot">
-      <span class="tbu-asset-code">src/styles/</span>: reúne as definições de tema, fontes,
-      utilities e estilos globais.
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">src/styles/</code>: reúne as definições de
+      tema, fontes, utilities e estilos globais.
     </li>
-    <li class="dot">
-      <span class="tbu-asset-code">src/style-customs.css</span>: concentra estilos personalizados do
-      conteúdo, como os usados nesta documentação.
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">src/styles/customs.css</code>: reúne
+      estilos editoriais adicionais. As páginas em português usam utilitários diretamente no HTML.
     </li>
-  </ol>
+  </ul>
 
   <p>
-    As pastas <span class="tbu-asset-code">pages/</span> e
-    <span class="tbu-asset-code">complements/</span> ajudam a organizar o conteúdo. Os arquivos são
-    carregados pelos caminhos informados nos links e na aplicação; colocá-los nessas pastas não cria
-    entradas de menu automaticamente.
+    As pastas <code class="tbu-text-asset-soft font-mono text-sm">pages/</code> e
+    <code class="tbu-text-asset-soft font-mono text-sm">complements/</code> ajudam a organizar o
+    conteúdo. Os arquivos são carregados pelos caminhos informados nos links e na aplicação;
+    colocá-los nessas pastas não cria entradas de menu automaticamente.
   </p>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>Como uma página é montada</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">Como uma página é montada</h2>
 
   <p>
     Ao abrir o site, a aplicação inicia a identificação do idioma e monta a estrutura compartilhada
@@ -133,36 +150,32 @@ src/
 
   <p>Cada parte tem uma responsabilidade:</p>
 
-  <ol>
-    <li class="enum">
-      <div>1</div>
-      <span class="tbu-asset-code">App.vue</span> reúne a estrutura da aplicação, a página da rota
-      atual e as telas de carregamento e erro.
+  <ol class="list-decimal space-y-2 pl-6">
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">App.vue</code> reúne a estrutura da
+      aplicação, a página da rota atual e as telas de carregamento e erro.
     </li>
-    <li class="enum">
-      <div>2</div>
-      O template define onde ficam o cabeçalho, a área principal, o rodapé e o menu lateral.
+    <li>
+      O componente
+      <code class="tbu-text-asset-soft font-mono text-sm">tbc-layout-linear</code> organiza
+      cabeçalho, área principal e rodapé. O menu lateral é um
+      <code class="tbu-text-asset-soft font-mono text-sm">tbc-sidebar</code> separado.
     </li>
-    <li class="enum">
-      <div>3</div>
-      <span class="tbu-asset-code">AppTemplate.vue</span> preenche as regiões do template com os
-      complementos e componentes correspondentes.
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">AppTemplate.vue</code> compõe o layout e o
+      menu lateral com os complementos e componentes correspondentes.
     </li>
-    <li class="enum">
-      <div>4</div>
-      O roteador determina qual conteúdo deve aparecer na área principal.
-    </li>
-    <li class="enum">
-      <div>5</div>
-      O componente <span class="tbu-asset-code">tbc-flux</span> busca o fragmento no idioma ativo e
-      insere seu HTML na página.
+    <li>O roteador determina qual conteúdo deve aparecer na área principal.</li>
+    <li>
+      O componente <code class="tbu-text-asset-soft font-mono text-sm">tbc-flux</code> busca o
+      fragmento no idioma ativo e insere seu HTML na página.
     </li>
   </ol>
 
   <p>
     Por exemplo, a marca exibida no cabeçalho, no rodapé e no menu lateral vem do mesmo arquivo
-    <span class="tbu-asset-code">complements/brand.htm</span>. Alterar esse fragmento atualiza o
-    conteúdo usado nessas três regiões na próxima carga.
+    <code class="tbu-text-asset-soft font-mono text-sm">complements/brand.htm</code>. Alterar esse
+    fragmento atualiza o conteúdo usado nessas três regiões na próxima carga.
   </p>
 
   <p>
@@ -170,14 +183,14 @@ src/
     estrutura compartilhada do site.
   </p>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>Como escrever o conteúdo</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">Como escrever o conteúdo</h2>
 
   <p>
-    Os arquivos <span class="tbu-asset-code">.htm</span> devem conter fragmentos HTML: apenas os
-    elementos que serão exibidos naquela parte do site. Não é necessário repetir a estrutura de um
-    documento completo HTML 5.
+    Os arquivos <code class="tbu-text-asset-soft font-mono text-sm">.htm</code> devem conter
+    fragmentos HTML: apenas os elementos que serão exibidos naquela parte do site. Não é necessário
+    repetir a estrutura de um documento completo HTML 5.
   </p>
 
   <p>
@@ -195,8 +208,9 @@ src/
   <p>
     Os fragmentos podem usar classes de estilo e componentes personalizados registrados pelo
     projeto. Expressões e diretivas Vue, como interpolações e
-    <span class="tbu-asset-code">v-if</span>, não são compiladas nesses arquivos. Comportamentos que
-    dependem de Vue devem ser implementados nos componentes da aplicação.
+    <code class="tbu-text-asset-soft font-mono text-sm">v-if</code>, não são compiladas nesses
+    arquivos. Comportamentos que dependem de Vue devem ser implementados nos componentes da
+    aplicação.
   </p>
 
   <p>
@@ -204,65 +218,62 @@ src/
     HTML, portanto publique apenas conteúdo que você conhece e revisou.
   </p>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>Páginas e navegação</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">Páginas e navegação</h2>
 
   <p>
-    Os links internos usam o formato com <span class="tbu-asset-code">#</span>. A página inicial
-    está em <span class="tbu-asset-code">#/</span>, e o seletor de idiomas está em
-    <span class="tbu-asset-code">#/language</span>.
+    Os links internos usam o formato com
+    <code class="tbu-text-asset-soft font-mono text-sm">#</code>. A página inicial está em
+    <code class="tbu-text-asset-soft font-mono text-sm">#/</code>, e o seletor de idiomas está em
+    <code class="tbu-text-asset-soft font-mono text-sm">#/language</code>.
   </p>
 
   <p>
     Para as páginas de conteúdo, o trecho depois de
-    <span class="tbu-asset-code">#/</span> indica o caminho do fragmento dentro da pasta do idioma
-    ativo. Por exemplo:
+    <code class="tbu-text-asset-soft font-mono text-sm">#/</code> indica o caminho do fragmento
+    dentro da pasta do idioma ativo. Por exemplo:
   </p>
 
-  <pre><code><span>Endereço: #/pages/howwork.htm</span>
-<span>Idioma ativo: pt-br</span>
-<span>Arquivo: public/content/pt-br/pages/howwork.htm</span></code></pre>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>Endereço: #/pages/howwork.htm
+Idioma ativo: pt-br
+Arquivo: public/content/pt-br/pages/howwork.htm</code></pre>
 
   <p>
     O mesmo endereço, com inglês ativo, procura
-    <span class="tbu-asset-code">public/content/en-us/pages/howwork.htm</span>. O idioma não precisa
-    aparecer no link.
+    <code class="tbu-text-asset-soft font-mono text-sm">public/content/en-us/pages/howwork.htm</code
+    >. O idioma não precisa aparecer no link.
   </p>
 
-  <h3>Adicionando uma página</h3>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Adicionando uma página</h3>
 
   <p>Para criar uma página chamada <strong>Sobre</strong>, siga esta sequência:</p>
 
-  <ol>
-    <li class="enum">
-      <div>1</div>
-      Crie <span class="tbu-asset-code">pages/about.htm</span> dentro da pasta de cada idioma
-      habilitado.
+  <ol class="list-decimal space-y-2 pl-6">
+    <li>
+      Crie <code class="tbu-text-asset-soft font-mono text-sm">pages/about.htm</code> dentro da
+      pasta de cada idioma habilitado.
     </li>
-    <li class="enum">
-      <div>2</div>
+    <li>
       Escreva o conteúdo correspondente em cada idioma, mantendo o mesmo nome e caminho do arquivo.
     </li>
-    <li class="enum">
-      <div>3</div>
-      Adicione o link nos complementos de navegação em que deseja disponibilizar a página.
-    </li>
-    <li class="enum">
-      <div>4</div>
-      Confira o acesso à página e a troca de idioma no ambiente local.
-    </li>
+    <li>Adicione o link nos complementos de navegação em que deseja disponibilizar a página.</li>
+    <li>Confira o acesso à página e a troca de idioma no ambiente local.</li>
   </ol>
 
   <p>O link pode ser escrito assim:</p>
 
-  <pre><code> &lt;a href="#/pages/about.htm"&gt;Sobre&lt;/a&gt; </code></pre>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-link href="#/pages/about.htm" text="Sobre"&gt;&lt;/tbc-link&gt;</code></pre>
 
   <p>
     O menu do cabeçalho e o menu lateral possuem arquivos separados:
-    <span class="tbu-asset-code">complements/header-nav.htm</span> e
-    <span class="tbu-asset-code">complements/sidebar-nav.htm</span>. Edite ambos quando quiser que a
-    página apareça nas duas navegações.
+    <code class="tbu-text-asset-soft font-mono text-sm">complements/header-nav.htm</code> e
+    <code class="tbu-text-asset-soft font-mono text-sm">complements/sidebar-nav.htm</code>. Edite
+    ambos quando quiser que a página apareça nas duas navegações.
   </p>
 
   <p>
@@ -270,13 +281,14 @@ src/
     cadastrar uma rota Vue para cada fragmento.
   </p>
 
-  <h3>Caminhos e falhas de carregamento</h3>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Caminhos e falhas de carregamento</h3>
 
   <p>
-    Os caminhos dos fragmentos precisam terminar em <span class="tbu-asset-code">.htm</span>. No
-    valor encaminhado ao carregador, não use uma barra inicial, barras invertidas, segmentos vazios
-    ou <span class="tbu-asset-code">..</span>. Subpastas são permitidas, como em
-    <span class="tbu-asset-code">pages/about.htm</span>.
+    Os caminhos dos fragmentos precisam terminar em
+    <code class="tbu-text-asset-soft font-mono text-sm">.htm</code>. No valor encaminhado ao
+    carregador, não use uma barra inicial, barras invertidas, segmentos vazios ou
+    <code class="tbu-text-asset-soft font-mono text-sm">..</code>. Subpastas são permitidas, como em
+    <code class="tbu-text-asset-soft font-mono text-sm">pages/about.htm</code>.
   </p>
 
   <p>
@@ -286,31 +298,37 @@ src/
     em outro idioma.
   </p>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>Como funcionam os idiomas</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">Como funcionam os idiomas</h2>
 
   <p>
-    O arquivo <span class="tbu-asset-code">public/config/languages.json</span> reúne quatro
-    informações:
+    O arquivo
+    <code class="tbu-text-asset-soft font-mono text-sm">public/config/languages.json</code> reúne
+    quatro informações:
   </p>
 
-  <ol>
-    <li class="dot"><span class="tbu-asset-code">default:</span> o idioma padrão.</li>
-    <li class="dot">
-      <span class="tbu-asset-code">available:</span> a lista de idiomas habilitados.
+  <ul class="list-disc space-y-2 pl-6">
+    <li><code class="tbu-text-asset-soft font-mono text-sm">default:</code> o idioma padrão.</li>
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">available:</code> a lista de idiomas
+      habilitados.
     </li>
-    <li class="dot">
-      <span class="tbu-asset-code">flags:</span> as bandeiras associadas a cada idioma.
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">flags:</code> as bandeiras associadas a
+      cada idioma.
     </li>
-    <li class="dot">
-      <span class="tbu-asset-code">names:</span> os nomes apresentados no seletor.
+    <li>
+      <code class="tbu-text-asset-soft font-mono text-sm">names:</code> os nomes apresentados no
+      seletor.
     </li>
-  </ol>
+  </ul>
 
   <p>A configuração atual é:</p>
 
-  <pre><code>{
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>{
   "default": "en-us",
   "available": ["pt-br", "en-us"],
   "flags": { "pt-br": "🇧🇷", "en-us": "🇺🇸" },
@@ -322,31 +340,20 @@ src/
 
   <p>Ao iniciar, o Taberna procura um idioma disponível nesta ordem:</p>
 
-  <ol>
-    <li class="enum">
-      <div>1</div>
-      A preferência salva no navegador em uma visita anterior.
-    </li>
-    <li class="enum">
-      <div>2</div>
-      As preferências de idioma informadas pelo navegador.
-    </li>
-    <li class="enum">
-      <div>3</div>
-      O idioma padrão da configuração.
-    </li>
-    <li class="enum">
-      <div>4</div>
-      O primeiro idioma disponível, caso o padrão não esteja na lista.
-    </li>
+  <ol class="list-decimal space-y-2 pl-6">
+    <li>A preferência salva no navegador em uma visita anterior.</li>
+    <li>As preferências de idioma informadas pelo navegador.</li>
+    <li>O idioma padrão da configuração.</li>
+    <li>O primeiro idioma disponível, caso o padrão não esteja na lista.</li>
   </ol>
 
   <p>
-    Use identificadores em letras minúsculas, como <span class="tbu-asset-code">pt-br</span> e
-    <span class="tbu-asset-code">en-us</span>, e mantenha esses nomes nas pastas de conteúdo. A
-    correspondência considera o identificador completo: uma preferência
-    <span class="tbu-asset-code">pt</span> não é convertida automaticamente em
-    <span class="tbu-asset-code">pt-br</span>.
+    Use identificadores em letras minúsculas, como
+    <code class="tbu-text-asset-soft font-mono text-sm">pt-br</code> e
+    <code class="tbu-text-asset-soft font-mono text-sm">en-us</code>, e mantenha esses nomes nas
+    pastas de conteúdo. A correspondência considera o identificador completo: uma preferência
+    <code class="tbu-text-asset-soft font-mono text-sm">pt</code> não é convertida automaticamente
+    em <code class="tbu-text-asset-soft font-mono text-sm">pt-br</code>.
   </p>
 
   <p>
@@ -362,108 +369,126 @@ src/
     algumas mensagens da interface ainda estão fixas em inglês.
   </p>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>Personalização: o papel de cada recurso</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">
+    Personalização: o papel de cada recurso
+  </h2>
 
-  <h3>Temas</h3>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Temas</h3>
 
   <p>
     O tema define a identidade visual compartilhada: cores, fontes, espaçamentos, bordas e outros
     detalhes. Suas variáveis ficam em
-    <span class="tbu-asset-code">src/styles/theme.css</span> e são utilizadas pelos estilos e pelas
-    utilities do projeto.
+    <code class="tbu-text-asset-soft font-mono text-sm">src/styles/theme.css</code> e são utilizadas
+    pelos estilos e pelas utilities do projeto.
   </p>
 
   <p>
     Alterar essas definições permite ajustar a aparência de várias regiões de forma consistente.
     Para conhecer a configuração visual, consulte a página de
-    <a href="#/pages/themes.htm">Temas</a>.
+    <tbc-link
+      href="#/pages/themes.htm"
+      class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+      >Temas</tbc-link
+    >.
   </p>
 
-  <h3>Templates</h3>
-
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Layout e composição</h3>
   <p>
-    Os templates definem a estrutura do layout. Eles organizam regiões como cabeçalho, conteúdo
-    principal, rodapé e menu lateral e oferecem espaços, chamados slots, para receber o conteúdo.
+    <code class="tbu-text-asset-soft font-mono text-sm">src/AppTemplate.vue</code> compõe
+    <code class="tbu-text-asset-soft font-mono text-sm">tbc-layout-linear</code> e
+    <code class="tbu-text-asset-soft font-mono text-sm">tbc-sidebar</code>, preenchendo os slots com
+    os complementos de conteúdo. O layout utiliza os componentes de cabeçalho e rodapé de
+    <code class="tbu-text-asset-soft font-mono text-sm">src/components/</code>.
+  </p>
+  <p>
+    Você pode trocar os fragmentos de cada região ou reorganizar os componentes na composição. O
+    guia de
+    <tbc-link
+      href="#/pages/templates.htm"
+      text="layout e composição"
+      class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+    ></tbc-link>
+    mostra os slots disponíveis e como preenchê-los.
   </p>
 
-  <p>
-    Atualmente, existe o template
-    <span class="tbu-asset-code">src/templates/default.vue</span>. O arquivo
-    <span class="tbu-asset-code">src/AppTemplate.vue</span> importa esse template e conecta seus
-    slots aos complementos e componentes da aplicação.
-  </p>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Componentes</h3>
 
   <p>
-    Com o tempo, serão criados diversos tipos de templates para diferentes propostas de site.
-    Sinta-se à vontade para criar os seus, adaptando a estrutura às necessidades do seu projeto.
-  </p>
-
-  <p>
-    Criar um template envolve trabalhar no layout Vue e integrá-lo ao
-    <span class="tbu-asset-code">AppTemplate.vue</span>; a aplicação não oferece um seletor
-    automático de templates. A página de <a href="#/pages/templates.htm">templates</a> é o espaço
-    para aprofundar essa personalização.
-  </p>
-
-  <h3>Componentes</h3>
-
-  <p>
-    Os componentes reúnem recursos e comportamentos reutilizáveis. Entre os elementos disponíveis
-    para o conteúdo estão <span class="tbu-asset-code">tbc-flux</span>, que carrega fragmentos,
-    <span class="tbu-asset-code">tbc-language</span>, que leva ao seletor de idiomas, e
-    <span class="tbu-asset-code">tbc-carousel</span>, que organiza itens em um carrossel.
+    Os componentes reúnem recursos e comportamentos reutilizáveis. Para navegação e ações, use
+    <code class="tbu-text-asset-soft font-mono text-sm">tbc-nav</code> e
+    <code class="tbu-text-asset-soft font-mono text-sm">tbc-link</code>. Também estão disponíveis
+    <code class="tbu-text-asset-soft font-mono text-sm">tbc-flux</code>, que carrega fragmentos,
+    <code class="tbu-text-asset-soft font-mono text-sm">tbc-language</code>, que leva ao seletor de
+    idiomas, e <code class="tbu-text-asset-soft font-mono text-sm">tbc-carousel</code>, que organiza
+    itens em um carrossel.
   </p>
 
   <p>
     Cada componente possui sua própria finalidade e pode oferecer atributos de configuração. A
-    página de <a href="#/pages/components.htm">componentes</a> reúne o assunto em separado.
+    página de
+    <tbc-link
+      href="#/pages/components.htm"
+      class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+      >componentes</tbc-link
+    >
+    reúne o assunto em separado.
   </p>
 
-  <h3>Utilities</h3>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Utilities</h3>
 
   <p>
     As utilities são classes que aplicam regras visuais diretamente aos elementos HTML. O Taberna
     utiliza Tailwind CSS e classes próprias com o prefixo
-    <span class="tbu-asset-code">tbu-*</span>, definidas em
-    <span class="tbu-asset-code">src/styles/utilities.css</span>.
+    <code class="tbu-text-asset-soft font-mono text-sm">tbu-*</code>, definidas em
+    <code class="tbu-text-asset-soft font-mono text-sm">src/styles/utilities/</code>.
   </p>
 
   <p>
     Elas ajudam a aplicar as cores do tema, espaçamentos, bordas e outros recursos sem repetir as
     mesmas regras de CSS em cada trecho de conteúdo. Os detalhes ficam na página de
-    <a href="#/pages/utilities.htm">utilities</a>.
+    <tbc-link
+      href="#/pages/utilities.htm"
+      class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+      >utilities</tbc-link
+    >.
   </p>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>Do desenvolvimento à publicação</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">Do desenvolvimento à publicação</h2>
 
-  <h3>Prepare sua cópia</h3>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Prepare sua cópia</h3>
 
   <p>
-    Tenha Git, Node.js 24 e npm instalados. Você pode criar um fork do Taberna na sua conta do
-    GitHub para manter suas personalizações em um repositório próprio.
+    Tenha Git, Node.js e npm instalados. O ambiente de referência do projeto usa Node.js 24. Você
+    pode criar um fork do Taberna na sua conta do GitHub para manter suas personalizações em um
+    repositório próprio.
   </p>
 
   <p>Para começar a partir do repositório original:</p>
 
-  <pre><code><span>git clone https://github.com/mineot/taberna.git</span>
-<span>cd taberna</span>
-<span>npm install</span></code></pre>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>git clone https://github.com/mineot/taberna.git
+cd taberna
+npm ci</code></pre>
 
   <p>Se criou um fork, substitua o endereço do comando pelo endereço do seu repositório.</p>
 
-  <h3>Trabalhe localmente</h3>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Trabalhe localmente</h3>
 
   <p>Inicie o servidor de desenvolvimento:</p>
 
-  <pre><code><span>npm run dev</span></code></pre>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>npm run dev</code></pre>
 
   <p>
     Abra o endereço informado no terminal. Edite os fragmentos de conteúdo e confira o resultado no
-    navegador. Se necessário, recarregue a página para buscar novamente os arquivos alterados.
+    navegador. Para revisar o português, selecione Português (Brasil) na página de idiomas. Se
+    necessário, recarregue a página para buscar novamente os arquivos alterados.
   </p>
 
   <p>
@@ -472,21 +497,28 @@ src/
     visuais.
   </p>
 
-  <h3>Gere e confira a versão de produção</h3>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">
+    Gere e confira a versão de produção
+  </h3>
 
   <p>Quando quiser preparar o site para publicação, execute:</p>
 
-  <pre><code><span>npm run build</span></code></pre>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>npm run build</code></pre>
 
   <p>
     Esse comando verifica o TypeScript e gera os arquivos de produção em
-    <span class="tbu-asset-code">dist/</span>. Os arquivos públicos, incluindo os fragmentos de
-    conteúdo, são copiados para essa saída.
+    <code class="tbu-text-asset-soft font-mono text-sm">dist/</code>. Os arquivos públicos,
+    incluindo os fragmentos de conteúdo, são copiados para essa saída. Novas classes nos fragmentos
+    também precisam desse build para integrar o CSS de produção.
   </p>
 
   <p>Para conferir o resultado localmente:</p>
 
-  <pre><code><span>npm run preview</span></code></pre>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>npm run preview</code></pre>
 
   <p>
     O preview serve para revisar o build antes de publicá-lo. Confira os links, as imagens, as
@@ -494,20 +526,21 @@ src/
     destinos dos links existem.
   </p>
 
-  <h3>Publique o site</h3>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Publique o site</h3>
 
   <p>
-    Envie o conteúdo de <span class="tbu-asset-code">dist/</span> para a hospedagem estática
-    escolhida. O processo de envio depende do serviço utilizado; o projeto não inclui um fluxo
-    automático de publicação.
+    Envie o conteúdo de <code class="tbu-text-asset-soft font-mono text-sm">dist/</code> para a
+    hospedagem estática escolhida. O processo de envio depende do serviço utilizado; o projeto não
+    inclui um fluxo automático de publicação.
   </p>
 
   <p>
     Se publicar em um subdiretório, confira os caminhos dos recursos nos fragmentos. Por exemplo,
-    <span class="tbu-asset-code">/images/logo.png</span> aponta para a raiz do domínio, enquanto
-    <span class="tbu-asset-code">images/logo.png</span> é relativo ao endereço-base da página
-    exibida. Os caminhos não são resolvidos a partir da pasta do fragmento e não são reescritos
-    automaticamente pelo build.
+    <code class="tbu-text-asset-soft font-mono text-sm">/images/logo.png</code> aponta para a raiz
+    do domínio, enquanto
+    <code class="tbu-text-asset-soft font-mono text-sm">images/logo.png</code> é relativo ao
+    endereço-base da página exibida. Os caminhos não são resolvidos a partir da pasta do fragmento e
+    não são reescritos automaticamente pelo build.
   </p>
 
   <p>
@@ -515,4 +548,4 @@ src/
     Dessa forma, seu repositório continua sendo a referência para o conteúdo e as personalizações do
     site.
   </p>
-</div>
+</article>
