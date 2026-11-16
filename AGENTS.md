@@ -64,7 +64,7 @@ gaps identify where the code does not yet meet those requirements.
 
 ### Tests
 
-- Focused navigation tests live in `src/components/_nav.test.ts`; the shared
+- Focused link/sidebar integration tests live in `src/components/_link.test.ts`; the shared
   setup file remains empty. See sections 4 and 11.2.
 - When tests are added or an approved change needs coverage, colocate focused
   `*.test.ts` files next to the code and use the existing Vitest config
@@ -158,7 +158,7 @@ the project repository at `https://github.com/mineot/taberna`.
 - `@lucide/vue` for UI icons
 - TypeScript 5.9 strict (`strict`, `noUnusedLocals`, `noUnusedParameters`,
   `noImplicitReturns`, `isolatedModules`, `allowImportingTsExtensions`)
-- Vitest 4 + jsdom + @vue/test-utils (focused navigation coverage)
+- Vitest 4 + jsdom + @vue/test-utils (focused link/sidebar coverage)
 - ESLint 10 flat config, Prettier 3 with `prettier-plugin-tailwindcss`
 - Self-hosted Roboto, Roboto Serif, Roboto Mono, Italianno (`.ttf`, in `public/fonts/`)
 
@@ -178,8 +178,8 @@ These are observed versions, not an `engines` requirement (none is declared).
 | `npm run build` | `vue-tsc --noEmit && vite build` | Passes |
 | `npm run preview` | Serve `dist/` | Defined; not started in this review |
 | `npm run typecheck` | `vue-tsc --noEmit` | Passes |
-| `npm run lint` | `eslint src/` | Rechecked 2026-11-16: fails with 14 Vue parsing errors (11.1) |
-| `npm run test` | `vitest --run` | Rechecked 2026-11-16: 3 navigation tests pass (11.2) |
+| `npm run lint` | `eslint src/` | Rechecked 2026-11-16: fails with 17 Vue parsing errors (11.1) |
+| `npm run test` | `vitest --run` | Rechecked 2026-11-16: 13 link/sidebar tests pass (11.2) |
 | `npm run format` | Prettier writes `src/**/*.{ts,vue,css}` | Not run; modifies source and does not format this guide |
 
 The lint parser failure predates the navigation integration. Typecheck and build
@@ -220,7 +220,8 @@ src/
   web-icons.ts              icon-home
   components/
     _nav.vue                navigation with default and responsive named slots
-    _nav.test.ts            Vue and light-DOM custom-element integration tests
+    _sidebar.vue            sidebar with show prop and local close state
+    _link.test.ts            link property assignment and sidebar reopen tests
     carousel.vue            carousel (documented with escaped HTML examples)
     error.vue               full-screen error overlay
     flux.vue                loads a locale fragment and renders it (v-html)
@@ -472,17 +473,18 @@ origin changes must account for the relevant CSP directive.
 
 Documented deliberately so agents do not "fix" them silently or claim they work.
 
-1. **`npm run lint` is broken.** All 14 Vue files currently report the parsing
+1. **`npm run lint` is broken.** All 17 Vue files currently report the parsing
    error `'>' expected`. The TypeScript recommended config applies to both
    `*.ts` and `*.vue` after the
    Vue config, replacing `vue-eslint-parser`. The later `parserOptions.parser`
    does not restore the outer Vue parser. Fixing parser order/scoping is a
    prerequisite before lint can check Vue templates. An override also targets
    the deleted `src/components/layouts/content.vue`.
-2. **Test coverage is limited to navigation.** `src/components/_nav.test.ts`
-   covers Vue slots, orientation updates, and light-DOM HTML slots through
-   custom-element attribute changes, preserving node identity and listeners.
-   `src/test/setup.ts` remains empty. Responsive CSS was checked separately in Chrome.
+2. **Test coverage is limited to link/sidebar integration.**
+   `src/components/_link.test.ts` covers property assignment, Boolean HTML
+   values, typed Vue values, invalid destinations, ordinary anchors, and
+   reopening after closing via the icon or backdrop. `src/test/setup.ts` remains
+   empty. Sidebar browser interaction is not verified.
 3. **`v-html` is unsanitized** and `dompurify` is an unused dependency
    (section 9).
 4. **Fragment asset paths break subdirectory hosting:** `/images/logo.png`
@@ -573,7 +575,39 @@ Currently registered:
 | `tbc-carousel`  | `interval`       | `3000`  | Autoplay ms; `0` disables it. Countdown + pause/play button      |
 | `tbc-nav`      | `responsive`    | `false` | Switches `nav-wide` / `nav-narrow` slots at `48rem`; otherwise renders the default slot |
 | `tbc-nav`      | `vertical`      | `false` | Arranges navigation items in columns, including both responsive groups |
+| `tbc-link`     | `text`, `href`, `target` | `Link`, `/#`, `_self` | Renders an anchor when no trigger is supplied |
+| `tbc-link`     | `trigger`, `trigger-prop`, `trigger-value` | `null` | Renders a button that assigns a property on the first element matching the trigger selector |
+| `tbc-sidebar`  | `show`          | `false` | Shows the panel and backdrop; clicking `icon-x` or the backdrop closes both and emits `update:show` with `false` |
 | `icon-home`     | none             | —       | Lucide `Home` icon; included in the component guide examples    |
+
+Link triggers (`src/components/_link.vue`):
+
+- `trigger` is a CSS selector; `trigger-prop` is the destination's JavaScript
+  property name (camelCase for multiword props). Only an existing property on
+  the first matching element is assigned. Invalid selectors, absent targets,
+  missing property names, and unknown properties are ignored.
+- `trigger-value` accepts strings, Booleans, numbers, objects, and arrays.
+  The strings `"true"` and `"false"` become Booleans; other supplied values are
+  assigned as received. Objects and arrays require Vue/property bindings;
+  HTML attribute strings are not parsed as JSON.
+- Trigger buttons use `type="button"` so they do not submit surrounding forms.
+  Without `trigger`, the component remains an anchor using `href` and `target`.
+- Example HTML: `<tbc-link text="Open" trigger="#menu" trigger-prop="show"
+  trigger-value="true"></tbc-link>` targets `<tbc-sidebar id="menu">`.
+  This DOM-property API targets custom elements/native elements, not private
+  component instances rendered by a regular Vue parent.
+
+Sidebar close behavior (`src/components/_sidebar.vue`):
+
+- Local visibility starts from `show` and follows subsequent prop changes.
+  Clicking `icon-x` or the backdrop hides both without mutating props.
+- Vue consumers can use `<Sidebar v-model:show="isOpen">`. Static HTML
+  `<tbc-sidebar show>` also closes without a parent listener. The emitted
+  custom-element `update:show` event carries `[false]` in `detail`.
+- When hosted as a Vue custom element, closing also sets the host property
+  `show` to `false` (removing its attribute), so a link can reopen it by assigning
+  `true` again. In regular Vue usage, `update:show` synchronizes the parent model.
+  Escape does not close this component.
 
 Navigation integration (`src/components/_nav.vue` and
 `src/styles/components/_nav.css`):

@@ -1,5 +1,16 @@
 import { defineCustomElement } from 'vue';
-import { Carousel, Flux, Footer, Header, Language, LayoutLinear, Link, Nav } from '@/components';
+
+import {
+  Carousel,
+  Flux,
+  Footer,
+  Header,
+  Language,
+  LayoutLinear,
+  Link,
+  Nav,
+  Sidebar,
+} from '@/components';
 
 function createElement(name: string, element: any): any {
   return {
@@ -18,6 +29,7 @@ const elements = {
   ...createElement('tbc-layout-linear', LayoutLinear),
   ...createElement('tbc-link', Link),
   ...createElement('tbc-nav', Nav),
+  ...createElement('tbc-sidebar', Sidebar),
 };
 
 Object.keys(elements).forEach((name: string) => {

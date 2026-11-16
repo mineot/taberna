@@ -1,8 +1,9 @@
 <template>
   <button
     v-if="props.trigger"
+    type="button"
     class="tbu-link"
-    @click="trigger(props.trigger, props.triggerAction)"
+    @click="trigger(props.trigger, props.triggerProp, props.triggerValue)"
   >
     <span>{{ props.text }}</span>
   </button>
@@ -34,18 +35,36 @@ const props = defineProps({
     required: false,
     default: null,
   },
-  triggerAction: {
+  triggerProp: {
     type: String,
+    required: false,
+    default: null,
+  },
+  triggerValue: {
+    type: [String, Boolean, Number, Object, Array],
     required: false,
     default: null,
   },
 });
 
-function trigger(target: string, action: string) {
-  const el: any = document.querySelector(target);
-
-  if (el) {
-    el.classList.add(action);
+function trigger(target: string, prop: string | null, value: unknown) {
+  if (!prop) {
+    return;
   }
+
+  let el: Element | null;
+
+  try {
+    el = document.querySelector(target);
+  } catch {
+    return;
+  }
+
+  if (!el || !(prop in el)) {
+    return;
+  }
+
+  const resolvedValue = value === 'true' ? true : value === 'false' ? false : value;
+  Reflect.set(el, prop, resolvedValue);
 }
 </script>
