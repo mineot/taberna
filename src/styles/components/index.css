@@ -1,1 +1,2 @@
-@import './header-footer.css';
+@import './_header-footer.css';
+@import './_layout.linear.css';

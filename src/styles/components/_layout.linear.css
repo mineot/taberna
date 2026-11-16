@@ -1,0 +1,16 @@
+@utility tbu-layout-linear {
+  @apply flex flex-col flex-nowrap;
+  gap: calc(var(--spacing) * var(--layout-linear-gap));
+
+  > header {
+    @apply tbu-header;
+  }
+
+  > footer {
+    @apply tbu-footer;
+  }
+
+  > main {
+    @apply tbu-container flex-1;
+  }
+}

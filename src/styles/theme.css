@@ -85,8 +85,10 @@
 
   --header-bg: color-mix(in oklab, var(--color-tb-secondary-hard) 80%, transparent);
   --header-border: var(--border-width) var(--border-style) var(--color-tb-secondary-soft);
-  
+
   --footer-bg: color-mix(in oklab, var(--color-tb-secondary-hard) 80%, transparent);
   --footer-border: var(--border-width) var(--border-style) var(--color-tb-secondary-soft);
   --footer-emphasis: var(--color-tb-secondary-soft);
+
+  --layout-linear-gap: 2;
 }
