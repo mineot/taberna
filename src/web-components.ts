@@ -1,5 +1,5 @@
 import { defineCustomElement } from 'vue';
-import { Carousel, Flux, Footer, Header, Language, Nav } from '@/components';
+import { Carousel, Flux, Footer, Header, Language, Link, Nav } from '@/components';
 
 function createElement(name: string, element: any): any {
   return {
@@ -15,6 +15,7 @@ const elements = {
   ...createElement('tbc-footer', Footer),
   ...createElement('tbc-header', Header),
   ...createElement('tbc-language', Language),
+  ...createElement('tbc-link', Link),
   ...createElement('tbc-nav', Nav),
 };
 
