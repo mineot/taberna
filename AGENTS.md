@@ -64,8 +64,8 @@ gaps identify where the code does not yet meet those requirements.
 
 ### Tests
 
-- There is currently **no test suite**; results and the empty setup file are
-  documented in sections 4 and 11.2.
+- Focused navigation tests live in `src/components/_nav.test.ts`; the shared
+  setup file remains empty. See sections 4 and 11.2.
 - When tests are added or an approved change needs coverage, colocate focused
   `*.test.ts` files next to the code and use the existing Vitest config
   (jsdom + `src/test/setup.ts`).
@@ -158,7 +158,7 @@ the project repository at `https://github.com/mineot/taberna`.
 - `@lucide/vue` for UI icons
 - TypeScript 5.9 strict (`strict`, `noUnusedLocals`, `noUnusedParameters`,
   `noImplicitReturns`, `isolatedModules`, `allowImportingTsExtensions`)
-- Vitest 4 + jsdom + @vue/test-utils (configured, no test suite)
+- Vitest 4 + jsdom + @vue/test-utils (focused navigation coverage)
 - ESLint 10 flat config, Prettier 3 with `prettier-plugin-tailwindcss`
 - Self-hosted Roboto, Roboto Serif, Roboto Mono, Italianno (`.ttf`, in `public/fonts/`)
 
@@ -178,13 +178,15 @@ These are observed versions, not an `engines` requirement (none is declared).
 | `npm run build` | `vue-tsc --noEmit && vite build` | Passes |
 | `npm run preview` | Serve `dist/` | Defined; not started in this review |
 | `npm run typecheck` | `vue-tsc --noEmit` | Passes |
-| `npm run lint` | `eslint src/` | Fails: 11 Vue parsing errors (11.1) |
-| `npm run test` | `vitest --run` | Exits 1: no test files found (11.2) |
+| `npm run lint` | `eslint src/` | Rechecked 2026-11-16: fails with 14 Vue parsing errors (11.1) |
+| `npm run test` | `vitest --run` | Rechecked 2026-11-16: 3 navigation tests pass (11.2) |
 | `npm run format` | Prettier writes `src/**/*.{ts,vue,css}` | Not run; modifies source and does not format this guide |
 
-Lint and test failures predate these documentation changes. Do not report them
-as green or infer working browser behavior from a successful build. Recheck
-these results when the relevant code or tooling changes.
+The lint parser failure predates the navigation integration. Typecheck and build
+were also rechecked successfully on 2026-11-16. Chrome navigation checks covered
+375, 767, 768, and 1280 px widths in both orientations, including named HTML
+slot wrappers, visibility, and inherited spacing. These checks do not establish
+browser behavior for the rest of the site. Recheck results when relevant code changes.
 
 ## 5. Repository Map
 
@@ -217,6 +219,8 @@ src/
   web-components.ts         tbc-carousel, tbc-flux, tbc-language
   web-icons.ts              icon-home
   components/
+    _nav.vue                navigation with default and responsive named slots
+    _nav.test.ts            Vue and light-DOM custom-element integration tests
     carousel.vue            carousel (documented with escaped HTML examples)
     error.vue               full-screen error overlay
     flux.vue                loads a locale fragment and renders it (v-html)
@@ -468,16 +472,17 @@ origin changes must account for the relevant CSP directive.
 
 Documented deliberately so agents do not "fix" them silently or claim they work.
 
-1. **`npm run lint` is broken.** All 11 Vue files currently report the parsing
+1. **`npm run lint` is broken.** All 14 Vue files currently report the parsing
    error `'>' expected`. The TypeScript recommended config applies to both
    `*.ts` and `*.vue` after the
    Vue config, replacing `vue-eslint-parser`. The later `parserOptions.parser`
    does not restore the outer Vue parser. Fixing parser order/scoping is a
    prerequisite before lint can check Vue templates. An override also targets
    the deleted `src/components/layouts/content.vue`.
-2. **No tests exist.** `npm test` exits 1. `src/test/setup.ts` is empty, and
-   `@vue/test-utils` and `jsdom` are installed, but no automated suite uses them.
-   Ad hoc parsing during documentation review is not a test suite.
+2. **Test coverage is limited to navigation.** `src/components/_nav.test.ts`
+   covers Vue slots, orientation updates, and light-DOM HTML slots through
+   custom-element attribute changes, preserving node identity and listeners.
+   `src/test/setup.ts` remains empty. Responsive CSS was checked separately in Chrome.
 3. **`v-html` is unsanitized** and `dompurify` is an unused dependency
    (section 9).
 4. **Fragment asset paths break subdirectory hosting:** `/images/logo.png`
@@ -566,7 +571,28 @@ Currently registered:
 | `tbc-language`  | `flag-only`      | `false` | Links to `#/language`; hides the language name when set          |
 | `tbc-carousel`  | `total-per-page` | `3`     | Direct slotted elements are items grouped into pages; 1 item/page below `48rem`         |
 | `tbc-carousel`  | `interval`       | `3000`  | Autoplay ms; `0` disables it. Countdown + pause/play button      |
+| `tbc-nav`      | `responsive`    | `false` | Switches `nav-wide` / `nav-narrow` slots at `48rem`; otherwise renders the default slot |
+| `tbc-nav`      | `vertical`      | `false` | Arranges navigation items in columns, including both responsive groups |
 | `icon-home`     | none             | —       | Lucide `Home` icon; included in the component guide examples    |
+
+Navigation integration (`src/components/_nav.vue` and
+`src/styles/components/_nav.css`):
+
+- `Nav` is exported by `src/components/index.ts` and registered as `tbc-nav`.
+- The global stylesheet imports `styles/components/index.css`, which imports
+  `_nav.css`. The component relies on the global `tbu-nav` utility.
+- Without `responsive`, supply the default slot. With `responsive`, supply
+  `nav-wide` (at least `48rem`) and `nav-narrow` (below `48rem`); there is no
+  automatic menu button or fallback to the default slot.
+- In HTML fragments use `slot="nav-wide"` / `slot="nav-narrow"` on real elements,
+  not Vue `<template #...>` syntax. In Vue component usage, named Vue slots work.
+- Direct named HTML slot wrappers inherit flex direction, wrapping, and gap
+  from the generated `.wide` / `.narrow` group, so their children follow the
+  selected orientation. Vue slot items may also be supplied directly.
+- Boolean HTML attributes are enabled by presence and disabled by omission;
+  in Vue use Boolean bindings such as `:responsive="false"`.
+- The CSS utility remains usable on plain HTML via `tbu-nav responsive` with
+  direct `.wide` / `.narrow` children and optional `.vertical` on each group.
 
 Carousel behavior to preserve:
 

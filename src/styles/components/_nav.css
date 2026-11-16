@@ -7,18 +7,25 @@
 
   &.responsive {
     > .wide {
-      @apply md:tbu-flex-rows hidden;
-
-      &.vertical {
-        @apply md:tbu-flex-cols hidden;
-      }
+      @apply tbu-flex-rows hidden md:flex;
     }
 
     > .narrow {
       @apply tbu-flex-rows md:hidden;
+    }
 
+    > .wide,
+    > .narrow {
       &.vertical {
-        @apply tbu-flex-cols md:hidden;
+        @apply flex-col;
+      }
+
+      > [slot='nav-wide'],
+      > [slot='nav-narrow'] {
+        display: flex;
+        flex-direction: inherit;
+        flex-wrap: inherit;
+        gap: inherit;
       }
     }
   }
