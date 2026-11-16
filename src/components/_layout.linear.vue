@@ -23,6 +23,10 @@
         <slot name="footer-nav"></slot>
       </template>
 
+      <template #footer-copyright>
+        <slot name="footer-copyright"></slot>
+      </template>
+
       <template #default>
         <slot name="footer-body"></slot>
       </template>

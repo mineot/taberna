@@ -5,25 +5,27 @@
     class="tbu-link"
     @click="trigger(props.trigger, props.triggerProp, props.triggerValue)"
   >
-    <span>{{ props.text }}</span>
+    <span v-if="props.text">{{ props.text }}</span>
+    <slot v-else></slot>
   </button>
 
   <a v-else class="tbu-link" :href="props.href" :target="props.target">
-    <span>{{ props.text }}</span>
+    <span v-if="props.text">{{ props.text }}</span>
+    <slot v-else></slot>
   </a>
 </template>
 
 <script setup lang="ts">
 const props = defineProps({
-  text: {
-    type: String,
-    required: true,
-    default: 'Link',
-  },
   href: {
     type: String,
     required: false,
     default: '/#',
+  },
+  text: {
+    type: String,
+    required: false,
+    default: null,
   },
   target: {
     type: String,

@@ -1,77 +1,55 @@
 <template>
-  <slot></slot>
-
-  <!-- <Default :scroll-to-top-on-footer-click="true">
-    <template #header-brand>
+  <tbc-layout-linear owner="Fabiano Pires">
+    <div slot="header-brand">
       <tbc-flux content-file="complements/brand.htm"></tbc-flux>
-    </template>
+    </div>
 
-    <template #header-nav>
+    <div slot="header-nav">
       <tbc-flux content-file="complements/header-nav.htm"></tbc-flux>
-    </template>
-
-    <template #footer-brand>
-      <tbc-flux content-file="complements/brand.htm"></tbc-flux>
-    </template>
-
-    <template #footer-complement>
-      <div class="tbi-socials">
-        <a href="https://github.com/" target="_blank">
-          <img src="/icons/github.svg" alt="github" />
-        </a>
-
-        <a href="https://tailwindcss.com/" target="_blank">
-          <img src="/icons/tailwindcss.svg" alt="tailwindcss" />
-        </a>
-
-        <a href="https://vuejs.org/" target="_blank">
-          <img src="/icons/vue.svg" alt="vue" />
-        </a>
-
-        <a href="https://vite.dev/" target="_blank">
-          <img src="/icons/vite.svg" alt="vue" />
-        </a>
-      </div>
-    </template>
-
-    <template #footer-body>
-      <tbc-flux content-file="complements/footer.htm"></tbc-flux>
-    </template>
-
-    <template #footer-copyright>
-      <tbc-flux content-file="complements/copyright.htm"></tbc-flux>
-    </template>
-
-    <template #sidebar-brand="{ close }">
-      <tbc-flux content-file="complements/brand.htm" @click="close"></tbc-flux>
-    </template>
-
-    <template #sidebar-body="{ close }">
-      <tbc-flux content-file="complements/sidebar-nav.htm" @click="close"></tbc-flux>
-    </template>
-
-    <template #sidebar-footer="{ close }">
-      <tbc-language @click="close"></tbc-language>
-    </template>
+    </div>
 
     <slot></slot>
-  </Default> -->
+
+    <div slot="footer-brand">
+      <tbc-flux content-file="complements/brand.htm"></tbc-flux>
+    </div>
+
+    <div slot="footer-nav">
+      <tbc-flux content-file="complements/socials.htm"></tbc-flux>
+    </div>
+
+    <div slot="footer-body">
+      <tbc-flux content-file="complements/footer.htm"></tbc-flux>
+    </div>
+
+    <div slot="footer-copyright">
+      <tbc-flux content-file="complements/copyright.htm"></tbc-flux>
+    </div>
+  </tbc-layout-linear>
+
+  <tbc-sidebar id="sidebar" ref="sidebar">
+    <div slot="sidebar-header">
+      <tbc-flux content-file="complements/brand.htm" @click="closeSidebar"></tbc-flux>
+    </div>
+
+    <div slot="sidebar-footer">
+      <tbc-language lg @click="closeSidebar"></tbc-language>
+    </div>
+
+    <div slot="sidebar-body">
+      <tbc-flux content-file="complements/sidebar-nav.htm" @click="closeSidebar"></tbc-flux>
+    </div>
+  </tbc-sidebar>
 </template>
-<!-- 
+
 <script setup lang="ts">
-import Default from '@/templates/default.vue';
-</script>
+import { ref } from 'vue';
 
-<style scoped>
-@reference "@/style.css";
+const sidebar = ref<{ show: boolean } | null>(null);
 
-.tbi-socials {
-  @apply flex flex-row items-center gap-6;
-
-  > a {
-    > img {
-      @apply w-6;
-    }
+function closeSidebar() {
+  if (sidebar.value) {
+    sidebar.value.show = false;
   }
 }
-</style> -->
+</script>

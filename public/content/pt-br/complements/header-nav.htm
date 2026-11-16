@@ -1,8 +1,16 @@
-<div class="flex flex-row gap-2">
-  <a class="tbu-asset-pill text-nowrap" href="#/pages/howwork.htm">Como Funciona</a>
-  <a class="tbu-asset-pill text-nowrap" href="#/pages/themes.htm">Tema</a>
-  <a class="tbu-asset-pill text-nowrap" href="#/pages/components.htm">Componentes</a>
-  <a class="tbu-asset-pill text-nowrap" href="#/pages/utilities.htm">Utilitários</a>
-  <a class="tbu-asset-pill text-nowrap" href="#/pages/templates.htm">Templates</a>
-  <tbc-language flag-only></tbc-language>
-</div>
+<tbc-nav responsive>
+  <div slot="nav-wide">
+    <a class="tbu-link text-nowrap" href="#/pages/howwork.htm">Como Funciona</a>
+    <a class="tbu-link text-nowrap" href="#/pages/themes.htm">Tema</a>
+    <a class="tbu-link text-nowrap" href="#/pages/components.htm">Componentes</a>
+    <a class="tbu-link text-nowrap" href="#/pages/utilities.htm">Utilitários</a>
+    <a class="tbu-link text-nowrap" href="#/pages/templates.htm">Templates</a>
+    <tbc-language flag-only></tbc-language>
+  </div>
+
+  <div slot="nav-narrow">
+    <tbc-link trigger="#sidebar" trigger-prop="show" trigger-value="true">
+      <icon-menu></icon-menu>
+    </tbc-link>
+  </div>
+</tbc-nav>

@@ -8,31 +8,13 @@
       <slot></slot>
     </div>
     <div class="bottom">
-      <div>&copy; {{ props.owner }} {{ props.year }} - {{ props.copyright }}</div>
+      <div>
+        <slot name="footer-copyright"></slot>
+      </div>
       <a href="https://github.com/mineot" target="_blank">Powered by Mineot</a>
     </div>
   </footer>
 </template>
-
-<script setup lang="ts">
-const props = defineProps({
-  owner: {
-    type: String,
-    required: false,
-    default: 'Owner Name',
-  },
-  year: {
-    type: String,
-    required: false,
-    default: new Date().getFullYear().toString(),
-  },
-  copyright: {
-    type: String,
-    required: false,
-    default: 'All rights reserved',
-  },
-});
-</script>
 
 <style scoped>
 @reference "@/style.css";
@@ -41,14 +23,14 @@ const props = defineProps({
   @apply tbu-flex-cols;
 
   > .top {
-    @apply gap-2 pb-1.5;
+    @apply gap-4 pb-3;
     @apply flex items-center justify-between;
     @apply flex-col md:flex-row;
     border-bottom: var(--footer-border);
   }
 
   > .bottom {
-    @apply gap-2 pt-1.5;
+    @apply gap-4 pt-3;
     @apply flex items-center justify-between;
     @apply flex-col sm:flex-row;
     @apply text-xs;
