@@ -1,0 +1,25 @@
+@utility tbu-nav {
+  @apply tbu-flex-rows;
+
+  &.vertical {
+    @apply tbu-flex-cols;
+  }
+
+  &.responsive {
+    > .wide {
+      @apply md:tbu-flex-rows hidden;
+
+      &.vertical {
+        @apply md:tbu-flex-cols hidden;
+      }
+    }
+
+    > .narrow {
+      @apply tbu-flex-rows md:hidden;
+
+      &.vertical {
+        @apply tbu-flex-cols md:hidden;
+      }
+    }
+  }
+}
