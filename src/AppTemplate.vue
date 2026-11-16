@@ -1,5 +1,6 @@
 <template>
-  <tbc-flux content-file="home.htm"></tbc-flux>
+  <slot></slot>
+
   <!-- <Default :scroll-to-top-on-footer-click="true">
     <template #header-brand>
       <tbc-flux content-file="complements/brand.htm"></tbc-flux>
