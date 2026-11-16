@@ -1,5 +1,5 @@
 @utility tbu-layout-linear {
-  @apply flex flex-col flex-nowrap;
+  @apply flex min-h-dvh flex-col flex-nowrap;
   gap: calc(var(--spacing) * var(--layout-linear-gap));
 
   > header {

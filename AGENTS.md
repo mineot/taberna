@@ -517,6 +517,14 @@ Documented deliberately so agents do not "fix" them silently or claim they work.
 
 ## 12. Styling and Theme
 
+`src/styles/components/_layout.linear.css` defines `tbu-layout-linear`, used by
+`src/components/_layout.linear.vue`. Its column layout has a minimum height of
+`100dvh`: short content fills the visible viewport, while longer `main` content
+expands the layout and scrolls in the existing ancestor scroll container. The
+`main` uses `flex-1` to fill remaining space, and the header retains `tbu-header`'s
+`sticky top-0` behavior. The layout does not impose a fixed height or its own
+overflow container.
+
 `src/style.css` imports, in order: `tailwindcss`, `styles/fonts.css`,
 `styles/theme.css`, `styles/utilities.css`, `styles/app.css`, then
 `style-customs.css`.
