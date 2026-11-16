@@ -31,7 +31,7 @@
 
   --texture: url('/images/texture.png');
   --shadow-color: color-mix(in oklab, var(--color-tb-secondary-hard) 100%, transparent);
-  --backdrop-color: color-mix(in oklab, var(--color-tb-secondary-hard) 30%, transparent);
+  --backdrop-color: color-mix(in oklab, var(--color-tb-secondary-hard) 80%, transparent);
 
   /* --- */
 
@@ -89,6 +89,11 @@
   --link: var(--color-emerald-500);
   --link-hover: var(--color-emerald-400);
   --link-active: var(--color-emerald-300);
+
+  --sidebar-pbg: var(--color-tb-primary-hard);
+  --sidebar-sbg: var(--color-tb-secondary-hard);
+  --sidebar-border: var(--border-width) var(--border-style) var(--color-tb-secondary-soft);
+  --sidebar-body-gap: 2;
 
   --layout-linear-gap: 2;
 }

@@ -1,0 +1,38 @@
+@utility tbu-sidebar {
+  @apply fixed flex flex-col;
+  @apply top-0 left-0 h-screen w-max overflow-hidden;
+  @apply tbu-duration tbu-texture transform transition-transform;
+  background-color: var(--sidebar-pbg);
+  border-right: var(--sidebar-border);
+  z-index: var(--z-sidebar);
+
+  > .header,
+  .footer,
+  .main {
+    @apply px-4 py-2;
+  }
+
+  > .header,
+  .footer {
+    @apply flex flex-row flex-nowrap items-center justify-between gap-4;
+    background-color: var(--sidebar-sbg);
+  }
+
+  > .header {
+    border-bottom: var(--sidebar-border);
+  }
+
+  > .footer {
+    border-top: var(--sidebar-border);
+  }
+
+  > .main {
+    @apply flex flex-1 flex-col;
+    @apply overflow-y-auto;
+    gap: calc(var(--spacing) * var(--sidebar-body-gap));
+  }
+
+  &.hide {
+    @apply -translate-x-full;
+  }
+}
