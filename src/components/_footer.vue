@@ -2,7 +2,7 @@
   <footer class="tbu-footer tbi-footer">
     <div class="top">
       <slot name="footer-brand"></slot>
-      <slot name="footer-complement"></slot>
+      <slot name="footer-nav"></slot>
     </div>
     <div class="content">
       <slot></slot>
@@ -24,7 +24,7 @@ const props = defineProps({
   year: {
     type: String,
     required: false,
-    default: '2000',
+    default: new Date().getFullYear().toString(),
   },
   copyright: {
     type: String,
