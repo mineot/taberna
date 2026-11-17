@@ -5,7 +5,8 @@ describes the **current** working tree: architecture, conventions, data
 contracts, security boundaries, and the known gaps that must not be mistaken
 for finished features.
 
-Portuguese documentation and its source contracts were reviewed on 2026-11-16.
+Portuguese and US English documentation and their source contracts were reviewed
+on 2026-11-16.
 Validation results and their limits are recorded in section 4. When code and this file disagree,
 establish current behavior from the code and update this file within the approved scope.
 Development requirements below are distinct from implemented behavior; known
@@ -103,21 +104,22 @@ Scope and limitations:
 
 ### Editorial purpose and current content
 
-Paths below are relative to `public/content/pt-br/`:
+Both `public/content/pt-br/` and `public/content/en-us/` contain the following
+fragments, with matching routes and component/utility structure:
 
 | Content | Current state and purpose |
 | --- | --- |
 | `home.htm` | Project overview with links to the detailed guides. |
 | `pages/howwork.htm` | Project organization, fragments, routes, languages, development, and publishing. |
 | `pages/themes.htm` | Current `--color-tb-*` palette, fonts, five spacing ranges, panel and component tokens. |
-| `pages/templates.htm` | “Layout e composição”: component composition and current slots. The URL is retained for existing links; there is no `src/templates/` directory. |
+| `pages/templates.htm` | “Layout e composição” / “Layout and composition”: component composition and current slots. The URL is retained for existing links; there is no `src/templates/` directory. |
 | `pages/components.htm` | All nine registered `tbc-*` elements, attributes, slots, icons, and extension examples. |
 | `pages/utilities.htm` | Current functional color/border utilities, flex/grid, panels, spacing, and component utilities. |
 | `pages/support.htm` | Bitcoin and USD/EUR remain unavailable; Pix retains the supplied key and `/images/pix.png`. No invented payment links. |
 | `pages/contribute.htm` | Development, issues, documentation, translations, and GitHub contribution steps. |
-| `complements/` | Brand, header/sidebar navigation, footer, copyright, and socials. Navigation uses `tbc-nav` and `tbc-link`; the footer retains “Conheça”, “Personalize”, and “Participe”. |
+| `complements/` | Brand, header/sidebar navigation, footer, copyright, and socials. Navigation uses `tbc-nav` and `tbc-link`; footer groups are “Conheça”/“Explore”, “Personalize”/“Customize”, and “Participe”/“Get involved”. |
 
-Portuguese pages use semantic `article` wrappers with `tbu-flex-cols` and
+Both locales use semantic `article` wrappers with `tbu-flex-cols` and
 `tbu-block`, existing theme utilities, and Tailwind typography. They do not rely
 on the removed `.page-custom`, `.dot`/`.enum`, or `tbu-asset-code*` styles.
 Code examples are escaped text inside `pre > code`, styled with `tbu-panel`;
@@ -129,16 +131,21 @@ The component and utility guides include small live navigation/panel examples;
 layout, sidebar, and source-code examples remain escaped text. Flux does not
 parse Markdown or compile Vue directives in fragments.
 
-English remains enabled and is the default locale. Its content was deliberately
-excluded from the Portuguese documentation revision; its older template,
-utility, and style instructions are not a current architecture reference.
-Keep existing Portuguese guide paths when editing navigation. Translations
-normally need matching paths, but this task explicitly limited edits to pt-br.
+English is enabled and is the default locale. Its 14 fragments mirror the
+Portuguese structure, including `complements/socials.htm`, with US English prose,
+navigation, accessible labels, and example text. Technical names, attributes,
+classes, routes, assets, and payment details are preserved. English-specific
+path examples use `en-us`; the real language manifest retains its original keys
+and display names. Keep equivalent fragment paths across enabled locales.
 
-The Portuguese support page keeps the author's supplied Pix image and key.
+The English layout guide describes the current default-slot sidebar integration.
+The Portuguese layout guide still contains an obsolete note about `sidebar-body`;
+that editorial note does not describe the current application code.
+
+Both support pages keep the author's supplied Pix image and key.
 Bitcoin and USD/EUR sections explain that payment details are pending, without
-placeholder QR images. Copyright retains the author's text. The footer and
-GitHub social link point to `https://github.com/mineot/taberna`.
+placeholder QR images. Copyright preserves the attribution and year, with
+localized rights text. The footer and GitHub social link point to `https://github.com/mineot/taberna`.
 
 ## 3. Technology Stack
 
@@ -167,13 +174,13 @@ requirement is declared. Results below were rechecked on 2026-11-16.
 | --- | --- | --- |
 | `npm run dev` | Vite development server | Defined; preview used for browser validation. |
 | `npm run build` | `vue-tsc --noEmit && vite build` | Passes. |
-| `npm run preview` | Serve `dist/` | Used for Portuguese documentation checks. |
+| `npm run preview` | Serve `dist/` | Used for documentation checks. |
 | `npm run typecheck` | `vue-tsc --noEmit` | Passes. |
 | `npm run lint` | `eslint src/` | Fails with 16 existing Vue parsing errors (11.1). |
 | `npm run test` | `vitest --run` | Exits 1: no test files found (11.2). |
 | `npm run format` | Prettier writes `src/**/*.{ts,vue,css}` | Not run; source is outside this documentation scope. |
 
-Portuguese HTML is formatted separately with the existing Prettier installation.
+Content HTML is formatted separately with the existing Prettier installation.
 Validation of this revision covers fragment structure, local link/asset targets,
 registered live elements, and current utility names. This editorial change adds
 no unit tests; it does not change application behavior.
@@ -181,11 +188,20 @@ no unit tests; it does not change application behavior.
 Chrome checks covered all eight Portuguese pages at 375, 768, 1280, and 1920 px
 on the production preview: no main-content horizontal overflow or JavaScript
 exceptions were observed. Keyboard activation and content-link navigation worked;
-the menu opener, backdrop close, and reopen worked. The sidebar body remained
-empty because of the pre-existing slot mismatch (11.6). Static checks passed for
+the menu opener, backdrop close, and reopen worked. Those earlier checks preceded
+the current sidebar default-slot integration. Static checks passed for
 14 fragments, 43 internal links, 6 local asset references, 38 escaped examples,
 and all utilities used by live fragment markup. These checks do not establish
 complete accessibility or every component's behavior.
+
+The English revision was checked on the production preview at the same four
+widths across all eight pages (32 page/width combinations), without main-content
+horizontal overflow, JavaScript exceptions, or failed HTTP responses. The
+sidebar displayed all five translated links and closed after navigation; keyboard
+link activation also worked. Static checks confirmed 14 matching fragment paths,
+43 internal links, 6 local asset references, and 38 escaped examples. Element
+structure and nonlocalized attributes match Portuguese, except for the corrected
+sidebar integration note; the language-manifest example matches the real JSON.
 
 ## 5. Repository Map
 
@@ -220,7 +236,7 @@ src/
   stories/                  app, error, language, loading (*.store.ts)
   styles/
     theme.css               fonts, palette, semantic/component tokens
-    customs.css             .footer-custom styles (English content still uses it)
+    customs.css             legacy .footer-custom styles (unused by both locales)
     utilities/              index + _borders, _colors, _layouts, _panels, _utils
     components/             index + _header-footer, _layout.linear, _link,
                             _nav, _sidebar
@@ -236,7 +252,7 @@ underscore prefix; pages, stores, and utilities use their respective suffixes.
 
 | Change | Primary location |
 | --- | --- |
-| Portuguese content or navigation | `public/content/pt-br/` |
+| Localized content or navigation | `public/content/{locale}/` |
 | Which content fills a region | `src/AppTemplate.vue` |
 | Layout/sidebar structure and behavior | `src/components/_layout.linear.vue`, `_sidebar.vue` |
 | Theme values | `src/styles/theme.css` |
@@ -279,14 +295,13 @@ through the slot. Footer always includes “Powered by Mineot”. No former
 Sidebar supports `sidebar-header`, the default slot, and `sidebar-footer`.
 The shell supplies the brand in `sidebar-header` and language link in
 `sidebar-footer`, with click handlers assigning `sidebar.show = false` via a
-Vue ref. **Current mismatch:** the sidebar navigation flux is wrapped in
-`slot="sidebar-body"`, but Sidebar has no such slot, so this body is not
-rendered. Correcting it requires an approved application change; editing the
-Portuguese fragment alone cannot resolve it.
+Vue ref. Sidebar navigation is supplied directly to its default slot by
+`tbc-flux content-file="complements/sidebar-nav.htm"`, also connected to
+`closeSidebar`. The former `sidebar-body` wrapper is no longer present.
 
-The Portuguese header uses `tbc-nav responsive` with HTML `nav-wide` and
-`nav-narrow` wrappers. The narrow group's `tbc-link` button assigns `show=true`
-on `#sidebar`. Breakpoint and slot behavior are detailed in section 13.
+Both locale headers use `tbc-nav responsive` with HTML `nav-wide` and
+`nav-narrow` wrappers. The narrow group's named `tbc-link` button assigns
+`show=true` on `#sidebar`. Breakpoint and slot behavior are detailed in section 13.
 
 ## 7. State (`src/stories/`)
 
@@ -456,17 +471,18 @@ origin changes must account for the relevant CSP directive.
    processing differs; inspect emitted files before drawing conclusions.
 5. **Stale helper selector:** `helpers/app.css` sets `display: contents` for
    `tbc-backdrop`, which is not registered; `tbc-sidebar` is registered.
-6. **Sidebar integration:** `AppTemplate.vue` supplies `sidebar-body`, but the
-   component only renders its default body slot (section 6).
+6. **Portuguese layout note is stale:** `pages/templates.htm` still describes
+   a `sidebar-body` mismatch, although the shell now uses the correct default
+   slot. The English guide describes the current integration (section 6).
 7. **Unused layout props/token:** `owner`/`year`/`copyright` do not populate the
    footer text, and `--z-loader` is declared but unused by Loading.
 8. **Accessibility gaps:** the language chooser uses clickable divs; sidebar
    close is a clickable icon without an accessible name. Sidebar lacks Escape,
    focus management and inert/aria-hidden for its hidden contents. Loading/error
    lack status/alert semantics; loader/sidebar lack reduced-motion handling.
-   The Portuguese menu opener is a named button through `tbc-link`.
-9. **English documentation is stale:** Portuguese guides now describe current
-   components and styles; English retains earlier template and utility content.
+   Both locale menu openers are named buttons through `tbc-link`.
+9. **Unused editorial CSS:** `.footer-custom` remains defined, but neither
+   locale uses it after adopting component navigation and direct utilities.
 10. **Partial validation/request handling:** locale schema validation remains
     incomplete; flux lacks cancellation/stale-response protection (sections 8–9).
 
@@ -500,8 +516,8 @@ origin changes must account for the relevant CSP directive.
 - Component appearance has dedicated `--header-*`, `--footer-*`, `--sidebar-*`,
   `--link*`, `--carousel-*`, `--loading-*`, and `--error-*` tokens. The backdrop
   uses the existing secondary-hard color at 80%, as do header/footer backgrounds.
-- `styles/customs.css` currently defines `.footer-custom` only. Portuguese
-  documentation uses direct utilities; `.page-custom` and the former
+- `styles/customs.css` currently defines `.footer-custom` only. Both locales
+  use direct utilities; `.page-custom` and the former
   `tbu-asset-code*`, `tbu-asset-pill`, and old color utility names do not exist.
 - Tailwind directives in component style blocks require `@reference "@/style.css";`.
   Custom elements use light DOM (`shadowRoot: false`); scoped selectors still

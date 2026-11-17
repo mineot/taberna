@@ -1,585 +1,1115 @@
-<div class="page-custom">
-  <h1>Components</h1>
+<article class="tbu-flex-cols tbu-block min-w-0 leading-relaxed [overflow-wrap:anywhere]">
+  <h1 class="tbu-text-asset-hard text-3xl font-bold md:text-4xl">Components</h1>
 
   <p>
-    Taberna's components offer reusable features for the site's content. With them, you can load a
-    fragment, provide access to languages, or organize a sequence of elements into a carousel.
+    Taberna components provide reusable features for your site's content. You can use them to build
+    layouts, organize navigation, open a sidebar, load fragments, offer language selection, and
+    display content in a carousel.
   </p>
 
   <p>
-    This page presents the available components, their attributes, and usage examples in the HTML
-    files. The appearance can be complemented with the
-    <a href="#/pages/themes.htm">theme</a> settings and the classes described in
-    <a href="#/pages/utilities.htm">utilities</a>.
+    This page covers the available components, their attributes, and examples for HTML files. You
+    can customize their appearance with
+    <tbc-link
+      href="#/pages/themes.htm"
+      class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+      >theme settings</tbc-link
+    >
+    and the classes described in
+    <tbc-link
+      href="#/pages/utilities.htm"
+      class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+      >utilities</tbc-link
+    >.
   </p>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>How the components work</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">How components work</h2>
 
   <p>
-    The components available to the fragments are registered as custom browser elements. Their names
-    use the prefix <span class="tbu-asset-code">tbc-*</span>, and registration happens in
-    <span class="tbu-asset-code">src/web-components.ts</span> during application initialization.
+    Components available to fragments are registered as browser custom elements. Their names use the
+    prefix
+    <code class="tbu-text-asset-soft font-mono text-sm">tbc-*</code>, and they are registered in
+    <code class="tbu-text-asset-soft font-mono text-sm">src/web-components.ts</code> during
+    application startup.
   </p>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Element</th>
-        <th>Purpose</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="tbu-asset-code">tbc-flux</td>
-        <td>Load an HTML fragment in the active language.</td>
-      </tr>
-      <tr>
-        <td class="tbu-asset-code">tbc-language</td>
-        <td>Present the current language and lead to the language switcher.</td>
-      </tr>
-      <tr>
-        <td class="tbu-asset-code">tbc-carousel</td>
-        <td>Organize elements into pages with navigation and optional autoplay.</td>
-      </tr>
-    </tbody>
-  </table>
+  <div
+    class="tbu-border-secondary-soft tbu-rounded my-2 max-w-full overflow-x-auto"
+    role="region"
+    tabindex="0"
+    aria-label="Table: How components work"
+  >
+    <table class="w-full min-w-[36rem] border-collapse text-left text-sm [overflow-wrap:normal]">
+      <thead>
+        <tr>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Element
+          </th>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Purpose
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td
+            class="tbu-text-asset-soft tbu-border-top-secondary-soft px-4 py-3 align-top font-mono"
+          >
+            tbc-flux
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Load an HTML fragment in the active language.
+          </td>
+        </tr>
+        <tr>
+          <td
+            class="tbu-text-asset-soft tbu-border-top-secondary-soft px-4 py-3 align-top font-mono"
+          >
+            tbc-language
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Display the current language and link to the language selector.
+          </td>
+        </tr>
+        <tr>
+          <td
+            class="tbu-text-asset-soft tbu-border-top-secondary-soft px-4 py-3 align-top font-mono"
+          >
+            tbc-carousel
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Group elements into pages with navigation and optional autoplay.
+          </td>
+        </tr>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">tbc-link</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Follow a link or assign a property on another element.
+          </td>
+        </tr>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">tbc-nav</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Arrange links in rows, columns, or responsive groups.
+          </td>
+        </tr>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">tbc-sidebar</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Display a sidebar with a backdrop.
+          </td>
+        </tr>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">tbc-header</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Compose the header with branding and content.
+          </td>
+        </tr>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">tbc-footer</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Compose the footer with branding, navigation, body content, and copyright.
+          </td>
+        </tr>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">tbc-layout-linear</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Arrange the header, main content, and footer.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <p>
-    Not every Vue component in the project is available as a custom tag. The loading and error
-    screens, for example, are internal components mounted by the application. To make a new
-    component available in fragments, you must register it.
+    Not every Vue component in the project is available as a custom tag. Loading and error screens,
+    for example, are internal components mounted by the application. To make a new component
+    available in fragments, you need to register it.
   </p>
 
   <p>
-    The current elements were prepared to work inside Taberna, with their styles and their
-    initialization. Components that query the language depend on the application's shared state;
-    copying their tags into an isolated HTML page does not reproduce that environment.
+    The current elements are designed to work within Taberna, using its styles and initialization.
+    Components that access the language depend on shared application state; copying their tags into
+    a standalone HTML page does not recreate that environment.
   </p>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>How to write tags and attributes</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">Writing tags and attributes</h2>
+
+  <p>In HTML fragments, use kebab-case attribute names and explicitly close custom tags:</p>
+
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-language&gt;&lt;/tbc-language&gt;</code></pre>
 
   <p>
-    In HTML fragments, use kebab-case attribute names and explicitly close custom tags:
-  </p>
-
-  <pre><code><span>&lt;tbc-language&gt;&lt;/tbc-language&gt;</span></code></pre>
-
-  <p>
-    A property name such as <span class="tbu-asset-code">totalPerPage</span> in the Vue component
-    corresponds to the <span class="tbu-asset-code">total-per-page</span> attribute in HTML. Numeric
+    A property name such as
+    <code class="tbu-text-asset-soft font-mono text-sm">totalPerPage</code> in a Vue component
+    corresponds to the attribute
+    <code class="tbu-text-asset-soft font-mono text-sm">total-per-page</code> in HTML. Numeric
     values are written as attributes, for example
-    <span class="tbu-asset-code">interval="5000"</span>.
+    <code class="tbu-text-asset-soft font-mono text-sm">interval="5000"</code>.
   </p>
 
   <p>
-    To enable a boolean property, use the attribute with no value. To keep its default value of
-    false, omit the attribute:
+    To enable a Boolean property, include the attribute without a value. To keep its default false
+    value, omit the attribute:
   </p>
 
-  <pre><code><span>&lt;tbc-language flag-only&gt;&lt;/tbc-language&gt;</span></code></pre>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-language flag-only&gt;&lt;/tbc-language&gt;</code></pre>
 
   <p>
-    Avoid writing <span class="tbu-asset-code">flag-only="false"</span> to disable the option: that
-    value is text and does not represent the boolean false in this usage. Simply remove
-    <span class="tbu-asset-code">flag-only</span>.
-  </p>
-
-  <p>
-    Fragments are inserted as HTML, without compiling Vue expressions or directives. Syntaxes such as
-    <span class="tbu-asset-code">:interval</span>, <span class="tbu-asset-code">v-if</span>,
-    <span class="tbu-asset-code">v-for</span>, and <span class="tbu-asset-code">@click</span> belong
-    to the application's Vue files, not to content fragments.
-  </p>
-
-  <hr />
-
-  <h2>tbc-flux: loading fragments</h2>
-
-  <p>
-    <span class="tbu-asset-code">tbc-flux</span> fetches a content file and inserts its HTML where
-    the component is placed. The application uses this feature to assemble pages and complements,
-    such as the brand, menus, and footer.
-  </p>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Attribute</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Purpose</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="tbu-asset-code">content-file</td>
-        <td>Text</td>
-        <td>Not set</td>
-        <td>Path of the fragment inside the active language's folder.</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <p>To reuse the site's brand:</p>
-
-  <pre><code><span>&lt;tbc-flux content-file="complements/brand.htm"&gt;&lt;/tbc-flux&gt;</span></code></pre>
-
-  <p>
-    With Portuguese active, the component looks for
-    <span class="tbu-asset-code">content/pt-br/complements/brand.htm</span> from the application's
-    base address. In the project files, this corresponds to
-    <span class="tbu-asset-code">public/content/pt-br/complements/brand.htm</span>.
+    Avoid writing <code class="tbu-text-asset-soft font-mono text-sm">flag-only="false"</code> to
+    disable the option: this is a text value, not the Boolean false in this context. Simply remove
+    <code class="tbu-text-asset-soft font-mono text-sm">flag-only</code>.
   </p>
 
   <p>
-    The language name must not be part of the attribute. Thus, the same component uses the equivalent
-    fragment when another language is chosen.
+    Fragments are inserted as HTML, without compiling Vue expressions or directives. Syntax such as
+    <code class="tbu-text-asset-soft font-mono text-sm">:interval</code>,
+    <code class="tbu-text-asset-soft font-mono text-sm">v-if</code>,
+    <code class="tbu-text-asset-soft font-mono text-sm">v-for</code> and
+    <code class="tbu-text-asset-soft font-mono text-sm">@click</code> belongs in the application's
+    Vue files, not in content fragments.
   </p>
 
-  <h3>Path rules</h3>
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
+
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">tbc-link: navigation and actions</h2>
+  <p>
+    Without <code class="tbu-text-asset-soft font-mono text-sm">trigger</code>, the component
+    creates a link. With <code class="tbu-text-asset-soft font-mono text-sm">trigger</code>, it
+    creates a button that assigns a value to a property on another element. In both cases, it
+    applies <code class="tbu-text-asset-soft font-mono text-sm">tbu-link</code>.
+  </p>
+  <div
+    class="tbu-border-secondary-soft tbu-rounded my-2 max-w-full overflow-x-auto"
+    role="region"
+    tabindex="0"
+    aria-label="Table: tbc-link: navigation and actions"
+  >
+    <table class="w-full min-w-[36rem] border-collapse text-left text-sm [overflow-wrap:normal]">
+      <thead>
+        <tr>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Attribute
+          </th>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Default
+          </th>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Usage
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">href</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">/#</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Link destination. Use
+            <code class="tbu-text-asset-soft font-mono text-sm">#/</code> for the home page relative
+            to the application.
+          </td>
+        </tr>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">target</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">_self</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            The browsing context in which the link opens.
+          </td>
+        </tr>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">text</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">null</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Control text; when omitted or empty, the slot content is used.
+          </td>
+        </tr>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">trigger</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">null</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            CSS selector for the element that receives the assignment.
+          </td>
+        </tr>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">trigger-prop</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">null</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            JavaScript property name, using camelCase for names with multiple words.
+          </td>
+        </tr>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">trigger-value</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">null</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Value to assign. The strings true and false are converted to Booleans.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-link href="#/pages/howwork.htm" text="How it works"&gt;&lt;/tbc-link&gt;
+&lt;tbc-link href="#/"&gt;
+  &lt;icon-home aria-hidden="true"&gt;&lt;/icon-home&gt;
+  &lt;span&gt;Home&lt;/span&gt;
+&lt;/tbc-link&gt;
+&lt;tbc-link trigger="#sidebar" trigger-prop="show" trigger-value="true"
+  text="Open menu"&gt;&lt;/tbc-link&gt;</code></pre>
+  <p>
+    The action's target must exist and already have the specified property. Invalid selectors,
+    missing targets, and nonexistent properties are ignored. Only the first matching element is
+    used. Other attribute values remain text; objects and arrays require property assignment or Vue
+    bindings and are not parsed from JSON.
+  </p>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">tbc-nav: navigation</h2>
+  <p>
+    The unnamed slot receives the items for a regular navigation group. The Boolean attribute
+    <code class="tbu-text-asset-soft font-mono text-sm">vertical</code> arranges them in a column.
+    Use <code class="tbu-text-asset-soft font-mono text-sm">aria-label</code> to identify the
+    navigation:
+  </p>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-nav vertical aria-label="Project guides"&gt;
+  &lt;tbc-link href="#/pages/themes.htm" text="Theme"&gt;&lt;/tbc-link&gt;
+  &lt;tbc-link href="#/pages/components.htm" text="Components"&gt;&lt;/tbc-link&gt;
+&lt;/tbc-nav&gt;</code></pre>
+  <tbc-nav aria-label="Navigation example"
+    ><tbc-link
+      href="#/pages/themes.htm"
+      text="Theme"
+      class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+    ></tbc-link
+    ><tbc-link
+      href="#/pages/utilities.htm"
+      text="Utilities"
+      class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+    ></tbc-link
+  ></tbc-nav>
+  <p>
+    With <code class="tbu-text-asset-soft font-mono text-sm">responsive</code>, provide the slots
+    <code class="tbu-text-asset-soft font-mono text-sm">nav-wide</code> and
+    <code class="tbu-text-asset-soft font-mono text-sm">nav-narrow</code> on actual elements. The
+    first appears at widths of at least
+    <code class="tbu-text-asset-soft font-mono text-sm">48rem</code>; the second appears below that
+    width. In this mode, the unnamed slot is not displayed and no menu button is created
+    automatically.
+  </p>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-nav responsive aria-label="Main navigation"&gt;
+  &lt;div slot="nav-wide"&gt;
+    &lt;tbc-link href="#/" text="Home"&gt;&lt;/tbc-link&gt;
+    &lt;tbc-link href="#/pages/components.htm" text="Components"&gt;&lt;/tbc-link&gt;
+  &lt;/div&gt;
+  &lt;div slot="nav-narrow"&gt;
+    &lt;tbc-link trigger="#sidebar" trigger-prop="show" trigger-value="true"
+      text="Open menu"&gt;&lt;/tbc-link&gt;
+  &lt;/div&gt;
+&lt;/tbc-nav&gt;</code></pre>
+  <p>
+    <code class="tbu-text-asset-soft font-mono text-sm">vertical</code> also works with
+    <code class="tbu-text-asset-soft font-mono text-sm">responsive</code>, changing the orientation
+    of both groups. The elements assigned to the slots inherit the navigation's direction, wrapping,
+    and spacing.
+  </p>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">tbc-sidebar: side panel</h2>
+  <p>
+    The Boolean property <code class="tbu-text-asset-soft font-mono text-sm">show</code> starts as
+    <code class="tbu-text-asset-soft font-mono text-sm">false</code>. The panel provides
+    <code class="tbu-text-asset-soft font-mono text-sm">sidebar-header</code>, the unnamed slot for
+    the body, and <code class="tbu-text-asset-soft font-mono text-sm">sidebar-footer</code>.
+  </p>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-link trigger="#example-menu" trigger-prop="show" trigger-value="true"
+  text="Open navigation"&gt;&lt;/tbc-link&gt;
+&lt;tbc-sidebar id="example-menu"&gt;
+  &lt;div slot="sidebar-header"&gt;Navigation&lt;/div&gt;
+  &lt;tbc-nav vertical&gt;
+    &lt;tbc-link href="#/" text="Home"&gt;&lt;/tbc-link&gt;
+    &lt;tbc-link href="#/pages/howwork.htm" text="How it works"&gt;&lt;/tbc-link&gt;
+  &lt;/tbc-nav&gt;
+  &lt;div slot="sidebar-footer"&gt;&lt;tbc-language&gt;&lt;/tbc-language&gt;&lt;/div&gt;
+&lt;/tbc-sidebar&gt;</code></pre>
+  <p>
+    The internal icon and backdrop close the panel. For the custom element, closing also updates
+    <code class="tbu-text-asset-soft font-mono text-sm">show</code>, allowing it to be opened again
+    with <code class="tbu-text-asset-soft font-mono text-sm">tbc-link</code>. For an imported Vue
+    component, use
+    <code class="tbu-text-asset-soft font-mono text-sm">&lt;Sidebar v-model:show="isOpen"&gt;</code
+    >; the event <code class="tbu-text-asset-soft font-mono text-sm">update:show</code> communicates
+    that the panel has closed.
+  </p>
+  <p>
+    Body links do not close the panel automatically. The menu does not yet implement Escape
+    handling, focus trapping and restoration, or disabling off-screen elements. Consider these
+    limitations when building your navigation.
+  </p>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">
+    tbc-header and tbc-footer: site regions
+  </h2>
+  <div
+    class="tbu-border-secondary-soft tbu-rounded my-2 max-w-full overflow-x-auto"
+    role="region"
+    tabindex="0"
+    aria-label="Table: tbc-header and tbc-footer: site regions"
+  >
+    <table class="w-full min-w-[36rem] border-collapse text-left text-sm [overflow-wrap:normal]">
+      <thead>
+        <tr>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Component
+          </th>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Slots
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">tbc-header</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">header-brand</code> for branding;
+            the unnamed slot for content, usually navigation.
+          </td>
+        </tr>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">tbc-footer</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">footer-brand</code>,
+            <code class="tbu-text-asset-soft font-mono text-sm">footer-nav</code>,
+            <code class="tbu-text-asset-soft font-mono text-sm">footer-copyright</code> and the
+            unnamed slot for the body.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-header&gt;
+  &lt;div slot="header-brand"&gt;My site&lt;/div&gt;
+  &lt;tbc-nav&gt;&lt;tbc-link href="#/" text="Home"&gt;&lt;/tbc-link&gt;&lt;/tbc-nav&gt;
+&lt;/tbc-header&gt;
+&lt;tbc-footer&gt;
+  &lt;div slot="footer-brand"&gt;My site&lt;/div&gt;
+  &lt;div slot="footer-nav"&gt;&lt;tbc-link href="#/pages/contribute.htm" text="Contribute"&gt;&lt;/tbc-link&gt;&lt;/div&gt;
+  &lt;p&gt;Additional information.&lt;/p&gt;
+  &lt;div slot="footer-copyright"&gt;© 2026 My site&lt;/div&gt;
+&lt;/tbc-footer&gt;</code></pre>
+  <p>
+    The header uses <code class="tbu-text-asset-soft font-mono text-sm">tbu-header</code> and stays
+    at the top while scrolling. The footer uses
+    <code class="tbu-text-asset-soft font-mono text-sm">tbu-footer</code> and includes the “Powered
+    by Mineot” link. Compose these regions in the application shell to avoid repeating headers and
+    footers inside each page.
+  </p>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">
+    tbc-layout-linear: page composition
+  </h2>
+  <p>
+    Combines the header and footer in a column with a minimum height of one viewport. The slots are
+    <code class="tbu-text-asset-soft font-mono text-sm">header-brand</code>,
+    <code class="tbu-text-asset-soft font-mono text-sm">header-nav</code>,
+    <code class="tbu-text-asset-soft font-mono text-sm">footer-brand</code>,
+    <code class="tbu-text-asset-soft font-mono text-sm">footer-nav</code>,
+    <code class="tbu-text-asset-soft font-mono text-sm">footer-body</code>,
+    <code class="tbu-text-asset-soft font-mono text-sm">footer-copyright</code> and the unnamed slot
+    for the main content.
+  </p>
+  <p>
+    The sidebar is composed separately. The properties
+    <code class="tbu-text-asset-soft font-mono text-sm">owner</code>,
+    <code class="tbu-text-asset-soft font-mono text-sm">year</code> and
+    <code class="tbu-text-asset-soft font-mono text-sm">copyright</code> are declared in the layout
+    but do not generate text in the current footer; fill the slot
+    <code class="tbu-text-asset-soft font-mono text-sm">footer-copyright</code>. See the complete
+    integration in the guide to
+    <tbc-link
+      href="#/pages/templates.htm"
+      text="layout and composition"
+      class="underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+    ></tbc-link
+    >.
+  </p>
+
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">tbc-flux: loading fragments</h2>
 
   <p>
-    The path must end in <span class="tbu-asset-code">.htm</span>, may contain subfolders, and must
-    not begin with <span class="tbu-asset-code">/</span>. The loader also rejects backslashes, empty
-    segments, and paths containing <span class="tbu-asset-code">..</span>.
+    The <code class="tbu-text-asset-soft font-mono text-sm">tbc-flux</code> fetches a content file
+    and inserts its HTML where the component is placed. The application uses this to assemble pages
+    and shared fragments, such as branding, menus, and the footer.
+  </p>
+
+  <div
+    class="tbu-border-secondary-soft tbu-rounded my-2 max-w-full overflow-x-auto"
+    role="region"
+    tabindex="0"
+    aria-label="Table: tbc-flux: loading fragments"
+  >
+    <table class="w-full min-w-[36rem] border-collapse text-left text-sm [overflow-wrap:normal]">
+      <thead>
+        <tr>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Attribute
+          </th>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Type
+          </th>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Default
+          </th>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Purpose
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td
+            class="tbu-text-asset-soft tbu-border-top-secondary-soft px-4 py-3 align-top font-mono"
+          >
+            content-file
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">Text</td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">Undefined</td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Fragment path within the active language's folder.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>To reuse the site branding:</p>
+
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-flux content-file="complements/brand.htm"&gt;&lt;/tbc-flux&gt;</code></pre>
+
+  <p>
+    With English active, the component looks for
+    <code class="tbu-text-asset-soft font-mono text-sm">content/en-us/complements/brand.htm</code>
+    relative to the application's base URL. In the project files, this corresponds to
+    <code class="tbu-text-asset-soft font-mono text-sm"
+      >public/content/en-us/complements/brand.htm</code
+    >.
   </p>
 
   <p>
-    The file must contain an HTML fragment, without the full structure of a document. The loader has
-    a basic check for responses beginning with
-    <span class="tbu-asset-code">&lt;!doctype html</span> or
-    <span class="tbu-asset-code">&lt;html</span>, as can happen when the hosting provider returns the
-    main page in place of a missing file.
+    The language name should not be part of the attribute. This lets the same component use the
+    equivalent fragment when another language is selected.
   </p>
 
-  <h3>Loading behavior</h3>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Path rules</h3>
 
-  <ol>
-    <li class="dot">
-      Without <span class="tbu-asset-code">content-file</span>, with an empty attribute, or before
-      the language is defined, the component remains empty and does not fetch.
+  <p>
+    The path must end in <code class="tbu-text-asset-soft font-mono text-sm">.htm</code>, may
+    contain subfolders, and must not start with
+    <code class="tbu-text-asset-soft font-mono text-sm">/</code>. The loader also rejects
+    backslashes, empty segments, and paths containing
+    <code class="tbu-text-asset-soft font-mono text-sm">..</code>.
+  </p>
+
+  <p>
+    The file must contain an HTML fragment, without a full document structure. The loader performs a
+    basic check for responses starting with
+    <code class="tbu-text-asset-soft font-mono text-sm">&lt;!doctype html</code> or
+    <code class="tbu-text-asset-soft font-mono text-sm">&lt;html</code>, which can happen when the
+    host returns the main page instead of a missing file.
+  </p>
+
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Loading behavior</h3>
+
+  <ul class="list-disc space-y-2 pl-6">
+    <li>
+      Without <code class="tbu-text-asset-soft font-mono text-sm">content-file</code>, with an empty
+      attribute, or before the language is resolved, the component stays empty and does not fetch
+      content.
     </li>
-    <li class="dot">
-      When the observed file or language changes, it clears the previous content and starts a new
-      load.
+    <li>
+      When the observed file or language changes, it clears the previous content and starts loading
+      again.
     </li>
-    <li class="dot">
-      Fetch or validation failures are forwarded to the application's error screen.
-    </li>
-    <li class="dot">
+    <li>Fetch or validation failures are forwarded to the application's error screen.</li>
+    <li>
       There is no automatic lookup of the same file in another language when a translation is
       missing.
     </li>
-    <li class="dot">
-      Each instance makes its own request; there is no cache or deduplication in the component's
-      code.
+    <li>
+      Each instance makes its own request; the component code has no cache or request deduplication.
     </li>
-  </ol>
+  </ul>
 
   <p>
-    There is also no cancellation or protection against stale responses on rapid attribute changes.
-    This observation matters if you control the component dynamically through code.
+    There is also no cancellation or protection against stale responses when attributes change
+    quickly. This matters if you control the component dynamically through code.
   </p>
 
   <p>
-    Avoid circular inclusions: a fragment must not load itself, nor load another file that includes
-    the first one again. This can create a continuous sequence of components and requests.
+    Avoid circular includes: a fragment should not load itself or load another file that includes
+    the first one again. This can create an endless chain of components and requests.
   </p>
 
   <p>
-    The HTML is inserted without sanitization. Use fragments reviewed and maintained by the person
-    responsible for the site. In the Vue integration, the component also emits
-    <span class="tbu-asset-code">click</span>, used by the sidebar to close after an interaction;
-    binding that event lives in the Vue file.
+    HTML is inserted without sanitization. Use fragments reviewed and maintained by the site owner.
+    In Vue integration, the component also emits
+    <code class="tbu-text-asset-soft font-mono text-sm">click</code>, used by the sidebar to close
+    after an interaction; this event is connected in the Vue file.
   </p>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>tbc-language: language access</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">tbc-language: access to languages</h2>
 
   <p>
-    <span class="tbu-asset-code">tbc-language</span> presents the flag and name of the active
-    language as a link to <span class="tbu-asset-code">#/language</span>.
+    The <code class="tbu-text-asset-soft font-mono text-sm">tbc-language</code> displays the active
+    language's flag and name as a link to
+    <code class="tbu-text-asset-soft font-mono text-sm">#/language</code>.
   </p>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Attribute</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Purpose</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="tbu-asset-code">flag-only</td>
-        <td>Boolean</td>
-        <td class="tbu-asset-code">false</td>
-        <td>Hide the name and show only the flag.</td>
-      </tr>
-    </tbody>
-  </table>
+  <div
+    class="tbu-border-secondary-soft tbu-rounded my-2 max-w-full overflow-x-auto"
+    role="region"
+    tabindex="0"
+    aria-label="Table: tbc-language: access to languages"
+  >
+    <table class="w-full min-w-[36rem] border-collapse text-left text-sm [overflow-wrap:normal]">
+      <thead>
+        <tr>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Attribute
+          </th>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Type
+          </th>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Default
+          </th>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Purpose
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td
+            class="tbu-text-asset-soft tbu-border-top-secondary-soft px-4 py-3 align-top font-mono"
+          >
+            flag-only
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">Boolean</td>
+          <td
+            class="tbu-text-asset-soft tbu-border-top-secondary-soft px-4 py-3 align-top font-mono"
+          >
+            false
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Hide the name and display only the flag.
+          </td>
+        </tr>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">lg</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">Boolean</td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">false</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">Larger text (text-xl).</td>
+        </tr>
+        <tr>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">sm</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">Boolean</td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            <code class="tbu-text-asset-soft font-mono text-sm">false</code>
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Smaller text (text-sm). Use only one size at a time.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <p>To show flag and name:</p>
+  <p>To display the flag and name:</p>
 
-  <pre><code><span>&lt;tbc-language&gt;&lt;/tbc-language&gt;</span></code></pre>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-language&gt;&lt;/tbc-language&gt;</code></pre>
 
-  <p>To show only the flag:</p>
+  <p>To display only the flag:</p>
 
-  <pre><code><span>&lt;tbc-language flag-only&gt;&lt;/tbc-language&gt;</span></code></pre>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-language flag-only&gt;&lt;/tbc-language&gt;</code></pre>
 
   <p>
-    The component queries the names and flags defined in
-    <span class="tbu-asset-code">public/config/languages.json</span>. This information is only
-    available after the language is detected.
+    The component reads the names and flags defined in
+    <code class="tbu-text-asset-soft font-mono text-sm">public/config/languages.json</code>. This
+    information is only available after language detection.
   </p>
 
   <p>
-    It provides access to the chooser page; it does not switch the language directly. Switching
-    happens in the chooser, saves the preference in the browser, and reloads the page.
+    It links to the selection page; it does not change the language directly. The selector handles
+    the change, saves the preference in the browser, and reloads the page.
   </p>
 
   <p>
-    In the Vue integration, the component emits <span class="tbu-asset-code">click</span>. The
-    default template uses this event to close the sidebar when the visitor accesses the chooser.
+    In Vue integration, the component emits
+    <code class="tbu-text-asset-soft font-mono text-sm">click</code>.
+    <code class="tbu-text-asset-soft font-mono text-sm">AppTemplate.vue</code> uses this event to
+    close the sidebar when the visitor opens the selector.
   </p>
 
   <p>
-    For clearer identification, prefer the version with the visible name when there is space. The
+    For clearer identification, prefer the version with a visible name when space allows. The
     flag-only version does not add a specific text label to the internal link.
   </p>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>tbc-carousel: content in pages</h2>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">tbc-carousel: paginated content</h2>
 
   <p>
-    <span class="tbu-asset-code">tbc-carousel</span> organizes its child elements into pages. Each
-    direct element inside the tag is considered an item; there is no additional carousel item tag.
+    The <code class="tbu-text-asset-soft font-mono text-sm">tbc-carousel</code> organizes its child
+    elements into pages. Each direct element inside the tag counts as one item; there is no
+    additional carousel item tag.
   </p>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Attribute</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Purpose</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="tbu-asset-code">total-per-page</td>
-        <td>Number</td>
-        <td class="tbu-asset-code">3</td>
-        <td>Number of items per page starting at <span class="tbu-asset-code">48rem</span>.</td>
-      </tr>
-      <tr>
-        <td class="tbu-asset-code">interval</td>
-        <td>Number</td>
-        <td class="tbu-asset-code">3000</td>
-        <td>
-          Autoplay interval, in milliseconds.
-          <span class="tbu-asset-code">0</span> disables autoplay.
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div
+    class="tbu-border-secondary-soft tbu-rounded my-2 max-w-full overflow-x-auto"
+    role="region"
+    tabindex="0"
+    aria-label="Table: tbc-carousel: paginated content"
+  >
+    <table class="w-full min-w-[36rem] border-collapse text-left text-sm [overflow-wrap:normal]">
+      <thead>
+        <tr>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Attribute
+          </th>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Type
+          </th>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Default
+          </th>
+          <th class="tbu-bg-secondary-hard tbu-text-asset-soft px-4 py-3 font-semibold" scope="col">
+            Purpose
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td
+            class="tbu-text-asset-soft tbu-border-top-secondary-soft px-4 py-3 align-top font-mono"
+          >
+            total-per-page
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">Number</td>
+          <td
+            class="tbu-text-asset-soft tbu-border-top-secondary-soft px-4 py-3 align-top font-mono"
+          >
+            3
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Number of items per page at widths of at least
+            <code class="tbu-text-asset-soft font-mono text-sm">48rem</code>.
+          </td>
+        </tr>
+        <tr>
+          <td
+            class="tbu-text-asset-soft tbu-border-top-secondary-soft px-4 py-3 align-top font-mono"
+          >
+            interval
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">Number</td>
+          <td
+            class="tbu-text-asset-soft tbu-border-top-secondary-soft px-4 py-3 align-top font-mono"
+          >
+            3000
+          </td>
+          <td class="tbu-border-top-secondary-soft px-4 py-3 align-top">
+            Autoplay interval, in milliseconds.
+            <code class="tbu-text-asset-soft font-mono text-sm">0</code> disables autoplay.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <h3>Organizing the items</h3>
-
-  <p>
-    Each item can bring together a title, text, image, and links. For these elements to be part of
-    the same item, place them inside a single element, such as
-    <span class="tbu-asset-code">article</span>.
-  </p>
-
-  <p>
-    This example shows two items per page on larger screens and changes page every five seconds:
-  </p>
-
-  <pre><code><span>&lt;tbc-carousel total-per-page="2" interval="5000"&gt;</span>
-<span>  &lt;article&gt;</span>
-<span>    &lt;h2&gt;First project&lt;/h2&gt;</span>
-<span>    &lt;p&gt;A presentation of the first work.&lt;/p&gt;</span>
-<span>  &lt;/article&gt;</span>
-<span>  &lt;article&gt;</span>
-<span>    &lt;h2&gt;Second project&lt;/h2&gt;</span>
-<span>    &lt;p&gt;A presentation of the second work.&lt;/p&gt;</span>
-<span>  &lt;/article&gt;</span>
-<span>  &lt;article&gt;</span>
-<span>    &lt;h2&gt;Third project&lt;/h2&gt;</span>
-<span>    &lt;p&gt;A presentation of the third work.&lt;/p&gt;</span>
-<span>  &lt;/article&gt;</span>
-<span>&lt;/tbc-carousel&gt;</span></code></pre>
-
-  <p>
-    Placing all articles inside a single <span class="tbu-asset-code">div</span> directly under the
-    carousel would make that <span class="tbu-asset-code">div</span> count as a single item. Loose
-    texts also do not replace the elements that represent the items.
-  </p>
-
-  <h3>Adapting to screen width</h3>
-
-  <p>
-    Below <span class="tbu-asset-code">48rem</span>, the component shows one item per page. At and
-    above that width, it uses <span class="tbu-asset-code">total-per-page</span>. The last page may
-    contain fewer items than the previous ones.
-  </p>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Organizing items</h3>
 
   <p>
-    On larger screens, pagination uses clickable indicators. On smaller ones, a counter for the
-    current page and the total pages appears. The previous and next buttons let you move through the
-    pages, returning to the start after the last and to the end before the first.
+    Each item can contain a heading, text, an image, and links. To keep those elements in the same
+    item, place them inside a single element, such as
+    <code class="tbu-text-asset-soft font-mono text-sm">article</code>.
   </p>
 
   <p>
-    If there is at most one page, the navigation controls and the carousel footer are hidden.
+    This example displays two items per page on wider screens and changes the page every five
+    seconds:
   </p>
 
-  <h3>Automatic and manual playback</h3>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-carousel total-per-page="2" interval="5000"&gt;
+  &lt;article&gt;
+    &lt;h2&gt;First project&lt;/h2&gt;
+    &lt;p&gt;An introduction to the first project.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article&gt;
+    &lt;h2&gt;Second project&lt;/h2&gt;
+    &lt;p&gt;An introduction to the second project.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article&gt;
+    &lt;h2&gt;Third project&lt;/h2&gt;
+    &lt;p&gt;An introduction to the third project.&lt;/p&gt;
+  &lt;/article&gt;
+&lt;/tbc-carousel&gt;</code></pre>
 
   <p>
-    To keep only manual navigation, use <span class="tbu-asset-code">interval="0"</span>:
+    Placing all articles inside a single
+    <code class="tbu-text-asset-soft font-mono text-sm">div</code> directly under the carousel would
+    make that <code class="tbu-text-asset-soft font-mono text-sm">div</code> count as a single item.
+    Plain text nodes also do not replace the elements that represent items.
   </p>
 
-  <pre><code><span>&lt;tbc-carousel total-per-page="1" interval="0"&gt;</span>
-<span>  &lt;article&gt;</span>
-<span>    &lt;h2&gt;First presentation&lt;/h2&gt;</span>
-<span>    &lt;p&gt;Content the visitor can read at their own pace.&lt;/p&gt;</span>
-<span>  &lt;/article&gt;</span>
-<span>  &lt;article&gt;</span>
-<span>    &lt;h2&gt;Second presentation&lt;/h2&gt;</span>
-<span>    &lt;p&gt;Other content accessible through the navigation controls.&lt;/p&gt;</span>
-<span>  &lt;/article&gt;</span>
-<span>&lt;/tbc-carousel&gt;</span></code></pre>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Adapting to screen width</h3>
 
   <p>
-    With a positive interval and more than one page, the carousel offers a pause/play button and a
-    countdown to the next change. Navigating to another page restarts that interval.
+    Below <code class="tbu-text-asset-soft font-mono text-sm">48rem</code>, the component displays
+    one item per page. At that width and above, it uses
+    <code class="tbu-text-asset-soft font-mono text-sm">total-per-page</code>. The last page may
+    contain fewer items than the others.
+  </p>
+
+  <p>
+    On wider screens, pagination uses clickable indicators. On smaller screens, it displays the
+    current page number and total page count. Previous and next buttons cycle through pages,
+    returning to the first after the last and to the last before the first.
+  </p>
+
+  <p>With at most one page, the navigation controls and carousel footer are hidden.</p>
+
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Automatic and manual playback</h3>
+
+  <p>
+    To use manual navigation only, set
+    <code class="tbu-text-asset-soft font-mono text-sm">interval="0"</code>:
+  </p>
+
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-carousel total-per-page="1" interval="0"&gt;
+  &lt;article&gt;
+    &lt;h2&gt;First presentation&lt;/h2&gt;
+    &lt;p&gt;Content visitors can read at their own pace.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article&gt;
+    &lt;h2&gt;Second presentation&lt;/h2&gt;
+    &lt;p&gt;More content available through the navigation controls.&lt;/p&gt;
+  &lt;/article&gt;
+&lt;/tbc-carousel&gt;</code></pre>
+
+  <p>
+    With a positive interval and more than one page, the carousel provides a pause/play button and a
+    countdown to the next change. Navigating to another page resets that interval.
   </p>
 
   <p>
     In the initial automatic mode, playback pauses while the pointer is over the carousel or focus
-    remains inside it. When these conditions end, the countdown may continue from the remaining time.
-    A pause made with the button remains until the visitor triggers playback.
+    remains inside it. Once those conditions end, the countdown can resume from the remaining time.
+    Pausing with the button keeps playback paused until the visitor starts it again.
   </p>
 
   <p>
-    When the browser reports a preference for reduced motion, autoplay does not start. If the visitor
-    explicitly triggers Play, playback becomes allowed and no longer pauses automatically on pointer
-    or focus. The visual sliding transition remains disabled under reduced motion.
+    When the browser reports a reduced-motion preference, autoplay does not start. If the visitor
+    explicitly selects Play, playback becomes enabled and no longer pauses automatically on hover or
+    focus. The sliding transition remains disabled under reduced motion.
   </p>
 
-  <h3>Values and item changes</h3>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Values and item changes</h3>
 
   <p>
-    <span class="tbu-asset-code">total-per-page</span> is rounded down and clamped to at least
-    <span class="tbu-asset-code">1</span>; non-finite values result in
-    <span class="tbu-asset-code">1</span>. The interval does not go below zero, and non-finite values
-    disable autoplay. When authoring attributes, use valid numbers, with a whole and positive item
-    count.
+    <code class="tbu-text-asset-soft font-mono text-sm">total-per-page</code> is rounded down and
+    clamped to at least <code class="tbu-text-asset-soft font-mono text-sm">1</code>; non-finite
+    values become <code class="tbu-text-asset-soft font-mono text-sm">1</code>. The interval cannot
+    go below zero, and non-finite values disable autoplay. When authoring attributes, use valid
+    numbers with a positive integer item count.
   </p>
 
   <p>
-    The component observes the addition and removal of direct elements to update the item count.
-    Changes in screen width also recalculate the grouping. When leaving the page, its observers,
+    The component observes additions and removals of direct elements to update the item count.
+    Screen width changes also recalculate the grouping. When the page is left, its observers,
     listeners, and timers are removed.
   </p>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>Icons</h2>
-
-  <p>
-    Icons have a separate registry in <span class="tbu-asset-code">src/web-icons.ts</span> and use the
-    prefix <span class="tbu-asset-code">icon-*</span>. The initially available element is
-    <span class="tbu-asset-code">icon-home</span>, based on the
-    <span class="tbu-asset-code">Home</span> icon from
-    <span class="tbu-asset-code">@lucide/vue</span>.
-  </p>
-
-  <p>You can combine it with a text that identifies the link's destination:</p>
-
-  <pre><code><span>&lt;a href="#/"&gt;</span>
-<span>  &lt;icon-home aria-hidden="true"&gt;&lt;/icon-home&gt;</span>
-<span>  &lt;span&gt;Home page&lt;/span&gt;</span>
-<span>&lt;/a&gt;</span></code></pre>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">Icons</h2>
 
   <p>
-    In this example, the text communicates the action and the icon works as a visual complement. The
-    current registry does not declare specific attributes to configure
-    <span class="tbu-asset-code">icon-home</span>.
+    Icons have a separate registry in
+    <code class="tbu-text-asset-soft font-mono text-sm">src/web-icons.ts</code> and use the prefix
+    <code class="tbu-text-asset-soft font-mono text-sm">icon-*</code>. The registered elements are
+    <code class="tbu-text-asset-soft font-mono text-sm">icon-home</code>,
+    <code class="tbu-text-asset-soft font-mono text-sm">icon-menu</code> and
+    <code class="tbu-text-asset-soft font-mono text-sm">icon-x</code>, based on the icons
+    <code class="tbu-text-asset-soft font-mono text-sm">Home</code>,
+    <code class="tbu-text-asset-soft font-mono text-sm">Menu</code> and
+    <code class="tbu-text-asset-soft font-mono text-sm">X</code> from
+    <code class="tbu-text-asset-soft font-mono text-sm">@lucide/vue</code>.
   </p>
 
-  <h3>Adding icons as needed</h3>
+  <p>You can combine an icon with text that identifies the link destination:</p>
+
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-link href="#/"&gt;
+  &lt;icon-home aria-hidden="true"&gt;&lt;/icon-home&gt;
+  &lt;span&gt;Home page&lt;/span&gt;
+&lt;/tbc-link&gt;</code></pre>
 
   <p>
-    You can add other icons as the project needs them. To make them available in fragments:
+    In this example, the text communicates the action and the icon provides a visual cue. The
+    current registry does not declare specific attributes for configuring
+    <code class="tbu-text-asset-soft font-mono text-sm">icon-home</code>.
   </p>
 
-  <ol>
-    <li class="enum">
-      <div>1</div>
-      Import the desired icon from <span class="tbu-asset-code">@lucide/vue</span> in
-      <span class="tbu-asset-code">src/web-icons.ts</span>.
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Adding icons as needed</h3>
+
+  <p>You can add other icons to meet your project's needs. To make them available in fragments:</p>
+
+  <ol class="list-decimal space-y-2 pl-6">
+    <li>
+      Import the desired icon from
+      <code class="tbu-text-asset-soft font-mono text-sm">@lucide/vue</code> in
+      <code class="tbu-text-asset-soft font-mono text-sm">src/web-icons.ts</code>.
     </li>
-    <li class="enum">
-      <div>2</div>
-      Add an entry to the <span class="tbu-asset-code">icons</span> object, using the existing
-      <span class="tbu-asset-code">createIcon</span> function.
+    <li>
+      Add an entry to the object
+      <code class="tbu-text-asset-soft font-mono text-sm">icons</code>, using the existing function
+      <code class="tbu-text-asset-soft font-mono text-sm">createIcon</code>.
     </li>
-    <li class="enum">
-      <div>3</div>
-      Choose a name with the <span class="tbu-asset-code">icon-*</span> prefix.
+    <li>
+      Choose a name with the prefix
+      <code class="tbu-text-asset-soft font-mono text-sm">icon-*</code>.
     </li>
-    <li class="enum">
-      <div>4</div>
-      Use the new tag in fragments after updating the application.
-    </li>
+    <li>Use the new tag in fragments after updating the application.</li>
   </ol>
 
-  <p>The existing entry serves as a reference for the registration pattern:</p>
+  <p>The existing entries illustrate the registration pattern:</p>
 
-  <pre><code><span>const icons = {</span>
-<span>  ...createIcon('icon-home', Home),</span>
-<span>};</span></code></pre>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>const icons = {
+  ...createIcon('icon-home', Home),
+  ...createIcon('icon-menu', Menu),
+  ...createIcon('icon-x', X),
+};</code></pre>
 
   <p>
-    Adding an icon to the registry lets you use it in content; writing a tag with a new name, without
-    registering its component, does not load the icon automatically.
+    Adding an icon to the registry makes it available in content; writing a tag with a new name
+    without registering its component does not load the icon automatically.
   </p>
 
-  <hr />
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
 
-  <h2>Appearance and accessibility</h2>
-
-  <p>
-    Custom elements use the page's DOM, without Shadow DOM. This allows sharing Taberna's global
-    styles, but the reach of a rule still depends on its selectors and the use of
-    <span class="tbu-asset-code">scoped</span> styles in the components.
-  </p>
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">Appearance and accessibility</h2>
 
   <p>
-    You can apply utilities to the items' content, use the theme colors, and create global styles
-    when necessary. Do not assume that a class applied to the outer tag controls all the component's
-    internal elements.
-  </p>
-
-  <p>
-    The carousel uses <span class="tbu-asset-code">--carousel-dot</span> for the indicators,
-    <span class="tbu-asset-code">--carousel-dot-active</span> for the active indicator, and
-    <span class="tbu-asset-code">--carousel-counter</span> for the countdown. The playback interval
-    is still configured through the <span class="tbu-asset-code">interval</span> attribute, not
-    through a theme variable.
+    Custom elements use the page DOM, without Shadow DOM. This allows them to share Taberna's global
+    styles, but a rule's reach still depends on its selectors and the use of styles marked
+    <code class="tbu-text-asset-soft font-mono text-sm">scoped</code> in components.
   </p>
 
   <p>
-    The carousel controls are buttons with accessible names and a visual focus indication. Items
-    outside the current page receive <span class="tbu-asset-code">inert</span> and
-    <span class="tbu-asset-code">aria-hidden</span>, becoming unavailable for interaction and hidden
-    from the accessibility tree while they are not visible.
+    You can apply utilities to item content, use theme colors, and create global styles when needed.
+    Do not assume that a class on the outer tag controls every element inside the component.
   </p>
 
   <p>
-    The carousel's interface labels are still fixed in English. Translating the items' content does
-    not automatically translate those labels.
+    The carousel uses
+    <code class="tbu-text-asset-soft font-mono text-sm">--carousel-dot</code> for indicators,
+    <code class="tbu-text-asset-soft font-mono text-sm">--carousel-dot-active</code> for the active
+    indicator, and <code class="tbu-text-asset-soft font-mono text-sm">--carousel-counter</code> for
+    the countdown. The playback interval is still configured with the attribute
+    <code class="tbu-text-asset-soft font-mono text-sm">interval</code>, not a theme variable.
   </p>
 
   <p>
-    When preparing content, use headings in a proper hierarchy, clear link text, and alternative
-    descriptions on images. These cares depend on the items' authorship, in addition to the features
-    offered by the component.
+    Carousel controls are buttons with accessible names and visible focus indicators. Items outside
+    the current page receive <code class="tbu-text-asset-soft font-mono text-sm">inert</code> and
+    <code class="tbu-text-asset-soft font-mono text-sm">aria-hidden</code>, making them unavailable
+    for interaction and hiding them from the accessibility tree while they are not visible.
   </p>
 
-  <hr />
+  <p>
+    Carousel interface labels are currently fixed in English. Translating the item content does not
+    automatically translate those labels.
+  </p>
 
-  <h2>Creating new components</h2>
+  <p>
+    When preparing content, use a proper heading hierarchy, clear link text, and alternative
+    descriptions for images. These practices depend on the item author as well as the component's
+    features.
+  </p>
+
+  <hr class="tbu-border-top-secondary-soft my-4 border-0" />
+
+  <h2 class="tbu-text-asset-hard mt-6 text-2xl font-semibold">Creating new components</h2>
 
   <p>
     If the site needs another reusable feature, create a Vue component in
-    <span class="tbu-asset-code">src/components/</span> and register it in
-    <span class="tbu-asset-code">src/web-components.ts</span>.
+    <code class="tbu-text-asset-soft font-mono text-sm">src/components/</code> and register it in
+    <code class="tbu-text-asset-soft font-mono text-sm">src/web-components.ts</code>.
   </p>
 
-  <h3>Define the component and its properties</h3>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">
+    Define the component and its properties
+  </h3>
 
   <p>
-    As a structural example, a <span class="tbu-asset-code">notice.vue</span> component could
-    receive a message:
+    As a structural example, a component named
+    <code class="tbu-text-asset-soft font-mono text-sm">_notice.vue</code> could receive a message:
   </p>
 
-  <pre><code><span>&lt;template&gt;</span>
-<span>  &lt;p&gt;{{ props.message }}&lt;/p&gt;</span>
-<span>&lt;/template&gt;</span>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;template&gt;
+  &lt;p&gt;{{ props.message }}&lt;/p&gt;
+&lt;/template&gt;
 
-<span>&lt;script setup lang="ts"&gt;</span>
-<span>const props = defineProps({</span>
-<span>  message: {</span>
-<span>    type: String,</span>
-<span>    default: '',</span>
-<span>  },</span>
-<span>});</span>
-<span>&lt;/script&gt;</span></code></pre>
+&lt;script setup lang="ts"&gt;
+const props = defineProps({
+  message: {
+    type: String,
+    default: '',
+  },
+});
+&lt;/script&gt;</code></pre>
 
   <p>
     This file would be compiled as part of the application. Vue expressions work in it because it is
-    a component, unlike the HTML loaded in fragments.
+    a component, unlike HTML loaded from fragments.
   </p>
 
-  <h3>Register the element</h3>
-
-  <p>In <span class="tbu-asset-code">src/web-components.ts</span>, import the new file:</p>
-
-  <pre><code><span>import Notice from '@/components/notice.vue';</span></code></pre>
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Register the element</h3>
 
   <p>
-    Then add this entry to the <span class="tbu-asset-code">elements</span> object, preserving the
-    existing registrations:
+    Export <code class="tbu-text-asset-soft font-mono text-sm">Notice</code> through
+    <code class="tbu-text-asset-soft font-mono text-sm">src/components/index.ts</code> and add it to
+    the list imported from
+    <code class="tbu-text-asset-soft font-mono text-sm">@/components</code> in
+    <code class="tbu-text-asset-soft font-mono text-sm">src/web-components.ts</code>:
   </p>
 
-  <pre><code><span>...createElement('tbc-notice', Notice),</span></code></pre>
-
-  <p>With the registration in place, the usage in content would be:</p>
-
-  <pre><code><span>&lt;tbc-notice message="See what's new in the project."&gt;&lt;/tbc-notice&gt;</span></code></pre>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>import { Notice } from '@/components';</code></pre>
 
   <p>
-    This component is only a creation example;
-    <span class="tbu-asset-code">tbc-notice</span> is not part of the elements currently registered
-    in Taberna.
+    Then add this entry to the object
+    <code class="tbu-text-asset-soft font-mono text-sm">elements</code>, preserving the existing
+    registrations:
   </p>
 
-  <h3>Take care of the integration</h3>
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>...createElement('tbc-notice', Notice),</code></pre>
+
+  <p>Once registered, it could be used in content as follows:</p>
+
+  <pre
+    class="tbu-panel tbu-rounded my-2 max-w-full min-w-0 overflow-x-auto p-4 text-sm leading-relaxed [overflow-wrap:normal]"
+  ><code>&lt;tbc-notice message="Explore the latest project updates."&gt;&lt;/tbc-notice&gt;</code></pre>
+
+  <p>
+    This component is only an example of creating a new element;
+    <code class="tbu-text-asset-soft font-mono text-sm">tbc-notice</code> is not one of the elements
+    currently registered in Taberna.
+  </p>
+
+  <h3 class="tbu-text-asset-soft mt-3 text-xl font-semibold">Handle integration</h3>
 
   <p>
     Define attributes with clear names, default values, and appropriate validation. For components
     that receive content through slots, also consider how their styles will reach the elements
-    provided by the author.
+    supplied by the author.
   </p>
 
   <p>
     When a style block uses Tailwind directives, place
-    <span class="tbu-asset-code">@reference "@/style.css";</span> at the beginning. Reuse the theme
-    variables and utilities to maintain visual consistency.
+    <code class="tbu-text-asset-soft font-mono text-sm">@reference "@/style.css";</code> at the
+    beginning. Reuse theme variables and utilities for visual consistency.
   </p>
 
   <p>
-    The current registrations do not install Pinia individually in each custom element. Components
-    that use the stores depend on the Taberna application being initialized; if you want to
-    distribute them as standalone widgets, that integration will need to be prepared separately.
+    The current registries do not install Pinia separately in each custom element. Components that
+    use stores depend on Taberna's application initialization; distributing them as standalone
+    widgets would require preparing that integration separately.
   </p>
 
   <p>
     Check the new element in a real fragment, with its attributes, content, and interactions. Verify
-    keyboard use, presentation on different screens, and cleanup of timers or observers when present.
-    Run <span class="tbu-asset-code">npm run typecheck</span> and
-    <span class="tbu-asset-code">npm run build</span> and document the tag name and its attributes
-    for whoever will use it.
+    keyboard use, presentation at different screen sizes, and cleanup of any timers or observers.
+    Run
+    <code class="tbu-text-asset-soft font-mono text-sm">npm run typecheck</code> and
+    <code class="tbu-text-asset-soft font-mono text-sm">npm run build</code> and document the tag
+    name and its attributes for others to use.
   </p>
-</div>
+</article>
